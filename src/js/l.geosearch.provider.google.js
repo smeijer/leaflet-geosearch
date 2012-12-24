@@ -11,7 +11,8 @@ L.GeoSearch.Provider.Google = function (options) {
 
     this.GetServiceUrl = function (qry) {
         var sensor = self._config.sensor || false;
-        return 'http://maps.googleapis.com/maps/api/geocode/json?address='+qry+'&sensor='+ sensor;
+        var region = self._config.region || '';
+        return 'http://maps.googleapis.com/maps/api/geocode/json?address='+qry+'&sensor='+ sensor+'&region='+region;
     };
 
     this.ParseJSON = function (data) {
