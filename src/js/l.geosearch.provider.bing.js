@@ -1,6 +1,6 @@
 /**
  * L.Control.GeoSearch - search for an address and zoom to it's location
- * L.GeoSearch.Provider.Google uses google geocoding service
+ * L.GeoSearch.Provider.Bing uses bing geocoding service
  * https://github.com/smeijer/leaflet.control.geosearch
  */
 
