@@ -4,24 +4,37 @@
  * https://github.com/smeijer/leaflet.control.geosearch
  */
 
-L.GeoSearch.Provider.Esri = function (options) {
-    
-    this._config = options || {};
-    var self = this;
-    
-    this.GetServiceUrl = function (qry) {
-        var country = self._config.country || '';
-        return 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=' + qry + '&sourceCountry=' + country + '&f=json';
-    };
+L.GeoSearch.Provider.Esri = L.Class.extend({
+    options: {
 
-    this.ParseJSON = function (data) {
+    },
+
+    initialize: function(options) {
+        options = L.Util.setOptions(this, options);
+    },
+    
+    GetServiceUrl: function (qry) {
+        var parameters = L.Util.extend({
+            text: qry,
+            f: 'pjson'
+        }, this.options);
+
+        return 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find'
+            + L.Util.getParamString(parameters);
+    },
+
+    ParseJSON: function (data) {
         if (data.locations.length == 0)
             return [];
         
         var results = [];
         for (var i = 0; i < data.locations.length; i++)
-            results.push(new L.GeoSearch.Result(data.locations[i].feature.geometry.x, data.locations[i].feature.geometry.y, data.locations[i].name));
+            results.push(new L.GeoSearch.Result(
+                data.locations[i].feature.geometry.x, 
+                data.locations[i].feature.geometry.y, 
+                data.locations[i].name
+            ));
         
         return results;
-    };
-};
+    }
+});

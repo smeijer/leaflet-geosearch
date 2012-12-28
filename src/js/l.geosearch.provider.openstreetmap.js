@@ -4,24 +4,37 @@
  * https://github.com/smeijer/leaflet.control.geosearch
  */
 
-L.GeoSearch.Provider.OpenStreetMap = function (options) {
+L.GeoSearch.Provider.OpenStreetMap = L.Class.extend({
+    options: {
 
-    this._config = options || {};
-    var self = this;
+    },
 
-    this.GetServiceUrl = function (qry) {
-        var countryCode = self._config.countryCode || '';
-        return 'http://nominatim.openstreetmap.org/search/?q=' + qry + '&format=json&countrycodes='+countryCode;
-    };
+    initialize: function(options) {
+        options = L.Util.setOptions(this, options);
+    },
 
-    this.ParseJSON = function (data) {
+    GetServiceUrl: function (qry) {
+        var parameters = L.Util.extend({
+            q: qry,
+            format: 'json'
+        }, this.options);
+
+        return 'http://nominatim.openstreetmap.org/search'
+            + L.Util.getParamString(parameters);
+    },
+
+    ParseJSON: function (data) {
         if (data.length == 0)
             return [];
 
         var results = [];
         for (var i = 0; i < data.length; i++) 
-            results.push(new L.GeoSearch.Result(data[i].lon, data[i].lat, data[i].display_name));
+            results.push(new L.GeoSearch.Result(
+                data[i].lon, 
+                data[i].lat, 
+                data[i].display_name
+            ));
         
         return results;
-    };
-};
+    }
+});

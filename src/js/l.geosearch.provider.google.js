@@ -4,25 +4,37 @@
  * https://github.com/smeijer/leaflet.control.geosearch
  */
 
-L.GeoSearch.Provider.Google = function (options) {
+L.GeoSearch.Provider.Google = L.Class.extend({
+    options: {
 
-    this._config = options || {};
-    var self = this;
+    },
 
-    this.GetServiceUrl = function (qry) {
-        var sensor = self._config.sensor || false;
-        var region = self._config.region || '';
-        return 'http://maps.googleapis.com/maps/api/geocode/json?address='+qry+'&sensor='+ sensor+'&region='+region;
-    };
+    initialize: function(options) {
+        options = L.Util.setOptions(this, options);
+    },
 
-    this.ParseJSON = function (data) {
+    GetServiceUrl: function (qry) {
+        var parameters = L.Util.extend({
+            address: qry,
+            sensor: false
+        }, this.options);
+
+        return 'http://maps.googleapis.com/maps/api/geocode/json'
+            + L.Util.getParamString(parameters);
+    },
+
+    ParseJSON: function (data) {
         if (data.results.length == 0)
             return [];
 
         var results = [];
         for (var i = 0; i < data.results.length; i++)
-            results.push(new L.GeoSearch.Result(data.results[i].geometry.location.lng, data.results[i].geometry.location.lat, data.results[i].formatted_address));
+            results.push(new L.GeoSearch.Result(
+                data.results[i].geometry.location.lng, 
+                data.results[i].geometry.location.lat, 
+                data.results[i].formatted_address
+            ));
 
         return results;
-    };
-};
+    }
+});
