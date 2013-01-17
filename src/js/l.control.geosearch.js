@@ -6,6 +6,9 @@
 L.GeoSearch = {};
 L.GeoSearch.Provider = {};
 
+// MSIE needs cors support
+jQuery.support.cors = true;
+
 L.GeoSearch.Result = function (x, y, label) {
     this.X = x;
     this.Y = y;
