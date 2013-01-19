@@ -78,20 +78,28 @@ L.Control.GeoSearch = L.Control.extend({
     geosearch: function (qry) {
         try {
             var provider = this._config.provider;
-            var url = provider.GetServiceUrl(qry);
 
-            $.getJSON(url, function (data) {
-                try {
-                    var results = provider.ParseJSON(data);
-                    if (results.length == 0)
-                        throw this._config.notFoundMessage;
-
+            if(typeof provider.GetLocations == 'function') {
+                var results = provider.GetLocations(qry, function(results) {
                     this._showLocation(results[0].X, results[0].Y);
-                }
-                catch (error) {
-                    this._printError(error);
-                }
-            }.bind(this));
+                }.bind(this));
+            }
+            else {
+                var url = provider.GetServiceUrl(qry);
+
+                $.getJSON(url, function (data) {
+                    try {
+                        var results = provider.ParseJSON(data);
+                        if (results.length == 0)
+                            throw this._config.notFoundMessage;
+
+                        this._showLocation(results[0].X, results[0].Y);
+                    }
+                    catch (error) {
+                        this._printError(error);
+                    }
+                }.bind(this));
+            }
         }
         catch (error) {
             this._printError(error);
