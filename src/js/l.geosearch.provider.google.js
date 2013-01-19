@@ -5,7 +5,7 @@
  */
 
 onLoadGoogleApiCallback = function() {
-    L.GeoSearch.Provider.Google.geocoder = new google.maps.Geocoder();
+    L.GeoSearch.Provider.Google.Geocoder = new google.maps.Geocoder();
 };
 
 L.GeoSearch.Provider.Google = L.Class.extend({
@@ -23,7 +23,7 @@ L.GeoSearch.Provider.Google = L.Class.extend({
     },
 
     GetLocations: function(qry, callback) {
-        var geocoder = new google.maps.Geocoder();
+        var geocoder = L.GeoSearch.Provider.Google.Geocoder;
         
         var parameters = L.Util.extend({
             address: qry
