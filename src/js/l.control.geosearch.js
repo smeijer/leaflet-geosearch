@@ -107,7 +107,7 @@ L.Control.GeoSearch = L.Control.extend({
         if (results.length == 0)
             throw this._config.notFoundMessage;
 
-        this._map.fireEvent('geosearch_foundlocations', {locations: results});
+        this._map.fireEvent('geosearch_foundlocations', {Locations: results});
         this._showLocation(results[0]);
     },
 
@@ -118,7 +118,7 @@ L.Control.GeoSearch = L.Control.extend({
             this._positionMarker.setLatLng([location.Y, location.X]);
 
         this._map.setView([location.Y, location.X], this._config.zoomLevel, false);
-        this._map.fireEvent('geosearch_showlocation', {location: location});
+        this._map.fireEvent('geosearch_showlocation', {Location: location});
     },
 
     _printError: function(message) {
