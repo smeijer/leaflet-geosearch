@@ -81,7 +81,7 @@ L.Control.GeoSearch = L.Control.extend({
 
             if(typeof provider.GetLocations == 'function') {
                 var results = provider.GetLocations(qry, function(results) {
-                    this._showLocation(results[0].X, results[0].Y);
+                    this._processResults(results);
                 }.bind(this));
             }
             else {
@@ -90,10 +90,7 @@ L.Control.GeoSearch = L.Control.extend({
                 $.getJSON(url, function (data) {
                     try {
                         var results = provider.ParseJSON(data);
-                        if (results.length == 0)
-                            throw this._config.notFoundMessage;
-
-                        this._showLocation(results[0].X, results[0].Y);
+                        this._processResults(results);
                     }
                     catch (error) {
                         this._printError(error);
@@ -105,14 +102,23 @@ L.Control.GeoSearch = L.Control.extend({
             this._printError(error);
         }
     },
-    
-    _showLocation: function (x, y) {
-        if (typeof this._positionMarker === 'undefined')
-            this._positionMarker = L.marker([y, x]).addTo(this._map);
-        else
-            this._positionMarker.setLatLng([y, x]);
 
-        this._map.setView([y, x], this._config.zoomLevel, false);
+    _processResults: function(results) {
+        if (results.length == 0)
+            throw this._config.notFoundMessage;
+
+        this._map.fireEvent('geosearch_foundlocations', {locations: results});
+        this._showLocation(results[0]);
+    },
+
+    _showLocation: function (location) {
+        if (typeof this._positionMarker === 'undefined')
+            this._positionMarker = L.marker([location.Y, location.X]).addTo(this._map);
+        else
+            this._positionMarker.setLatLng([location.Y, location.X]);
+
+        this._map.setView([location.Y, location.X], this._config.zoomLevel, false);
+        this._map.fireEvent('geosearch_showlocation', {location: location});
     },
 
     _printError: function(message) {
