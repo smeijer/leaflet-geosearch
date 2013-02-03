@@ -22,6 +22,7 @@ L.Control.GeoSearch = L.Control.extend({
 
     initialize: function (options) {
         this._config = {};
+        L.Util.extend(this.options, options);
         this.setConfig(options);
     },
 
