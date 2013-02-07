@@ -40,4 +40,14 @@ new L.Control.GeoSearch({
 }).addTo(map);
 ````
 
+There are other configurable options like setting the position of the search input and whether or not a marker should be displayed at the position of the search result.
+
+````
+new L.Control.GeoSearch({
+    provider: new L.GeoSearch.Provider.OpenStreetMap(),
+    position: 'topcenter',
+    showMarker: true
+}).addTo(map);
+````
+
 I really can't make it any harder. Checkout the providers to see how easy it is to write your own.
