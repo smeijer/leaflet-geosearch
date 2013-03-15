@@ -1,6 +1,6 @@
 /*
  * L.Control.GeoSearch - search for an address and zoom to it's location
- * https://github.com/smeijer/leaflet.control.geosearch
+ * https://github.com/smeijer/L.GeoSearch
  */
 
 L.GeoSearch = {};
@@ -34,7 +34,8 @@ L.Control.GeoSearch = L.Control.extend({
             'searchLabel': options.searchLabel || 'search for address...',
             'notFoundMessage' : options.notFoundMessage || 'Sorry, that address could not be found.',
             'messageHideDelay': options.messageHideDelay || 3000,
-            'zoomLevel': options.zoomLevel || 18
+            'zoomLevel': options.zoomLevel || 18,
+            'showPositionMarker': (options.showPositionMarker === undefined ? true : options.showPositionMarker)
         };
     },
 
@@ -113,13 +114,18 @@ L.Control.GeoSearch = L.Control.extend({
     },
 
     _showLocation: function (location) {
+        if (this._config.showPositionMarker)
+            this._showPositionMarker(location);
+
+        this._map.setView([location.Y, location.X], this._config.zoomLevel, false);
+        this._map.fireEvent('geosearch_showlocation', {Location: location});
+    },
+    
+    _showPositionMarker: function (location) {
         if (typeof this._positionMarker === 'undefined')
             this._positionMarker = L.marker([location.Y, location.X]).addTo(this._map);
         else
             this._positionMarker.setLatLng([location.Y, location.X]);
-
-        this._map.setView([location.Y, location.X], this._config.zoomLevel, false);
-        this._map.fireEvent('geosearch_showlocation', {Location: location});
     },
 
     _printError: function(message) {
