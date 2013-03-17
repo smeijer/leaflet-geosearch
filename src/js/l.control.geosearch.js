@@ -103,6 +103,23 @@ L.Control.GeoSearch = L.Control.extend({
     sendRequest: function (provider, url) {
         var that = this;
 
+        window.parseLocation = function (response) {
+            var results = provider.ParseJSON(response);
+            that._processResults(results);
+
+            document.body.removeChild(document.getElementById('getJsonP'));
+            delete window.parseLocation;
+        };
+
+        function getJsonP (url) {
+            url = url + '&callback=parseLocation'
+            var script = document.createElement('script');
+            script.id = 'getJsonP';
+            script.src = url;
+            script.async = true;
+            document.body.appendChild(script);
+        }
+
         if (XMLHttpRequest) {
             var xhr = new XMLHttpRequest();
 
@@ -111,12 +128,13 @@ L.Control.GeoSearch = L.Control.extend({
 
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == 4) {
-                        console.log(xhr.responseText);
                         if (xhr.status == 200) {
                             var response = JSON.parse(xhr.responseText),
                                 results = provider.ParseJSON(response);
 
                             that._processResults(results);
+                        } else if (xhr.status == 0 || xhr.status == 400) {
+                            getJsonP(url);
                         } else {
                             that._printError(xhr.responseText);
                         }
@@ -142,7 +160,7 @@ L.Control.GeoSearch = L.Control.extend({
                 xdr.open('GET', url);
                 xdr.send();
             } else {
-                // No CORS
+                getJsonP(url);
             }
         }
     },
