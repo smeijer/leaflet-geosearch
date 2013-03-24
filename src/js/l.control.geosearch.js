@@ -30,12 +30,16 @@ L.Control.GeoSearch = L.Control.extend({
         this._config = {
             'country': options.country || '',
             'provider': options.provider,
-            
             'searchLabel': options.searchLabel || 'search for address...',
             'notFoundMessage' : options.notFoundMessage || 'Sorry, that address could not be found.',
             'messageHideDelay': options.messageHideDelay || 3000,
             'zoomLevel': options.zoomLevel || 18
         };
+        if(typeof options.showMarker !== "undefined" && options.showMarker !== null ) {
+          this._config.showMarker = options.showMarker
+        } else {
+          this._config.showMarker = true
+        }
     },
 
     onAdd: function (map) {
@@ -75,7 +79,7 @@ L.Control.GeoSearch = L.Control.extend({
 
         return this._container;
     },
-    
+
     geosearch: function (qry) {
         try {
             var provider = this._config.provider;
@@ -113,10 +117,12 @@ L.Control.GeoSearch = L.Control.extend({
     },
 
     _showLocation: function (location) {
-        if (typeof this._positionMarker === 'undefined')
-            this._positionMarker = L.marker([location.Y, location.X]).addTo(this._map);
-        else
-            this._positionMarker.setLatLng([location.Y, location.X]);
+        if (this._config.showMarker) {
+            if (typeof this._positionMarker === 'undefined')
+                this._positionMarker = L.marker([location.Y, location.X]).addTo(this._map);
+            else
+                this._positionMarker.setLatLng([location.Y, location.X]);
+        }
 
         this._map.setView([location.Y, location.X], this._config.zoomLevel, false);
         this._map.fireEvent('geosearch_showlocation', {Location: location});
@@ -128,7 +134,7 @@ L.Control.GeoSearch = L.Control.extend({
             .fadeIn('slow').delay(this._config.messageHideDelay).fadeOut('slow',
                     function () { $(this).html(''); });
     },
-    
+
     _onKeyUp: function (e) {
         var escapeKey = 27;
         var enterKey = 13;
