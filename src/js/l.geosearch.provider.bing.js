@@ -6,7 +6,8 @@
 
 L.GeoSearch.Provider.Bing = L.Class.extend({
     options: {
-
+        dataType: 'jsonp',
+        jsonpCallback: 'jsonp'
     },
 
     initialize: function(options) {
@@ -16,7 +17,7 @@ L.GeoSearch.Provider.Bing = L.Class.extend({
     GetServiceUrl: function (qry) {
         var parameters = L.Util.extend({
             query: qry,
-            jsonp: '?'
+            output: 'json'
         }, this.options);
 
         return 'http://dev.virtualearth.net/REST/v1/Locations'
