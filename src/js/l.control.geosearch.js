@@ -34,7 +34,8 @@ L.Control.GeoSearch = L.Control.extend({
             'searchLabel': options.searchLabel || 'search for address...',
             'notFoundMessage' : options.notFoundMessage || 'Sorry, that address could not be found.',
             'messageHideDelay': options.messageHideDelay || 3000,
-            'zoomLevel': options.zoomLevel || 18
+            'zoomLevel': options.zoomLevel || 18,
+            'panOnly': options.panOnly
         };
     },
 
@@ -88,15 +89,20 @@ L.Control.GeoSearch = L.Control.extend({
             else {
                 var url = provider.GetServiceUrl(qry);
 
-                $.getJSON(url, function (data) {
-                    try {
-                        var results = provider.ParseJSON(data);
-                        this._processResults(results);
-                    }
-                    catch (error) {
-                        this._printError(error);
-                    }
-                }.bind(this));
+                $.ajax({
+                    dataType: provider.options.dataType || 'json',
+                    url: url,
+                    jsonp: provider.options.jsonpCallback || 'callback',
+                    success: function (data) {
+                        try {
+                            var results = provider.ParseJSON(data);
+                            this._processResults(results);
+                        }
+                        catch (error) {
+                            this._printError(error);
+                        }
+                    }.bind(this)
+                });
             }
         }
         catch (error) {
@@ -118,7 +124,7 @@ L.Control.GeoSearch = L.Control.extend({
         else
             this._positionMarker.setLatLng([location.Y, location.X]);
 
-        this._map.setView([location.Y, location.X], this._config.zoomLevel, false);
+        this._map.setView([location.Y, location.X], (this._config.panOnly && this._map._zoom) || this._config.zoomLevel, false);
         this._map.fireEvent('geosearch_showlocation', {Location: location});
     },
 
