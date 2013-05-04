@@ -1,5 +1,5 @@
 /*
- * L.Control.GeoSearch - search for an address and zoom to it's location
+ * L.Control.GeoSearch - search for an address and zoom to its location
  * https://github.com/smeijer/leaflet.control.geosearch
  */
 
