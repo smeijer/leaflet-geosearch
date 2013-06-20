@@ -36,6 +36,7 @@ L.Control.GeoSearch = L.Control.extend({
             'messageHideDelay': options.messageHideDelay || 3000,
             'zoomLevel': options.zoomLevel || 18,
             'showAddressTooltip': typeof(options.showAddressTooltip) == "undefined" ? true:options.showAddressTooltip,
+            'reverseLookup': typeof(options.reverseLookup) == "undefined" ? false:options.reverseLookup,
         };
     },
 
@@ -86,6 +87,12 @@ L.Control.GeoSearch = L.Control.extend({
 
         L.DomEvent.disableClickPropagation(this._container);
 
+        this._positionMarker = L.marker(this._map.getCenter(),{
+            draggable:this._config.reverseLookup && (typeof this._config.provider.GetAddresses == 'function'),
+        }).addTo(this._map);
+        this._map.removeLayer(this._positionMarker);
+        this._positionMarker.on('dragend',this._onMarkerDrop.bind(this));
+
         return this._container;
     },
     
@@ -117,27 +124,51 @@ L.Control.GeoSearch = L.Control.extend({
         }
     },
 
+    reverse: function (lat,lng) {
+        try {
+            var provider = this._config.provider;
+
+            if(typeof provider.GetAddresses == 'function') {
+                var results = provider.GetAddresses([lat,lng], function(results) {
+                    this._processReverseResults(results,lat,lng);
+                }.bind(this));
+            }
+        }
+        catch (error) {
+            this._printError(error);
+        }
+    },
+
     _processResults: function(results) {
         if (results.length == 0)
             throw this._config.notFoundMessage;
 
         this._map.fireEvent('geosearch_foundlocations', {Locations: results});
-        this._showLocation(results[0]);
+        this._showLocation(results[0],results[0].Y,results[0].X);
     },
 
-    _showLocation: function (location) {
-        if (typeof this._positionMarker === 'undefined')
-            this._positionMarker = L.marker([location.Y, location.X]).addTo(this._map);
-        else
-            this._positionMarker.setLatLng([location.Y, location.X]);
-
-        if( this._config.showAddressTooltip ) {
-            this._map.removeLayer(this._positionMarker);
-            this._positionMarker.options.title = location.Label;
-            this._map.addLayer(this._positionMarker);
+    _processReverseResults: function(results,lat,lng) {
+        if( results.length ) {
+            this._map.fireEvent('geosearch_foundaddresses', {Addresses: results});
+            this._showLocation(results[0],lat,lng);
         }
+    },
 
-        this._map.setView([location.Y, location.X], this._config.zoomLevel, false);
+    _onMarkerDrop: function(e) {
+        var latlng = e.target.getLatLng();
+        this.reverse(latlng.lat,latlng.lng);
+    },
+
+    _showLocation: function (location,lat,lng) {
+        this._map.removeLayer(this._positionMarker);
+        this._positionMarker.setLatLng([lat, lng]);
+        this._positionMarker.options.draggable = this._config.reverseLookup && (typeof this._config.provider.GetAddresses == 'function');
+        if( this._config.showAddressTooltip ) {
+            this._positionMarker.options.title = location.Label;
+        }
+        this._map.addLayer(this._positionMarker);
+
+        this._map.setView([lat, lng], this._config.zoomLevel, false);
         this._map.fireEvent('geosearch_showlocation', {Location: location});
     },
 
