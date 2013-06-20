@@ -34,7 +34,8 @@ L.Control.GeoSearch = L.Control.extend({
             'searchLabel': options.searchLabel || 'search for address...',
             'notFoundMessage' : options.notFoundMessage || 'Sorry, that address could not be found.',
             'messageHideDelay': options.messageHideDelay || 3000,
-            'zoomLevel': options.zoomLevel || 18
+            'zoomLevel': options.zoomLevel || 18,
+            'showAddressTooltip': options.showAddressTooltip || true,
         };
     },
 
@@ -129,6 +130,12 @@ L.Control.GeoSearch = L.Control.extend({
             this._positionMarker = L.marker([location.Y, location.X]).addTo(this._map);
         else
             this._positionMarker.setLatLng([location.Y, location.X]);
+
+        if( this._config.showAddressTooltip ) {
+            this._map.removeLayer(this._positionMarker);
+            this._positionMarker.options.title = location.Label;
+            this._map.addLayer(this._positionMarker);
+        }
 
         this._map.setView([location.Y, location.X], this._config.zoomLevel, false);
         this._map.fireEvent('geosearch_showlocation', {Location: location});
