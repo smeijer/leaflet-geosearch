@@ -151,6 +151,8 @@ L.Control.GeoSearch = L.Control.extend({
         if( results.length ) {
             this._map.fireEvent('geosearch_foundaddresses', {Addresses: results});
             this._showLocation(results[0],lat,lng);
+        } else {
+            this._printError(this._config.notFoundMessage);
         }
     },
 
