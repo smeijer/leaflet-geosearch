@@ -38,6 +38,18 @@ L.Control.GeoSearch = L.Control.extend({
         };
     },
 
+    container: function() {
+        return this._container;
+    },
+
+    positionMarker: function() {
+        return this._positionMarker;
+    },
+
+    config: function() {
+        return this._config;
+    },
+
     onAdd: function (map) {
         var $controlContainer = $(map._controlContainer);
 
