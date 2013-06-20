@@ -35,7 +35,7 @@ L.Control.GeoSearch = L.Control.extend({
             'notFoundMessage' : options.notFoundMessage || 'Sorry, that address could not be found.',
             'messageHideDelay': options.messageHideDelay || 3000,
             'zoomLevel': options.zoomLevel || 18,
-            'showAddressTooltip': options.showAddressTooltip || true,
+            'showAddressTooltip': typeof(options.showAddressTooltip) == "undefined" ? true:options.showAddressTooltip,
         };
     },
 
