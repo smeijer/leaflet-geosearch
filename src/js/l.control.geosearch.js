@@ -143,17 +143,22 @@ L.Control.GeoSearch = L.Control.extend({
 			.fadeIn('slow').delay(this._config.messageHideDelay).fadeOut('slow',
 					function () { $(this).html(''); });
 	},
-	
-	_onKeyUp: function (e) {
-		var escapeKey = 27;
+
+	onKeyPress: function (e) {
 		var enterKey = 13;
 
-		if (e.keyCode === escapeKey) {
-			$('#leaflet-control-geosearch-qry').val('');
-			$(this._map._container).focus();
+		if (e.keyCode === enterKey) {
+			L.DomEvent.preventDefault(e); // prevent default form submission
+
+			this.startSearch();
 		}
-		else if (e.keyCode === enterKey) {
-			this.geosearch($('#leaflet-control-geosearch-qry').val());
+	},
+	
+	onKeyUp: function (e) {
+		var escapeKey = 27;
+
+		if (e.keyCode === escapeKey) {
+			this.cancelSearch();
 		}
 	}
 });
