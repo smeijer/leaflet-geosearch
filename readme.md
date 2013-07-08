@@ -1,5 +1,5 @@
 #Leaflet.GeoSearch
-Adds support for address lookup (a.k.a. geocoding / geosearching) to Leaflet.
+Adds support for address lookup to Leaflet.
 
 #About the control
 The control uses providers to take care of building the correct service url and parsing the retrieved data
