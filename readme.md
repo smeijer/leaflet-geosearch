@@ -1,18 +1,20 @@
 #Leaflet.GeoSearch
-Adds support for address lookup (a.k.a. geocoding / geoseaching) to Leaflet.
+Adds support for address lookup (a.k.a. geocoding / geosearching) to Leaflet.
 
 Check out the [demo](http://smeijer.github.com/GeoSearch/)
 
 #About the control
 The control uses so called providers to take care of building the correct service url and parsing the retrieved data into an uniformal format. Thanks to this split-up, it is pretty easy to write your own providers, so you can use your own geocoding service(s).
 
-The control comes with an default set of three providers:
+The control comes with a default set of five providers:
 
+  - L.GeoSearch.Provider.Bing
   - L.GeoSearch.Provider.Esri
   - L.GeoSearch.Provider.Google
+  - L.GeoSearch.Provider.Nokia
   - L.GeoSearch.Provider.OpenStreetMap
 
-Using these are pretty simple.
+Using these is pretty simple - see below:
 
 #Using the control
 
@@ -32,7 +34,7 @@ new L.Control.GeoSearch({
 }).addTo(map);
 ````
 
-Some people are really loving open source and by that openstreetmap
+Some people are really loving open source and by that I mean OpenStreetMap
 
 ````
 new L.Control.GeoSearch({
