@@ -137,11 +137,17 @@ L.Control.GeoSearch = L.Control.extend({
 		this._map.fireEvent('geosearch_showlocation', {Location: location});
 	},
 
-	_printError: function(message) {
-		$(this._resultslist)
-			.html('<li>'+message+'</li>')
-			.fadeIn('slow').delay(this._config.messageHideDelay).fadeOut('slow',
-					function () { $(this).html(''); });
+	_isShowingError: false,
+
+	_printError: function(error) {
+		var message = this._container.querySelector('.message');
+		message.innerHTML = error;
+		L.DomUtil.removeClass(message, 'displayNone');
+
+		// show alert icon
+		this.resetLink('alert');
+
+		this._isShowingError = true;
 	},
 
 	cancelSearch: function() {
