@@ -28,13 +28,10 @@ L.Control.GeoSearch = L.Control.extend({
 
 	setConfig: function (options) {
 		this._config = {
-			'country': options.country || '',
 			'provider': options.provider,
-			
 			'searchLabel': options.searchLabel || 'Enter address',
 			'notFoundMessage' : options.notFoundMessage || 'Sorry, that address could not be found.',
-			'messageHideDelay': options.messageHideDelay || 3000,
-			'zoomLevel': options.zoomLevel || 18
+			'zoomLevel': options.zoomLevel || 17
 		};
 	},
 
@@ -51,7 +48,7 @@ L.Control.GeoSearch = L.Control.extend({
 		// create the link - this will contain one of the icons
 		var link = L.DomUtil.create('a', '', this._container);
 		link.href = '#';
-		link.title = 'Enter address';
+		link.title = this._config.searchLabel;
 
 		// set the link's icon to magnifying glass
 		this.resetLink('glass');
