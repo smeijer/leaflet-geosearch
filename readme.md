@@ -1,5 +1,5 @@
 #Leaflet.GeoSearch
-Adds support for address lookup to Leaflet:
+Adds support for address lookup to Leaflet. This fork adds a Leaflet-style widget to the [original repo](https://github.com/smeijer/L.GeoSearch):
 
 ![One](https://raw.github.com/gabrielflorit/L.GeoSearch/master/screenshots/one.png)
 ![Two](https://raw.github.com/gabrielflorit/L.GeoSearch/master/screenshots/two.png)
