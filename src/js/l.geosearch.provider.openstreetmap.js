@@ -5,36 +5,36 @@
  */
 
 L.GeoSearch.Provider.OpenStreetMap = L.Class.extend({
-    options: {
+	options: {
 
-    },
+	},
 
-    initialize: function(options) {
-        options = L.Util.setOptions(this, options);
-    },
+	initialize: function(options) {
+		options = L.Util.setOptions(this, options);
+	},
 
-    GetServiceUrl: function (qry) {
-        var parameters = L.Util.extend({
-            q: qry,
-            format: 'json'
-        }, this.options);
+	GetServiceUrl: function (qry) {
+		var parameters = L.Util.extend({
+			q: qry,
+			format: 'json'
+		}, this.options);
 
-        return 'http://nominatim.openstreetmap.org/search'
-            + L.Util.getParamString(parameters);
-    },
+		return 'http://nominatim.openstreetmap.org/search'
+			+ L.Util.getParamString(parameters);
+	},
 
-    ParseJSON: function (data) {
-        if (data.length == 0)
-            return [];
+	ParseJSON: function (data) {
+		if (data.length == 0)
+			return [];
 
-        var results = [];
-        for (var i = 0; i < data.length; i++) 
-            results.push(new L.GeoSearch.Result(
-                data[i].lon, 
-                data[i].lat, 
-                data[i].display_name
-            ));
-        
-        return results;
-    }
+		var results = [];
+		for (var i = 0; i < data.length; i++) 
+			results.push(new L.GeoSearch.Result(
+				data[i].lon, 
+				data[i].lat, 
+				data[i].display_name
+			));
+		
+		return results;
+	}
 });

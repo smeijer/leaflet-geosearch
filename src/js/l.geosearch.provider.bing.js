@@ -5,36 +5,36 @@
  */
 
 L.GeoSearch.Provider.Bing = L.Class.extend({
-    options: {
+	options: {
 
-    },
+	},
 
-    initialize: function(options) {
-        options = L.Util.setOptions(this, options);
-    },
+	initialize: function(options) {
+		options = L.Util.setOptions(this, options);
+	},
 
-    GetServiceUrl: function (qry) {
-        var parameters = L.Util.extend({
-            query: qry,
-            jsonp: '?'
-        }, this.options);
+	GetServiceUrl: function (qry) {
+		var parameters = L.Util.extend({
+			query: qry,
+			jsonp: '?'
+		}, this.options);
 
-        return 'http://dev.virtualearth.net/REST/v1/Locations'
-            + L.Util.getParamString(parameters);
-    },
+		return 'http://dev.virtualearth.net/REST/v1/Locations'
+			+ L.Util.getParamString(parameters);
+	},
 
-    ParseJSON: function (data) {
-        if (data.resourceSets.length == 0 || data.resourceSets[0].resources.length == 0)
-            return [];
+	ParseJSON: function (data) {
+		if (data.resourceSets.length == 0 || data.resourceSets[0].resources.length == 0)
+			return [];
 
-        var results = [];
-        for (var i = 0; i < data.resourceSets[0].resources.length; i++)
-            results.push(new L.GeoSearch.Result(
-                data.resourceSets[0].resources[i].point.coordinates[1], 
-                data.resourceSets[0].resources[i].point.coordinates[0], 
-                data.resourceSets[0].resources[i].address.formattedAddress
-            ));
+		var results = [];
+		for (var i = 0; i < data.resourceSets[0].resources.length; i++)
+			results.push(new L.GeoSearch.Result(
+				data.resourceSets[0].resources[i].point.coordinates[1], 
+				data.resourceSets[0].resources[i].point.coordinates[0], 
+				data.resourceSets[0].resources[i].address.formattedAddress
+			));
 
-        return results;
-    }
+		return results;
+	}
 });
