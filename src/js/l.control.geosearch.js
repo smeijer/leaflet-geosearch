@@ -38,40 +38,55 @@ L.Control.GeoSearch = L.Control.extend({
 		};
 	},
 
+	resetLink: function(extraClass) {
+		var link = this._container.querySelector('a');
+		link.className = 'leaflet-bar-part leaflet-bar-part-single' + ' ' + extraClass;
+	},
+
 	onAdd: function (map) {
-		var $controlContainer = $(map._controlContainer);
 
-		if ($controlContainer.children('.leaflet-top.leaflet-center').length == 0) {
-			$controlContainer.append('<div class="leaflet-top leaflet-center"></div>');
-			map._controlCorners.topcenter = $controlContainer.children('.leaflet-top.leaflet-center').first()[0];
-		}
+		// create the container
+		this._container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-geosearch');
 
-		this._map = map;
-		this._container = L.DomUtil.create('div', 'leaflet-control-geosearch');
+		// create the link - this will contain one of the icons
+		var link = L.DomUtil.create('a', '', this._container);
+		link.href = '#';
+		link.title = 'Enter address';
 
-		var searchbox = document.createElement('input');
-		searchbox.id = 'leaflet-control-geosearch-qry';
-		searchbox.type = 'text';
-		searchbox.placeholder = this._config.searchLabel;
-		this._searchbox = searchbox;
+		// set the link's icon to magnifying glass
+		this.resetLink('glass');
 
-		var msgbox = document.createElement('div');
-		msgbox.id = 'leaflet-control-geosearch-msg';
-		msgbox.className = 'leaflet-control-geosearch-msg';
-		this._msgbox = msgbox;
+		var displayNoneClass = 'displayNone';
 
-		var resultslist = document.createElement('ul');
-		resultslist.id = 'leaflet-control-geosearch-results';
-		this._resultslist = resultslist;
+		// create the form that will contain the input
+		var form = L.DomUtil.create('form', displayNoneClass, this._container);
 
-		$(this._msgbox).append(this._resultslist);
-		$(this._container).append(this._searchbox, this._msgbox);
+		// create the input, and set its placeholder ("Enter address") text
+		var input = L.DomUtil.create('input', null, form);
+		input.placeholder = 'Enter address';
+
+		// create the error message div
+		var message = L.DomUtil.create('div', 'leaflet-bar message displayNone', this._container);
 
 		L.DomEvent
-		  .addListener(this._container, 'click', L.DomEvent.stop)
-		  .addListener(this._container, 'keypress', this._onKeyUp, this);
+			.on(link, 'click', L.DomEvent.stopPropagation)
+			.on(link, 'click', L.DomEvent.preventDefault)
+			.on(link, 'click', function() {
 
-		L.DomEvent.disableClickPropagation(this._container);
+				if (L.DomUtil.hasClass(form, displayNoneClass)) {
+					L.DomUtil.removeClass(form, 'displayNone'); // unhide form
+					input.focus();
+				} else {
+					L.DomUtil.addClass(form, 'displayNone'); // hide form
+				}
+
+			})
+			.on(link, 'dblclick', L.DomEvent.stopPropagation);
+
+		L.DomEvent
+			.on(input, 'keypress', this.onKeyPress, this)
+			.on(input, 'keyup', this.onKeyUp, this)
+			.on(input, 'input', this.onInput, this);
 
 		return this._container;
 	},
