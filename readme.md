@@ -14,8 +14,6 @@ The control comes with a default set of five providers:
   - L.GeoSearch.Provider.Nokia
   - L.GeoSearch.Provider.OpenStreetMap
 
-Using these is pretty simple - see below:
-
 #Using the control
 
 For example, Esri:
