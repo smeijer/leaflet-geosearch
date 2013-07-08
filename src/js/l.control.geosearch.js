@@ -144,6 +144,40 @@ L.Control.GeoSearch = L.Control.extend({
 					function () { $(this).html(''); });
 	},
 
+	cancelSearch: function() {
+		var form = this._container.querySelector('form');
+		L.DomUtil.addClass(form, 'displayNone'); // hide form
+
+		var input = form.querySelector('input');
+		input.value = ''; // clear form
+
+		// show glass icon
+		this.resetLink('glass');
+
+		var message = this._container.querySelector('.message');
+		L.DomUtil.addClass(message, 'displayNone'); // hide message
+	},
+
+	startSearch: function() {
+		// show spinner icon
+		this.resetLink('spinner');
+
+		var input = this._container.querySelector('input');
+		this.geosearch(input.value);
+	},
+
+	onInput: function() {
+		if (this._isShowingError) {
+			// show glass icon
+			this.resetLink('glass');
+
+			var message = this._container.querySelector('.message');
+			L.DomUtil.addClass(message, 'displayNone'); // hide message
+
+			this._isShowingError = false;
+		}
+	},
+
 	onKeyPress: function (e) {
 		var enterKey = 13;
 
