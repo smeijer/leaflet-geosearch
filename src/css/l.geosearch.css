@@ -13,17 +13,17 @@
 }
 
 .leaflet-control-geosearch a.glass {
-	background-image: url(../images/geosearch.png);
+	background-image: url(../img/geosearch.png);
 	background-size: 100% 100%;
 }
 
 .leaflet-control-geosearch a.spinner {
-	background-image: url(../images/spinner.gif);
+	background-image: url(../img/spinner.gif);
 	background-position: 50% 50%;
 }
 
 .leaflet-control-geosearch a.alert {
-	background-image: url(../images/alert.png);
+	background-image: url(../img/alert.png);
 	background-size: 64% 64%;
 }
 
