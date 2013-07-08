@@ -17,7 +17,7 @@ L.GeoSearch.Result = function (x, y, label) {
 
 L.Control.GeoSearch = L.Control.extend({
 	options: {
-		position: 'topcenter'
+		position: 'topleft'
 	},
 
 	initialize: function (options) {
