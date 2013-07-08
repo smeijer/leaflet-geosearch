@@ -1,5 +1,11 @@
 #Leaflet.GeoSearch
-Adds support for address lookup to Leaflet.
+Adds support for address lookup to Leaflet:
+
+![One](https://raw.github.com/gabrielflorit/L.GeoSearch/master/screenshots/one.png)
+![Two](https://raw.github.com/gabrielflorit/L.GeoSearch/master/screenshots/two.png)
+![Three](https://raw.github.com/gabrielflorit/L.GeoSearch/master/screenshots/three.png)
+![Four](https://raw.github.com/gabrielflorit/L.GeoSearch/master/screenshots/four.png)
+![Five](https://raw.github.com/gabrielflorit/L.GeoSearch/master/screenshots/five.png)
 
 #About the control
 The control uses providers to take care of building the correct service url and parsing the retrieved data
