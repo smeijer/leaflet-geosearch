@@ -1,5 +1,5 @@
 /*
- * L.Control.GeoSearch - search for an address and zoom to it's location
+ * L.Control.GeoSearch - search for an address and zoom to its location
  * https://github.com/smeijer/leaflet.control.geosearch
  */
 
@@ -120,10 +120,10 @@ L.Control.GeoSearch = L.Control.extend({
 	},
 
 	_processResults: function(results) {
-		if (results.length == 0)
+		if (results.length === 0)
 			throw this._config.notFoundMessage;
 
-		this._map.fireEvent('geosearch_foundlocations', {Locations: results});
+		this.cancelSearch();
 		this._showLocation(results[0]);
 	},
 
