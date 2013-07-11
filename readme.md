@@ -1,11 +1,11 @@
 #Leaflet.GeoSearch
 Adds support for address lookup to Leaflet. This fork adds a Leaflet-style widget to the [original repo](https://github.com/smeijer/L.GeoSearch):
 
-![One](https://raw.github.com/gabrielflorit/L.GeoSearch/master/screenshots/one.png)
-![Two](https://raw.github.com/gabrielflorit/L.GeoSearch/master/screenshots/two.png)
-![Three](https://raw.github.com/gabrielflorit/L.GeoSearch/master/screenshots/three.png)
-![Four](https://raw.github.com/gabrielflorit/L.GeoSearch/master/screenshots/four.png)
-![Five](https://raw.github.com/gabrielflorit/L.GeoSearch/master/screenshots/five.png)
+![One](/screenshots/one.png)
+![Two](/screenshots/two.png)
+![Three](/screenshots/three.png)
+![Four](/screenshots/four.png)
+![Five](/screenshots/five.png)
 
 #About the control
 The control uses providers to take care of building the correct service url and parsing the retrieved data
@@ -24,24 +24,24 @@ The control comes with a default set of five providers:
 
 For example, Esri:
 
-````
+```js
 new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.Esri()
 }).addTo(map);
-````
+```
 
 Google:
 
-````
+```js
 new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.Google()
 }).addTo(map);
-````
+```
 
 OpenStreetMap:
 
-````
+```js
 new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.OpenStreetMap()
 }).addTo(map);
-````
+```
