@@ -37,6 +37,7 @@ L.Control.GeoSearch = L.Control.extend({
             'zoomLevel': options.zoomLevel || 18,
             'showAddressTooltip': typeof(options.showAddressTooltip) == "undefined" ? true:options.showAddressTooltip,
             'reverseLookup': typeof(options.reverseLookup) == "undefined" ? false:options.reverseLookup,
+            'markerOptions': options.markerOptions || {},
         };
     },
 
@@ -87,9 +88,12 @@ L.Control.GeoSearch = L.Control.extend({
 
         L.DomEvent.disableClickPropagation(this._container);
 
-        this._positionMarker = L.marker(this._map.getCenter(),{
+        var markerOptions = L.Util.extend({},this.config().markerOptions);
+        markerOptions = L.Util.extend(markerOptions,{
             draggable:this._config.reverseLookup && (typeof this._config.provider.GetAddresses == 'function'),
-        }).addTo(this._map);
+        });
+
+        this._positionMarker = L.marker(this._map.getCenter(),markerOptions).addTo(this._map);
         this._map.removeLayer(this._positionMarker);
         this._positionMarker.on('dragend',this._onMarkerDrop.bind(this));
 
