@@ -36,5 +36,38 @@ L.GeoSearch.Provider.Esri = L.Class.extend({
             ));
         
         return results;
-    }
+    },
+
+    GetAddresses: function(latlng, callback) {
+        var lat = latlng[0];
+        var lon = latlng[1];
+
+        var parameters = L.Util.extend({
+            location: lon+','+lat,
+            distance: 100,
+            f: 'pjson'
+        }, this.options);
+
+        var url = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode' + L.Util.getParamString(parameters);
+        $.getJSON(url, function (data) {
+            var results = [];
+            if(data.address && data.location) {
+                var address = "";
+                for(var i in data.address) {
+                    if( !data.address[i] )
+                        continue;
+                    if( address.length )
+                        address += ', ';
+                    address += data.address[i];
+                }
+                results.push(new L.GeoSearch.Result(
+                    data.location.x, 
+                    data.location.y, 
+                    address
+                ));
+            }
+            if(typeof callback == 'function')
+                callback(results);
+        }.bind(this));
+    },
 });
