@@ -3,10 +3,10 @@
 	<head>
 		<title>Leaflet.GeoSearch / Esri Provider</title>
 
-		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.2/leaflet.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.2/leaflet.ie.css" /><![endif]-->
 		
-		<script src="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.js"></script>
+		<script src="http://cdn.leafletjs.com/leaflet-0.6.2/leaflet.js"></script>
 		<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 
 		<script src="../src/js/l.control.geosearch.js"></script>
@@ -26,9 +26,9 @@
 			center: new L.LatLng(53.2, 5.8), zoom: 12 
 		});
 
-        new L.Control.GeoSearch({
-            provider: new L.GeoSearch.Provider.Esri()
-        }).addTo(map);
+		new L.Control.GeoSearch({
+			provider: new L.GeoSearch.Provider.Esri()
+		}).addTo(map);
 		
 	</script>
 </body>
