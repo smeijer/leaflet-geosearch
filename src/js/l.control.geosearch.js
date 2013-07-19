@@ -31,7 +31,8 @@ L.Control.GeoSearch = L.Control.extend({
 			'provider': options.provider,
 			'searchLabel': options.searchLabel || 'Enter address',
 			'notFoundMessage' : options.notFoundMessage || 'Sorry, that address could not be found.',
-			'zoomLevel': options.zoomLevel || 17
+			'zoomLevel': options.zoomLevel || 17,
+			'showMarker': typeof options.showMarker !== 'undefined' ? options.showMarker : true
 		};
 	},
 
@@ -125,10 +126,12 @@ L.Control.GeoSearch = L.Control.extend({
 	},
 
 	_showLocation: function (location) {
-		if (typeof this._positionMarker === 'undefined')
-			this._positionMarker = L.marker([location.Y, location.X]).addTo(this._map);
-		else
-			this._positionMarker.setLatLng([location.Y, location.X]);
+		if (this._config.showMarker) {
+			if (typeof this._positionMarker === 'undefined')
+				this._positionMarker = L.marker([location.Y, location.X]).addTo(this._map);
+			else
+				this._positionMarker.setLatLng([location.Y, location.X]);
+		}
 
 		this._map.setView([location.Y, location.X], this._config.zoomLevel, false);
 	},
