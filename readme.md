@@ -54,6 +54,18 @@ new L.Control.GeoSearch({
 }).addTo(map);
 ````
 
+Autocomplete can be enabled for providers which return incremental search results
+
+````javascript
+new L.Control.GeoSearch({
+    provider: new L.GeoSearch.Provider.OpenStreetMap(),
+    enableButtons: true,
+    enableAutoComplete: true,
+    autocompleteMinQueryLen: 3,
+    autocompleteQueryDelay_ms: 800
+}).addTo(map);
+````
+
 If you want to have your custom GeoSearch control you can directly use one of the providers. 
 
 ````javascript
@@ -61,7 +73,7 @@ var googleGeocodeProvider = new L.GeoSearch.Provider.Google(),
   addressText = 'Amsterdam';
 
 googleGeocodeProvider.GetLocations( addressText, function ( data ) {
-  // in data are your results with x, y, label and bounds (currently availabel for google maps provider only)
+  // in data are your results with x, y, label and bounds (currently available for google maps provider only)
 });
 
 ````
