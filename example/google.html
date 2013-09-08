@@ -3,11 +3,10 @@
 	<head>
 		<title>Leaflet.GeoSearch / Google Provider</title>
 
-		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
-		
-		<script src="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.js"></script>
-		<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" /><![endif]-->
+
+		<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
 
 		<script src="../src/js/l.control.geosearch.js"></script>
 		<script src="../src/js/l.geosearch.provider.google.js"></script>
@@ -15,21 +14,21 @@
 	</head>
 <body>
 	<div id="map" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
-	
+
 	<script type="text/javascript">
-		
+
 		var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
 		var basemap = new L.TileLayer(cloudmadeUrl, {maxZoom: 18});
-		
+
 		var map = new L.Map('map', {
-			layers: [basemap], 
-			center: new L.LatLng(53.2, 5.8), zoom: 12 
+			layers: [basemap],
+			center: new L.LatLng(53.2, 5.8), zoom: 12
 		});
 
         new L.Control.GeoSearch({
             provider: new L.GeoSearch.Provider.Google()
         }).addTo(map);
-		
+
 	</script>
 </body>
 </html>
