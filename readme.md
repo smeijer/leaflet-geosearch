@@ -3,6 +3,11 @@ Adds support for address lookup (a.k.a. geocoding / geoseaching) to Leaflet.
 
 Check out the [demo](http://smeijer.github.com/GeoSearch/)
 
+#Installing via Bower
+````
+bower install L.GeoSearch
+````
+
 #About the control
 The control uses so called providers to take care of building the correct service url and parsing the retrieved data into an uniformal format. Thanks to this split-up, it is pretty easy to write your own providers, so you can use your own geocoding service(s).
 
