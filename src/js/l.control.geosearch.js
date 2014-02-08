@@ -6,6 +6,12 @@
 L.GeoSearch = {};
 L.GeoSearch.Provider = {};
 
+if(typeof Lang == 'undefined')
+	Lang = {
+		searchLabel: 'search for address ...',
+		notFoundMessage: 'Sorry, that address could not be found.'
+	};
+
 L.GeoSearch.Result = function (x, y, label) {
     this.X = x;
     this.Y = y;
@@ -20,8 +26,8 @@ L.Control.GeoSearch = L.Control.extend({
 
     _config: {
         country: '',
-        searchLabel: 'search for address ...',
-        notFoundMessage: 'Sorry, that address could not be found.',
+        searchLabel: Lang.searchLabel,
+        notFoundMessage: Lang.notFoundMessage,
         messageHideDelay: 3000,
         zoomLevel: 18
     },

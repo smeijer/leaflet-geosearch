@@ -58,3 +58,10 @@ new L.Control.GeoSearch({
 ````
 
 I really can't make it any harder. Checkout the providers to see how easy it is to write your own.
+
+#Changing language for labels in the search field
+Just include the language file before the library
+e.g. for albanian language
+````
+<script type="text/javascript" src="js/lang/sq_SQ.js" charset="utf-8"></script>
+````
