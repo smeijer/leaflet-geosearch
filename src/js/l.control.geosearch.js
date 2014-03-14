@@ -206,6 +206,8 @@ L.Control.GeoSearch = L.Control.extend({
             queryBox.value = '';
             this._map._container.focus();
         } else if (e.keyCode === enter) {
+            e.preventDefault();
+            e.stopPropagation();
             this.geosearch(queryBox.value);
         }
     }
