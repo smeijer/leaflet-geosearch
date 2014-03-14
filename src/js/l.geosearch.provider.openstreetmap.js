@@ -1,7 +1,7 @@
 /**
  * L.Control.GeoSearch - search for an address and zoom to it's location
  * L.GeoSearch.Provider.OpenStreetMap uses openstreetmap geocoding service
- * https://github.com/smeijer/leaflet.control.geosearch
+ * https://github.com/smeijer/L.GeoSearch
  */
 
 L.GeoSearch.Provider.OpenStreetMap = L.Class.extend({
