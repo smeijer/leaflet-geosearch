@@ -19,7 +19,8 @@ L.GeoSearch.Provider.OpenStreetMap = L.Class.extend({
             format: 'json'
         }, this.options);
 
-        return 'http://nominatim.openstreetmap.org/search'
+        return location.protocol
+            + '//nominatim.openstreetmap.org/search'
             + L.Util.getParamString(parameters);
     },
 
