@@ -41,13 +41,27 @@ L.GeoSearch.Provider.Google = L.Class.extend({
             if (data.results.length == 0)
                 return [];
 
-            var results = [];
-            for (var i = 0; i < data.results.length; i++)
+            var results = [],
+                northEastLatLng,
+                southWestLatLng,
+                bounds;
+            for (var i = 0; i < data.results.length; i++) {
+
+                if( data.results[i].geometry.bounds ) {
+                    northEastLatLng = new L.LatLng( data.results[i].geometry.bounds.Aa.j, data.results[i].geometry.bounds.ra.j );
+                    southWestLatLng = new L.LatLng( data.results[i].geometry.bounds.Aa.k, data.results[i].geometry.bounds.ra.k );
+                    bounds = new L.LatLngBounds([ northEastLatLng, southWestLatLng ]);
+                }
+                else {
+                    bounds = undefined;
+                }
                 results.push(new L.GeoSearch.Result(
                     data.results[i].geometry.location.lng(),
                     data.results[i].geometry.location.lat(),
-                    data.results[i].formatted_address
+                    data.results[i].formatted_address,
+                    bounds
                 ));
+            }
 
             if(typeof callback == 'function')
                 callback(results);
