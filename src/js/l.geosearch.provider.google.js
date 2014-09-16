@@ -48,8 +48,11 @@ L.GeoSearch.Provider.Google = L.Class.extend({
             for (var i = 0; i < data.results.length; i++) {
 
                 if( data.results[i].geometry.bounds ) {
-                    northEastLatLng = new L.LatLng( data.results[i].geometry.bounds.Aa.j, data.results[i].geometry.bounds.ra.j );
-                    southWestLatLng = new L.LatLng( data.results[i].geometry.bounds.Aa.k, data.results[i].geometry.bounds.ra.k );
+                    var northEastGoogle = data.results[i].geometry.bounds.getNorthEast(),
+                        southWestGoogle = data.results[i].geometry.bounds.getSouthWest();
+
+                    northEastLatLng = new L.LatLng( northEastGoogle.lat(), northEastGoogle.lng() );
+                    southWestLatLng = new L.LatLng( southWestGoogle.lat(), southWestGoogle.lng() );
                     bounds = new L.LatLngBounds([ northEastLatLng, southWestLatLng ]);
                 }
                 else {
