@@ -199,14 +199,13 @@ L.Control.GeoSearch = L.Control.extend({
 
     _onKeyUp: function (e) {
         var esc = 27,
-            enter = 13,
-            queryBox = document.getElementById('leaflet-control-geosearch-qry');
+            enter = 13;
 
         if (e.keyCode === esc) { // escape key detection is unreliable
-            queryBox.value = '';
+            this._searchbox.value = '';
             this._map._container.focus();
         } else if (e.keyCode === enter) {
-            this.geosearch(queryBox.value);
+            this.geosearch(this._searchbox.value);
         }
     }
 });
