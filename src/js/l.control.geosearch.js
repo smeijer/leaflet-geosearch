@@ -117,7 +117,7 @@ L.Control.GeoSearch = L.Control.extend({
         };
 
         function getJsonP (url) {
-            url = url + '&callback=parseLocation'
+            url = url + '&callback=parseLocation';
             var script = document.createElement('script');
             script.id = 'getJsonP';
             script.src = url;
