@@ -16,7 +16,8 @@ L.GeoSearch.Provider.Google = L.Class.extend({
 
     initialize: function(options) {
         options = L.Util.setOptions(this, options);
-        if( ! window.google || ! window.google.maps) this.loadMapsApi();
+        if (!window.google || !window.google.maps)
+          this.loadMapsApi();
     },
 
     loadMapsApi: function () {
@@ -38,13 +39,30 @@ L.GeoSearch.Provider.Google = L.Class.extend({
         var results = geocoder.geocode(parameters, function(data){
             data = {results: data};
 
-            var results = [];
-            for (var i = 0; i < data.results.length; i++)
+            var results = [],
+                northEastLatLng,
+                southWestLatLng,
+                bounds;
+            for (var i = 0; i < data.results.length; i++) {
+
+                if( data.results[i].geometry.bounds ) {
+                    var northEastGoogle = data.results[i].geometry.bounds.getNorthEast(),
+                        southWestGoogle = data.results[i].geometry.bounds.getSouthWest();
+
+                    northEastLatLng = new L.LatLng( northEastGoogle.lat(), northEastGoogle.lng() );
+                    southWestLatLng = new L.LatLng( southWestGoogle.lat(), southWestGoogle.lng() );
+                    bounds = new L.LatLngBounds([ northEastLatLng, southWestLatLng ]);
+                }
+                else {
+                    bounds = undefined;
+                }
                 results.push(new L.GeoSearch.Result(
                     data.results[i].geometry.location.lng(),
                     data.results[i].geometry.location.lat(),
-                    data.results[i].formatted_address
+                    data.results[i].formatted_address,
+                    bounds
                 ));
+            }
 
             if(typeof callback == 'function')
                 callback(results);

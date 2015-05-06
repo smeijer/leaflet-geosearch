@@ -50,4 +50,17 @@ new L.Control.GeoSearch({
 }).addTo(map);
 ````
 
+If you want to have your custom GeoSearch control you can directly use one of the providers. 
+
+````
+var googleGeocodeProvider = new L.GeoSearch.Provider.Google(),
+  addressText = 'Amsterdam';
+
+googleGeocodeProvider.GetLocations( addressText, function ( data ) {
+  // in data are your results with x, y, label and bounds (currently availabel for google maps provider only)
+});
+
+````
+
+
 I really can't make it any harder. Checkout the providers to see how easy it is to write your own.
