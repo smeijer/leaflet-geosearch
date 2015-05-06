@@ -194,9 +194,9 @@ L.Control.GeoSearch = L.Control.extend({
         }
 
         this._map.fireEvent('geosearch_showlocation', {
-          Location: location, 
+          Location: location,
           Marker : this._positionMarker
-        ));
+        });
     },
 
     _printError: function(message) {
