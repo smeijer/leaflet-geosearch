@@ -16,7 +16,7 @@ L.GeoSearch.Provider.Bing = L.Class.extend({
     GetServiceUrl: function (qry) {
         var parameters = L.Util.extend({
             query: qry,
-            jsonp: '?'
+            jsonp: 'parseLocation'
         }, this.options);
 
         return 'http://dev.virtualearth.net/REST/v1/Locations'
@@ -30,8 +30,8 @@ L.GeoSearch.Provider.Bing = L.Class.extend({
         var results = [];
         for (var i = 0; i < data.resourceSets[0].resources.length; i++)
             results.push(new L.GeoSearch.Result(
-                data.resourceSets[0].resources[i].point.coordinates[1], 
-                data.resourceSets[0].resources[i].point.coordinates[0], 
+                data.resourceSets[0].resources[i].point.coordinates[1],
+                data.resourceSets[0].resources[i].point.coordinates[0],
                 data.resourceSets[0].resources[i].address.formattedAddress
             ));
 
