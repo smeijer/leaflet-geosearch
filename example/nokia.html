@@ -17,8 +17,8 @@
 
 	<script type="text/javascript">
 
-		var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
-		var basemap = new L.TileLayer(cloudmadeUrl, {maxZoom: 18});
+		var osmTileUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+		var basemap = new L.TileLayer(osmTileUrl, {maxZoom: 18});
 
 		var map = new L.Map('map', {
 			layers: [basemap],

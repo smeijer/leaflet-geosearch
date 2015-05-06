@@ -6,10 +6,11 @@
 L.GeoSearch = {};
 L.GeoSearch.Provider = {};
 
-L.GeoSearch.Result = function (x, y, label) {
+L.GeoSearch.Result = function (x, y, label, bounds) {
     this.X = x;
     this.Y = y;
     this.Label = label;
+    this.bounds = bounds;
 };
 
 L.Control.GeoSearch = L.Control.extend({
@@ -183,7 +184,12 @@ L.Control.GeoSearch = L.Control.extend({
                 this._positionMarker.setLatLng([location.Y, location.X]);
         }
 
-        this._map.setView([location.Y, location.X], this._config.zoomLevel, false);
+        if (location.bounds && location.bounds.isValid()) {
+            this._map.fitBounds(location.bounds);
+        }
+        else {
+            this._map.setView([location.Y, location.X], this._config.zoomLevel, false);
+        }
         this._map.fireEvent('geosearch_showlocation', {Location: location});
     },
 
