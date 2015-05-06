@@ -1,18 +1,20 @@
 #Leaflet.GeoSearch
-Adds support for address lookup (a.k.a. geocoding / geoseaching) to Leaflet.
+Adds support for geocoding (address lookup, a.k.a. geoseaching) to [Leaflet](leafletjs.com).
 
 Check out the [demo](http://smeijer.github.com/GeoSearch/)
 
 #About the control
-The control uses so called providers to take care of building the correct service url and parsing the retrieved data into an uniformal format. Thanks to this split-up, it is pretty easy to write your own providers, so you can use your own geocoding service(s).
+The control uses so-called "providers" to take care of building the correct service URL and parsing
+the retrieved data into a uniform format. Thanks to this architecture, it is pretty easy to write
+your own providers, so you can use your own geocoding service(s).
 
-The control comes with an default set of three providers:
+The control comes with a default set of three providers:
 
   - L.GeoSearch.Provider.Esri
   - L.GeoSearch.Provider.Google
   - L.GeoSearch.Provider.OpenStreetMap
 
-Using these are pretty simple.
+Using these is pretty simple.
 
 #Using the control
 
@@ -32,7 +34,7 @@ new L.Control.GeoSearch({
 }).addTo(map);
 ````
 
-Some people are really loving open source and by that openstreetmap
+Or, for open-source lovers who like OpenStreetMap:
 
 ````
 new L.Control.GeoSearch({
@@ -40,6 +42,7 @@ new L.Control.GeoSearch({
 }).addTo(map);
 ````
 
+I really can't make it any harder. Checkout the providers to see how easy it is to write your own.
 There are other configurable options like setting the position of the search input and whether or not a marker should be displayed at the position of the search result.
 
 ````
@@ -63,5 +66,4 @@ googleGeocodeProvider.GetLocations( addressText, function ( data ) {
 
 ````
 
-
-I really can't make it any harder. Checkout the providers to see how easy it is to write your own.
+I really can't make it any easier. Check out the providers to see how easy it is to write your own.
