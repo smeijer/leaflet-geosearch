@@ -16,7 +16,8 @@ L.GeoSearch.Result = function (x, y, label, bounds) {
 L.Control.GeoSearch = L.Control.extend({
     options: {
         position: 'topcenter',
-        showMarker: true
+        showMarker: true,
+        retainZoomLevel: false
     },
 
     _config: {
@@ -185,12 +186,13 @@ L.Control.GeoSearch = L.Control.extend({
                 this._positionMarker.setLatLng([location.Y, location.X]);
         }
 
-        if (location.bounds && location.bounds.isValid()) {
+        if (!this.options.retainZoomLevel && location.bounds && location.bounds.isValid()) {
             this._map.fitBounds(location.bounds);
         }
         else {
-            this._map.setView([location.Y, location.X], this._config.zoomLevel, false);
+            this._map.setView([location.Y, location.X], this._getZoomLevel(), false);
         }
+
         this._map.fireEvent('geosearch_showlocation', {Location: location});
     },
 
@@ -219,5 +221,13 @@ L.Control.GeoSearch = L.Control.extend({
 
             this.geosearch(this._searchbox.value);
         }
+    },
+
+    _getZoomLevel: function() {
+        if (! this.options.retainZoomLevel) {
+            return this._config.zoomLevel;
+        }
+        return this._map.zoom;
     }
+
 });
