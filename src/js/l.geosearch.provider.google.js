@@ -38,9 +38,6 @@ L.GeoSearch.Provider.Google = L.Class.extend({
         var results = geocoder.geocode(parameters, function(data){
             data = {results: data};
 
-            if (data.results.length == 0)
-                return [];
-
             var results = [];
             for (var i = 0; i < data.results.length; i++)
                 results.push(new L.GeoSearch.Result(
