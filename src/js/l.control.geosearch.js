@@ -83,13 +83,14 @@ L.Control.GeoSearch = L.Control.extend({
     },
 
     geosearch: function (qry) {
+        var that = this;
         try {
             var provider = this._config.provider;
 
             if(typeof provider.GetLocations == 'function') {
                 var results = provider.GetLocations(qry, function(results) {
-                    this._processResults(results);
-                }.bind(this));
+                    that._processResults(results);
+                });
             }
             else {
                 var url = provider.GetServiceUrl(qry);
