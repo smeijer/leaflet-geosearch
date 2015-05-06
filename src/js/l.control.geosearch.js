@@ -17,7 +17,8 @@ L.Control.GeoSearch = L.Control.extend({
     options: {
         position: 'topcenter',
         showMarker: true,
-        retainZoomLevel: false
+        retainZoomLevel: false,
+        draggable: false
     },
 
     _config: {
@@ -180,12 +181,16 @@ L.Control.GeoSearch = L.Control.extend({
 
     _showLocation: function (location) {
         if (this.options.showMarker == true) {
-            if (typeof this._positionMarker === 'undefined')
-                this._positionMarker = L.marker([location.Y, location.X]).addTo(this._map);
-            else
+            if (typeof this._positionMarker === 'undefined') {
+                this._positionMarker = L.marker(
+                    [location.Y, location.X],
+                    {draggable: this.options.draggable}
+                ).addTo(this._map);
+            }
+            else {
                 this._positionMarker.setLatLng([location.Y, location.X]);
+            }
         }
-
         if (!this.options.retainZoomLevel && location.bounds && location.bounds.isValid()) {
             this._map.fitBounds(location.bounds);
         }
