@@ -6,11 +6,14 @@
 L.GeoSearch = {};
 L.GeoSearch.Provider = {};
 
-L.GeoSearch.Result = function (x, y, label, bounds) {
+L.GeoSearch.Result = function (x, y, label, bounds, details) {
     this.X = x;
     this.Y = y;
     this.Label = label;
     this.bounds = bounds;
+
+    if (details)
+        this.details = details;
 };
 
 L.Control.GeoSearch = L.Control.extend({

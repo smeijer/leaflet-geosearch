@@ -33,7 +33,9 @@ L.GeoSearch.Provider.OpenStreetMap = L.Class.extend({
             results.push(new L.GeoSearch.Result(
                 data[i].lon, 
                 data[i].lat, 
-                data[i].display_name
+                data[i].display_name,
+                null,
+                data[i].address
             ));
         
         return results;
