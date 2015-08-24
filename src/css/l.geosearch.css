@@ -44,6 +44,11 @@
 	padding: 0 6px 0 6px;
 }
 
+.leaflet-touch .leaflet-control-geosearch form {
+	padding: 2px 6px 2px 8px;
+	line-height: 28px;
+}
+
 .leaflet-control-geosearch form input {
 	width: 200px;
 	border: none;
@@ -62,4 +67,9 @@
 	color: #FFF;
 	background: rgb(40, 40, 40);
 	padding: 4px 0 4px 8px;
+}
+
+.leaflet-touch .leaflet-control-geosearch .message {
+	top: 30px;
+	left: -2px;
 }
