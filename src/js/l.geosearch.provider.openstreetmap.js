@@ -30,6 +30,9 @@ L.GeoSearch.Provider.OpenStreetMap = L.Class.extend({
                 northEastLatLng = new L.LatLng( boundingBox[1], boundingBox[3] ),
                 southWestLatLng = new L.LatLng( boundingBox[0], boundingBox[2] );
 
+            if (data[i].address)
+                data[i].address.type = data[i].type;
+
             results.push(new L.GeoSearch.Result(
                 data[i].lon,
                 data[i].lat,
