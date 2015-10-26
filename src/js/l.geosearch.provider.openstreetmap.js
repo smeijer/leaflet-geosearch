@@ -5,9 +5,7 @@
  */
 
 L.GeoSearch.Provider.OpenStreetMap = L.Class.extend({
-    options: {
-
-    },
+    options: {},
 
     initialize: function(options) {
         options = L.Util.setOptions(this, options);
@@ -25,17 +23,28 @@ L.GeoSearch.Provider.OpenStreetMap = L.Class.extend({
     },
 
     ParseJSON: function (data) {
-        if (data.length == 0)
-            return [];
-
         var results = [];
-        for (var i = 0; i < data.length; i++) 
+
+        for (var i = 0; i < data.length; i++) {
+            var boundingBox = data[i].boundingbox,
+                northEastLatLng = new L.LatLng( boundingBox[1], boundingBox[3] ),
+                southWestLatLng = new L.LatLng( boundingBox[0], boundingBox[2] );
+
+            if (data[i].address)
+                data[i].address.type = data[i].type;
+
             results.push(new L.GeoSearch.Result(
-                data[i].lon, 
-                data[i].lat, 
-                data[i].display_name
+                data[i].lon,
+                data[i].lat,
+                data[i].display_name,
+                new L.LatLngBounds([
+                    northEastLatLng,
+                    southWestLatLng
+                ]),
+                data[i].address
             ));
-        
+        }
+
         return results;
     }
 });
