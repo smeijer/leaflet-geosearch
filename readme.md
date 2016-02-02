@@ -20,7 +20,7 @@ Using these is pretty simple.
 
 For example, to use the Esri provider:
 
-````
+````javascript
 new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.Esri()
 }).addTo(map);
@@ -28,7 +28,7 @@ new L.Control.GeoSearch({
 
 Or if you prefer using Google
 
-````
+````javascript
 new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.Google()
 }).addTo(map);
@@ -36,7 +36,7 @@ new L.Control.GeoSearch({
 
 Or, for open-source lovers who like OpenStreetMap:
 
-````
+````javascript
 new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.OpenStreetMap()
 }).addTo(map);
@@ -45,7 +45,7 @@ new L.Control.GeoSearch({
 I really can't make it any harder. Checkout the providers to see how easy it is to write your own.
 There are other configurable options like setting the position of the search input and whether or not a marker should be displayed at the position of the search result.
 
-````
+````javascript
 new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.OpenStreetMap(),
     position: 'topcenter',
@@ -56,7 +56,7 @@ new L.Control.GeoSearch({
 
 If you want to have your custom GeoSearch control you can directly use one of the providers. 
 
-````
+````javascript
 var googleGeocodeProvider = new L.GeoSearch.Provider.Google(),
   addressText = 'Amsterdam';
 
