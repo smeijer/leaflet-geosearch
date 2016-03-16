@@ -6,7 +6,10 @@
 
 onLoadGoogleApiCallback = function() {
     L.GeoSearch.Provider.Google.Geocoder = new google.maps.Geocoder();
-    document.body.removeChild(document.getElementById('load_google_api'));
+    var scriptNode = document.getElementById('load_google_api');
+    if (!!scriptNode) {
+        document.body.removeChild(scriptNode);    
+    }
 };
 
 L.GeoSearch.Provider.Google = L.Class.extend({
@@ -16,8 +19,13 @@ L.GeoSearch.Provider.Google = L.Class.extend({
 
     initialize: function(options) {
         options = L.Util.setOptions(this, options);
-        if (!window.google || !window.google.maps)
-          this.loadMapsApi();
+        if (!window.google || !window.google.maps) {
+            this.loadMapsApi();  
+        } else {
+            // if google is already loaded, make sure we initialize the Geocoder
+            onLoadGoogleApiCallback();
+        }
+          
     },
 
     loadMapsApi: function () {
