@@ -257,7 +257,7 @@ L.Control.GeoSearch = L.Control.extend({
         if (! this.options.retainZoomLevel) {
             return this._config.zoomLevel;
         }
-        return this._map.zoom;
+        return this._map._zoom;
     },
 
     _onInput: function() {
