@@ -12,14 +12,14 @@ L.GeoSearch.Provider.Esri = L.Class.extend({
     initialize: function(options) {
         options = L.Util.setOptions(this, options);
     },
-    
+
     GetServiceUrl: function (qry) {
         var parameters = L.Util.extend({
             text: qry,
             f: 'pjson'
         }, this.options);
 
-        return location.protocol 
+        return (location.protocol === 'https:' ? 'https:' : 'http:')
             + '//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find'
             + L.Util.getParamString(parameters);
     },
@@ -27,15 +27,15 @@ L.GeoSearch.Provider.Esri = L.Class.extend({
     ParseJSON: function (data) {
         if (data.locations.length == 0)
             return [];
-        
+
         var results = [];
         for (var i = 0; i < data.locations.length; i++)
             results.push(new L.GeoSearch.Result(
-                data.locations[i].feature.geometry.x, 
-                data.locations[i].feature.geometry.y, 
+                data.locations[i].feature.geometry.x,
+                data.locations[i].feature.geometry.y,
                 data.locations[i].name
             ));
-        
+
         return results;
     }
 });
