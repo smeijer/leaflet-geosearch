@@ -20,6 +20,7 @@ L.Control.GeoSearch = L.Control.extend({
     options: {
         position: 'topleft',
         showMarker: true,
+        showPopup: false,
         customIcon: false,
         retainZoomLevel: false,
         draggable: false
@@ -97,13 +98,13 @@ L.Control.GeoSearch = L.Control.extend({
             var provider = this._config.provider;
 
             if(typeof provider.GetLocations == 'function') {
-                var results = provider.GetLocations(qry, function(results) {
-                    that._processResults(results);
+                provider.GetLocations(qry, function(results) {
+                    that._processResults(results, qry);
                 });
             }
             else {
                 var url = provider.GetServiceUrl(qry);
-                this.sendRequest(provider, url);
+                this.sendRequest(provider, url, qry);
             }
         }
         catch (error) {
@@ -129,12 +130,12 @@ L.Control.GeoSearch = L.Control.extend({
         this.geosearch(this._searchbox.value);
     },
 
-    sendRequest: function (provider, url) {
+    sendRequest: function (provider, url, qry) {
         var that = this;
 
         window.parseLocation = function (response) {
             var results = provider.ParseJSON(response);
-            that._processResults(results);
+            that._processResults(results, qry);
 
             document.body.removeChild(document.getElementById('getJsonP'));
             delete window.parseLocation;
@@ -161,7 +162,7 @@ L.Control.GeoSearch = L.Control.extend({
                             var response = JSON.parse(xhr.responseText),
                                 results = provider.ParseJSON(response);
 
-                            that._processResults(results);
+                            that._processResults(results, qry);
                         } else if (xhr.status == 0 || xhr.status == 400) {
                             getJsonP(url);
                         } else {
@@ -183,7 +184,7 @@ L.Control.GeoSearch = L.Control.extend({
                     var response = JSON.parse(xdr.responseText),
                         results = provider.ParseJSON(response);
 
-                    that._processResults(results);
+                    that._processResults(results, qry);
                 };
 
                 xdr.open('GET', url);
@@ -194,17 +195,17 @@ L.Control.GeoSearch = L.Control.extend({
         }
     },
 
-    _processResults: function(results) {
+    _processResults: function(results, qry) {
         if (results.length > 0) {
             this._map.fireEvent('geosearch_foundlocations', {Locations: results});
-            this._showLocation(results[0]);
+            this._showLocation(results[0], qry);
             this.cancelSearch();
         } else {
             this._printError(this._config.notFoundMessage);
         }
     },
 
-    _showLocation: function (location) {
+    _showLocation: function (location, qry) {
         if (this.options.showMarker == true) {
             if (typeof this._positionMarker === 'undefined') {
                 this._positionMarker = L.marker(
@@ -214,9 +215,15 @@ L.Control.GeoSearch = L.Control.extend({
                 if( this.options.customIcon ) {
                     this._positionMarker.setIcon(this.options.customIcon);
                 }
+                if( this.options.showPopup ) {
+                   this._positionMarker.bindPopup(qry).openPopup();
+                }
             }
             else {
                 this._positionMarker.setLatLng([location.Y, location.X]);
+                if( this.options.showPopup ) {
+                   this._positionMarker.bindPopup(qry).openPopup();
+                }
             }
         }
         if (!this.options.retainZoomLevel && location.bounds && location.bounds.isValid()) {
