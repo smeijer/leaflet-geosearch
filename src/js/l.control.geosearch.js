@@ -20,6 +20,7 @@ L.Control.GeoSearch = L.Control.extend({
     options: {
         position: 'topleft',
         showMarker: true,
+        customIcon: false,
         retainZoomLevel: false,
         draggable: false
     },
@@ -210,6 +211,9 @@ L.Control.GeoSearch = L.Control.extend({
                     [location.Y, location.X],
                     {draggable: this.options.draggable}
                 ).addTo(this._map);
+                if( this.options.customIcon ) {
+                    this._positionMarker.setIcon(this.options.customIcon);
+                }
             }
             else {
                 this._positionMarker.setLatLng([location.Y, location.X]);
