@@ -1,7 +1,7 @@
 #Leaflet.GeoSearch
 Adds support for geocoding (address lookup, a.k.a. geoseaching) to [Leaflet](leafletjs.com).
 
-Check out the [demo](http://smeijer.github.com/GeoSearch/)
+Check out the [demo](http://smeijer.github.io/L.GeoSearch)
 
 #About the control
 The control uses so-called "providers" to take care of building the correct service URL and parsing
