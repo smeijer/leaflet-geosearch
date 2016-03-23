@@ -18,7 +18,7 @@ L.GeoSearch.Result = function (x, y, label, bounds, details) {
 
 L.Control.GeoSearch = L.Control.extend({
     options: {
-        position: 'topcenter',
+        position: 'topleft',
         showMarker: true,
         retainZoomLevel: false,
         draggable: false
@@ -26,7 +26,7 @@ L.Control.GeoSearch = L.Control.extend({
 
     _config: {
         country: '',
-        searchLabel: 'search for address ...',
+        searchLabel: 'Enter address',
         notFoundMessage: 'Sorry, that address could not be found.',
         messageHideDelay: 3000,
         zoomLevel: 18
@@ -37,51 +37,53 @@ L.Control.GeoSearch = L.Control.extend({
         L.Util.extend(this._config, options);
     },
 
+    resetLink: function(extraClass) {
+        var link = this._container.querySelector('a');
+        link.className = 'leaflet-bar-part leaflet-bar-part-single' + ' ' + extraClass;
+    },
+
     onAdd: function (map) {
-        var $controlContainer = map._controlContainer,
-            nodes = $controlContainer.childNodes,
-            topCenter = false;
+        this._container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-geosearch');
 
-        for (var i = 0, len = nodes.length; i < len; i++) {
-            var klass = nodes[i].className;
-            if (/leaflet-top/.test(klass) && /leaflet-center/.test(klass)) {
-                topCenter = true;
-                break;
-            }
-        }
+        // create the link - this will contain one of the icons
+        var link = L.DomUtil.create('a', '', this._container);
+        link.href = '#';
+        link.title = this._config.searchLabel;
 
-        if (!topCenter) {
-            var tc = document.createElement('div');
-            tc.className += 'leaflet-top leaflet-center';
-            $controlContainer.appendChild(tc);
-            map._controlCorners.topcenter = tc;
-        }
+        // set the link's icon to magnifying glass
+        this.resetLink('glass');
 
-        this._map = map;
-        this._container = L.DomUtil.create('div', 'leaflet-control-geosearch');
+        // create the form that will contain the input
+        var form = L.DomUtil.create('form', 'displayNone', this._container);
 
-        var searchbox = document.createElement('input');
-        searchbox.id = 'leaflet-control-geosearch-qry';
+        // create the input, and set its placeholder text
+        var searchbox = L.DomUtil.create('input', null, form);
         searchbox.type = 'text';
         searchbox.placeholder = this._config.searchLabel;
         this._searchbox = searchbox;
 
-        var msgbox = document.createElement('div');
-        msgbox.id = 'leaflet-control-geosearch-msg';
-        msgbox.className = 'leaflet-control-geosearch-msg';
+        var msgbox = L.DomUtil.create('div', 'leaflet-bar message displayNone', this._container);
         this._msgbox = msgbox;
 
-        var resultslist = document.createElement('ul');
-        resultslist.id = 'leaflet-control-geosearch-results';
-        this._resultslist = resultslist;
+        L.DomEvent
+            .on(link, 'click', L.DomEvent.stopPropagation)
+            .on(link, 'click', L.DomEvent.preventDefault)
+            .on(link, 'click', function() {
 
-        this._msgbox.appendChild(this._resultslist);
-        this._container.appendChild(this._searchbox);
-        this._container.appendChild(this._msgbox);
+                if (L.DomUtil.hasClass(form, 'displayNone')) {
+                    L.DomUtil.removeClass(form, 'displayNone'); // unhide form
+                    searchbox.focus();
+                } else {
+                    L.DomUtil.addClass(form, 'displayNone'); // hide form
+                }
+
+            })
+            .on(link, 'dblclick', L.DomEvent.stopPropagation);
 
         L.DomEvent
-          .addListener(this._container, 'click', L.DomEvent.stop)
-          .addListener(this._searchbox, 'keypress', this._onKeyUp, this);
+            .addListener(this._searchbox, 'keypress', this._onKeyPress, this)
+            .addListener(this._searchbox, 'keyup', this._onKeyUp, this)
+            .addListener(this._searchbox, 'input', this._onInput, this);
 
         L.DomEvent.disableClickPropagation(this._container);
 
@@ -106,6 +108,24 @@ L.Control.GeoSearch = L.Control.extend({
         catch (error) {
             this._printError(error);
         }
+    },
+
+    cancelSearch: function() {
+        var form = this._container.querySelector('form');
+        L.DomUtil.addClass(form, 'displayNone');
+
+        this._searchbox.value = '';
+        this.resetLink('glass');
+
+        L.DomUtil.addClass(this._msgbox, 'displayNone');
+
+        this._map._container.focus();
+    },
+
+    startSearch: function() {
+        // show spinner icon
+        this.resetLink('spinner');
+        this.geosearch(this._searchbox.value);
     },
 
     sendRequest: function (provider, url) {
@@ -177,6 +197,7 @@ L.Control.GeoSearch = L.Control.extend({
         if (results.length > 0) {
             this._map.fireEvent('geosearch_foundlocations', {Locations: results});
             this._showLocation(results[0]);
+            this.cancelSearch();
         } else {
             this._printError(this._config.notFoundMessage);
         }
@@ -207,30 +228,24 @@ L.Control.GeoSearch = L.Control.extend({
         });
     },
 
+    _isShowingError: false,
+
     _printError: function(message) {
-        var elem = this._resultslist;
-        elem.innerHTML = '<li>' + message + '</li>';
-        elem.style.display = 'block';
+        this._msgbox.innerHTML = message;
+        L.DomUtil.removeClass(this._msgbox, 'displayNone');
 
         this._map.fireEvent('geosearch_error', {message: message});
 
-        setTimeout(function () {
-            elem.style.display = 'none';
-        }, 3000);
+        // show alert icon
+        this.resetLink('alert');
+        this._isShowingError = true;
     },
 
     _onKeyUp: function (e) {
-        var esc = 27,
-            enter = 13;
+        var esc = 27;
 
         if (e.keyCode === esc) { // escape key detection is unreliable
-            this._searchbox.value = '';
-            this._map._container.focus();
-        } else if (e.keyCode === enter) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            this.geosearch(this._searchbox.value);
+            this.cancelSearch();
         }
     },
 
@@ -239,6 +254,25 @@ L.Control.GeoSearch = L.Control.extend({
             return this._config.zoomLevel;
         }
         return this._map.zoom;
-    }
+    },
 
+    _onInput: function() {
+        if (this._isShowingError) {
+            this.resetLink('glass');
+            L.DomUtil.addClass(this._msgbox, 'displayNone');
+
+            this._isShowingError = false;
+        }
+    },
+
+    _onKeyPress: function (e) {
+        var enterKey = 13;
+
+        if (e.keyCode === enterKey) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            this.startSearch();
+        }
+    }
 });
