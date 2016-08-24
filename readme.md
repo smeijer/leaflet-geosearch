@@ -48,7 +48,7 @@ There are other configurable options like setting the position of the search inp
 ````javascript
 new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.OpenStreetMap(),
-    position: 'topcenter',
+    position: 'topleft',
     showMarker: true,
     retainZoomLevel: false,
 }).addTo(map);
