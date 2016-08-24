@@ -23,7 +23,8 @@ L.Control.GeoSearch = L.Control.extend({
         showPopup: false,
         customIcon: false,
         retainZoomLevel: false,
-        draggable: false
+        draggable: false,
+        keepMarkers: false
     },
 
     _config: {
@@ -37,6 +38,7 @@ L.Control.GeoSearch = L.Control.extend({
     initialize: function (options) {
         L.Util.extend(this.options, options);
         L.Util.extend(this._config, options);
+        this.markersList = [];
     },
 
     resetLink: function(extraClass) {
@@ -207,35 +209,33 @@ L.Control.GeoSearch = L.Control.extend({
 
     _showLocation: function (location, qry) {
         if (this.options.showMarker == true) {
-            if (typeof this._positionMarker === 'undefined') {
-                this._positionMarker = L.marker(
-                    [location.Y, location.X],
-                    {draggable: this.options.draggable}
-                ).addTo(this._map);
-                if( this.options.customIcon ) {
-                    this._positionMarker.setIcon(this.options.customIcon);
-                }
-                if( this.options.showPopup ) {
-                   this._positionMarker.bindPopup(qry).openPopup();
-                }
-            }
-            else {
-                this._positionMarker.setLatLng([location.Y, location.X]);
-                if( this.options.showPopup ) {
-                   this._positionMarker.bindPopup(qry).openPopup();
-                }
-            }
+          var marker = L.marker([location.Y, location.X], {
+            draggable: this.options.draggable
+          }).addTo(this._map);
+
+          if( this.options.customIcon ) {
+              marker.setIcon(this.options.customIcon);
+          }
+          if( this.options.showPopup ) {
+             marker.bindPopup(qry).openPopup();
+          }
+
+          if (!this.options.keepMarkers) {
+            this.markersList = [];
+          }
+          this.markersList.push(marker);
         }
+
         if (!this.options.retainZoomLevel && location.bounds && location.bounds.isValid()) {
             this._map.fitBounds(location.bounds);
-        }
-        else {
+        } else {
             this._map.setView([location.Y, location.X], this._getZoomLevel(), false);
         }
 
+        var lastMarker = this.markersList.length - 1;
         this._map.fireEvent('geosearch_showlocation', {
           Location: location,
-          Marker : this._positionMarker
+          Marker : this.markersList[lastMarker]
         });
     },
 
