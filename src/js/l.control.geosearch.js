@@ -246,6 +246,7 @@ L.Control.GeoSearch = L.Control.extend({
 				closeLink.innerHTML = this._config.hideMarkerText;
 				L.DomEvent.on(closeLink, 'click', function() {
 					this._map.removeLayer(this._positionMarker);
+					this._positionMarker = undefined;
 				}.bind(this));
                 this._positionMarker.bindPopup(popup).openPopup();
             }
