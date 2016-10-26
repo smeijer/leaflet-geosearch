@@ -215,15 +215,20 @@ L.Control.GeoSearch = L.Control.extend({
                 if( this.options.customIcon ) {
                     this._positionMarker.setIcon(this.options.customIcon);
                 }
-                if( this.options.showPopup ) {
-                   this._positionMarker.bindPopup(qry).openPopup();
-                }
             }
             else {
                 this._positionMarker.setLatLng([location.Y, location.X]);
-                if( this.options.showPopup ) {
-                   this._positionMarker.bindPopup(qry).openPopup();
-                }
+            }
+            if (this.options.showPopup) {
+				var display = "<b>Searched for:</b><br />";
+				display += qry;
+				display += "<br />";
+				if (location.Label != null) {
+					display += "<b>Found:</b><br />";
+					//try to format an address as a multi-line string so it doesn't take up the entire width of the screen
+					display += location.Label.replace(/, /g, ', <br />');
+				}
+                this._positionMarker.bindPopup(display).openPopup();
             }
         }
         if (!this.options.retainZoomLevel && location.bounds && location.bounds.isValid()) {
