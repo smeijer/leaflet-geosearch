@@ -30,6 +30,9 @@ L.Control.GeoSearch = L.Control.extend({
         country: '',
         searchLabel: 'Enter address',
         notFoundMessage: 'Sorry, that address could not be found.',
+		queryStringHeader: 'Searched for:',
+		resultHeader: 'Found:',
+		hideMarkerText: 'Hide marker',
         messageHideDelay: 3000,
         zoomLevel: 18
     },
@@ -220,15 +223,31 @@ L.Control.GeoSearch = L.Control.extend({
                 this._positionMarker.setLatLng([location.Y, location.X]);
             }
             if (this.options.showPopup) {
-				var display = "<b>Searched for:</b><br />";
-				display += qry;
-				display += "<br />";
+				var popup = L.DomUtil.create('div');
+				var searchedForTitle = L.DomUtil.create('b', '', popup);
+				searchedForTitle.innerHTML = this._config.queryStringHeader;
+				L.DomUtil.create('br', '', popup);
+				var searchedFor = L.DomUtil.create('span', '', popup);
+				searchedFor.innerHTML = qry;
+				L.DomUtil.create('br', '', popup);
 				if (location.Label != null) {
-					display += "<b>Found:</b><br />";
+					L.DomUtil.create('br', '', popup);
+					var foundTitle = L.DomUtil.create('b', '', popup);
+					foundTitle.innerHTML = this._config.resultHeader;
+					L.DomUtil.create('br', '', popup);
+					var foundContent = L.DomUtil.create('span', '', popup);
 					//try to format an address as a multi-line string so it doesn't take up the entire width of the screen
-					display += location.Label.replace(/, /g, ', <br />');
+					foundContent.innerHTML = location.Label.replace(/, /g, ', <br />');
+					L.DomUtil.create('br', '', popup);
 				}
-                this._positionMarker.bindPopup(display).openPopup();
+				L.DomUtil.create('br', '', popup);
+				var closeLink = L.DomUtil.create('a', '', popup);
+				closeLink.href = '#';
+				closeLink.innerHTML = this._config.hideMarkerText;
+				L.DomEvent.on(closeLink, 'click', function() {
+					this._map.removeLayer(this._positionMarker);
+				}.bind(this));
+                this._positionMarker.bindPopup(popup).openPopup();
             }
         }
         if (!this.options.retainZoomLevel && location.bounds && location.bounds.isValid()) {
