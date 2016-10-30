@@ -341,9 +341,9 @@ L.Control.GeoSearch = L.Control.extend({
         return false;
     },
 
-    _setCancelButtonVisible(isVis) {
+    _setCancelButtonVisible(isVisible) {
         var el = document.getElementsByClassName('leaflet-geosearch-cancel-button');
-        var val = isVis ? 'block' : 'none';
+        var val = isVisible ? 'block' : 'none';
         var ii;
         for (ii = 0; ii < el.length; ++ii) {
             el[ii].style.display = val;

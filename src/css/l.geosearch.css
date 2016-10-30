@@ -146,6 +146,7 @@
     margin-top: 5px;
     filter: alpha(opacity=80);
     opacity: 0.8;
+    top: 0;
     right: 42px;
     display: none; /*initially hidden*/
     position: absolute;
