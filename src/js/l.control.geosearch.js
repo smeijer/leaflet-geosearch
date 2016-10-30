@@ -97,7 +97,7 @@ L.Control.GeoSearch = L.Control.extend({
             })
             .on(link, 'dblclick', L.DomEvent.stopPropagation);
 
-        if (this._config.enableAutocomplete) {
+        if (this._config.enableAutoComplete) {
             this._autocomplete = new L.AutoComplete({}).addTo(this._container, function (suggestionText, isActivated) {
                 this._searchbox.value = suggestionText;
                 if (isActivated) {
@@ -145,7 +145,7 @@ L.Control.GeoSearch = L.Control.extend({
 
     // qry may be a String or a function
     geosearch_autocomplete: function (qry, requestDelay_ms) {
-        if (!this._config.enableAutocomplete) {
+        if (!this._config.enableAutoComplete) {
             return;
         }
 
@@ -335,7 +335,7 @@ L.Control.GeoSearch = L.Control.extend({
 
     _hideAutocomplete: function () {
         clearTimeout(this._autocompleteRequestTimer);
-        if (this._config.enableAutocomplete && this._autocomplete.isVisible()) {
+        if (this._config.enableAutoComplete && this._autocomplete.isVisible()) {
             this._autocomplete.hide();
             return true;
         }
@@ -361,7 +361,7 @@ L.Control.GeoSearch = L.Control.extend({
         }
         var qry = getQuery();
 
-        if (this._config.enableAutocomplete) {
+        if (this._config.enableAutoComplete) {
             this._autocomplete.recordLastUserInput(qry);
             if (qry.length >= this._config.autocompleteMinQueryLen) {
                 this.geosearch_autocomplete(getQuery, this._config.autocompleteQueryDelay_ms);
@@ -395,12 +395,12 @@ L.Control.GeoSearch = L.Control.extend({
                 }
                 break;
             case upArrow:
-                if (this._config.enableAutocomplete && this._autocomplete.isVisible()) {
+                if (this._config.enableAutoComplete && this._autocomplete.isVisible()) {
                     this._autocomplete.moveUp();
                 }
                 break;
             case downArrow:
-                if (this._config.enableAutocomplete && this._autocomplete.isVisible()) {
+                if (this._config.enableAutoComplete && this._autocomplete.isVisible()) {
                     this._autocomplete.moveDown();
                 }
                 break;
