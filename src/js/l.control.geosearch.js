@@ -104,7 +104,6 @@ L.Control.GeoSearch = L.Control.extend({
                     this.startSearch();
                 }
             }.bind(this));
-            $(this._container).append(this._autocomplete);
         }
 
         // TODO This will result in duplicate processing of events. Options?
@@ -342,10 +341,19 @@ L.Control.GeoSearch = L.Control.extend({
         return false;
     },
 
+    _setCancelButtonVisible(isVis) {
+        var el = document.getElementsByClassName('leaflet-geosearch-cancel-button');
+        var val = isVis ? 'block' : 'none';
+        var ii;
+        for (ii = 0; ii < el.length; ++ii) {
+            el[ii].style.display = val;
+        }
+    },
+
     _clearUserSearchInput: function () {
         this._hideAutocomplete();
         this._searchbox.value = '';
-        $('.leaflet-geosearch-cancel-button').hide();
+        this._setCancelButtonVisible(false);
     },
 
     _onPasteToInput: function () {
@@ -370,11 +378,7 @@ L.Control.GeoSearch = L.Control.extend({
             }
         }
 
-        if (qry.length > 0) {
-            $('.leaflet-geosearch-cancel-button').show();
-        } else {
-            $('.leaflet-geosearch-cancel-button').hide();
-        }
+        this._setCancelButtonVisible(qry.length > 0);
     },
 
     _onKeyUp: function (e) {
@@ -419,9 +423,7 @@ L.Control.GeoSearch = L.Control.extend({
 L.AutoComplete = L.Class.extend({
     _config: {
         'maxResultCount': 10,
-        'onMakeSuggestionHTML': function (geosearchResult) {
-            return this._htmlEscape(geosearchResult.Label);
-        }.bind(this)
+        'onMakeSuggestionHTML': null
     },
 
     initialize: function (options) {
@@ -432,6 +434,14 @@ L.AutoComplete = L.Class.extend({
         this._container = container;
         this._onSelection = onSelectionCallback;
         return this._createUI(container, 'leaflet-geosearch-autocomplete');
+    },
+
+    onMakeSuggestionHTML: function (geosearchResult) {
+        if (this._config.onMakeSuggestionHTML) {
+            return this._config.onMakeSuggestionHTML(geosearchResult);
+        } else {
+            return this._htmlEscape(geosearchResult.Label);
+        }
     },
 
     recordLastUserInput: function (str) {
@@ -497,7 +507,7 @@ L.AutoComplete = L.Class.extend({
 
     _newSuggestion: function (result) {
         var tip = L.DomUtil.create('li', 'leaflet-geosearch-suggestion');
-        tip.innerHTML = this._config.onMakeSuggestionHTML(result);
+        tip.innerHTML = this.onMakeSuggestionHTML(result);
         tip._text = result.Label;
         L.DomEvent
             .disableClickPropagation(tip)
