@@ -17,7 +17,7 @@ L.GeoSearch.Provider.OpenStreetMap = L.Class.extend({
             format: 'json'
         }, this.options);
 
-        return (location.protocol === 'https:' ? 'https:' : 'http:')
+        return (~location.protocol.indexOf('http') ? location.protocol : 'https:')
             + '//nominatim.openstreetmap.org/search'
             + L.Util.getParamString(parameters);
     },
