@@ -51,6 +51,7 @@ new L.Control.GeoSearch({
     position: 'topcenter',
     showMarker: true,
     retainZoomLevel: false,
+    maxMarkers: 3
 }).addTo(map);
 ````
 

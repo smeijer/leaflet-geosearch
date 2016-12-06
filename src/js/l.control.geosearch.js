@@ -31,7 +31,8 @@ L.Control.GeoSearch = L.Control.extend({
         searchLabel: 'Enter address',
         notFoundMessage: 'Sorry, that address could not be found.',
         messageHideDelay: 3000,
-        zoomLevel: 18
+        zoomLevel: 18,
+        maxMarkers: 1
     },
 
     initialize: function (options) {
@@ -198,58 +199,77 @@ L.Control.GeoSearch = L.Control.extend({
     _processResults: function(results, qry) {
         if (results.length > 0) {
             this._map.fireEvent('geosearch_foundlocations', {Locations: results});
-            this._showLocation(results[0], qry);
+            this._showLocations(results, qry);
             this.cancelSearch();
         } else {
             this._printError(this._config.notFoundMessage);
         }
     },
 
-    _showLocation: function (location, qry) {
+    _showLocations: function (results, qry) {
         if (this.options.showMarker == true) {
-            if (typeof this._positionMarker === 'undefined') {
-                this._positionMarker = L.marker(
+            if (typeof this._layer !== 'undefined') {
+                this._map.removeLayer(this._layer);
+                this._layer = undefined;
+            }
+
+            this._markerList = []
+            for (var ii=0; ii < results.length && ii < this._config.maxMarkers; ++ii) {
+                var location = results[ii];
+                var marker = L.marker(
                     [location.Y, location.X],
                     {draggable: this.options.draggable}
-                ).addTo(this._map);
-                if( this.options.customIcon ) {
-                    this._positionMarker.setIcon(this.options.customIcon);
+                );
+                if (this.options.customIcon) {
+                    marker.setIcon(this.options.customIcon);
                 }
-                if( this.options.showPopup ) {
-                   this._positionMarker.bindPopup(qry).openPopup();
+                if (this.options.showPopup) {
+                    // better to tag with location's Label instead of qry
+                    marker.bindPopup(location.Label);
                 }
+                this._markerList.push(marker);
             }
-            else {
-                this._positionMarker.setLatLng([location.Y, location.X]);
-                if( this.options.showPopup ) {
-                   this._positionMarker.bindPopup(qry).openPopup();
-                }
-            }
+            this._layer = L.layerGroup(this._markerList).addTo(this._map);
+            this._printInfo('Displaying ' + Math.min(this._config.maxMarkers, results.length) + ' of ' + results.length +' results.');
         }
-        if (!this.options.retainZoomLevel && location.bounds && location.bounds.isValid()) {
-            this._map.fitBounds(location.bounds);
+
+        var premierLocation = results[0];
+        var premierMarker = this._markerList[0];
+        if (!this.options.retainZoomLevel && premierLocation.bounds && premierLocation.bounds.isValid()) {
+            this._map.fitBounds(premierLocation.bounds);
+        } else {
+            this._map.setView([premierLocation.Y, premierLocation.X], this._getZoomLevel(), false);
         }
-        else {
-            this._map.setView([location.Y, location.X], this._getZoomLevel(), false);
+
+        if (this.options.showMarker == true && this.options.showPopup) {
+            premierMarker.openPopup();
         }
 
         this._map.fireEvent('geosearch_showlocation', {
-          Location: location,
-          Marker : this._positionMarker
+            Location: premierLocation,
+            Marker : premierMarker
         });
     },
 
-    _isShowingError: false,
+    _isShowingFlashMessage: false,
 
-    _printError: function(message) {
-        this._msgbox.innerHTML = message;
-        L.DomUtil.removeClass(this._msgbox, 'displayNone');
-
+    _printError: function (message) {
+        this._showFlashMessage(message);
         this._map.fireEvent('geosearch_error', {message: message});
 
         // show alert icon
         this.resetLink('alert');
-        this._isShowingError = true;
+    },
+
+    _printInfo: function (message) {
+        this._showFlashMessage(message);
+        this._map.fireEvent('geosearch_showinfo', {message: message});
+    },
+
+    _showFlashMessage: function (message) {
+        this._msgbox.innerHTML = message;
+        L.DomUtil.removeClass(this._msgbox, 'displayNone');
+        this._isShowingFlashMessage = true;
     },
 
     _onKeyUp: function (e) {
@@ -268,11 +288,11 @@ L.Control.GeoSearch = L.Control.extend({
     },
 
     _onInput: function() {
-        if (this._isShowingError) {
+        if (this._isShowingFlashMessage) {
             this.resetLink('glass');
             L.DomUtil.addClass(this._msgbox, 'displayNone');
 
-            this._isShowingError = false;
+            this._isShowingFlashMessage = false;
         }
     },
 
