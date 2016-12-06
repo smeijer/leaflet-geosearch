@@ -24,7 +24,8 @@
 		});
 
     new L.Control.GeoSearch({
-        provider: new L.GeoSearch.Provider.OpenStreetMap()
+        provider: new L.GeoSearch.Provider.OpenStreetMap(),
+        maxMarkers: 4
     }).addTo(map);
 
 	</script>
