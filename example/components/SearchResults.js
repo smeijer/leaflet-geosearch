@@ -1,4 +1,4 @@
-import preact, { Component } from 'preact';
+import preact from 'preact';
 
 const SearchResults = ({ results = [], selected }) => (
   <div className="results">

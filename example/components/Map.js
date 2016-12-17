@@ -1,6 +1,10 @@
 import preact, { Component } from 'preact';
 import merge from 'lodash.merge';
-import { GeoSearchControl, OpenStreetMapProvider, Provider as BaseProvider } from '../src';
+import {
+  GeoSearchControl,
+  OpenStreetMapProvider,
+  Provider as BaseProvider,
+} from '../../src';
 
 const L = window.L;
 

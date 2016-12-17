@@ -1,6 +1,6 @@
 import preact, { Component } from 'preact';
 import debounce from 'lodash.debounce';
-import * as providers from '../src/providers';
+import * as providers from '../../src/providers';
 import SearchResults from './SearchResults';
 
 const specialKeys = ['ArrowDown', 'ArrowUp', 'Escape'];

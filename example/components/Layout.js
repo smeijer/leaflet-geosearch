@@ -1,5 +1,4 @@
 import preact, { Component } from 'preact';
-import Search from './Search';
 
 class Layout extends Component {
   constructor(props) {
