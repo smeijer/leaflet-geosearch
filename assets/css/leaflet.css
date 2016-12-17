@@ -1,34 +1,32 @@
-.displayNone {
-	display: none;
+.geosearch.leaflet-bar form,
+.geosearch.leaflet-bar .message {
+  display: none;
 }
 
-.leaflet-control-geosearch {
-	position: relative;
+.geosearch.leaflet-bar.active form {
+  display: block;
 }
 
-.leaflet-control-geosearch a {
-	-webkit-border-radius: 4px;
-			border-radius: 4px;
+.geosearch a.leaflet-bar-part {
+	border-radius: 4px;
 	border-bottom: none;
-}
-
-.leaflet-control-geosearch a.glass {
 	background-image: url(../img/geosearch.png);
+  background-position: center center;
 	background-size: 100% 100%;
 }
 
-.leaflet-control-geosearch a.spinner {
+.geosearch.pending a.leaflet-bar-part {
 	background-image: url(../img/spinner.gif);
-	background-position: 50% 50%;
+  background-size: 12px 12px;
 }
 
-.leaflet-control-geosearch a.alert {
+.geosearch.error a.leaflet-bar-part {
 	background-image: url(../img/alert.png);
-	background-size: 64% 64%;
+	background-size: 18px 18px;
 }
 
-.leaflet-control-geosearch a:hover {
-	border-bottom: none;
+.leaflet-control-geosearch {
+  position: relative;
 }
 
 .leaflet-control-geosearch form {
@@ -36,17 +34,12 @@
 	top: 0;
 	left: 22px;
 	box-shadow: 0 1px 7px rgba(0, 0, 0, 0.65);
-	-webkit-border-radius: 4px;
-			border-radius: 0px 4px 4px 0px;
+	border-radius: 0 4px 4px 0;
 	z-index: -1;
 	background: #FFF;
-	height: 26px;
-	padding: 0 6px 0 6px;
-}
-
-.leaflet-touch .leaflet-control-geosearch form {
-	padding: 2px 6px 2px 8px;
-	line-height: 28px;
+	height: auto;
+	margin: 0;
+  padding: 0;
 }
 
 .leaflet-control-geosearch form input {
@@ -56,7 +49,9 @@
 	margin: 0;
 	padding: 0;
 	font-size: 12px;
-	margin-top: 5px;
+  height: 30px;
+  border-radius: 0 4px 4px 0;
+
 }
 
 .leaflet-control-geosearch .message {

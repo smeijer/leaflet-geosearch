@@ -165,3 +165,6 @@ pip-log.txt
 *.sublime-project
 *.sublime-workspace
 .idea
+dist/
+lib/
+node_modules/

@@ -1,24 +1,36 @@
 {
   "name": "leaflet-geosearch",
-  "version": "1.1.0",
+  "version": "2.0.0-rc.1",
+  "publishConfig": {
+    "tag": "next"
+  },
   "description": "Adds support for address lookup (a.k.a. geocoding / geoseaching) to Leaflet.",
-  "main": "src/js/l.control.geosearch.js",
+  "main": "lib/index.js",
+  "scripts": {
+    "build:commonjs": "babel src --out-dir lib --ignore *.spec.js",
+    "build:umd": "cross-env NODE_ENV=development webpack",
+    "build:umd:min": "cross-env NODE_ENV=production webpack",
+    "build:watch": "npm run build:umd -- --watch",
+    "build": "npm run clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min",
+    "clean": "rimraf lib",
+    "lint": "esw src webpack.config --color",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:watch": "npm run lint -- --watch",
+    "prepublish": "npm run lint && npm run test && npm run build",
+    "test": "ava",
+    "test:watch": "ava -w",
+    "test:cover": "nyc ava",
+    "test:report": "nyc report --reporter html",
+    "start": "webpack-dev-server"
+  },
+  "files": [
+    "lib",
+    "dist",
+    "assets"
+  ],
   "directories": {
     "example": "example"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/smeijer/L.GeoSearch.git"
-  },
-  "author": "Stephan Meijer",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/smeijer/L.GeoSearch/issues"
-  },
-  "homepage": "https://github.com/smeijer/L.GeoSearch#readme",
   "keywords": [
     "geolocation",
     "geocoding",
@@ -26,5 +38,58 @@
     "leaflet",
     "geo",
     "map"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smeijer/L.GeoSearch.git"
+  },
+  "author": "Stephan Meijer <stephan@meijer.ws>",
+  "bugs": {
+    "url": "https://github.com/smeijer/L.GeoSearch/issues"
+  },
+  "homepage": "https://github.com/smeijer/L.GeoSearch#readme",
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-transform-react-jsx": "^6.8.0",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-power-assert": "^1.0.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "browser-env": "^2.0.16",
+    "cross-env": "^3.1.3",
+    "dotenv": "^2.0.0",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.8.0",
+    "eslint-watch": "^2.1.14",
+    "leaflet": "^1.0.2",
+    "lodash.debounce": "^4.0.8",
+    "lodash.merge": "^4.6.0",
+    "node-fetch": "^1.6.3",
+    "power-assert": "^1.4.2",
+    "preact": "^7.1.0",
+    "raw-loader": "^0.5.1",
+    "rimraf": "^2.5.4",
+    "testdouble": "^1.10.0",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
+  },
+  "dependencies": {},
+  "ava": {
+    "files": [
+      "./src/**/__tests__/**.spec.js"
+    ],
+    "require": [
+      "dotenv/config",
+      "babel-core/register",
+      "./test/browserEnv"
+    ],
+    "babel": "inherit"
+  }
 }
