@@ -25,19 +25,33 @@ if (production) {
   );
 }
 
+const entryFiles = [
+  'babel-polyfill',
+  path.join(__dirname, 'src/index.js'),
+];
+
+if (!production) {
+  entryFiles.push(path.join(__dirname, 'example/main.js'));
+}
+
 export default {
-  entry: [
-    'babel-polyfill',
-    path.join(__dirname, 'src/index.js'),
-  ],
+  entry: entryFiles,
   output: {
     path: path.join(__dirname, 'dist'),
     filename: `bundle${production ? '.min' : ''}.js`,
     library: 'GeoSearch',
     libraryTarget: 'umd',
   },
+  devServer: {
+    // contentBase: './example',
+    inline: true,
+  },
   module: {
     loaders: [
+      {
+        test: /\.html|\.css$/,
+        loader: 'raw-loader',
+      },
       {
         test: /\.js$/,
         loaders: ['babel-loader'],
