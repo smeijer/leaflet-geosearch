@@ -10,7 +10,7 @@ const input = form.querySelector('input[type="text"]');
 form.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  provider.search({ query: input.value }).then(((results) => {
+  provider.search({ query: input.value }).then((results) => {
     console.log(results);
-  }));
+  });
 });
