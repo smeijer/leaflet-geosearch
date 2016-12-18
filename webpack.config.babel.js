@@ -31,7 +31,7 @@ const entryFiles = [
 ];
 
 if (!production) {
-  entryFiles.push(path.join(__dirname, 'example/main.js'));
+  entryFiles.push(path.join(__dirname, 'docs/main.js'));
 }
 
 export default {

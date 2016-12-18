@@ -33,7 +33,7 @@ rules:
     - devDependencies:
       - "**/*.spec.js"
       - "**/test_helpers/**/*.js"
-      - "example/**/*.js"
+      - "docs/**/*.js"
 
   react/jsx-filename-extension:
     - "error"
