@@ -26,7 +26,7 @@ if (production) {
 }
 
 const entryFiles = [
-  'babel-polyfill',
+  'nodent-runtime',
   path.join(__dirname, 'src/index.js'),
 ];
 

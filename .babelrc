@@ -1,8 +1,14 @@
 {
-  "presets": ["es2015", "stage-0", "power-assert"],
+  "presets": ["es2015", "power-assert"],
   "plugins": [
+    ["fast-async", {
+      "runtimePattern": null,
+      "useRuntimeModule": true
+    }],
     ["transform-react-jsx", { "pragma": "preact.h"}],
-    "transform-async-to-generator",
+    ["transform-export-extensions"],
+    ["transform-class-properties"],
+    ["transform-object-rest-spread"],
     ["babel-plugin-espower", {
       "embedAst": true,
       "patterns": [
