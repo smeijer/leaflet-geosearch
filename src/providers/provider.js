@@ -10,7 +10,8 @@ export default class Provider {
   }
 
   async search({ query }) {
-    const protocol = location.protocol === 'https:' ? 'https:' : 'http:';
+    // eslint-disable-next-line no-bitwise
+    const protocol = ~location.protocol.indexOf('http') ? location.protocol : 'https:';
     const url = this.endpoint({ query, protocol });
 
     const request = await fetch(url);

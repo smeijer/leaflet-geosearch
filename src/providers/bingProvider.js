@@ -32,7 +32,8 @@ export default class Provider extends BaseProvider {
   }
 
   async search({ query }) {
-    const protocol = location.protocol === 'https:' ? 'https:' : 'http:';
+    // eslint-disable-next-line no-bitwise
+    const protocol = ~location.protocol.indexOf('http') ? location.protocol : 'https:';
 
     const jsonp = `BING_JSONP_CB_${Date.now()}`;
     const url = this.endpoint({ query, protocol, jsonp });
