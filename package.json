@@ -71,6 +71,7 @@
     "leaflet": "^1.0.2",
     "lodash.debounce": "^4.0.8",
     "lodash.merge": "^4.6.0",
+    "microlight": "0.0.7",
     "node-fetch": "^1.6.3",
     "power-assert": "^1.4.2",
     "preact": "^7.1.0",

@@ -29,7 +29,7 @@ rules:
   class-methods-use-this: "off"
 
   import/no-extraneous-dependencies:
-    - "error"
+    - "warn"
     - devDependencies:
       - "**/*.spec.js"
       - "**/test_helpers/**/*.js"

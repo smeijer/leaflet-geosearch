@@ -1,12 +1,13 @@
 import preact, { Component } from 'preact';
 import merge from 'lodash.merge';
+import L from 'leaflet';
+
 import {
   GeoSearchControl,
   OpenStreetMapProvider,
   Provider as BaseProvider,
 } from '../../src';
 
-const L = window.L;
 
 // eslint-disable-next-line no-confusing-arrow
 const ensureInstance = Provider => Provider instanceof BaseProvider ? Provider : new Provider();

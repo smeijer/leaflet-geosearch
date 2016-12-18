@@ -1,4 +1,5 @@
 import preact, { Component } from 'preact';
+import Code from './Code';
 
 class Layout extends Component {
   constructor(props) {
@@ -45,6 +46,12 @@ class Layout extends Component {
         <div className={`content ${hash}`}>
           {page && page.view()}
         </div>
+
+        {page.code && (
+          <Code>
+            {page.code}
+          </Code>
+        )}
       </div>
     );
   }

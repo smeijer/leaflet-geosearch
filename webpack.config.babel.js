@@ -42,6 +42,7 @@ export default {
     library: 'GeoSearch',
     libraryTarget: 'umd',
   },
+  devTool: 'inline-source-map',
   devServer: {
     // contentBase: './example',
     inline: true,

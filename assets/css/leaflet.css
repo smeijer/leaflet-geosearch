@@ -5,6 +5,7 @@
 
 .geosearch.leaflet-bar.active form {
   display: block;
+  box-shadow: none;
 }
 
 .geosearch a.leaflet-bar-part {
@@ -24,6 +25,9 @@
 	background-image: url(../img/alert.png);
 	background-size: 18px 18px;
 }
+.geosearch.active a.leaflet-bar-part {
+  border-radius: 4px 0 0 4px
+}
 
 .leaflet-control-geosearch {
   position: relative;
@@ -31,12 +35,13 @@
 
 .leaflet-control-geosearch form {
 	position: absolute;
-	top: 0;
-	left: 22px;
-	box-shadow: 0 1px 7px rgba(0, 0, 0, 0.65);
+	top: -2px;
+	left: 30px;
 	border-radius: 0 4px 4px 0;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-left: none;
+  background-clip: padding-box;
 	z-index: -1;
-	background: #FFF;
 	height: auto;
 	margin: 0;
   padding: 0;
@@ -51,7 +56,7 @@
 	font-size: 12px;
   height: 30px;
   border-radius: 0 4px 4px 0;
-
+  text-indent: 0;
 }
 
 .leaflet-control-geosearch .message {
