@@ -1,0 +1,6 @@
+* text eol=lf
+*.jpg binary
+*.png binary
+*.gif binary
+
+CHANGELOG.md merge=union
