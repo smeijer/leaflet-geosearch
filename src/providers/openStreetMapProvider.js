@@ -22,6 +22,7 @@ export default class Provider extends BaseProvider {
         [parseFloat(r.boundingbox[0]), parseFloat(r.boundingbox[2])], // s, w
         [parseFloat(r.boundingbox[1]), parseFloat(r.boundingbox[3])], // n, e
       ],
+      raw: r,
     }));
   }
 }

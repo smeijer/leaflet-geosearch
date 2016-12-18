@@ -22,6 +22,7 @@ export default class Provider extends BaseProvider {
         [r.extent.ymin, r.extent.xmin], // s, w
         [r.extent.ymax, r.extent.xmax], // n, e
       ],
+      raw: r,
     }));
   }
 }

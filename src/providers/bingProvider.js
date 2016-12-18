@@ -27,6 +27,7 @@ export default class Provider extends BaseProvider {
         [r.bbox[0], r.bbox[1]], // s, w
         [r.bbox[2], r.bbox[3]], // n, e
       ],
+      raw: r,
     }));
   }
 

@@ -23,6 +23,7 @@ export default class Provider extends BaseProvider {
         [r.geometry.viewport.southwest.lat, r.geometry.viewport.southwest.lng], // s, w
         [r.geometry.viewport.northeast.lat, r.geometry.viewport.northeast.lng], // n, e
       ],
+      raw: r,
     }));
   }
 }
