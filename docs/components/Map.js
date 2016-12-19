@@ -1,13 +1,13 @@
 import preact, { Component } from 'preact';
 import merge from 'lodash.merge';
 import L from 'leaflet';
+import styles from './Map.css';
 
 import {
   GeoSearchControl,
   OpenStreetMapProvider,
   Provider as BaseProvider,
 } from '../../src';
-
 
 // eslint-disable-next-line no-confusing-arrow
 const ensureInstance = Provider => Provider instanceof BaseProvider ? Provider : new Provider();
@@ -49,10 +49,8 @@ class Map extends Component {
   };
 
   render() {
-    const { style } = this.props;
-
     return (
-      <div className="leaflet-map" style={style} ref={this.bindContainer} />
+      <div className={styles.map} ref={this.bindContainer} />
     );
   }
 }

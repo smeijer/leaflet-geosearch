@@ -1,13 +1,13 @@
 import preact, { Component } from 'preact';
 import microlight from 'microlight';
-window.microlight = microlight;
+import styles from './Code.css';
 
 class Code extends Component {
   componentDidMount() {
     microlight.reset('code');
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const { children } = this.props;
     this.container.innerHTML = children.join('\n\n');
     microlight.reset('code');
@@ -21,7 +21,7 @@ class Code extends Component {
     const { children } = this.props;
 
     return (
-      <div ref={this.defineContainer} className="code">
+      <div ref={this.defineContainer} className={styles.code}>
         {children}
       </div>
     );

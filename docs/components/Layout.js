@@ -1,5 +1,6 @@
 import preact, { Component } from 'preact';
 import Code from './Code';
+import styles from './Layout.css';
 
 class Layout extends Component {
   constructor(props) {
@@ -29,21 +30,25 @@ class Layout extends Component {
     const { hash } = this.state;
     const page = pages.find(p => p.slug === (hash || 'search'));
 
+    const contentClassName = hash === 'search'
+      ? styles.content
+      : [styles.content, styles.fullWidth].join(' ');
+
     return (
       <div>
-        <div className="header">
+        <div className={styles.header}>
           <h1>{`GeoSearch / ${page.title}`}</h1>
 
           <ul>
             {pages.map((p, idx) => (
-              <li key={idx} className={p.slug === hash ? 'active' : ''}>
+              <li key={idx} className={p.slug === hash && 'active'}>
                 <a href={`#${p.slug}`}>{p.title}</a>
               </li>
             ))}
           </ul>
         </div>
 
-        <div className={`content ${hash}`}>
+        <div className={contentClassName}>
           {page && page.view()}
         </div>
 

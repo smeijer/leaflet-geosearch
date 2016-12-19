@@ -1,0 +1,60 @@
+.header {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  padding: 0 0 0 20px;
+}
+
+.header h1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 64px;
+  margin: 0;
+  padding: 0;
+}
+
+.header ul {
+  list-style: none;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  line-height: 32px
+}
+
+.header ul li {
+  float: left;
+  display: block;
+  cursor: pointer;
+}
+
+.header ul li:hover {
+  border-bottom: 4px solid #00bcd4;
+}
+
+.header ul :global(li.active) {
+  border-bottom: 4px solid #2196f3;
+}
+
+.header ul li a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0 24px;
+}
+
+.content {
+  position: absolute;
+  top: 100px;
+  bottom: 0;
+  left: 20px;
+  right: 465px;
+}
+
+.fullWidth {
+  left: 0;
+  right: 0;
+}

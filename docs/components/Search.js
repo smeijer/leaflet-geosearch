@@ -2,6 +2,7 @@ import preact, { Component } from 'preact';
 import debounce from 'lodash.debounce';
 import * as providers from '../../src/providers';
 import SearchResults from './SearchResults';
+import styles from './Search.css';
 
 const specialKeys = ['ArrowDown', 'ArrowUp', 'Escape'];
 
@@ -65,6 +66,14 @@ class Search extends Component {
     });
   };
 
+  onFocus = () => {
+    this.setState({ isActive: true });
+  };
+
+  onBlur = () => {
+    this.setState({ isActive: false });
+  };
+
   autoSearch = debounce((event) => {
     this.onSubmit(event);
   }, 250);
@@ -78,14 +87,21 @@ class Search extends Component {
   }
 
   render() {
-    const { results, selected, query } = this.state;
+    const { results, selected, query, isActive } = this.state;
+
+    const className = [
+      styles.search,
+      (isActive ? 'active' : ''),
+    ].join(' ').trim();
 
     return (
-      <div className="search">
+      <div className={className}>
         <form onSubmit={this.onSubmit}>
           <input
             onKeyUp={this.onKeyUp}
             onKeyDown={this.onKeyDown}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
             type="text"
             placeholder="search"
             value={query}
