@@ -1,16 +1,14 @@
-.geosearch.leaflet-bar form,
-.geosearch.leaflet-bar .message {
-  display: none;
+/* global styling */
+.leaflet-control-geosearch *,
+.leaflet-control-geosearch *:before,
+.leaflet-control-geosearch *:after {
+  box-sizing: inherit;
 }
 
-.geosearch.leaflet-bar.active form {
-  display: block;
-  box-shadow: none;
-}
-
-.geosearch a.leaflet-bar-part {
-	border-radius: 4px;
-	border-bottom: none;
+/* leaflet button styling */
+.leaflet-control-geosearch .leaflet-bar-part {
+  border-radius: 4px;
+  border-bottom: none;
 }
 
 .leaflet-control-geosearch a.leaflet-bar-part:before,
@@ -20,6 +18,7 @@
   content: '';
 }
 
+/* magnifying glass */
 .leaflet-control-geosearch a.leaflet-bar-part:before {
   top: 19px;
   left: 16px;
@@ -37,8 +36,9 @@
   border: 2px solid #555;
 }
 
+/* resets for pending and error icons */
 .leaflet-control-geosearch.error a.leaflet-bar-part:before,
-.leaflet-control-geosearch.pending a.leaflet-bar-part:before{
+.leaflet-control-geosearch.pending a.leaflet-bar-part:before {
   display: none;
 }
 
@@ -52,11 +52,15 @@
   border-radius: 50%;
 }
 
+/* pending icon */
 .leaflet-control-geosearch.pending a.leaflet-bar-part:after {
+  content: '';
   border: 2px solid #555;
   border-top: 2px solid #f3f3f3;
   animation: spin 1s linear infinite;
 }
+
+/* error icon */
 .leaflet-control-geosearch.error a.leaflet-bar-part:after {
   content: '!';
   line-height: initial;
@@ -65,69 +69,49 @@
   border: none;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.geosearch.active a.leaflet-bar-part {
-  border-radius: 4px 0 0 4px
-}
-
-.leaflet-control-geosearch {
-  position: relative;
-}
-
+/* search form styling */
 .leaflet-control-geosearch form {
-	position: absolute;
-	top: -2px;
-	left: 30px;
-	border-radius: 0 4px 4px 0;
-  border: 2px solid rgba(0,0,0,0.2);
+  display: none;
+  position: absolute;
+  top: -2px;
+  left: 28px;
+  border-radius: 0 4px 4px 0;
+  border: 2px solid rgba(0, 0, 0, 0.2);
   border-left: none;
+  background-color: #fff;
   background-clip: padding-box;
-	z-index: -1;
-	height: auto;
-	margin: 0;
+  z-index: -1;
+  height: auto;
+  margin: 0;
   padding: 0 8px;
 }
 
+.leaflet-control-geosearch.active form {
+  display: block;
+}
+
 .leaflet-control-geosearch form input {
-	min-width: 200px;
+  min-width: 200px;
   width: 100%;
-	border: none;
-	outline: none;
-	margin: 0;
-	padding: 0;
-	font-size: 12px;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
   height: 30px;
   border-radius: 0 4px 4px 0;
   text-indent: 8px;
 }
 
-.leaflet-control-geosearch {
-  border-left: 2px solid rgba(0, 0, 0, 0.2);
-}
-
-.leaflet-control-geosearch .message {
-	position: absolute;
-	top: 26px;
-	left: 0;
-	width: 226px;
-	color: #FFF;
-	background: rgb(40, 40, 40);
-	padding: 4px 0 4px 8px;
-}
-
-.leaflet-touch .leaflet-control-geosearch .message {
-	top: 30px;
-	left: -2px;
+.leaflet-control-geosearch .results {
+  background: #fff;
 }
 
 .leaflet-control-geosearch .results > * {
   white-space: nowrap;
   line-height: 24px;
   padding: 0 8px;
+  border: 1px solid transparent;
 }
 
 .leaflet-control-geosearch .results.active {
@@ -135,9 +119,27 @@
   border-top: 1px solid #c6c6c6;
 }
 
-.leaflet-control-geosearch .results > div.active,
-.leaflet-control-geosearch .results > div:hover {
+.leaflet-control-geosearch .results > .active,
+.leaflet-control-geosearch .results > :hover {
   background-color: #f8f8f8;
   border-color: #c6c6c6;
   cursor: pointer;
+}
+
+/* add missing border to form */
+.leaflet-control-geosearch .results.active:after {
+  content: '';
+  display: block;
+  width: 0;
+  border-left: 2px solid rgba(0, 0, 0, .2);
+  position: absolute;
+  left: -2px;
+  bottom: -2px;
+  top: 30px;
+}
+
+/* animations */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

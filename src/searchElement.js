@@ -6,7 +6,6 @@ export default class SearchElement {
     const container = createElement('div', ['geosearch', classNames.container].join(' '));
     const form = createElement('form', ['', classNames.form].join(' '), container);
     const input = createElement('input', ['glass', classNames.input].join(' '), form);
-    const msgbox = createElement('div', ['', classNames.msgbox].join(' '), container);
 
     input.type = 'text';
     input.placeholder = searchLabel;
@@ -17,7 +16,7 @@ export default class SearchElement {
     input.addEventListener('focus', (e) => { this.onFocus(e); }, false);
     input.addEventListener('blur', (e) => { this.onBlur(e); }, false);
 
-    this.elements = { container, form, input, msgbox };
+    this.elements = { container, form, input };
     this.handleSubmit = handleSubmit;
   }
 
@@ -34,6 +33,7 @@ export default class SearchElement {
     event.stopPropagation();
 
     const { input, container } = this.elements;
+    removeClassName(container, 'error');
     addClassName(container, 'pending');
 
     await this.handleSubmit({ query: input.value });
