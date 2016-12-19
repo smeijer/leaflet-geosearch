@@ -1,21 +1,20 @@
 import test from 'ava';
 import td from 'testdouble';
 import LeafletControl from '../leafletControl';
-import id from '../../test/randomId';
+import randomId from '../../test/randomId';
 
-function MapInstance(options) {
+function createMapInstance(options, id = randomId()) {
   const div = document.createElement('div');
-  div.id = id();
+  div.setAttribute('id', id);
 
   document.body.appendChild(div);
   const map = new L.map(div, options); // eslint-disable-line new-cap
 
-  this.div = div;
-  this.map = map;
+  return { map, div, id };
 }
 
 test('Can init leaflet', (t) => {
-  const { div, map } = new MapInstance();
+  const { div, map } = createMapInstance();
 
   t.truthy(div._leaflet_id);
   t.truthy(map._leaflet_id);
@@ -24,20 +23,18 @@ test('Can init leaflet', (t) => {
 });
 
 test('Can add geosearch control to leaflet', (t) => {
-  const { div, map } = new MapInstance();
+  const { div, map } = createMapInstance();
 
   const provider = { search: td.function() };
   const control = new LeafletControl({
     provider,
   }).addTo(map);
 
-  const element = document.querySelector(`#${div.id}`);
-  t.truthy(element._leaflet_events);
-  t.is(control._map, map);
+  t.true(div.contains(control.searchElement.elements.container));
 });
 
 test('It toggles the active class when the search button is clicked', (t) => {
-  const { map } = new MapInstance();
+  const { map } = createMapInstance();
 
   const provider = { search: td.function() };
   const control = new LeafletControl({
@@ -55,7 +52,7 @@ test('It toggles the active class when the search button is clicked', (t) => {
 });
 
 test('Shows result on submit', async () => {
-  const { map } = new MapInstance();
+  const { map } = createMapInstance();
 
   const query = 'some city';
   const result = [{ x: 0, y: 50 }];
@@ -76,7 +73,7 @@ test('Shows result on submit', async () => {
 });
 
 test('Change view on result', () => {
-  const { map } = new MapInstance({
+  const { map } = createMapInstance({
     center: [180, 180],
     zoom: 18,
     animateZoom: false,

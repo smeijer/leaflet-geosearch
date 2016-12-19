@@ -2,8 +2,6 @@
 const browserEnv = require('browser-env');
 browserEnv();
 
-require('nodent-runtime');
-
 const fetch = require('node-fetch');
 window.fetch = global.fetch = fetch;
 

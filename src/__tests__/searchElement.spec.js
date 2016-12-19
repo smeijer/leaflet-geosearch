@@ -14,16 +14,20 @@ test('Can localize texts', (t) => {
 });
 
 test('It will search when enter key is pressed', () => {
+  const query = { query: 'Nederland' };
+
   const handleSubmit = td.function();
+  td.when(handleSubmit(query)).thenReturn(Promise.resolve(query));
+
   const control = new SearchElement({
-    handleSubmit,
+    handleSubmit: handleSubmit(),
   });
+  control.onSubmit = td.function();
 
   const { input } = control.elements;
-  input.value = 'Nederland';
   input.dispatchEvent(new KeyboardEvent('keypress', {
     keyCode: 13,
   }));
 
-  td.verify(handleSubmit({ query: 'Nederland' }));
+  td.verify(control.onSubmit(td.matchers.anything()));
 });

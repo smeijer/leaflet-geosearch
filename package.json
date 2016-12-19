@@ -92,6 +92,7 @@
       "./src/**/__tests__/**.spec.js"
     ],
     "require": [
+      "nodent-runtime",
       "dotenv/config",
       "babel-core/register",
       "./test/browserEnv"
