@@ -2,7 +2,7 @@ import { createElement, addClassName, removeClassName } from './domUtils';
 import { ESCAPE_KEY, ENTER_KEY } from './constants';
 
 export default class SearchElement {
-  constructor({ handleSubmit = () => {}, searchLabel = 'search', classNames = {} }) {
+  constructor({ handleSubmit = () => {}, searchLabel = 'search', classNames = {} } = {}) {
     const container = createElement('div', ['geosearch', classNames.container].join(' '));
     const form = createElement('form', ['', classNames.form].join(' '), container);
     const input = createElement('input', ['glass', classNames.input].join(' '), form);
@@ -67,5 +67,10 @@ export default class SearchElement {
     if (event.keyCode === ENTER_KEY) {
       this.onSubmit(event);
     }
+  }
+
+  setQuery(query) {
+    const { input } = this.elements;
+    input.value = query;
   }
 }

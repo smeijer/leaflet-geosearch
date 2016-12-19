@@ -1,5 +1,9 @@
+import debounce from 'lodash.debounce';
 import GeoSearchElement from './searchElement';
+import ResultList from './resultList';
+
 import { createElement, addClassName, removeClassName } from './domUtils';
+import { SPECIAL_KEYS, ARROW_UP_KEY, ARROW_DOWN_KEY, ESCAPE_KEY } from './constants';
 
 const defaultOptions = {
   position: 'topleft',
@@ -24,6 +28,8 @@ const defaultOptions = {
     form: '',
     input: '',
   },
+  autoComplete: true,
+  autoCompleteDelay: 250,
 };
 
 export default L.Control.extend({
@@ -35,14 +41,15 @@ export default L.Control.extend({
       ...options,
     };
 
-    const { classNames, searchLabel } = this.options;
+    const { classNames, searchLabel, autoComplete, autoCompleteDelay } = this.options;
 
     this.searchElement = new GeoSearchElement({
       ...this.options,
       handleSubmit: query => this.onSubmit(query),
     });
 
-    const { container } = this.searchElement.elements;
+
+    const { container, form, input } = this.searchElement.elements;
     container.addEventListener('dblclick', (e) => { e.stopPropagation(); });
 
     const button = createElement('a', classNames.button, container);
@@ -50,6 +57,22 @@ export default L.Control.extend({
     button.href = '#';
 
     button.addEventListener('click', (e) => { this.onClick(e); }, false);
+
+    if (autoComplete) {
+      this.resultList = new ResultList({
+        handleClick: ({ result }) => {
+          input.value = result.label;
+          this.onSubmit({ query: result.label });
+        },
+      });
+
+      form.appendChild(this.resultList.elements.container);
+
+      input.addEventListener('keyup',
+        debounce(e => this.autoSearch(e), autoCompleteDelay), true);
+      input.addEventListener('keydown', e => this.selectResult(e), true);
+      input.addEventListener('keydown', e => this.clearResults(e), true);
+    }
 
     this.elements = { button };
   },
@@ -77,6 +100,46 @@ export default L.Control.extend({
       addClassName(container, 'active');
       input.focus();
     }
+  },
+
+  selectResult(event) {
+    if (![ARROW_DOWN_KEY, ARROW_UP_KEY].includes(event.keyCode)) {
+      return;
+    }
+
+    event.preventDefault();
+    const { input } = this.searchElement.elements;
+
+    const list = this.resultList;
+    const max = this.resultList.count() - 1;
+
+    // eslint-disable-next-line no-bitwise
+    const next = (event.code === 'ArrowDown') ? ~~list.selected + 1 : ~~list.selected - 1;
+    // eslint-disable-next-line no-nested-ternary
+    const idx = (next < 0) ? max : (next > max) ? 0 : next;
+
+    const item = list.select(idx);
+    input.value = item.label;
+  },
+
+  clearResults(event) {
+    if (event.keyCode !== ESCAPE_KEY) {
+      return;
+    }
+
+    this.resultList.clear();
+  },
+
+  async autoSearch(event) {
+    if (SPECIAL_KEYS.includes(event.keyCode)) {
+      return;
+    }
+
+    const query = event.target.value;
+    const { provider } = this.options;
+
+    const results = await provider.search({ query });
+    this.resultList.render(results);
   },
 
   async onSubmit(query) {

@@ -71,7 +71,6 @@
     "eslint-watch": "^2.1.14",
     "fast-async": "^6.1.2",
     "leaflet": "^1.0.2",
-    "lodash.debounce": "^4.0.8",
     "lodash.merge": "^4.6.0",
     "microlight": "0.0.7",
     "node-fetch": "^1.6.3",
@@ -83,7 +82,9 @@
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash.debounce": "^4.0.8"
+  },
   "ava": {
     "files": [
       "./src/**/__tests__/**.spec.js"
