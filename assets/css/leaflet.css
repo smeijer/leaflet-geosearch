@@ -11,20 +11,65 @@
 .geosearch a.leaflet-bar-part {
 	border-radius: 4px;
 	border-bottom: none;
-	background-image: url(../img/geosearch.png);
-  background-position: center center;
-	background-size: 100% 100%;
 }
 
-.geosearch.pending a.leaflet-bar-part {
-	background-image: url(../img/spinner.gif);
-  background-size: 12px 12px;
+.leaflet-control-geosearch a.leaflet-bar-part:before,
+.leaflet-control-geosearch a.leaflet-bar-part:after {
+  position: absolute;
+  display: block;
+  content: '';
 }
 
-.geosearch.error a.leaflet-bar-part {
-	background-image: url(../img/alert.png);
-	background-size: 18px 18px;
+.leaflet-control-geosearch a.leaflet-bar-part:before {
+  top: 19px;
+  left: 16px;
+  width: 8px;
+  border-top: 2px solid #555;
+  transform: rotateZ(45deg);
 }
+
+.leaflet-control-geosearch a.leaflet-bar-part:after {
+  top: 6px;
+  left: 6px;
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  border: 2px solid #555;
+}
+
+.leaflet-control-geosearch.error a.leaflet-bar-part:before,
+.leaflet-control-geosearch.pending a.leaflet-bar-part:before{
+  display: none;
+}
+
+.leaflet-control-geosearch.pending a.leaflet-bar-part:after,
+.leaflet-control-geosearch.error a.leaflet-bar-part:after {
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border-radius: 50%;
+}
+
+.leaflet-control-geosearch.pending a.leaflet-bar-part:after {
+  border: 2px solid #555;
+  border-top: 2px solid #f3f3f3;
+  animation: spin 1s linear infinite;
+}
+.leaflet-control-geosearch.error a.leaflet-bar-part:after {
+  content: '!';
+  line-height: initial;
+  font-weight: 600;
+  font-size: 18px;
+  border: none;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .geosearch.active a.leaflet-bar-part {
   border-radius: 4px 0 0 4px
 }
@@ -61,13 +106,13 @@
 }
 
 .leaflet-control-geosearch {
-  border-left: 2px solid rgba(0,0,0,0.2);
+  border-left: 2px solid rgba(0, 0, 0, 0.2);
 }
 
 .leaflet-control-geosearch .message {
 	position: absolute;
 	top: 26px;
-	left: 0px;
+	left: 0;
 	width: 226px;
 	color: #FFF;
 	background: rgb(40, 40, 40);
