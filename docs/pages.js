@@ -22,7 +22,7 @@ export default [
   {
     slug: 'openstreetmap',
     title: 'OpenStreetMap',
-    view: () => (<Map Provider={OpenStreetMapProvider} />),
+    view: () => (<Map Provider={OpenStreetMapProvider} options={{ style: 'bar' }} />),
     code: require('!!raw!./snippets/openstreetmap'),
   },
   {

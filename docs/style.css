@@ -10,3 +10,9 @@ html, body {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+:global(.leaflet-control-geosearch.bar) {
+  position: absolute !important;
+  left: 50px;
+  right: 515px;
+}

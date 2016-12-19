@@ -25,19 +25,22 @@ const mapOptions = () => ({
 class Map extends Component {
   componentDidMount() {
     const { options, Provider } = this.props;
-
-    this.map = new L.Map(this.container, merge(mapOptions(), options));
+    this.map = this.map || new L.Map(this.container, mapOptions());
 
     const provider = (Provider) ? ensureInstance(Provider) : new OpenStreetMapProvider();
 
     this.searchControl = new GeoSearchControl({
+      ...options,
       provider,
     }).addTo(this.map);
+
+    window.search = this.searchControl;
+    window.map = this.map;
   }
 
   componentDidUpdate() {
-    const Provider = this.props.Provider || OpenStreetMapProvider;
-    this.searchControl.options.provider = ensureInstance(Provider);
+    this.searchControl.removeFrom(this.map);
+    this.componentDidMount();
   }
 
   componentWillUnmount() {

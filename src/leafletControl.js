@@ -5,8 +5,9 @@ import ResultList from './resultList';
 import { createElement, addClassName, removeClassName } from './domUtils';
 import { SPECIAL_KEYS, ARROW_UP_KEY, ARROW_DOWN_KEY, ESCAPE_KEY } from './constants';
 
-const defaultOptions = {
+const defaultOptions = () => ({
   position: 'topleft',
+  style: 'button',
   showMarker: true,
   showPopup: false,
   marker: {
@@ -30,24 +31,26 @@ const defaultOptions = {
   },
   autoComplete: true,
   autoCompleteDelay: 250,
-};
+});
 
 export default L.Control.extend({
   initialize(options) {
     this.markers = new L.FeatureGroup();
 
     this.options = {
-      ...defaultOptions,
+      ...defaultOptions(),
       ...options,
     };
 
-    const { classNames, searchLabel, autoComplete, autoCompleteDelay } = this.options;
+    const { style, classNames, searchLabel, autoComplete, autoCompleteDelay } = this.options;
+    if (style !== 'button') {
+      this.options.classNames.container += ` ${options.style}`;
+    }
 
     this.searchElement = new GeoSearchElement({
       ...this.options,
       handleSubmit: query => this.onSubmit(query),
     });
-
 
     const { container, form, input } = this.searchElement.elements;
     container.addEventListener('dblclick', (e) => { e.stopPropagation(); });
@@ -78,14 +81,33 @@ export default L.Control.extend({
   },
 
   onAdd(map) {
-    const { showMarker } = this.options;
+    const { showMarker, style } = this.options;
 
     this.map = map;
     if (showMarker) {
       this.markers.addTo(map);
     }
 
+    if (style === 'bar') {
+      const { form } = this.searchElement.elements;
+      const root = map.getContainer().querySelector('.leaflet-control-container');
+
+      const container = createElement('div', 'leaflet-control-geosearch bar');
+      container.appendChild(form);
+      root.appendChild(container);
+      this.elements.container = container;
+    }
+
     return this.searchElement.elements.container;
+  },
+
+  onRemove() {
+    const { container } = this.elements;
+    if (container) {
+      container.remove();
+    }
+
+    return this;
   },
 
   onClick(event) {

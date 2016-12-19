@@ -108,10 +108,13 @@
 }
 
 .leaflet-control-geosearch .results > * {
-  white-space: nowrap;
   line-height: 24px;
   padding: 0 8px;
   border: 1px solid transparent;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .leaflet-control-geosearch .results.active {
@@ -142,4 +145,36 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.leaflet-top .leaflet-control-geosearch.bar,
+.leaflet-bottom .leaflet-control-geosearch.bar {
+  display: none;
+}
+
+.leaflet-control-geosearch.bar {
+  position: relative;
+  display: block;
+  height: auto;
+  width: 400px;
+  margin: 10px auto 0;
+  cursor: auto;
+  z-index: 1;
+}
+
+.leaflet-control-geosearch.bar form {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.leaflet-control-geosearch.bar form input {
+  min-width: 100%;
+  width: 100%;
+}
+
+.leaflet-control-geosearch.bar .results.active:after {
+  opacity: .2;
 }
