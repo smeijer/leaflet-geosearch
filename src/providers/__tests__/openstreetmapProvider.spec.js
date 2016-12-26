@@ -24,5 +24,5 @@ test('Can get localized results', async (t) => {
   });
 
   const results = await provider.search({ query: 'nederland' });
-  t.is(results[0].label, 'Nederland, Koninkrijk der Nederlanden');
+  t.is(results[0].label, 'Nederland');
 });
