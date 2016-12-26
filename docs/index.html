@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Leaflet.GeoSearch / Google Provider</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@0.7.7/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@0.7.7/dist/leaflet.js"></script>
+
+    <script type="text/javascript">
+      handleOnLoad = function() {
+        L.Icon.Default.imagePath = 'https://unpkg.com/leaflet@0.7.7/dist/images/';
+      }
+    </script>
+
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/assets/css/leaflet.css" />
+  </head>
+<body onload="handleOnLoad()">
+  <div id="app"></div>
+
+  <script type="text/javascript" src="/bundle.js" charset="utf-8"></script>
+</body>
+</html>

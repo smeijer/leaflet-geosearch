@@ -1,0 +1,28 @@
+{
+  "presets": ["es2015", "power-assert"],
+  "plugins": [
+    ["fast-async", {
+      "runtimePattern": null,
+      "useRuntimeModule": true
+    }],
+    ["transform-react-jsx", { "pragma": "preact.h"}],
+    ["transform-export-extensions"],
+    ["transform-class-properties"],
+    ["transform-object-rest-spread"],
+    ["babel-plugin-espower", {
+      "embedAst": true,
+      "patterns": [
+        "t.truthy(value, [message])",
+        "t.falsy(value, [message])",
+        "t.true(value, [message])",
+        "t.false(value, [message])",
+        "t.is(value, expected, [message])",
+        "t.not(value, expected, [message])",
+        "t.deepEqual(value, expected, [message])",
+        "t.notDeepEqual(value, expected, [message])",
+        "t.regex(contents, regex, [message])",
+        "t.notRegex(contents, regex, [message])"
+      ]
+    }]
+  ]
+}

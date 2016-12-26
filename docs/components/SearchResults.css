@@ -1,0 +1,15 @@
+.item > * {
+  border: 1px solid transparent;
+  line-height: 32px;
+  padding: 0 18px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item > *:hover,
+.item > :global(.active) {
+  background-color: #f8f8f8;
+  border-color: #c6c6c6;
+}
