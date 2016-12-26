@@ -17,7 +17,6 @@ const defaultOptions = () => ({
   maxMarkers: 1,
   retainZoomLevel: false,
   animateZoom: true,
-  country: '',
   searchLabel: 'Enter address',
   notFoundMessage: 'Sorry, that address could not be found.',
   messageHideDelay: 3000,
