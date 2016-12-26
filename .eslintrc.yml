@@ -1,0 +1,55 @@
+extends: "airbnb"
+
+env:
+  browser: true
+
+parser: "babel-eslint"
+parserOptions:
+  ecmaVersion: 6
+  ecmaFeatures:
+    experimentalObjectRestSpread: true
+    jsx: true
+  sourceType: "module"
+
+rules:
+  # we need this to test leaflet private vars
+  no-underscore-dangle: "off"
+
+  # force else and catch to a new line
+  brace-style:
+   - "error"
+   - "stroustrup"
+   - allowSingleLine: true
+
+  quote-props:
+    - "error"
+    - "consistent-as-needed"
+    - keywords: true
+
+  class-methods-use-this: "off"
+
+  import/no-extraneous-dependencies:
+    - "warn"
+    - devDependencies:
+      - "**/*.spec.js"
+      - "**/test_helpers/**/*.js"
+      - "docs/**/*.js"
+
+  react/jsx-filename-extension:
+    - "error"
+    - extensions:
+      - ".js"
+
+  react/prop-types: "off"
+
+  jsx-a11y/anchor-has-content: "off"
+
+globals:
+  L: false
+  fetch: false
+  document: false
+  location: false
+
+settings:
+  react:
+    pragma: "preact"

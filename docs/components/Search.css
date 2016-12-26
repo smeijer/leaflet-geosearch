@@ -1,0 +1,27 @@
+.search form {
+  position: relative;
+  margin: 32px 0;
+  background-color: #fff;
+  vertical-align: top;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+  transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.search form:hover,
+.search:global(.active) form {
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.search input {
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  outline: none;
+  font: 16px arial, sans-serif;
+  line-height: 48px;
+  height: 48px;
+  text-indent: 18px;
+}
+
