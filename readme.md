@@ -297,5 +297,5 @@ to share your work with us.
 [11]: https://www.npmjs.com
 [12]: https://unpkg.com/leaflet-geosearch@latest/dist
 [13]: https://unpkg.com
-[14]: https://unpkg.com/leaflet-geosearch@latest/dist/leaflet-geosearch.js
-[15]: https://unpkg.com/leaflet-geosearch@latest/dist/leaflet-geosearch.min.js
+[14]: https://unpkg.com/leaflet-geosearch@latest/dist/bundle.js
+[15]: https://unpkg.com/leaflet-geosearch@latest/dist/bundle.min.js
