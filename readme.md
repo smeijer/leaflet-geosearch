@@ -285,7 +285,7 @@ In case you decide to write your own provider, please consider submitting a PR
 to share your work with us.
 
 [1]: http://leafletjs.com
-[2]: http://smeijer.github.io/L.GeoSearch
+[2]: http://smeijer.github.io/leaflet-geosearch
 [3]: https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm
 [4]: https://developers.google.com/maps/documentation/geocoding/start
 [5]: http://wiki.openstreetmap.org/wiki/Nominatim
