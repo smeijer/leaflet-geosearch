@@ -1,6 +1,6 @@
 {
   "name": "leaflet-geosearch",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "publishConfig": {
     "tag": "latest"
   },
@@ -11,7 +11,8 @@
     "build:umd": "cross-env NODE_ENV=development webpack",
     "build:umd:min": "cross-env NODE_ENV=production webpack",
     "build:watch": "npm run build:umd -- --watch",
-    "build": "npm run clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min",
+    "build": "npm run clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min && npm run build:docs",
+    "build:docs": "cross-env NODE_ENV=production webpack --config webpack.docs.config.babel.js",
     "clean": "rimraf lib dist",
     "lint": "esw src webpack.config --color",
     "lint:fix": "npm run lint -- --fix",
