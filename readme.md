@@ -190,7 +190,7 @@ this with on of the other included providers as well as your own custom made
 providers. Remember to setup the provider with a `key` when required (Google and 
 Bing for example).
 
-![search control](./docs/images/searchbar.png)
+![search control](./docs/assets/img/searchbar.png)
 
 ```js
 import L from 'leaflet';
@@ -210,7 +210,7 @@ map.addControl(searchControl);
 There are some configurable options like setting the position of the search input
 and whether or not a marker should be displayed at the position of the search result.
 
-![search button](./docs/images/searchbutton.png)
+![search button](./docs/assets/img/searchbutton.png)
 There are two visual styles of this control. One is the more 'leaflet-way' by 
 putting the search control under a button (see image above). And one where the 
 search control is permanently shown as a search bar (see image under 
