@@ -39,7 +39,7 @@ class Map extends Component {
   }
 
   componentDidUpdate() {
-    this.searchControl.removeFrom(this.map);
+    this.map.removeControl(this.searchControl);
     this.componentDidMount();
   }
 
