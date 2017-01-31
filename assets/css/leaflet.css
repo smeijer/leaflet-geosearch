@@ -2,7 +2,7 @@
 .leaflet-control-geosearch *,
 .leaflet-control-geosearch *:before,
 .leaflet-control-geosearch *:after {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 /* leaflet button styling */
