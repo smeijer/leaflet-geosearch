@@ -2,7 +2,7 @@
 .leaflet-control-geosearch *,
 .leaflet-control-geosearch *:before,
 .leaflet-control-geosearch *:after {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 /* leaflet button styling */
@@ -159,7 +159,7 @@
   width: 400px;
   margin: 10px auto 0;
   cursor: auto;
-  z-index: 1;
+  z-index: 1000;
 }
 
 .leaflet-control-geosearch.bar form {
@@ -178,4 +178,12 @@
 
 .leaflet-control-geosearch.bar .results.active:after {
   opacity: .2;
+}
+
+.leaflet-right .leaflet-control-geosearch form {
+  right: 28px;
+  left: initial;
+  border-radius: 4px 0 0 4px;
+  border-left: inherit;
+  border-right: none;
 }
