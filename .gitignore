@@ -2,7 +2,7 @@ node_modules
 coverage
 *.log
 lib
-./dist
+dist/
 .idea
 .env
 .tmp
