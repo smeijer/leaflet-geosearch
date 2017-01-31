@@ -179,3 +179,11 @@
 .leaflet-control-geosearch.bar .results.active:after {
   opacity: .2;
 }
+
+.leaflet-right .leaflet-control-geosearch form {
+  right: 28px;
+  left: initial;
+  border-radius: 4px 0 0 4px;
+  border-left: inherit;
+  border-right: none;
+}
