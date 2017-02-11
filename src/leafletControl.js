@@ -32,7 +32,7 @@ const defaultOptions = () => ({
   autoCompleteDelay: 250,
 });
 
-export default L.Control.extend({
+const Control = {
   initialize(options) {
     this.markers = new L.FeatureGroup();
 
@@ -220,4 +220,13 @@ export default L.Control.extend({
     const { retainZoomLevel, zoomLevel } = this.options;
     return retainZoomLevel ? this.map.getZoom() : zoomLevel;
   },
-});
+};
+
+export default function LeafletControl(...options) {
+  if (!L || !L.Control || !L.Control.extend) {
+    throw new Error('Leaflet must be loaded before instantiating the GeoSearch control');
+  }
+
+  const LControl = L.Control.extend(Control);
+  return new LControl(...options);
+}
