@@ -1,5 +1,7 @@
 # Leaflet.GeoSearch
 
+[![Join the chat at https://gitter.im/smeijer/leaflet-geosearch](https://badges.gitter.im/smeijer/leaflet-geosearch.svg)](https://gitter.im/smeijer/leaflet-geosearch?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![build status](https://img.shields.io/travis/smeijer/leaflet-geosearch/master.svg?style=flat-square)][9]
 
 [![NPM](https://nodei.co/npm/leaflet-geosearch.png?downloads=true)][10]
