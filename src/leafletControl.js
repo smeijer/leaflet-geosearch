@@ -135,6 +135,9 @@ const Control = {
 
     const list = this.resultList;
     const max = this.resultList.count() - 1;
+    if (max < 0) {
+      return;
+    }
 
     // eslint-disable-next-line no-bitwise
     const next = (event.code === 'ArrowDown') ? ~~list.selected + 1 : ~~list.selected - 1;
