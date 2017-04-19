@@ -259,6 +259,7 @@ new GeoSearchControl({
   maxMarkers: 1,                  // optional: number      - default 1
   retainZoomLevel: false,         // optional: true|false  - default false
   animateZoom: true,              // optional: true|false  - default true
+  searchLabel: 'Enter address'    // optional: string      - default 'Enter address'
 });
 ```
 
