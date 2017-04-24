@@ -260,6 +260,7 @@ new GeoSearchControl({
   retainZoomLevel: false,         // optional: true|false  - default false
   animateZoom: true,              // optional: true|false  - default true
   autoClose: false,               // optional: true|false  - default false
+  searchLabel: 'Enter address'    // optional: string      - default 'Enter address'
 });
 ```
 
