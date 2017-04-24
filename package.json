@@ -86,7 +86,8 @@
     "style-loader": "^0.13.1",
     "testdouble": "^1.10.1",
     "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2"
+    "webpack-dev-server": "^1.16.2",
+    "nodent-runtime": "^3.0.4"    
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8"
