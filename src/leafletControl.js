@@ -3,7 +3,7 @@ import GeoSearchElement from './searchElement';
 import ResultList from './resultList';
 
 import { createElement, addClassName, removeClassName } from './domUtils';
-import { SPECIAL_KEYS, ARROW_UP_KEY, ARROW_DOWN_KEY, ESCAPE_KEY } from './constants';
+import { ENTER_KEY, SPECIAL_KEYS, ARROW_UP_KEY, ARROW_DOWN_KEY, ESCAPE_KEY } from './constants';
 
 const defaultOptions = () => ({
   position: 'topleft',
@@ -30,6 +30,7 @@ const defaultOptions = () => ({
   },
   autoComplete: true,
   autoCompleteDelay: 250,
+  autoClose: false,
 });
 
 const Control = {
@@ -124,15 +125,19 @@ const Control = {
   },
 
   selectResult(event) {
-    if (![ARROW_DOWN_KEY, ARROW_UP_KEY].includes(event.keyCode)) {
+    if (![ENTER_KEY, ARROW_DOWN_KEY, ARROW_UP_KEY].includes(event.keyCode)) {
       return;
     }
 
     event.preventDefault();
+
     const { input } = this.searchElement.elements;
 
     const list = this.resultList;
     const max = this.resultList.count() - 1;
+    if (max < 0) {
+      return;
+    }
 
     // eslint-disable-next-line no-bitwise
     const next = (event.code === 'ArrowDown') ? ~~list.selected + 1 : ~~list.selected - 1;
@@ -141,6 +146,10 @@ const Control = {
 
     const item = list.select(idx);
     input.value = item.label;
+
+    if (event.keyCode === ENTER_KEY) {
+       this.onSubmit({ query: item.label });
+    }
   },
 
   clearResults(event) {
@@ -174,6 +183,8 @@ const Control = {
   },
 
   showResult(result) {
+    const { autoClose } = this.options;
+
     const markers = Object.keys(this.markers._layers);
     if (markers.length >= this.options.maxMarkers) {
       this.markers.removeLayer(markers[0]);
@@ -186,6 +197,21 @@ const Control = {
       location: result,
       marker,
     });
+
+    if (autoClose) {
+      this.closeResults();
+    }
+  },
+
+  closeResults() {
+    const { container, input } = this.searchElement.elements;
+
+    if (container.classList.contains('active')) {
+      removeClassName(container, 'active');
+    }
+
+    input.value = '';
+    this.resultList.clear();
   },
 
   addMarker(result) {

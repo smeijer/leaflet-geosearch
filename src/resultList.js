@@ -45,7 +45,7 @@ export default class ResultList {
   }
 
   count() {
-    return this.results.length;
+    return this.results ? this.results.length : 0;
   }
 
   clear() {
