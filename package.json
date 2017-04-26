@@ -1,6 +1,6 @@
 {
   "name": "leaflet-geosearch",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "publishConfig": {
     "tag": "latest"
   },
@@ -87,7 +87,7 @@
     "testdouble": "^1.10.1",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2",
-    "nodent-runtime": "^3.0.4"    
+    "nodent-runtime": "^3.0.4"
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8"
