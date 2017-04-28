@@ -1,6 +1,6 @@
 {
   "name": "leaflet-geosearch",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "publishConfig": {
     "tag": "latest"
   },
@@ -42,13 +42,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smeijer/L.GeoSearch.git"
+    "url": "git+https://github.com/smeijer/leaflet-geosearch.git"
   },
   "author": "Stephan Meijer <stephan@meijer.ws>",
   "bugs": {
-    "url": "https://github.com/smeijer/L.GeoSearch/issues"
+    "url": "https://github.com/smeijer/leaflet-geosearch/issues"
   },
-  "homepage": "https://github.com/smeijer/L.GeoSearch#readme",
+  "homepage": "https://github.com/smeijer/leaflet-geosearch#readme",
   "license": "MIT",
   "devDependencies": {
     "ava": "^0.17.0",
@@ -86,11 +86,11 @@
     "style-loader": "^0.13.1",
     "testdouble": "^1.10.1",
     "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2",
-    "nodent-runtime": "^3.0.4"
+    "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
-    "lodash.debounce": "^4.0.8"
+    "lodash.debounce": "^4.0.8",
+    "nodent-runtime": "^3.0.4"
   },
   "ava": {
     "files": [

@@ -148,7 +148,7 @@ const Control = {
     input.value = item.label;
 
     if (event.keyCode === ENTER_KEY) {
-       this.onSubmit({ query: item.label });
+      this.onSubmit({ query: item.label });
     }
   },
 
