@@ -42,13 +42,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smeijer/L.GeoSearch.git"
+    "url": "git+https://github.com/smeijer/leaflet-geosearch.git"
   },
   "author": "Stephan Meijer <stephan@meijer.ws>",
   "bugs": {
-    "url": "https://github.com/smeijer/L.GeoSearch/issues"
+    "url": "https://github.com/smeijer/leaflet-geosearch/issues"
   },
-  "homepage": "https://github.com/smeijer/L.GeoSearch#readme",
+  "homepage": "https://github.com/smeijer/leaflet-geosearch#readme",
   "license": "MIT",
   "devDependencies": {
     "ava": "^0.17.0",
