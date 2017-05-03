@@ -168,8 +168,13 @@ const Control = {
     const query = event.target.value;
     const { provider } = this.options;
 
-    const results = await provider.search({ query });
-    this.resultList.render(results);
+    if (query.length) {
+      const results = await provider.search({ query });
+      this.resultList.render(results);
+    }
+    else {
+      this.resultList.clear();
+    }
   },
 
   async onSubmit(query) {
