@@ -27,7 +27,7 @@ test('Can get localized results', async (t) => {
   t.is(results[0].label, 'Leeuwarden, Nederland');
 });
 
-test('Can fetch results with API Key', async (t) => {
+test.skip('Can fetch results with API Key', async (t) => {
   const provider = new Provider({
     params: {
       key: process.env.GOOGLE_API_KEY,
