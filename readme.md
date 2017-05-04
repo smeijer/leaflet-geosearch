@@ -285,7 +285,7 @@ only panned.
 
 `geosearch/showlocation` is fired when location is chosen from the result list.
 
-```
+```js
 map.on('geosearch/showlocation', yourEventHandler)
 ```
 
