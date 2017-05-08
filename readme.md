@@ -281,6 +281,14 @@ only panned.
 
 `autoClose` closes the result list if a result is selected by click/enter.
 
+**Events**
+
+`geosearch/showlocation` is fired when location is chosen from the result list.
+
+```js
+map.on('geosearch/showlocation', yourEventHandler)
+```
+
 # Development
 
 Checkout the providers to see how easy it is to write your own. For research it
