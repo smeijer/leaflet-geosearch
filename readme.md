@@ -249,18 +249,19 @@ There are a number of options to adjust the way results are visualized.
  
 ```js
 new GeoSearchControl({
-  provider: myProvider,           // required
-  showMarker: true,               // optional: true|false  - default true
-  showPopup: false,               // optional: true|false  - default false
-  marker: {                       // optional: L.Marker    - default L.Icon.Default
+  provider: myProvider,                 // required
+  showMarker: true,                     // optional: true|false  - default true
+  showPopup: false,                     // optional: true|false  - default false
+  marker: {                             // optional: L.Marker    - default L.Icon.Default
     icon: new L.Icon.Default(),
     draggable: false,
   },
-  maxMarkers: 1,                  // optional: number      - default 1
-  retainZoomLevel: false,         // optional: true|false  - default false
-  animateZoom: true,              // optional: true|false  - default true
-  autoClose: false,               // optional: true|false  - default false
-  searchLabel: 'Enter address'    // optional: string      - default 'Enter address'
+  popupFormat: result => result.label,  // optional: function    - default returns result label
+  maxMarkers: 1,                        // optional: number      - default 1
+  retainZoomLevel: false,               // optional: true|false  - default false
+  animateZoom: true,                    // optional: true|false  - default true
+  autoClose: false,                     // optional: true|false  - default false
+  searchLabel: 'Enter address'          // optional: string      - default 'Enter address'
 });
 ```
 
@@ -268,6 +269,8 @@ new GeoSearchControl({
 open a popup with the location text.
 
 `marker` can be set to any instance of a (custom) `L.Icon`.
+
+`popupFormat` is callback function for displaying text on popup.
 
 `maxMarker` determines how many last results are kept in memory. Default 1, but
 perhaps you want to show the last `x` results when searching for new queries as 

@@ -10,6 +10,7 @@ const defaultOptions = () => ({
   style: 'button',
   showMarker: true,
   showPopup: false,
+  popupFormat: result => result.label,
   marker: {
     icon: new L.Icon.Default(),
     draggable: false,
@@ -220,9 +221,15 @@ const Control = {
   },
 
   addMarker(result) {
-    const { marker: options, showPopup } = this.options;
+    const { marker: options, showPopup, popupFormat } = this.options;
     const marker = new L.Marker([result.y, result.x], options);
-    marker.bindPopup(result.label);
+    let popupLabel = result.label;
+
+    if (typeof popupFormat === 'function') {
+      popupLabel = popupFormat(result);
+    }
+
+    marker.bindPopup(popupLabel);
 
     this.markers.addLayer(marker);
 
