@@ -13,7 +13,7 @@ const defaultOptions = () => ({
   popupFormat: ({ query, result }) => `${result.label}`,
   marker: {
     icon: new L.Icon.Default(),
-    draggable: false,
+    draggable: true,
   },
   maxMarkers: 1,
   retainZoomLevel: false,
@@ -235,6 +235,15 @@ const Control = {
 
     if (showPopup) {
       marker.openPopup();
+    }
+
+    if (options.draggable) {
+      marker.on('dragend', (args) => {
+        this.map.fireEvent('geosearch/marker/dragend', {
+          location: marker.getLatLng(),
+          event: args,
+        });
+      });
     }
 
     return marker;
