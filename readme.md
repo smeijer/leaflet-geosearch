@@ -250,8 +250,8 @@ There are a number of options to adjust the way results are visualized.
 ```js
 new GeoSearchControl({
   provider: myProvider,                               // required
-showMarker: true,                                     // optional: true|false  - default true
-showPopup: false,                                     // optional: true|false  - default false
+  showMarker: true,                                   // optional: true|false  - default true
+  showPopup: false,                                   // optional: true|false  - default false
   marker: {                                           // optional: L.Marker    - default L.Icon.Default
     icon: new L.Icon.Default(),
     draggable: false,
