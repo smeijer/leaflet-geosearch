@@ -292,6 +292,12 @@ only panned.
 map.on('geosearch/showlocation', yourEventHandler)
 ```
 
+`geosearch/marker/dragend` is fired when marker has been dragged.
+
+```js
+map.on('geosearch/marker/dragend', yourEventHandler)
+```
+
 # Development
 
 Checkout the providers to see how easy it is to write your own. For research it
