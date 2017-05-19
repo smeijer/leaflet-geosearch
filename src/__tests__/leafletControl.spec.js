@@ -69,7 +69,7 @@ test('Shows result on submit', async () => {
   control.showResult = td.function();
   await control.onSubmit('some city');
 
-  td.verify(control.showResult(result[0]));
+  td.verify(control.showResult(result[0], query));
 });
 
 test('Change view on result', () => {
