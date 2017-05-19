@@ -13,7 +13,7 @@ const defaultOptions = () => ({
   popupFormat: ({ query, result }) => `${result.label}`,
   marker: {
     icon: new L.Icon.Default(),
-    draggable: true,
+    draggable: false,
   },
   maxMarkers: 1,
   retainZoomLevel: false,
