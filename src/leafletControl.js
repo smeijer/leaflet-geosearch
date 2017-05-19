@@ -237,6 +237,15 @@ const Control = {
       marker.openPopup();
     }
 
+    if (options.draggable) {
+      marker.on('dragend', (args) => {
+        this.map.fireEvent('geosearch/marker/dragend', {
+          location: marker.getLatLng(),
+          event: args,
+        });
+      });
+    }
+
     return marker;
   },
 
