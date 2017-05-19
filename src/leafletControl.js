@@ -10,7 +10,7 @@ const defaultOptions = () => ({
   style: 'button',
   showMarker: true,
   showPopup: false,
-  popupFormat: ({ query, result }) => `${result.label}`,
+  popupFormat: ({ result }) => `${result.label}`,
   marker: {
     icon: new L.Icon.Default(),
     draggable: false,
