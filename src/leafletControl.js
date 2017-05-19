@@ -10,6 +10,7 @@ const defaultOptions = () => ({
   style: 'button',
   showMarker: true,
   showPopup: false,
+  popupFormat: ({ result }) => `${result.label}`,
   marker: {
     icon: new L.Icon.Default(),
     draggable: false,
@@ -168,8 +169,13 @@ const Control = {
     const query = event.target.value;
     const { provider } = this.options;
 
-    const results = await provider.search({ query });
-    this.resultList.render(results);
+    if (query.length) {
+      const results = await provider.search({ query });
+      this.resultList.render(results);
+    }
+    else {
+      this.resultList.clear();
+    }
   },
 
   async onSubmit(query) {
@@ -178,11 +184,11 @@ const Control = {
     const results = await provider.search(query);
 
     if (results && results.length > 0) {
-      this.showResult(results[0]);
+      this.showResult(results[0], query);
     }
   },
 
-  showResult(result) {
+  showResult(result, query) {
     const { autoClose } = this.options;
 
     const markers = Object.keys(this.markers._layers);
@@ -190,7 +196,7 @@ const Control = {
       this.markers.removeLayer(markers[0]);
     }
 
-    const marker = this.addMarker(result);
+    const marker = this.addMarker(result, query);
     this.centerMap(result);
 
     this.map.fireEvent('geosearch/showlocation', {
@@ -214,15 +220,30 @@ const Control = {
     this.resultList.clear();
   },
 
-  addMarker(result) {
-    const { marker: options, showPopup } = this.options;
+  addMarker(result, query) {
+    const { marker: options, showPopup, popupFormat } = this.options;
     const marker = new L.Marker([result.y, result.x], options);
-    marker.bindPopup(result.label);
+    let popupLabel = result.label;
+
+    if (typeof popupFormat === 'function') {
+      popupLabel = popupFormat({ query, result });
+    }
+
+    marker.bindPopup(popupLabel);
 
     this.markers.addLayer(marker);
 
     if (showPopup) {
       marker.openPopup();
+    }
+
+    if (options.draggable) {
+      marker.on('dragend', (args) => {
+        this.map.fireEvent('geosearch/marker/dragend', {
+          location: marker.getLatLng(),
+          event: args,
+        });
+      });
     }
 
     return marker;
