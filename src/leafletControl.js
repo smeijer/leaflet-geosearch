@@ -188,7 +188,7 @@ const Control = {
     }
   },
 
-  showResult(result, query) {
+  showResult(result, { query }) {
     const { autoClose } = this.options;
 
     const markers = Object.keys(this.markers._layers);
