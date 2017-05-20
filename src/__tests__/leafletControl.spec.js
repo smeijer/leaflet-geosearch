@@ -84,7 +84,7 @@ test('Change view on result', () => {
   const control = new LeafletControl({
   }).addTo(map);
 
-  control.showResult({ x: 50, y: 0 });
+  control.showResult({ x: 50, y: 0 }, { query: 'none' });
 
   td.verify(map.setView(
     td.matchers.isA(L.LatLng),
