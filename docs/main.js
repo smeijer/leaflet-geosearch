@@ -1,3 +1,7 @@
+// polyfills
+import 'babel-polyfill';
+import 'whatwg-fetch';
+
 import preact, { render } from 'preact';
 import { Layout } from './components';
 import pages from './pages';
