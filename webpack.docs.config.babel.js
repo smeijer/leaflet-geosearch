@@ -29,7 +29,6 @@ if (production) {
 
 const entryFiles = [
   'nodent-runtime',
-  'babel-polyfill',
   path.join(__dirname, 'docs/main.js'),
 ];
 

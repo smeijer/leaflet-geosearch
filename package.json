@@ -1,6 +1,6 @@
 {
   "name": "leaflet-geosearch",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "publishConfig": {
     "tag": "latest"
   },
@@ -81,13 +81,14 @@
     "node-fetch": "^1.6.3",
     "npm": "^4.0.5",
     "power-assert": "^1.4.2",
-    "preact": "^7.1.0",
+    "preact": "^8.1.0",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.5.4",
     "style-loader": "^0.13.1",
     "testdouble": "^1.10.1",
     "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2"
+    "webpack-dev-server": "^1.16.2",
+    "whatwg-fetch": "^2.0.3"
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8",
