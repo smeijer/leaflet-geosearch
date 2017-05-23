@@ -118,6 +118,7 @@ const Control = {
 
     if (container.classList.contains('active')) {
       removeClassName(container, 'active');
+      this.clearResults();
     }
     else {
       addClassName(container, 'active');
@@ -154,11 +155,15 @@ const Control = {
   },
 
   clearResults(event) {
-    if (event.keyCode !== ESCAPE_KEY) {
+    if (event && event.keyCode !== ESCAPE_KEY) {
       return;
     }
 
+    const { input } = this.searchElement.elements;
+    input.value = '';
+
     this.resultList.clear();
+    this.markers.clearLayers();
   },
 
   async autoSearch(event) {
@@ -210,14 +215,13 @@ const Control = {
   },
 
   closeResults() {
-    const { container, input } = this.searchElement.elements;
+    const { container } = this.searchElement.elements;
 
     if (container.classList.contains('active')) {
       removeClassName(container, 'active');
     }
 
-    input.value = '';
-    this.resultList.clear();
+    this.clearResults();
   },
 
   addMarker(result, query) {
