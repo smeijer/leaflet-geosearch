@@ -25,6 +25,7 @@ const defaultOptions = () => ({
   classNames: {
     container: 'leaflet-bar leaflet-control leaflet-control-geosearch',
     button: 'leaflet-bar-part leaflet-bar-part-single',
+    resetButton: 'reset',
     msgbox: 'leaflet-bar message',
     form: '',
     input: '',
@@ -62,6 +63,11 @@ const Control = {
 
     button.addEventListener('click', (e) => { this.onClick(e); }, false);
 
+    const resetButton = createElement('a', classNames.resetButton, form);
+    resetButton.innerHTML = 'X';
+    button.href = '#';
+    resetButton.addEventListener('click', () => { this.clearResults(); }, false);
+
     if (autoComplete) {
       this.resultList = new ResultList({
         handleClick: ({ result }) => {
@@ -78,7 +84,7 @@ const Control = {
       input.addEventListener('keydown', e => this.clearResults(e), true);
     }
 
-    this.elements = { button };
+    this.elements = { button, resetButton };
   },
 
   onAdd(map) {

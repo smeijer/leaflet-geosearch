@@ -187,3 +187,18 @@
   border-left: inherit;
   border-right: none;
 }
+
+.leaflet-control-geosearch a.reset {
+  color: black;
+  position: absolute;
+  line-height: 30px;
+  padding: 0 8px;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  border: none;
+}
+
+.leaflet-control-geosearch a.reset:hover {
+  background: #f5f5f5;
+}
