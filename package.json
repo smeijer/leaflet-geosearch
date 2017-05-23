@@ -1,6 +1,6 @@
 {
   "name": "leaflet-geosearch",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "publishConfig": {
     "tag": "latest"
   },
