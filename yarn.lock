@@ -922,6 +922,14 @@ babel-polyfill@^6.16.0:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
+babel-polyfill@^6.23.0:
+  version "6.23.0"
+  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.23.0.tgz#8364ca62df8eafb830499f699177466c3b03499d"
+  dependencies:
+    babel-runtime "^6.22.0"
+    core-js "^2.4.0"
+    regenerator-runtime "^0.10.0"
+
 babel-preset-es2015-node4@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/babel-preset-es2015-node4/-/babel-preset-es2015-node4-2.1.0.tgz#9852f281e2332b57d49c189841ac25466a6ebe98"
@@ -1014,6 +1022,13 @@ babel-runtime@^6.11.6, babel-runtime@^6.9.0:
   dependencies:
     core-js "^2.4.0"
     regenerator-runtime "^0.9.5"
+
+babel-runtime@^6.22.0:
+  version "6.23.0"
+  resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.23.0.tgz#0a9489f144de70efb3ce4300accdb329e2fc543b"
+  dependencies:
+    core-js "^2.4.0"
+    regenerator-runtime "^0.10.0"
 
 babel-template@^6.14.0, babel-template@^6.15.0, babel-template@^6.16.0, babel-template@^6.7.0, babel-template@^6.8.0:
   version "6.16.0"
@@ -3592,11 +3607,7 @@ node-status-codes@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/node-status-codes/-/node-status-codes-1.0.0.tgz#5ae5541d024645d32a58fcddc9ceecea7ae3ac2f"
 
-nodent-runtime@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/nodent-runtime/-/nodent-runtime-3.0.3.tgz#49a25f4f4efb092c40d97be9e73de7e53a5f8361"
-
-nodent-runtime@^3.0.4:
+nodent-runtime@^3.0.3, nodent-runtime@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/nodent-runtime/-/nodent-runtime-3.0.4.tgz#a801ecb7bb0f6c39a69b24cc2fa370cfa8b492da"
 
