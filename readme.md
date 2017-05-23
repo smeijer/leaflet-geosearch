@@ -31,6 +31,12 @@ exports a global called `window.GeoSearch` if you add it to your page via a
 
 We *don’t* recommend UMD builds for any serious application.
 
+## Browser support / Polyfills
+This library is written with the latest technologies in mind. Thereby it is required to include some polyfills when you wish to support older browsers. These polyfills are recommended for IE and Safari support:
+
+- [babel-polyfill][16], for `array.includes` support.
+- [whatwg-fetch][17], for `fetch` requests.
+
 # About
 This library adds support for geocoding *(address lookup, a.k.a. geoseaching)* 
 to your (web) application. It comes with controls to be embedded in your 
@@ -322,3 +328,5 @@ to share your work with us.
 [13]: https://unpkg.com
 [14]: https://unpkg.com/leaflet-geosearch@latest/dist/bundle.js
 [15]: https://unpkg.com/leaflet-geosearch@latest/dist/bundle.min.js
+[16]: https://www.npmjs.com/package/babel-polyfill
+[17]: https://www.npmjs.com/package/whatwg-fetch
