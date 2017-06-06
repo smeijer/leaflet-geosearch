@@ -1,7 +1,6 @@
 node_modules
 coverage
 *.log
-lib
 dist/
 .idea
 .env
