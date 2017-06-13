@@ -5,3 +5,4 @@ dist/
 .idea
 .env
 .tmp
+lib
