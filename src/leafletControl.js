@@ -33,7 +33,7 @@ const defaultOptions = () => ({
   autoComplete: true,
   autoCompleteDelay: 250,
   autoClose: false,
-  keepResults: false,
+  keepResult: false,
 });
 
 const Control = {
@@ -167,9 +167,9 @@ const Control = {
     }
 
     const { input } = this.searchElement.elements;
-    const { keepResults } = this.options;
+    const { keepResult } = this.options;
 
-    if (force || !keepResults) {
+    if (force || !keepResult) {
       input.value = '';
       this.markers.clearLayers();
     }
