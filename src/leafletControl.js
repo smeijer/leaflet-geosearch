@@ -33,6 +33,7 @@ const defaultOptions = () => ({
   autoComplete: true,
   autoCompleteDelay: 250,
   autoClose: false,
+  keepResult: false,
 });
 
 const Control = {
@@ -66,7 +67,7 @@ const Control = {
     const resetButton = createElement('a', classNames.resetButton, form);
     resetButton.innerHTML = 'X';
     button.href = '#';
-    resetButton.addEventListener('click', () => { this.clearResults(); }, false);
+    resetButton.addEventListener('click', () => { this.clearResults(null, true); }, false);
 
     if (autoComplete) {
       this.resultList = new ResultList({
@@ -81,7 +82,7 @@ const Control = {
       input.addEventListener('keyup',
         debounce(e => this.autoSearch(e), autoCompleteDelay), true);
       input.addEventListener('keydown', e => this.selectResult(e), true);
-      input.addEventListener('keydown', e => this.clearResults(e), true);
+      input.addEventListener('keydown', e => this.clearResults(e, true), true);
     }
 
     this.elements = { button, resetButton };
@@ -160,16 +161,19 @@ const Control = {
     }
   },
 
-  clearResults(event) {
+  clearResults(event, force = false) {
     if (event && event.keyCode !== ESCAPE_KEY) {
       return;
     }
 
     const { input } = this.searchElement.elements;
-    input.value = '';
+    const { keepResult } = this.options;
 
+    if (force || !keepResult) {
+      input.value = '';
+      this.markers.clearLayers();
+    }
     this.resultList.clear();
-    this.markers.clearLayers();
   },
 
   async autoSearch(event) {
