@@ -151,11 +151,12 @@ const Control = {
     // eslint-disable-next-line no-bitwise
     const next = (event.code === 'ArrowDown') ? ~~list.selected + 1 : ~~list.selected - 1;
     // eslint-disable-next-line no-nested-ternary
-    if (event.keyCode === _constants.ENTER_KEY) {
-      var idx = this.currentIdx || 0;
+    var idx = 0;
+    if (event.keyCode === ENTER_KEY) {
+      idx = this.currentIdx;
     }
     else {
-      var idx = next < 0 ? max : next > max ? 0 : next;
+      idx = next < 0 ? max : next > max ? 0 : next;
       this.currentIdx = idx;
     }
     const item = list.select(idx);
