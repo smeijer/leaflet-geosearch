@@ -151,8 +151,13 @@ const Control = {
     // eslint-disable-next-line no-bitwise
     const next = (event.code === 'ArrowDown') ? ~~list.selected + 1 : ~~list.selected - 1;
     // eslint-disable-next-line no-nested-ternary
-    const idx = (next < 0) ? max : (next > max) ? 0 : next;
-
+    if (event.keyCode === _constants.ENTER_KEY) {
+      var idx = this.currentIdx || 0;
+    }
+    else {
+      var idx = next < 0 ? max : next > max ? 0 : next;
+      this.currentIdx = idx;
+    }
     const item = list.select(idx);
     input.value = item.label;
 
@@ -242,7 +247,6 @@ const Control = {
     if (typeof popupFormat === 'function') {
       popupLabel = popupFormat({ query, result });
     }
-
     marker.bindPopup(popupLabel);
 
     this.markers.addLayer(marker);
