@@ -3,7 +3,8 @@ import { ESCAPE_KEY, ENTER_KEY } from './constants';
 
 export default class SearchElement {
   constructor({ handleSubmit = () => {}, searchLabel = 'search', classNames = {} } = {}) {
-    const container = createElement('div', ['geosearch', classNames.container].join(' '));
+    const container = L.DomUtil.create('div', ['geosearch', classNames.container].join(' '));
+    L.DomEvent.disableClickPropagation(container);
     const form = createElement('form', ['', classNames.form].join(' '), container);
     const input = createElement('input', ['glass', classNames.input].join(' '), form);
 
