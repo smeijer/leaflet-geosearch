@@ -69,6 +69,8 @@ const Control = {
     button.href = '#';
     resetButton.addEventListener('click', () => { this.clearResults(null, true); }, false);
 
+    this.currentIdx = 0;
+
     if (autoComplete) {
       this.resultList = new ResultList({
         handleClick: ({ result }) => {
@@ -151,8 +153,22 @@ const Control = {
     // eslint-disable-next-line no-bitwise
     const next = (event.code === 'ArrowDown') ? ~~list.selected + 1 : ~~list.selected - 1;
     // eslint-disable-next-line no-nested-ternary
-    const idx = (next < 0) ? max : (next > max) ? 0 : next;
-
+    let idx = 0;
+    if (event.keyCode === ENTER_KEY) {
+      idx = this.currentIdx;
+    }
+    else {
+      if (next < 0) {
+        idx = max;
+      }
+      else if (next > max) {
+        idx = 0;
+      }
+      else {
+        idx = next;
+      }
+      this.currentIdx = idx;
+    }
     const item = list.select(idx);
     input.value = item.label;
 
@@ -195,6 +211,8 @@ const Control = {
 
   async onSubmit(query) {
     const { provider } = this.options;
+
+    this.currentIdx = 0;
 
     const results = await provider.search(query);
 
@@ -242,7 +260,6 @@ const Control = {
     if (typeof popupFormat === 'function') {
       popupLabel = popupFormat({ query, result });
     }
-
     marker.bindPopup(popupLabel);
 
     this.markers.addLayer(marker);
