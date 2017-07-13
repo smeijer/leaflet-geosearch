@@ -69,6 +69,8 @@ const Control = {
     button.href = '#';
     resetButton.addEventListener('click', () => { this.clearResults(null, true); }, false);
 
+    this.currentIdx = 0;
+
     if (autoComplete) {
       this.resultList = new ResultList({
         handleClick: ({ result }) => {
@@ -209,6 +211,8 @@ const Control = {
 
   async onSubmit(query) {
     const { provider } = this.options;
+
+    this.currentIdx = 0;
 
     const results = await provider.search(query);
 
