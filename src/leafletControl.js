@@ -168,13 +168,16 @@ const Control = {
     }
 
     const { input } = this.searchElement.elements;
-    const { keepResult } = this.options;
+    const { keepResult, autoComplete } = this.options;
 
     if (force || !keepResult) {
       input.value = '';
       this.markers.clearLayers();
     }
-    this.resultList.clear();
+
+    if (autoComplete) {
+      this.resultList.clear();
+    }
   },
 
   async autoSearch(event) {
