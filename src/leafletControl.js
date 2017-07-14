@@ -36,6 +36,16 @@ const defaultOptions = () => ({
   keepResult: false,
 });
 
+const wasHandlerEnabled = {};
+const mapHandlers = [
+  'dragging',
+  'touchZoom',
+  'doubleClickZoom',
+  'scrollWheelZoom',
+  'boxZoom',
+  'keyboard',
+];
+
 const Control = {
   initialize(options) {
     this.markers = new L.FeatureGroup();
@@ -56,7 +66,6 @@ const Control = {
     });
 
     const { container, form, input } = this.searchElement.elements;
-    container.addEventListener('dblclick', (e) => { e.stopPropagation(); });
 
     const button = createElement('a', classNames.button, container);
     button.title = searchLabel;
@@ -84,6 +93,9 @@ const Control = {
       input.addEventListener('keydown', e => this.selectResult(e), true);
       input.addEventListener('keydown', e => this.clearResults(e, true), true);
     }
+
+    form.addEventListener('mouseover', () => this.disableHandlers(), true);
+    form.addEventListener('mouseout', () => this.restoreHandlers(), true);
 
     this.elements = { button, resetButton };
   },
@@ -131,6 +143,23 @@ const Control = {
       addClassName(container, 'active');
       input.focus();
     }
+  },
+
+  disableHandlers() {
+    mapHandlers.forEach((handler) => {
+      if (this.map[handler]) {
+        wasHandlerEnabled[handler] = this.map[handler].enabled();
+        this.map[handler].disable();
+      }
+    });
+  },
+
+  restoreHandlers() {
+    mapHandlers.forEach((handler) => {
+      if (wasHandlerEnabled[handler]) {
+        this.map[handler].enable();
+      }
+    });
   },
 
   selectResult(event) {
