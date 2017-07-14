@@ -12,9 +12,12 @@ import {
 // eslint-disable-next-line no-confusing-arrow
 const ensureInstance = Provider => Provider instanceof BaseProvider ? Provider : new Provider();
 
+// eslint-disable-next-line no-bitwise
+const protocol = ~location.protocol.indexOf('http') ? location.protocol : 'https:';
+
 const mapOptions = () => ({
   layers: [
-    new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    new L.TileLayer(`${protocol}//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       maxZoom: 18,
     }),
   ],
