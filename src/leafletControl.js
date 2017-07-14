@@ -142,8 +142,13 @@ const Control = {
 
     const { input } = this.searchElement.elements;
 
+    if (event.keyCode === ENTER_KEY) {
+      this.onSubmit({ query: input.value });
+      return;
+    }
+
     const list = this.resultList;
-    const max = this.resultList.count() - 1;
+    const max = list.count() - 1;
     if (max < 0) {
       return;
     }
@@ -155,10 +160,6 @@ const Control = {
 
     const item = list.select(idx);
     input.value = item.label;
-
-    if (event.keyCode === ENTER_KEY) {
-      this.onSubmit({ query: item.label });
-    }
   },
 
   clearResults(event, force = false) {
