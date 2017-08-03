@@ -49,6 +49,7 @@ const mapHandlers = [
 const Control = {
   initialize(options) {
     this.markers = new L.FeatureGroup();
+    this.handlersDisabled = false;
 
     this.options = {
       ...defaultOptions(),
@@ -94,8 +95,8 @@ const Control = {
       input.addEventListener('keydown', e => this.clearResults(e, true), true);
     }
 
-    form.addEventListener('mouseover', () => this.disableHandlers(), true);
-    form.addEventListener('mouseout', () => this.restoreHandlers(), true);
+    form.addEventListener('mouseenter', e => this.disableHandlers(e), true);
+    form.addEventListener('mouseleave', e => this.restoreHandlers(e), true);
 
     this.elements = { button, resetButton };
   },
@@ -145,7 +146,14 @@ const Control = {
     }
   },
 
-  disableHandlers() {
+  disableHandlers(e) {
+    const { form } = this.searchElement.elements;
+
+    if (this.handlersDisabled || (e && e.target !== form)) {
+      return;
+    }
+
+    this.handlersDisabled = true;
     mapHandlers.forEach((handler) => {
       if (this.map[handler]) {
         wasHandlerEnabled[handler] = this.map[handler].enabled();
@@ -154,7 +162,14 @@ const Control = {
     });
   },
 
-  restoreHandlers() {
+  restoreHandlers(e) {
+    const { form } = this.searchElement.elements;
+
+    if (!this.handlersDisabled || (e && e.target !== form)) {
+      return;
+    }
+
+    this.handlersDisabled = false;
     mapHandlers.forEach((handler) => {
       if (wasHandlerEnabled[handler]) {
         this.map[handler].enable();
@@ -264,6 +279,7 @@ const Control = {
       removeClassName(container, 'active');
     }
 
+    this.restoreHandlers();
     this.clearResults();
   },
 
