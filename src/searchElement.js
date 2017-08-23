@@ -13,6 +13,7 @@ export default class SearchElement {
     input.addEventListener('input', (e) => { this.onInput(e); }, false);
     input.addEventListener('keyup', (e) => { this.onKeyUp(e); }, false);
     input.addEventListener('keypress', (e) => { this.onKeyPress(e); }, false);
+    input.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); e.target.focus(); }, false);
     input.addEventListener('focus', (e) => { this.onFocus(e); }, false);
     input.addEventListener('blur', (e) => { this.onBlur(e); }, false);
 
