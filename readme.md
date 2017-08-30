@@ -50,12 +50,13 @@ service URL and parsing the retrieved data into a uniform format. Thanks to this
 architecture, it is pretty easy to add your own providers, so you can use 
 your own geocoding service(s).
 
-The control comes with a default set of four providers:
+The control comes with a default set of five providers:
 
   - [Bing](#bing-provider).
   - [Esri](#esri-provider).
   - [Google](#google-provider).
   - [OpenStreetMap](#openstreetmap-provider).
+  - [LocationIQ](#locationiq-provider).
 
 Although this project is still named `leaflet-geosearch`, this library is also 
 usable without LeafletJS, and does not have any dependencies whatsoever.
@@ -131,7 +132,7 @@ use your debugger)
   
 # Providers
 When `OpenStreetMap` does not match your needs; you can also choose to use the 
-`Bing`, `Esri` or `Google` providers. Those providers do however require API 
+`Bing`, `Esri`, `Google` or `LocationIQ` providers. Those providers do however require API 
 keys. See the documentation pages on the relevant organisations on how to obtain 
 these keys.
  
@@ -188,6 +189,20 @@ For more options and configurations, see the [OpenStreetMap Nominatim wiki][5].
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 
 const provider = new OpenStreetMapProvider();
+```
+
+## LocationIQ Provider
+**note**: LocationIQ services require an API key. [Obtain here][18].
+For more options and configurations, see the [LocationIQ developer docs][19].
+
+```js
+import { LocationIQProvider } from 'leaflet-geosearch';
+
+const provider = new LocationIQProvider({ 
+  params: {
+    key: '__YOUR_LOCATIONIQ_KEY__',
+  },
+});
 ```
 
 # Using with LeafletJS
@@ -333,3 +348,5 @@ to share your work with us.
 [15]: https://unpkg.com/leaflet-geosearch@latest/dist/bundle.min.js
 [16]: https://www.npmjs.com/package/babel-polyfill
 [17]: https://www.npmjs.com/package/whatwg-fetch
+[18]: https://locationiq.org
+[19]: https://locationiq.org/#docs
