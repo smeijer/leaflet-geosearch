@@ -193,7 +193,7 @@ const Control = {
       this.onSubmit({ query: input.value, data: item });
       return;
     }
-    
+
     const max = list.count() - 1;
     if (max < 0) {
       return;
