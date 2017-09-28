@@ -45,7 +45,7 @@ export default class Provider extends BaseProvider {
     // eslint-disable-next-line no-bitwise
     const protocol = ~location.protocol.indexOf('http') ? location.protocol : 'https:';
 
-    const url = data 
+    const url = data
       ? this.endpointReverse({ data, protocol })
       : this.endpoint({ query, protocol });
 
@@ -55,15 +55,9 @@ export default class Provider extends BaseProvider {
   }
 
   translateOsmType(type) {
-    if (type === 'node') {
-      return 'N';
-    }
-    if (type === 'way') {
-      return 'W';
-    }
-    if (type === 'relation') {
-      return 'R';
-    }
+    if (type === 'node') return 'N';
+    if (type === 'way') return 'W';
+    if (type === 'relation') return 'R';
     return ''; // Unknown
   }
 }
