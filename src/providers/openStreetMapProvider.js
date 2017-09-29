@@ -51,7 +51,7 @@ export default class Provider extends BaseProvider {
 
     const request = await fetch(url);
     const json = await request.json();
-    return this.parse({ data: json });
+    return this.parse({ data: data ? [json] : json });
   }
 
   translateOsmType(type) {
