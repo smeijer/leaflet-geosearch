@@ -342,7 +342,7 @@ to share your work with us.
 [9]: https://travis-ci.org/smeijer/leaflet-geosearch
 [10]: https://nodei.co/npm/leaflet-geosearch
 [11]: https://www.npmjs.com
-[12]: https://unpkg.com/leaflet-geosearch@latest/dist
+[12]: https://unpkg.com/leaflet-geosearch@latest/dist/
 [13]: https://unpkg.com
 [14]: https://unpkg.com/leaflet-geosearch@latest/dist/bundle.js
 [15]: https://unpkg.com/leaflet-geosearch@latest/dist/bundle.min.js
