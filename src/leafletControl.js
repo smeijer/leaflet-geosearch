@@ -83,7 +83,7 @@ const Control = {
       this.resultList = new ResultList({
         handleClick: ({ result }) => {
           input.value = result.label;
-          this.onSubmit({ query: result.label });
+          this.onSubmit({ query: result.label, data: result });
         },
       });
 
@@ -186,12 +186,14 @@ const Control = {
 
     const { input } = this.searchElement.elements;
 
+    const list = this.resultList;
+
     if (event.keyCode === ENTER_KEY) {
-      this.onSubmit({ query: input.value });
+      const item = list.select(list.selected);
+      this.onSubmit({ query: input.value, data: item });
       return;
     }
 
-    const list = this.resultList;
     const max = list.count() - 1;
     if (max < 0) {
       return;
