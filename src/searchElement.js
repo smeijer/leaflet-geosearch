@@ -4,7 +4,7 @@ import { ESCAPE_KEY, ENTER_KEY } from './constants';
 export default class SearchElement {
   constructor({ handleSubmit = () => {}, searchLabel = 'search', classNames = {}, stopClickPropagation = false } = {}) {
     const container = createElement('div', ['geosearch', classNames.container].join(' '));
-    const form = createElement('form', ['', classNames.form].join(' '), container);
+    const form = createElement('form', ['', classNames.form].join(' '), container, { 'autocomplete': 'none' });
     const input = createElement('input', ['glass', classNames.input].join(' '), form);
 
     input.type = 'text';

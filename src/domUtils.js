@@ -1,7 +1,11 @@
 /* eslint-disable import/prefer-default-export */
-export const createElement = (element, classNames = '', parent = null) => {
+export const createElement = (element, classNames = '', parent = null, attributes = {}) => {
   const el = document.createElement(element);
   el.className = classNames;
+
+  Object.keys(attributes).forEach((key) => {
+    el.setAttribute(key, attributes[key])
+  });
 
   if (parent) {
     parent.appendChild(el);
