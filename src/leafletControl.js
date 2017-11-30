@@ -34,6 +34,7 @@ const defaultOptions = () => ({
   autoCompleteDelay: 250,
   autoClose: false,
   keepResult: false,
+  stopClickPropagation: false
 });
 
 const wasHandlerEnabled = {};
