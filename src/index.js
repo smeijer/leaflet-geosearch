@@ -5,4 +5,5 @@ export { default as BingProvider } from './providers/bingProvider';
 export { default as EsriProvider } from './providers/esriProvider';
 export { default as GoogleProvider } from './providers/googleProvider';
 export { default as OpenStreetMapProvider } from './providers/openStreetMapProvider';
+export { default as HereMapProvider } from './providers/hereMapProvider';
 export { default as Provider } from './providers/provider';
