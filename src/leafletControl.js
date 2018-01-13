@@ -33,8 +33,7 @@ const defaultOptions = () => ({
   autoComplete: true,
   autoCompleteDelay: 250,
   autoClose: false,
-  keepResult: false,
-  stopClickPropagation: false
+  keepResult: false
 });
 
 const wasHandlerEnabled = {};
@@ -98,6 +97,7 @@ const Control = {
 
     form.addEventListener('mouseenter', e => this.disableHandlers(e), true);
     form.addEventListener('mouseleave', e => this.restoreHandlers(e), true);
+    form.addEventListener('click', e => e.preventDefault(), false);
 
     this.elements = { button, resetButton };
   },

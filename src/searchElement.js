@@ -2,7 +2,7 @@ import { createElement, addClassName, removeClassName } from './domUtils';
 import { ESCAPE_KEY, ENTER_KEY } from './constants';
 
 export default class SearchElement {
-  constructor({ handleSubmit = () => {}, searchLabel = 'search', classNames = {}, stopClickPropagation = false } = {}) {
+  constructor({ handleSubmit = () => {}, searchLabel = 'search', classNames = {} } = {}) {
     const container = createElement('div', ['geosearch', classNames.container].join(' '));
     const form = createElement('form', ['', classNames.form].join(' '), container, { 'autocomplete': 'none' });
     const input = createElement('input', ['glass', classNames.input].join(' '), form);
@@ -15,9 +15,6 @@ export default class SearchElement {
     input.addEventListener('keypress', (e) => { this.onKeyPress(e); }, false);
     input.addEventListener('focus', (e) => { this.onFocus(e); }, false);
     input.addEventListener('blur', (e) => { this.onBlur(e); }, false);
- 
-    if(stopClickPropagation)
-      form.addEventListener('click', function (e) { event.stopPropagation(); }, false);
 
     this.elements = { container, form, input };
     this.handleSubmit = handleSubmit;
