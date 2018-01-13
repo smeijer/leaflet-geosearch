@@ -33,7 +33,7 @@ const defaultOptions = () => ({
   autoComplete: true,
   autoCompleteDelay: 250,
   autoClose: false,
-  keepResult: false
+  keepResult: false,
 });
 
 const wasHandlerEnabled = {};

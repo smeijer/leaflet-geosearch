@@ -4,7 +4,7 @@ export const createElement = (element, classNames = '', parent = null, attribute
   el.className = classNames;
 
   Object.keys(attributes).forEach((key) => {
-    el.setAttribute(key, attributes[key])
+    el.setAttribute(key, attributes[key]);
   });
 
   if (parent) {
