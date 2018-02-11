@@ -50,13 +50,14 @@ service URL and parsing the retrieved data into a uniform format. Thanks to this
 architecture, it is pretty easy to add your own providers, so you can use 
 your own geocoding service(s).
 
-The control comes with a default set of five providers:
+The control comes with a default set of six providers:
 
   - [Bing](#bing-provider).
   - [Esri](#esri-provider).
   - [Google](#google-provider).
   - [OpenStreetMap](#openstreetmap-provider).
   - [LocationIQ](#locationiq-provider).
+  - [OpenCage](#opencage-provider).
 
 Although this project is still named `leaflet-geosearch`, this library is also 
 usable without LeafletJS, and does not have any dependencies whatsoever.
@@ -132,7 +133,7 @@ use your debugger)
   
 # Providers
 When `OpenStreetMap` does not match your needs; you can also choose to use the 
-`Bing`, `Esri`, `Google` or `LocationIQ` providers. Those providers do however require API 
+`Bing`, `Esri`, `Google` `LocationIQ`, or `OpenCage` providers. Those providers do however require API 
 keys. See the documentation pages on the relevant organisations on how to obtain 
 these keys.
  
@@ -201,6 +202,19 @@ import { LocationIQProvider } from 'leaflet-geosearch';
 const provider = new LocationIQProvider({ 
   params: {
     key: '__YOUR_LOCATIONIQ_KEY__',
+  },
+});
+```
+## OpenCage Provider
+**note**: OpenCage services require an API key. [Obtain here][20].
+For more options and configurations, see the [OpenCage developer docs][21].
+
+```js
+import { OpenCageProvider } from 'leaflet-geosearch';
+
+const provider = new OpenCageProvider({ 
+  params: {
+    key: '__YOUR_OPENCAGE_KEY__',
   },
 });
 ```
@@ -350,3 +364,5 @@ to share your work with us.
 [17]: https://www.npmjs.com/package/whatwg-fetch
 [18]: https://locationiq.org
 [19]: https://locationiq.org/#docs
+[20]: https://geocoder.opencagedata.com
+[21]: https://geocoder.opencagedata.com/api
