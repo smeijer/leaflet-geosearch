@@ -10,7 +10,7 @@ export default class Provider extends BaseProvider {
       q: query,
     });
 
-    return `${protocol}//nominatim.openstreetmap.org/search?${paramString}`;
+    return `https://nominatim.openstreetmap.org/search?${paramString}`;
   }
 
   endpointReverse({ data, protocol } = {}) {
