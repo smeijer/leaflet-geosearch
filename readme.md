@@ -1,3 +1,9 @@
+## LOOKING FOR MAINTAINERS
+
+See: [#172](https://github.com/smeijer/leaflet-geosearch/issues/172) for more info.
+
+---
+
 # Leaflet.GeoSearch
 
 [![Join the chat at https://gitter.im/smeijer/leaflet-geosearch](https://badges.gitter.im/smeijer/leaflet-geosearch.svg)](https://gitter.im/smeijer/leaflet-geosearch?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
