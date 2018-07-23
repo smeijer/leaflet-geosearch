@@ -1,7 +1,7 @@
 import BaseProvider from './provider';
 
 export default class Provider extends BaseProvider {
-  endpoint({ query, protocol } = {}) {
+  endpoint({ query } = {}) {
     const { params } = this.options;
 
     const paramString = this.getParamString({
@@ -10,10 +10,10 @@ export default class Provider extends BaseProvider {
       q: query,
     });
 
-    return `${protocol}//nominatim.openstreetmap.org/search?${paramString}`;
+    return `https://nominatim.openstreetmap.org/search?${paramString}`;
   }
 
-  endpointReverse({ data, protocol } = {}) {
+  endpointReverse({ data } = {}) {
     const { params } = this.options;
 
     const paramString = this.getParamString({
@@ -25,7 +25,7 @@ export default class Provider extends BaseProvider {
       osm_type: this.translateOsmType(data.raw.osm_type),
     });
 
-    return `${protocol}//nominatim.openstreetmap.org/reverse?${paramString}`;
+    return `https://nominatim.openstreetmap.org/reverse?${paramString}`;
   }
 
   parse({ data }) {
