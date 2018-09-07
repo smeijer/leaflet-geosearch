@@ -12,6 +12,7 @@ export default class ResultList {
 
     container.addEventListener('click', this.onClick, true);
     this.elements = { container, resultItem };
+    this.results = [];
   }
 
   render(results = []) {
