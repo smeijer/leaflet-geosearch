@@ -6,6 +6,7 @@
   },
   "description": "Adds support for address lookup (a.k.a. geocoding / geoseaching) to Leaflet.",
   "main": "lib/index.js",
+  "module": "src/index.js",
   "scripts": {
     "build:commonjs": "babel src --out-dir lib --ignore *.spec.js",
     "build:umd": "cross-env NODE_ENV=development webpack",
