@@ -25,6 +25,7 @@
     "start": "webpack-dev-server"
   },
   "files": [
+    "src",
     "lib",
     "dist",
     "assets"
