@@ -189,8 +189,10 @@ const Control = {
     const list = this.resultList;
 
     if (event.keyCode === ENTER_KEY) {
-      const item = list.select(list.selected);
-      this.onSubmit({ query: input.value, data: item });
+      if (list.selected !== -1) {
+        const item = list.select(list.selected);
+        this.onSubmit({ query: input.value, data: item });
+      }
       return;
     }
 
