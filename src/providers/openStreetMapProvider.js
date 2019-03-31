@@ -3,11 +3,13 @@ import BaseProvider from './provider';
 export default class Provider extends BaseProvider {
   endpoint({ query } = {}) {
     const { params } = this.options;
+    const { restriction } = this.options;
+    const finalQuery = `${query} ${restriction}`;
 
     const paramString = this.getParamString({
       ...params,
       format: 'json',
-      q: query,
+      q: finalQuery,
     });
 
     return `https://nominatim.openstreetmap.org/search?${paramString}`;
