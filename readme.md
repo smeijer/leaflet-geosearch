@@ -30,6 +30,17 @@ or bower:
 bower install leaflet-geosearch
 ```
 
+**TypeScript**
+
+If you use TypeScript then consider to install types:
+```bash
+npm install --save-dev @types/leaflet-geosearch
+```
+or yarn:
+```bash
+yarn add @types/leaflet-geosearch -D
+```
+---
 If you don’t use [npm][11], you may grab the latest [UMD][12] build from 
 [unpkg][13] (either a [development][14] or a [production][15] build). The UMD build 
 exports a global called `window.GeoSearch` if you add it to your page via a 
