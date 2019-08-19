@@ -6,6 +6,7 @@ export default class ResultList {
   constructor({ handleClick = () => {}, classNames = {} } = {}) {
     this.props = { handleClick, classNames };
     this.selected = -1;
+    this.results = [];
 
     const container = createElement('div', cx('results', classNames.container));
     const resultItem = createElement('div', cx(classNames.item));
