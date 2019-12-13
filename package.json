@@ -81,7 +81,7 @@
     "lodash.merge": "^4.6.0",
     "microlight": "0.0.7",
     "node-fetch": "^1.6.3",
-    "npm": "^4.0.5",
+    "npm": "^6.13.4",
     "power-assert": "^1.4.2",
     "preact": "^8.1.0",
     "raw-loader": "^0.5.1",
