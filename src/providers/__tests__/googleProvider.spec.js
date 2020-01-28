@@ -2,7 +2,11 @@ import test from 'ava';
 import Provider from '../googleProvider';
 
 test('Can fetch results with Google Provider', async (t) => {
-  const provider = new Provider();
+  const provider = new Provider({
+    params: {
+      key: process.env.GOOGLE_API_KEY,
+    },
+  });
 
   const results = await provider.search({ query: 'netherlands' });
   const result = results[0];
@@ -19,23 +23,11 @@ test('Can fetch results with Google Provider', async (t) => {
 test('Can get localized results', async (t) => {
   const provider = new Provider({
     params: {
+      key: process.env.GOOGLE_API_KEY,
       language: 'nl',
     },
   });
 
   const results = await provider.search({ query: 'leeuwarden' });
   t.is(results[0].label, 'Leeuwarden, Nederland');
-});
-
-test.skip('Can fetch results with API Key', async (t) => {
-  const provider = new Provider({
-    params: {
-      key: process.env.GOOGLE_API_KEY,
-    },
-  });
-
-  const results = await provider.search({ query: 'nederland' });
-  const result = results[0];
-
-  t.truthy(result.label);
 });
