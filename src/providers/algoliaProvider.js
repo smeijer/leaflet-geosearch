@@ -29,10 +29,6 @@ export default class Provider extends BaseProvider {
     if (r.locale_names) {
       stringBuilder.push(r.locale_names.default);
     }
-    // Zip code
-    if (r.postcode) {
-      stringBuilder.push(r.postcode[0]);
-    }
     // City
     if (r.city) {
       stringBuilder.push(r.city.default);
@@ -40,6 +36,10 @@ export default class Provider extends BaseProvider {
     // State
     if (r.administrative) {
       stringBuilder.push(r.administrative[0]);
+    }
+    // Zip code
+    if (r.postcode) {
+      stringBuilder.push(r.postcode[0]);
     }
     // Country
     if (r.country) {
