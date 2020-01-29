@@ -1,7 +1,7 @@
 import test from 'ava';
 import Provider from '../googleProvider';
 
-test('Can fetch results with Google Provider', async (t) => {
+async function testFetch(t) {
   const provider = new Provider({
     params: {
       key: process.env.GOOGLE_API_KEY,
@@ -18,9 +18,9 @@ test('Can fetch results with Google Provider', async (t) => {
   t.true(result.bounds[1][0] > result.bounds[1][1]);
   t.true(result.bounds[0][0] < result.bounds[1][0]);
   t.true(result.bounds[0][1] < result.bounds[1][1]);
-});
+}
 
-test('Can get localized results', async (t) => {
+async function testLocalizedResults(t) {
   const provider = new Provider({
     params: {
       key: process.env.GOOGLE_API_KEY,
@@ -30,4 +30,13 @@ test('Can get localized results', async (t) => {
 
   const results = await provider.search({ query: 'leeuwarden' });
   t.is(results[0].label, 'Leeuwarden, Nederland');
-});
+}
+
+if (process.env.GOOGLE_API_KEY) {
+  test('Can fetch results with Google Provider', testFetch);
+  test('Can get localized results', testLocalizedResults);
+}
+else {
+  test.skip('Can fetch results with Google Provider', testFetch);
+  test.skip('Can get localized results', testLocalizedResults);
+}
