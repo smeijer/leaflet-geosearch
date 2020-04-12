@@ -1,7 +1,6 @@
-import test from 'ava';
 import Provider from '../openCageProvider';
 
-test.skip('Can fetch results with OpenCage', async (t) => {
+test.skip('Can fetch results with OpenCage', async () => {
   const provider = new Provider({
     params: {
       key: process.env.OPENCAGE_API_KEY,
@@ -20,10 +19,10 @@ test.skip('Can fetch results with OpenCage', async (t) => {
   t.true(result.bounds[0][1] < result.bounds[1][1]);
 });
 
-test.skip('Can get localized results', async (t) => {
+test.skip('Can get localized results', async () => {
   const provider = new Provider({
     params: {
-      'key': process.env.OPENCAGE_API_KEY,
+      key: process.env.OPENCAGE_API_KEY,
       'accept-language': 'nl',
     },
   });

@@ -1,8 +1,6 @@
-import test from 'ava';
-import td from 'testdouble';
 import SearchElement from '../searchElement';
 
-test('Can localize texts', (t) => {
+test('Can localize texts', () => {
   const searchLabel = 'Lookup address';
 
   const control = new SearchElement({
@@ -10,24 +8,26 @@ test('Can localize texts', (t) => {
   });
 
   const { input } = control.elements;
-  t.is(input.getAttribute('placeholder'), searchLabel);
+  expect(input.getAttribute('placeholder')).toEqual(searchLabel);
 });
 
 test('It will search when enter key is pressed', () => {
   const query = { query: 'Nederland' };
 
-  const handleSubmit = td.function();
-  td.when(handleSubmit(query)).thenReturn(Promise.resolve(query));
+  const handleSubmit = jest.fn(async () => query);
 
   const control = new SearchElement({
     handleSubmit: handleSubmit(),
   });
-  control.onSubmit = td.function();
+
+  control.onSubmit = jest.fn();
 
   const { input } = control.elements;
-  input.dispatchEvent(new KeyboardEvent('keypress', {
-    keyCode: 13,
-  }));
+  input.dispatchEvent(
+    new KeyboardEvent('keypress', {
+      keyCode: 13,
+    }),
+  );
 
-  td.verify(control.onSubmit(td.matchers.anything()));
+  expect(control.onSubmit).toHaveBeenCalled();
 });

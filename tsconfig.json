@@ -6,11 +6,12 @@
     "preserveConstEnums": true,
     "outFile": "./dist/tsc.js",
     "sourceMap": true,
-    "noEmit": true,
     "allowJs": true,
     "esModuleInterop": true,
     "noUnusedLocals": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "target": "ES5",
+    "outDir": ".tsout"
   },
   "include": [
     "src/**/*",

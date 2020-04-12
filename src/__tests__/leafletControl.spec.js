@@ -1,5 +1,3 @@
-import test from 'ava';
-import td from 'testdouble';
 import LeafletControl from '../leafletControl';
 import randomId from '../../test/randomId';
 
@@ -13,30 +11,30 @@ function createMapInstance(options, id = randomId()) {
   return { map, div, id };
 }
 
-test('Can init leaflet', (t) => {
+test('Can init leaflet', () => {
   const { div, map } = createMapInstance();
 
-  t.truthy(div._leaflet_id);
-  t.truthy(map._leaflet_id);
-  t.not(div._leaflet_id, map._leaflet_id);
-  t.true(map._initHooksCalled);
+  expect(div._leaflet_id).toBeDefined();
+  expect(map._leaflet_id).toBeDefined();
+  expect(div._leaflet_id).not.toEqual(map._leaflet_id);
+  expect(map._initHooksCalled).toEqual(true);
 });
 
-test('Can add geosearch control to leaflet', (t) => {
+test('Can add geosearch control to leaflet', () => {
   const { div, map } = createMapInstance();
 
-  const provider = { search: td.function() };
+  const provider = { search: jest.fn() };
   const control = new LeafletControl({
     provider,
   }).addTo(map);
 
-  t.true(div.contains(control.searchElement.elements.container));
+  expect(div.contains(control.searchElement.elements.container)).toEqual(true);
 });
 
-test('It toggles the active class when the search button is clicked', (t) => {
+test('It toggles the active class when the search button is clicked', () => {
   const { map } = createMapInstance();
 
-  const provider = { search: td.function() };
+  const provider = { search: jest.fn() };
   const control = new LeafletControl({
     provider,
   }).addTo(map);
@@ -45,10 +43,10 @@ test('It toggles the active class when the search button is clicked', (t) => {
   const { container } = control.searchElement.elements;
 
   button.click(new Event('click'));
-  t.regex(container.className, /active/);
+  expect(container.className).toEqual(expect.stringMatching(/active/));
 
   button.click(new Event('click'));
-  t.notRegex(container.className, /active/);
+  expect(container.className).not.toEqual(expect.stringMatching(/active/));
 });
 
 test('Shows result on submit', async () => {
@@ -57,19 +55,16 @@ test('Shows result on submit', async () => {
   const query = 'some city';
   const result = [{ x: 0, y: 50 }];
 
-  const provider = { search: td.function() };
-
-  td.when(provider.search(query))
-    .thenReturn(Promise.resolve(result));
+  const provider = { search: jest.fn(async () => result) };
 
   const control = new LeafletControl({
     provider,
   }).addTo(map);
 
-  control.showResult = td.function();
+  control.showResult = jest.fn();
   await control.onSubmit('some city');
 
-  td.verify(control.showResult(result[0], query));
+  expect(control.showResult).toHaveBeenCalledWith(result[0], query);
 });
 
 test('Change view on result', () => {
@@ -79,16 +74,11 @@ test('Change view on result', () => {
     animateZoom: false,
   });
 
-  map.setView = td.function();
+  map.setView = jest.fn();
 
-  const control = new LeafletControl({
-  }).addTo(map);
+  const control = new LeafletControl({}).addTo(map);
 
   control.showResult({ x: 50, y: 0 }, { query: 'none' });
 
-  td.verify(map.setView(
-    td.matchers.isA(L.LatLng),
-    td.matchers.isA(Number),
-    td.matchers.anything(),
-  ));
+  expect(map.setView).toHaveBeenCalled();
 });

@@ -1,0 +1,42 @@
+[
+  {
+    "place_id": "274747177",
+    "licence": "https://locationiq.com/attribution",
+    "osm_type": "node",
+    "osm_id": "2590910713",
+    "boundingbox": ["52.0990469", "52.0991469", "4.2989929", "4.2990929"],
+    "lat": "52.0990969",
+    "lon": "4.2990429",
+    "display_name": "Madurodam, 1, George Maduroplein, Archipelbuurt, The Hague, South Holland, Netherlands, 2584RZ, The Netherlands",
+    "class": "tourism",
+    "type": "theme_park",
+    "importance": 0.50098857248736,
+    "icon": "https://locationiq.org/static/images/mapicons/poi_point_of_interest.p.20.png"
+  },
+  {
+    "place_id": "11951658",
+    "licence": "https://locationiq.com/attribution",
+    "osm_type": "node",
+    "osm_id": "1200925962",
+    "boundingbox": ["52.0972521", "52.0973521", "4.3032224", "4.3033224"],
+    "lat": "52.0973021",
+    "lon": "4.3032724",
+    "display_name": "Madurodam, Hubertusviaduct, Archipelbuurt, The Hague, South Holland, Netherlands, 2585WB, The Netherlands",
+    "class": "highway",
+    "type": "motorway_junction",
+    "importance": 0.111
+  },
+  {
+    "place_id": "13081721",
+    "licence": "https://locationiq.com/attribution",
+    "osm_type": "node",
+    "osm_id": "1200785922",
+    "boundingbox": ["52.0979783", "52.0980783", "4.2955383", "4.2956383"],
+    "lat": "52.0980283",
+    "lon": "4.2955883",
+    "display_name": "Madurodam, Hubertusviaduct, Archipelbuurt, The Hague, South Holland, Netherlands, 2585 JC, The Netherlands",
+    "class": "highway",
+    "type": "motorway_junction",
+    "importance": 0.111
+  }
+]

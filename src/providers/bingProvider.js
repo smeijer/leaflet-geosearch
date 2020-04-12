@@ -19,7 +19,7 @@ export default class Provider extends BaseProvider {
       return [];
     }
 
-    return (data.resourceSets[0].resources).map(r => ({
+    return data.resourceSets[0].resources.map((r) => ({
       x: r.point.coordinates[1],
       y: r.point.coordinates[0],
       label: r.address.formattedAddress,
