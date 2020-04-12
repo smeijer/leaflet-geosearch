@@ -25,3 +25,19 @@
   text-indent: 18px;
 }
 
+.result > * {
+  border: 1px solid transparent;
+  line-height: 32px;
+  padding: 0 18px;
+  font-size: 14px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.result > *:hover,
+.result > :global(.active) {
+  background-color: #f8f8f8;
+  border-color: #c6c6c6;
+}

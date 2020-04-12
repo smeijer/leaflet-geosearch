@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "outFile": "./dist/tsc.js",
+    "sourceMap": true,
+    "noEmit": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "noUnusedLocals": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "src/**/*",
+    "docs/**/*",
+    "typings"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}

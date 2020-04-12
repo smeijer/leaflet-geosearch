@@ -1,0 +1,44 @@
+---
+name: Introduction
+route: /
+---
+
+import { Link } from 'docz';
+import Playground from './components/Playground';
+import Map from './components/Map';
+
+# Introduction
+`leaflet-geosearch` adds support for geocoding (address lookup, a.k.a. geoseaching) to your (web) application. It comes with controls to be embedded in your Leaflet map.
+
+
+We support the following providers out-of-the-box; [Bing](/providers/bing), [Esri](/providers/esri), [Google](/providers/google), [OpenStreetMap](/providers/openstreetmap), [LocationIQ](/providers/locationiq), [OpenCage](/providers/opencage).
+
+Although this project is named `leaflet-geosearch`, this library is also usable without LeafletJS, and does not have any dependencies on Leaflet whatsoever.
+
+<Playground>
+  <Map />
+</Playground>
+
+## Installation
+
+```bash
+npm install --save leaflet-geosearch
+```
+
+## Providers
+`leaflet-geosearch` uses so-called "providers" to take care of building the correct service URL and parsing the retrieved data into a uniform format. Thanks to this architecture, it is trivial to add your own providers, so you can use your own geocoding service.
+
+When [`OpenStreetMap`](/providers/openstreet) does not match your needs; you can also choose to use the [`Bing`](/providers/bing), [`Esri`](/providers/esri), [`Google`](/providers/google), [`LocationIQ`](/providers/locationiq), or [`OpenCage`](/providers/opencage) providers. Most of those providers do however require `API keys`. See the documentation pages on the relevant organisations on how to obtain these keys.
+
+In case you decide to write your own provider, please consider submitting a PR to share your work with us.
+
+Providers are unaware of any options you can give them. They are simple proxies to their endpoints. There is only one special property, and that is the `params` option. The difference being; that `params` will be included in the endpoint url. Being Often used for `API KEYS`, while the other attributes can be used for provider configuration.
+
+## Browser support / Polyfills
+This project is written with the latest technologies in mind. Thereby it is required to include some polyfills when you wish to support older browsers. These polyfills are recommended for IE and Safari support:
+
+- [babel-polyfill][1], for `array.includes` support.
+- [unfetch][2], for `fetch` requests.
+
+[1]: https://npm.im/babel-polyfill
+[2]: https://npm.im/unfetch

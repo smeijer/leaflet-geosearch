@@ -1,0 +1,38 @@
+---
+name: Google
+menu: Providers
+route: /providers/google
+---
+
+import Playground from '../components/Playground';
+import Map from '../components/Map';
+
+# Google Provider
+
+**note**: Google services require an API key. [Obtain here][1].
+For more options and configurations, see the [Google Maps developer docs][2].
+
+<Playground>
+  <Map provider="Google" />
+</Playground>
+
+
+```js
+import { GoogleProvider } from 'leaflet-geosearch';
+
+const provider = new GoogleProvider({
+  params: {
+    key: '__YOUR_GOOGLE_KEY__'
+  },
+});
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(new GeoSearchControl({
+  provider,
+}));
+```
+
+[1]: https://developers.google.com/maps/documentation/javascript/get-api-key
+[2]: https://developers.google.com/maps/documentation/geocoding/start

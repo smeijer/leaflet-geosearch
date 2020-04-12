@@ -1,0 +1,13 @@
+.root > div > :nth-child(1) > :nth-child(2), .root > div > :nth-child(2) {
+  display: none;
+}
+
+.root + div > pre {
+  height: auto;
+  display: block;
+  background-color: var(--theme-ui-colors-playground-bg,#FFFFFF);
+  border: 1px solid var(--theme-ui-colors-playground-border,#CED4DE);
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
+  margin: 0;
+}
