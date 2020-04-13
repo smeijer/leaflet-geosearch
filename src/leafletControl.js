@@ -1,6 +1,6 @@
-import debounce from 'lodash.debounce';
 import GeoSearchElement from './searchElement';
 import ResultList from './resultList';
+import debounce from './lib/debounce';
 
 import { createElement, addClassName, removeClassName } from './domUtils';
 import { ENTER_KEY, SPECIAL_KEYS, ARROW_UP_KEY, ARROW_DOWN_KEY, ESCAPE_KEY } from './constants';
@@ -37,14 +37,7 @@ const defaultOptions = () => ({
 });
 
 const wasHandlerEnabled = {};
-const mapHandlers = [
-  'dragging',
-  'touchZoom',
-  'doubleClickZoom',
-  'scrollWheelZoom',
-  'boxZoom',
-  'keyboard',
-];
+const mapHandlers = ['dragging', 'touchZoom', 'doubleClickZoom', 'scrollWheelZoom', 'boxZoom', 'keyboard'];
 
 const Control = {
   initialize(options) {
@@ -63,7 +56,7 @@ const Control = {
 
     this.searchElement = new GeoSearchElement({
       ...this.options,
-      handleSubmit: query => this.onSubmit(query),
+      handleSubmit: (query) => this.onSubmit(query),
     });
 
     const { container, form, input } = this.searchElement.elements;
@@ -72,12 +65,24 @@ const Control = {
     button.title = searchLabel;
     button.href = '#';
 
-    button.addEventListener('click', (e) => { this.onClick(e); }, false);
+    button.addEventListener(
+      'click',
+      (e) => {
+        this.onClick(e);
+      },
+      false,
+    );
 
     const resetButton = createElement('a', classNames.resetButton, form);
     resetButton.innerHTML = 'X';
     button.href = '#';
-    resetButton.addEventListener('click', () => { this.clearResults(null, true); }, false);
+    resetButton.addEventListener(
+      'click',
+      () => {
+        this.clearResults(null, true);
+      },
+      false,
+    );
 
     if (autoComplete) {
       this.resultList = new ResultList({
@@ -89,14 +94,17 @@ const Control = {
 
       form.appendChild(this.resultList.elements.container);
 
-      input.addEventListener('keyup',
-        debounce(e => this.autoSearch(e), autoCompleteDelay), true);
-      input.addEventListener('keydown', e => this.selectResult(e), true);
-      input.addEventListener('keydown', e => this.clearResults(e, true), true);
+      input.addEventListener(
+        'keyup',
+        debounce((e) => this.autoSearch(e), autoCompleteDelay),
+        true,
+      );
+      input.addEventListener('keydown', (e) => this.selectResult(e), true);
+      input.addEventListener('keydown', (e) => this.clearResults(e, true), true);
     }
 
-    form.addEventListener('mouseenter', e => this.disableHandlers(e), true);
-    form.addEventListener('mouseleave', e => this.restoreHandlers(e), true);
+    form.addEventListener('mouseenter', (e) => this.disableHandlers(e), true);
+    form.addEventListener('mouseleave', (e) => this.restoreHandlers(e), true);
 
     this.elements = { button, resetButton };
   },
@@ -139,8 +147,7 @@ const Control = {
     if (container.classList.contains('active')) {
       removeClassName(container, 'active');
       this.clearResults();
-    }
-    else {
+    } else {
       addClassName(container, 'active');
       input.focus();
     }
@@ -200,9 +207,9 @@ const Control = {
     }
 
     // eslint-disable-next-line no-bitwise
-    const next = (event.code === 'ArrowDown') ? ~~list.selected + 1 : ~~list.selected - 1;
+    const next = event.code === 'ArrowDown' ? ~~list.selected + 1 : ~~list.selected - 1;
     // eslint-disable-next-line no-nested-ternary
-    const idx = (next < 0) ? max : (next > max) ? 0 : next;
+    const idx = next < 0 ? max : next > max ? 0 : next;
 
     const item = list.select(idx);
     input.value = item.label;
@@ -237,8 +244,7 @@ const Control = {
     if (query.length) {
       const results = await provider.search({ query });
       this.resultList.render(results);
-    }
-    else {
+    } else {
       this.resultList.clear();
     }
   },
@@ -322,8 +328,7 @@ const Control = {
 
     if (!retainZoomLevel && resultBounds.isValid()) {
       this.map.fitBounds(bounds, { animate: animateZoom });
-    }
-    else {
+    } else {
       this.map.setView(bounds.getCenter(), this.getZoom(), { animate: animateZoom });
     }
   },

@@ -1,13 +1,28 @@
 {
   "name": "leaflet-geosearch",
   "version": "2.6.0",
+  "description": "Adds support for address lookup (a.k.a. geocoding / geoseaching) to Leaflet.",
   "publishConfig": {
     "tag": "latest"
   },
-  "description": "Adds support for address lookup (a.k.a. geocoding / geoseaching) to Leaflet.",
-  "main": "lib/index.js",
-  "module": "src/index.js",
+  "main": "dist/geosearch.js",
+  "umd:main": "dist/geosearch.umd.js",
+  "module": "dist/geosearch.module.js",
+  "unpkg": "dist/geosearch.umd.js",
+  "source": "src/index.js",
+  "types": "dist/types.d.ts",
+  "exports": {
+    ".": {
+      "browser": "./dist/geosearch.module.js",
+      "umd": "./dist/geosearch.umd.js",
+      "import": "./dist/geosearch.module.js",
+      "require": "./dist/geosearch.js"
+    },
+    "./package.json": "./package.json",
+    "./": "./"
+  },
   "scripts": {
+    "build": "microbundle build --compress false --external none",
     "test": "jest",
     "lint": "tsc --noEmit && eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "docz:dev": "docz dev",
@@ -17,13 +32,9 @@
   },
   "files": [
     "src",
-    "lib",
     "dist",
     "assets"
   ],
-  "directories": {
-    "example": "example"
-  },
   "keywords": [
     "geolocation",
     "geocoding",
@@ -58,6 +69,7 @@
     "jest": "^25.3.0",
     "jest-fetch-mock": "^3.0.3",
     "leaflet": "^1.6.0",
+    "microbundle": "^0.12.0-next.8",
     "prettier": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -65,7 +77,5 @@
     "ts-jest": "^25.3.1",
     "typescript": "^3.8.3"
   },
-  "dependencies": {
-    "lodash.debounce": "^4.0.8"
-  }
+  "dependencies": {}
 }
