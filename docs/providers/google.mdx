@@ -34,5 +34,22 @@ map.addControl(new GeoSearchControl({
 }));
 ```
 
+## Additional options
+
+Google supports a number of [optional parameters][3]. As Google requires those parameters to be added to the url, they can be added to the `params` key of the provider.
+
+All options defined next to the `params` key, would have been added to the request body.
+
+```js
+const provider = new GoogleProvider({
+  params: {
+    key: '__YOUR_GOOGLE_KEY__',
+    language: 'nl', // render results in Dutch
+    region: 'nl',   // prioritize matches within The Netherlands
+  },
+});
+```
+
 [1]: https://developers.google.com/maps/documentation/javascript/get-api-key
 [2]: https://developers.google.com/maps/documentation/geocoding/start
+[3]: https://developers.google.com/maps/documentation/geocoding/intro#geocoding
