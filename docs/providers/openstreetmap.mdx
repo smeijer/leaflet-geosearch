@@ -29,4 +29,33 @@ map.addControl(new GeoSearchControl({
 }));
 ```
 
+## Authentication
+
+Note that OpenStreetMap is open, but not free without limits. They do have a [Usage Policy][3] just like the other providers. Provide the `email` property to opt-in for authenticated requests.
+
+```js
+const provider = new OpenStreetMapProvider({
+  params: {
+    email: 'john@example.com', // auth for large number of requests
+  },
+});
+```
+
+## Optional parameters
+
+OpenStreetMap Nominatim supports a number of [optional parameters][2]. As the api requires those parameters to be added to the url, they can be added to the `params` key of the provider.
+
+All options defined next to the `params` key, would have been added to the request body.
+
+```js
+const provider = new OpenStreetMapProvider({
+  params: {
+    'accept-language': 'nl', // render results in Dutch
+    'countrycodes': 'nl',    // limit search results to the Netherlands
+  },
+});
+```
+
 [1]: http://wiki.openstreetmap.org/wiki/Nominatim
+[2]: https://nominatim.org/release-docs/develop/api/Search/#parameters
+[3]: https://operations.osmfoundation.org/policies/nominatim
