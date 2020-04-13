@@ -27,7 +27,7 @@
     "test": "jest",
     "lint": "tsc --noEmit && eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "docz:dev": "docz dev",
-    "docz:build": "docz build",
+    "docz:build": "docz build --base /leaflet-geosearch/",
     "docz:serve": "docz build && docz serve",
     "docs:update": "npm run lib:build && npm run docz:build && git checkout gh-pages && find .docz/dist -name '*.js.map' -delete && cp -r .docz/dist/* . && git add . &&  git commit -m \"update docs\" && git checkout -"
   },
