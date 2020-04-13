@@ -24,9 +24,6 @@
   "directories": {
     "example": "example"
   },
-  "resolutions": {
-    "docz/**/webpack": "4.28.4"
-  },
   "keywords": [
     "geolocation",
     "geocoding",

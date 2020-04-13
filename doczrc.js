@@ -6,7 +6,7 @@ export default {
   },
   src: 'docs',
   dest: '.docz/dist',
-  public: 'assets',
+  public: 'docs/assets',
   ignore: ['CODE_OF_CONDUCT.md', 'CONTRIBUTING.md', 'LICENSE.md'],
   menu: [
     { name: 'Introduction' },

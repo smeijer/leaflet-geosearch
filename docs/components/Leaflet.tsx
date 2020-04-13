@@ -1,11 +1,12 @@
 import React, { ReactElement, useRef, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { Map, TileLayer } from 'react-leaflet';
-import styles from './Leaflet.module.css';
+
 import '../../assets/css/leaflet.css';
 import useConfigureLeaflet from '../hooks/useConfigureLeaflet';
 import * as providers from '../../src/providers';
 import GeoSearchControl from '../../src/leafletControl';
+import styles from './Leaflet.module.css';
 
 import { MapProps } from './Map';
 
@@ -55,9 +56,11 @@ function Leaflet(props: MapProps): ReactElement {
     };
   }, [ref.current, control.current, provider]);
 
+  // I'm not sure what's causing it, but the className from the outer
+  // div is being removed. Hence the useless wrapper
   return (
-    <div className={styles.root}>
-      <Map ref={ref} viewport={viewport} className={styles.map}>
+    <div>
+      <Map ref={ref} viewport={viewport} id="map" className={styles.map}>
         <TileLayer url="//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       </Map>
     </div>

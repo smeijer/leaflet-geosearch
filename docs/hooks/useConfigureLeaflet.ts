@@ -1,6 +1,4 @@
 import L from 'leaflet';
-
-import isDomAvailable from '../lib/isDomAvailable';
 import { Viewport } from 'react-leaflet';
 
 const viewport: Viewport = {
@@ -13,7 +11,7 @@ export interface LeafletConfig {
 }
 
 const useConfigureLeaflet = (): LeafletConfig => {
-  if (!isDomAvailable()) return;
+  if (!window) return;
 
   // To get around an issue with the default icon not being set up right between using React
   // and importing the leaflet library, we need to reset the image imports

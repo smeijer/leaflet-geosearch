@@ -1,20 +1,17 @@
-import React, { ReactElement, lazy, Suspense } from 'react';
-import 'leaflet/dist/leaflet.css';
-
-const Leaflet = lazy(() => import('./Leaflet'));
-const Loader = () => <div>loading...</div>;
+import React, { ReactElement } from 'react';
+import Leaflet from './Leaflet';
 
 export interface MapProps {
-  provider: 'OpenStreetMap' | 'Google' | 'Bing';
+  provider?: 'OpenStreetMap' | 'Google' | 'Bing';
   providerOptions: any;
 }
 
 function Map(props: MapProps): ReactElement {
-  return (
-    <Suspense fallback={<Loader />}>
-      <Leaflet provider={props.provider} />
-    </Suspense>
-  );
+  if (typeof window === 'undefined') {
+    return <div>loading...</div>;
+  }
+
+  return <Leaflet provider={props.provider} />;
 }
 
 export default Map;

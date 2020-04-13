@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+const tsConfig = require('./tsconfig.json');
+
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
@@ -12,4 +15,13 @@ module.exports = {
   },
   automock: false,
   setupFiles: ['./jest.setup.js'],
+  globals: {
+    'ts-jest': {
+      tsConfig: {
+        ...tsConfig.compilerOptions,
+        noEmit: false,
+        outDir: '.tsCache',
+      },
+    },
+  },
 };

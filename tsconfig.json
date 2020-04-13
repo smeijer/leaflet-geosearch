@@ -1,17 +1,18 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "module": "commonjs",
-    "noImplicitAny": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "outFile": "./dist/tsc.js",
-    "sourceMap": true,
-    "allowJs": true,
+    "target":"es2015",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
-    "noUnusedLocals": true,
-    "jsx": "preserve",
-    "target": "ES5",
-    "outDir": ".tsout"
+    "noEmit": true,
+    "jsx": "react",
+    "inlineSourceMap": true,
+    "allowJs": true,
+    "pretty": true,
+    "strict": true,
+    "skipLibCheck": false
   },
   "include": [
     "src/**/*",
