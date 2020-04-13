@@ -7,11 +7,13 @@ const viewport: Viewport = {
 };
 
 export interface LeafletConfig {
-  viewport: Viewport;
+  viewport?: Viewport;
 }
 
 const useConfigureLeaflet = (): LeafletConfig => {
-  if (!window) return;
+  if (typeof window === 'undefined') {
+    return {};
+  }
 
   // To get around an issue with the default icon not being set up right between using React
   // and importing the leaflet library, we need to reset the image imports
