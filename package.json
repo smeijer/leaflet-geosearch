@@ -29,7 +29,7 @@
     "docz:dev": "docz dev",
     "docz:build": "docz build",
     "docz:serve": "docz build && docz serve",
-    "docz:publish": "git stash && git checkout -b gh-pages && git checkout stash@{0} -- ./docs && git add . && git commit -m \"update docs\" && git checkout - && git stash pop"
+    "docs:update": "npm run lib:build && npm run docz:build && git checkout gh-pages && find .docz/dist -name '*.js.map' -delete && cp -r .docz/dist/* . && git add . &&  git commit -m \"update docs\" && git checkout -"
   },
   "files": [
     "src",
