@@ -1,17 +1,19 @@
 import React, { useState, useEffect, ReactElement } from 'react';
-import * as providers from '../../src/providers';
+import providers from '../lib/providers';
 import styles from './Search.module.css';
 import { MapProps } from './Map';
 
 interface SearchProps {
   provider: MapProps['provider'];
-  providerOptions: MapProps['providerOptions'];
 }
 
 function Search(props: SearchProps): ReactElement {
   // @ts-ignore
-  const Provider = providers[`${props.provider}Provider`] || providers.OpenStreetMapProvider;
-  const provider = new Provider(props.providerOptions || {});
+  if (!providers[props.provider || 'OpenStreetMap']) {
+    throw new Error('unknown provider');
+  }
+
+  const provider = providers[props.provider || 'OpenStreetMap'];
 
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);

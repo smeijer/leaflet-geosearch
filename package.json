@@ -22,7 +22,8 @@
     "./": "./"
   },
   "scripts": {
-    "build": "microbundle build --compress false --external none",
+    "lib:build": "microbundle build --external none",
+    "lib:dev": "microbundle build --compress false --external none --watch",
     "test": "jest",
     "lint": "tsc --noEmit && eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "docz:dev": "docz dev",
@@ -56,6 +57,7 @@
   "devDependencies": {
     "@types/jest": "^25.2.1",
     "@types/lodash.debounce": "^4.0.6",
+    "@types/react-dom": "^16.9.6",
     "@types/react-leaflet": "^2.5.1",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",

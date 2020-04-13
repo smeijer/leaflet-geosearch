@@ -1,34 +1,18 @@
 import React, { ReactElement, useRef, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { Map as BaseMap, TileLayer } from 'react-leaflet';
+import { GeoSearchControl } from 'leaflet-geosearch';
 
 import '../../assets/css/leaflet.css';
+
 import useConfigureLeaflet from '../hooks/useConfigureLeaflet';
-import * as providers from '../../src/providers';
-import GeoSearchControl from '../../src/leafletControl';
+import providers from '../lib/providers';
 import styles from './Map.module.css';
 
 export interface MapProps {
   provider?: 'OpenStreetMap' | 'Google' | 'Bing';
   providerOptions: any;
 }
-
-const providerMap = {
-  Bing: new providers.BingProvider({
-    params: { key: process.env.GATSBY_BING_API_KEY },
-  }),
-  Esri: new providers.EsriProvider(),
-  Google: new providers.GoogleProvider({
-    params: { key: process.env.GATSBY_GOOGLE_API_KEY },
-  }),
-  LocationIQ: new providers.LocationIQProvider({
-    params: { key: process.env.GATSBY_LOCATIONIQ_API_KEY },
-  }),
-  OpenCage: new providers.OpenCageProvider({
-    params: { key: process.env.GATSBY_OPENCAGE_API_KEY },
-  }),
-  OpenStreetMap: new providers.OpenStreetMapProvider(),
-};
 
 function Map(props: MapProps): ReactElement {
   const { provider = 'OpenStreetMap' } = props;
@@ -40,13 +24,13 @@ function Map(props: MapProps): ReactElement {
 
   useEffect(() => {
     if (ref.current) {
-      if (!providerMap[provider]) {
+      if (!providers[provider]) {
         throw new Error('unknown provider');
       }
 
       control.current = GeoSearchControl({
         style: 'bar',
-        provider: providerMap[provider],
+        provider: providers[provider],
       });
 
       ref.current.leafletElement.addControl(control.current);
