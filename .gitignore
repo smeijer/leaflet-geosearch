@@ -7,3 +7,4 @@ coverage
 .env
 .tmp
 .docz
+.rts2_cache*

@@ -1,26 +1,28 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target":"es2015",
-    "module": "CommonJS",
+    "target":"esnext",
+    "module": "esnext",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
     "esModuleInterop": true,
-    "noEmit": true,
     "jsx": "react",
-    "inlineSourceMap": true,
     "allowJs": true,
     "pretty": true,
     "strict": true,
-    "skipLibCheck": false
+    "rootDir": "src",
+    "sourceMap": true,
+    "removeComments": false,
+    "noEmitHelpers": false,
+    "outDir": "lib",
+    "declaration": true
   },
   "include": [
-    "src/**/*",
-    "docs/**/*",
+    "src",
     "typings"
   ],
   "exclude": [
     "node_modules",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/*.spec.js"
   ]
 }

@@ -9,7 +9,7 @@
   "umd:main": "dist/geosearch.umd.js",
   "module": "dist/geosearch.module.js",
   "unpkg": "dist/geosearch.umd.js",
-  "source": "src/index.js",
+  "source": "src/index.ts",
   "types": "dist/types.d.ts",
   "exports": {
     ".": {
@@ -22,8 +22,11 @@
     "./": "./"
   },
   "scripts": {
-    "lib:build": "microbundle build --external none",
-    "lib:dev": "microbundle build --compress false --external none --watch",
+    "clean": "rimraf ./dist",
+    "build": "run-s clean \"run-p build:dist build:lib\"",
+    "build:dist": "microbundle build --external none --format es,cjs,umd",
+    "build:lib": "tsc",
+    "build:watch": "npm run build:dist -- --compress false --watch",
     "test": "jest",
     "lint": "tsc --noEmit && eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "docz:dev": "docz dev",
@@ -34,6 +37,7 @@
   "files": [
     "src",
     "dist",
+    "lib",
     "assets"
   ],
   "keywords": [
@@ -72,10 +76,12 @@
     "jest-fetch-mock": "^3.0.3",
     "leaflet": "^1.6.0",
     "microbundle": "^0.12.0-next.8",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-leaflet": "^2.6.3",
+    "rimraf": "^3.0.2",
     "ts-jest": "^25.3.1",
     "typescript": "^3.8.3"
   },
