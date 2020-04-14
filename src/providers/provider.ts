@@ -6,7 +6,7 @@ export interface LatLng {
   lng: number;
 }
 
-export interface SearchResult<TRawResult> {
+export interface SearchResult<TRawResult = any> {
   x: number;
   y: number;
   label: string;

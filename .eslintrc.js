@@ -12,6 +12,7 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/ban-ts-ignore': 0,
+    '@typescript-eslint/no-explicit-any': 'off',
     curly: ['error', 'all'],
   },
 };
