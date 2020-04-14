@@ -186,7 +186,7 @@ const Control = {
   },
 
   selectResult(event) {
-    if (![ENTER_KEY, ARROW_DOWN_KEY, ARROW_UP_KEY].includes(event.keyCode)) {
+    if ([ENTER_KEY, ARROW_DOWN_KEY, ARROW_UP_KEY].indexOf(event.keyCode) === -1) {
       return;
     }
 
@@ -235,7 +235,7 @@ const Control = {
   },
 
   async autoSearch(event) {
-    if (SPECIAL_KEYS.includes(event.keyCode)) {
+    if (SPECIAL_KEYS.indexOf(event.keyCode) > -1) {
       return;
     }
 
