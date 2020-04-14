@@ -30,15 +30,20 @@ export type OpenStreetMapProviderOptions = {
   reverseUrl?: string;
 } & ProviderOptions;
 
-export default class OpenStreetMapProvider extends AbstractProvider<RawResult[], RawResult> {
+export default class OpenStreetMapProvider extends AbstractProvider<
+  RawResult[],
+  RawResult
+> {
   searchUrl: string;
   reverseUrl: string;
 
   constructor(options: OpenStreetMapProviderOptions = {}) {
     super(options);
 
-    this.searchUrl = options.searchUrl || 'https://nominatim.openstreetmap.org/search';
-    this.reverseUrl = options.reverseUrl || 'https://nominatim.openstreetmap.org/reverse';
+    this.searchUrl =
+      options.searchUrl || 'https://nominatim.openstreetmap.org/search';
+    this.reverseUrl =
+      options.reverseUrl || 'https://nominatim.openstreetmap.org/reverse';
   }
 
   endpoint({ query, type }: EndpointArgument): string {
@@ -55,7 +60,9 @@ export default class OpenStreetMapProvider extends AbstractProvider<RawResult[],
   }
 
   parse(response: ParseArgument<RequestResult>): SearchResult<RawResult>[] {
-    const records = Array.isArray(response.data) ? response.data : [response.data];
+    const records = Array.isArray(response.data)
+      ? response.data
+      : [response.data];
 
     return records.map((r) => ({
       x: Number(r.lon),

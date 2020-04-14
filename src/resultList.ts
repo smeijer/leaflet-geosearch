@@ -20,7 +20,10 @@ export default class ResultList {
   constructor({ handleClick, classNames = {} }: ResultListProps) {
     this.handleClick = handleClick;
 
-    this.container = createElement<HTMLDivElement>('div', cx('results', classNames.container));
+    this.container = createElement<HTMLDivElement>(
+      'div',
+      cx('results', classNames.container),
+    );
     this.container.addEventListener('click', this.onClick, true);
 
     this.resultItem = createElement<HTMLDivElement>('div', cx(classNames.item));
@@ -46,7 +49,9 @@ export default class ResultList {
   select(index: number): SearchResult {
     // eslint-disable-next-line no-confusing-arrow
     Array.from(this.container.children).forEach((child, idx) =>
-      idx === index ? addClassName(child, 'active') : removeClassName(child, 'active'),
+      idx === index
+        ? addClassName(child, 'active')
+        : removeClassName(child, 'active'),
     );
 
     this.selected = index;
@@ -72,7 +77,11 @@ export default class ResultList {
       return;
     }
     const target = event.target as HTMLDivElement;
-    if (!target || !this.container.contains(target) || !target.hasAttribute('data-key')) {
+    if (
+      !target ||
+      !this.container.contains(target) ||
+      !target.hasAttribute('data-key')
+    ) {
       return;
     }
 

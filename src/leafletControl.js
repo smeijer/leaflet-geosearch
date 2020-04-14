@@ -3,7 +3,13 @@ import ResultList from './resultList';
 import debounce from './lib/debounce';
 
 import { createElement, addClassName, removeClassName } from './domUtils';
-import { ENTER_KEY, SPECIAL_KEYS, ARROW_UP_KEY, ARROW_DOWN_KEY, ESCAPE_KEY } from './constants';
+import {
+  ENTER_KEY,
+  SPECIAL_KEYS,
+  ARROW_UP_KEY,
+  ARROW_DOWN_KEY,
+  ESCAPE_KEY,
+} from './constants';
 
 const defaultOptions = () => ({
   position: 'topleft',
@@ -37,7 +43,14 @@ const defaultOptions = () => ({
 });
 
 const wasHandlerEnabled = {};
-const mapHandlers = ['dragging', 'touchZoom', 'doubleClickZoom', 'scrollWheelZoom', 'boxZoom', 'keyboard'];
+const mapHandlers = [
+  'dragging',
+  'touchZoom',
+  'doubleClickZoom',
+  'scrollWheelZoom',
+  'boxZoom',
+  'keyboard',
+];
 
 const Control = {
   initialize(options) {
@@ -49,7 +62,13 @@ const Control = {
       ...options,
     };
 
-    const { style, classNames, searchLabel, autoComplete, autoCompleteDelay } = this.options;
+    const {
+      style,
+      classNames,
+      searchLabel,
+      autoComplete,
+      autoCompleteDelay,
+    } = this.options;
     if (style !== 'button') {
       this.options.classNames.container += ` ${options.style}`;
     }
@@ -100,7 +119,11 @@ const Control = {
         true,
       );
       input.addEventListener('keydown', (e) => this.selectResult(e), true);
-      input.addEventListener('keydown', (e) => this.clearResults(e, true), true);
+      input.addEventListener(
+        'keydown',
+        (e) => this.clearResults(e, true),
+        true,
+      );
     }
 
     form.addEventListener('mouseenter', (e) => this.disableHandlers(e), true);
@@ -120,7 +143,9 @@ const Control = {
 
     if (style === 'bar') {
       const { form } = this.searchElement.elements;
-      const root = map.getContainer().querySelector('.leaflet-control-container');
+      const root = map
+        .getContainer()
+        .querySelector('.leaflet-control-container');
 
       const container = createElement('div', 'leaflet-control-geosearch bar');
       container.appendChild(form);
@@ -186,7 +211,9 @@ const Control = {
   },
 
   selectResult(event) {
-    if ([ENTER_KEY, ARROW_DOWN_KEY, ARROW_UP_KEY].indexOf(event.keyCode) === -1) {
+    if (
+      [ENTER_KEY, ARROW_DOWN_KEY, ARROW_UP_KEY].indexOf(event.keyCode) === -1
+    ) {
       return;
     }
 
@@ -208,7 +235,8 @@ const Control = {
     }
 
     // eslint-disable-next-line no-bitwise
-    const next = event.code === 'ArrowDown' ? ~~list.selected + 1 : ~~list.selected - 1;
+    const next =
+      event.code === 'ArrowDown' ? ~~list.selected + 1 : ~~list.selected - 1;
     // eslint-disable-next-line no-nested-ternary
     const idx = next < 0 ? max : next > max ? 0 : next;
 
@@ -325,12 +353,16 @@ const Control = {
     const { retainZoomLevel, animateZoom } = this.options;
 
     const resultBounds = new L.LatLngBounds(result.bounds);
-    const bounds = resultBounds.isValid() ? resultBounds : this.markers.getBounds();
+    const bounds = resultBounds.isValid()
+      ? resultBounds
+      : this.markers.getBounds();
 
     if (!retainZoomLevel && resultBounds.isValid()) {
       this.map.fitBounds(bounds, { animate: animateZoom });
     } else {
-      this.map.setView(bounds.getCenter(), this.getZoom(), { animate: animateZoom });
+      this.map.setView(bounds.getCenter(), this.getZoom(), {
+        animate: animateZoom,
+      });
     }
   },
 
@@ -342,7 +374,9 @@ const Control = {
 
 export default function LeafletControl(...options) {
   if (!L || !L.Control || !L.Control.extend) {
-    throw new Error('Leaflet must be loaded before instantiating the GeoSearch control');
+    throw new Error(
+      'Leaflet must be loaded before instantiating the GeoSearch control',
+    );
   }
 
   const LControl = L.Control.extend(Control);

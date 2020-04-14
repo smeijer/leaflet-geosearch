@@ -1,4 +1,9 @@
-import AbstractProvider, { EndpointArgument, ParseArgument, SearchArgument, SearchResult } from './provider';
+import AbstractProvider, {
+  EndpointArgument,
+  ParseArgument,
+  SearchArgument,
+  SearchResult,
+} from './provider';
 import { createScriptElement } from '../domUtils';
 
 export interface RequestResult {
@@ -39,7 +44,10 @@ export interface RawResult {
   matchCodes: string[];
 }
 
-export default class BingProvider extends AbstractProvider<RequestResult, RawResult> {
+export default class BingProvider extends AbstractProvider<
+  RequestResult,
+  RawResult
+> {
   searchUrl = 'https://dev.virtualearth.net/REST/v1/Locations';
 
   endpoint({ query, jsonp }: EndpointArgument & { jsonp: string }): string {
@@ -68,7 +76,10 @@ export default class BingProvider extends AbstractProvider<RequestResult, RawRes
 
   async search({ query }: SearchArgument): Promise<SearchResult<RawResult>[]> {
     const jsonp = `BING_JSONP_CB_${Date.now()}`;
-    const json = await createScriptElement<RequestResult>(this.endpoint({ query, jsonp }), jsonp);
+    const json = await createScriptElement<RequestResult>(
+      this.endpoint({ query, jsonp }),
+      jsonp,
+    );
 
     return this.parse({ data: json });
   }

@@ -58,12 +58,16 @@ export default abstract class AbstractProvider<TRequestResult, TRawResult>
   }
 
   abstract endpoint(options: EndpointArgument): string;
-  abstract parse(response: ParseArgument<TRequestResult>): SearchResult<TRawResult>[];
+  abstract parse(
+    response: ParseArgument<TRequestResult>,
+  ): SearchResult<TRawResult>[];
 
   getParamString(params: ProviderParams = {}): string {
     const set = { ...this.options.params, ...params };
     return Object.keys(set)
-      .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(set[key])}`)
+      .map(
+        (key) => `${encodeURIComponent(key)}=${encodeURIComponent(set[key])}`,
+      )
       .join('&');
   }
 

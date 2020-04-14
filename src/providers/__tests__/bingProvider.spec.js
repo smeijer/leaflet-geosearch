@@ -21,9 +21,16 @@ describe('BingProvider', () => {
   const callbackName = `BING_JSONP_CB_${now}`;
 
   beforeAll(() => {
-    fetch.mockResponse(async () => ({ body: `${callbackName}(${JSON.stringify(fixtures)})` }));
+    fetch.mockResponse(async () => ({
+      body: `${callbackName}(${JSON.stringify(fixtures)})`,
+    }));
+
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    jest.spyOn(require('../../domUtils'), 'createScriptElement').mockImplementation(jest.fn(async () => fixtures));
+    const domUtils = require('../../domUtils');
+
+    jest
+      .spyOn(domUtils, 'createScriptElement')
+      .mockImplementation(jest.fn(async () => fixtures));
   });
 
   afterAll(() => {
@@ -43,8 +50,12 @@ describe('BingProvider', () => {
     const result = results[0];
 
     expect(result.label).toBeTruthy();
-    expect(result.x).toEqual(fixtures.resourceSets[0].resources[0].point.coordinates[1]);
-    expect(result.y).toEqual(fixtures.resourceSets[0].resources[0].point.coordinates[0]);
+    expect(result.x).toEqual(
+      fixtures.resourceSets[0].resources[0].point.coordinates[1],
+    );
+    expect(result.y).toEqual(
+      fixtures.resourceSets[0].resources[0].point.coordinates[0],
+    );
     expect(result.bounds[0][0]).toBeGreaterThan(result.bounds[0][1]);
     expect(result.bounds[1][0]).toBeGreaterThan(result.bounds[1][1]);
     expect(result.bounds[0][0]).toBeLessThan(result.bounds[1][0]);

@@ -15,4 +15,9 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     curly: ['error', 'all'],
   },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
 };

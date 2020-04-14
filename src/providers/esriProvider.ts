@@ -1,4 +1,8 @@
-import AbstractProvider, { EndpointArgument, ParseArgument, SearchResult } from './provider';
+import AbstractProvider, {
+  EndpointArgument,
+  ParseArgument,
+  SearchResult,
+} from './provider';
 
 interface RequestResult {
   spatialReference: { wkid: number; latestWkid: number };
@@ -19,8 +23,12 @@ interface RawResult {
   };
 }
 
-export default class EsriProvider extends AbstractProvider<RequestResult, RawResult> {
-  searchUrl = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find';
+export default class EsriProvider extends AbstractProvider<
+  RequestResult,
+  RawResult
+> {
+  searchUrl =
+    'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find';
 
   endpoint({ query }: EndpointArgument): string {
     const params = typeof query === 'string' ? { text: query } : query;

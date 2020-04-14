@@ -1,4 +1,9 @@
-import AbstractProvider, { EndpointArgument, LatLng, ParseArgument, SearchResult } from './provider';
+import AbstractProvider, {
+  EndpointArgument,
+  LatLng,
+  ParseArgument,
+  SearchResult,
+} from './provider';
 
 export interface RequestResult {
   results: RawResult[];
@@ -44,8 +49,18 @@ export interface RawResult {
       speed_in: string;
     };
     sun: {
-      rise: { apparent: number; astronomical: number; civil: number; nautical: number };
-      set: { apparent: number; astronomical: number; civil: number; nautical: number };
+      rise: {
+        apparent: number;
+        astronomical: number;
+        civil: number;
+        nautical: number;
+      };
+      set: {
+        apparent: number;
+        astronomical: number;
+        civil: number;
+        nautical: number;
+      };
     };
     timezone: {
       name: string;
@@ -64,7 +79,10 @@ export interface RawResult {
   geometry: LatLng;
 }
 
-export default class OpenCageProvider extends AbstractProvider<RequestResult, RawResult> {
+export default class OpenCageProvider extends AbstractProvider<
+  RequestResult,
+  RawResult
+> {
   searchUrl = 'https://api.opencagedata.com/geocode/v1/json';
 
   endpoint({ query }: EndpointArgument) {

@@ -1,4 +1,8 @@
-export default function hasShape(keys: string[], exact: boolean, object: object): boolean {
+export default function hasShape(
+  keys: string[],
+  exact: boolean,
+  object: object,
+): boolean {
   if (exact && keys.length !== Object.keys(object).length) {
     return false;
   }

@@ -1,4 +1,9 @@
-import AbstractProvider, { EndpointArgument, LatLng, ParseArgument, SearchResult } from './provider';
+import AbstractProvider, {
+  EndpointArgument,
+  LatLng,
+  ParseArgument,
+  SearchResult,
+} from './provider';
 
 export interface RequestResult {
   results: RawResult[];
@@ -28,7 +33,10 @@ export interface RawResult {
   types: string[];
 }
 
-export default class GoogleProvider extends AbstractProvider<RequestResult, RawResult> {
+export default class GoogleProvider extends AbstractProvider<
+  RequestResult,
+  RawResult
+> {
   searchUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
 
   endpoint({ query }: EndpointArgument) {

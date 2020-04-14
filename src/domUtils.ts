@@ -13,7 +13,9 @@ export function createElement<T extends HTMLElement = HTMLElement>(
   Object.keys(attributes).forEach((key) => {
     if (typeof attributes[key] === 'function') {
       // IE doesn't support startsWith
-      const type = (key.indexOf('on') === 0 ? key.substr(2).toLowerCase() : key) as keyof HTMLElementEventMap;
+      const type = (key.indexOf('on') === 0
+        ? key.substr(2).toLowerCase()
+        : key) as keyof HTMLElementEventMap;
       el.addEventListener(type, attributes[key] as () => void);
     } else {
       el.setAttribute(key, attributes[key] as string);
@@ -32,7 +34,10 @@ export function stopPropagation(event: Event) {
   event.stopPropagation();
 }
 
-export function createScriptElement<T = object>(url: string, cb: string): Promise<T> {
+export function createScriptElement<T = object>(
+  url: string,
+  cb: string,
+): Promise<T> {
   const script = createElement('script', null, document.body);
   script.setAttribute('type', 'text/javascript');
 
@@ -47,9 +52,13 @@ export function createScriptElement<T = object>(url: string, cb: string): Promis
   });
 }
 
-export const cx = (...classNames: (string | undefined)[]): string => classNames.filter(Boolean).join(' ').trim();
+export const cx = (...classNames: (string | undefined)[]): string =>
+  classNames.filter(Boolean).join(' ').trim();
 
-export function addClassName(element: Element, className: string | string[]): void {
+export function addClassName(
+  element: Element,
+  className: string | string[],
+): void {
   if (!element || !element.classList) {
     return;
   }
@@ -63,7 +72,10 @@ export function addClassName(element: Element, className: string | string[]): vo
   });
 }
 
-export function removeClassName(element: Element, className: string | string[]): void {
+export function removeClassName(
+  element: Element,
+  className: string | string[],
+): void {
   if (!element || !element.classList) {
     return;
   }
@@ -77,7 +89,11 @@ export function removeClassName(element: Element, className: string | string[]):
   });
 }
 
-export function replaceClassName(element: Element, find: string, replace: string): void {
+export function replaceClassName(
+  element: Element,
+  find: string,
+  replace: string,
+): void {
   removeClassName(element, find);
   addClassName(element, replace);
 }
