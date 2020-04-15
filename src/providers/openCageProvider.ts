@@ -2,6 +2,7 @@ import AbstractProvider, {
   EndpointArgument,
   LatLng,
   ParseArgument,
+  SearchArgument,
   SearchResult,
 } from './provider';
 
@@ -103,5 +104,14 @@ export default class OpenCageProvider extends AbstractProvider<
       ],
       raw: r,
     }));
+  }
+
+  async search(options: SearchArgument): Promise<SearchResult<RawResult>[]> {
+    // opencage returns a 400 error when query length < 2
+    if (options.query.length < 2) {
+      return [];
+    }
+
+    return super.search(options);
   }
 }
