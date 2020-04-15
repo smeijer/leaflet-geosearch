@@ -197,6 +197,8 @@
   top: 0;
   cursor: pointer;
   border: none;
+  text-decoration: none;
+  background-color: #fff;
 }
 
 .leaflet-control-geosearch a.reset:hover {

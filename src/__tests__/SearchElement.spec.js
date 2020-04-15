@@ -1,4 +1,4 @@
-import SearchElement from '../searchElement';
+import SearchElement from '../SearchElement';
 
 test('Can localize texts', () => {
   const searchLabel = 'Lookup address';

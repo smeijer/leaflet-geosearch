@@ -49,8 +49,10 @@ export interface Provider<TRequestResult, TRawResult> {
   search(options: SearchArgument): Promise<SearchResult<TRawResult>[]>;
 }
 
-export default abstract class AbstractProvider<TRequestResult, TRawResult>
-  implements Provider<TRequestResult, TRawResult> {
+export default abstract class AbstractProvider<
+  TRequestResult = any,
+  TRawResult = any
+> implements Provider<TRequestResult, TRawResult> {
   options: ProviderOptions;
 
   constructor(options: ProviderOptions = {}) {

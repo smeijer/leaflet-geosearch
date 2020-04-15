@@ -1,4 +1,4 @@
-import LeafletControl from '../leafletControl';
+import SearchControl from '../SearchControl';
 import randomId from '../../test/randomId';
 
 function createMapInstance(options, id = randomId()) {
@@ -24,7 +24,7 @@ test('Can add geosearch control to leaflet', () => {
   const { div, map } = createMapInstance();
 
   const provider = { search: jest.fn() };
-  const control = new LeafletControl({
+  const control = new SearchControl({
     provider,
   }).addTo(map);
 
@@ -35,7 +35,7 @@ test('It toggles the active class when the search button is clicked', () => {
   const { map } = createMapInstance();
 
   const provider = { search: jest.fn() };
-  const control = new LeafletControl({
+  const control = new SearchControl({
     provider,
   }).addTo(map);
 
@@ -57,7 +57,7 @@ test('Shows result on submit', async () => {
 
   const provider = { search: jest.fn(async () => result) };
 
-  const control = new LeafletControl({
+  const control = new SearchControl({
     provider,
   }).addTo(map);
 
@@ -76,7 +76,7 @@ test('Change view on result', () => {
 
   map.setView = jest.fn();
 
-  const control = new LeafletControl({}).addTo(map);
+  const control = new SearchControl({}).addTo(map);
 
   control.showResult({ x: 50, y: 0 }, { query: 'none' });
 

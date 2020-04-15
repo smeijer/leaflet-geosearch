@@ -17,6 +17,10 @@ export function createElement<T extends HTMLElement = HTMLElement>(
         ? key.substr(2).toLowerCase()
         : key) as keyof HTMLElementEventMap;
       el.addEventListener(type, attributes[key] as () => void);
+    } else if (key === 'html') {
+      el.innerHTML = attributes[key] as string;
+    } else if (key === 'text') {
+      el.innerText = attributes[key] as string;
     } else {
       el.setAttribute(key, attributes[key] as string);
     }

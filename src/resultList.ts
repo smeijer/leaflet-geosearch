@@ -2,7 +2,7 @@ import { createElement, addClassName, removeClassName, cx } from './domUtils';
 import { SearchResult } from './providers/provider';
 
 interface ResultListProps {
-  handleClick: () => void;
+  handleClick: (args: { result: SearchResult }) => void;
   classNames?: {
     container?: string;
     item?: string;
@@ -76,6 +76,7 @@ export default class ResultList {
     if (typeof this.handleClick !== 'function') {
       return;
     }
+
     const target = event.target as HTMLDivElement;
     if (
       !target ||

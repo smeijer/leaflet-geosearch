@@ -6,11 +6,12 @@ import {
   stopPropagation,
   replaceClassName,
 } from './domUtils';
+
 import { ESCAPE_KEY, ENTER_KEY } from './constants';
 
 interface SearchElementProps {
   searchLabel?: string;
-  handleSubmit: () => void;
+  handleSubmit: (args: { query: string }) => void;
   classNames?: {
     container?: string;
     form?: string;
@@ -52,10 +53,10 @@ export default class SearchElement {
         type: 'text',
         placeholder: searchLabel || 'search',
         onInput: this.onInput,
-        onKeyUp: this.onKeyUp,
-        onKeyPress: this.onKeyPress,
-        onFocus: this.onFocus,
-        onBlur: this.onBlur,
+        onKeyUp: (e) => this.onKeyUp(e),
+        onKeyPress: (e) => this.onKeyPress(e),
+        onFocus: () => this.onFocus(),
+        onBlur: () => this.onBlur(),
       },
     );
 

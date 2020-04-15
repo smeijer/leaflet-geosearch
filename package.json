@@ -24,7 +24,7 @@
   "scripts": {
     "clean": "rimraf ./dist",
     "build": "run-s clean \"run-p build:dist build:lib\"",
-    "build:dist": "microbundle build --external none --format es,cjs,umd",
+    "build:dist": "microbundle build --external leaflet --format es,cjs,umd",
     "build:lib": "tsc",
     "build:watch": "npm run build:dist -- --compress false --watch",
     "test": "jest",
@@ -77,7 +77,6 @@
     "gatsby-plugin-react-leaflet": "^2.0.12",
     "jest": "^25.3.0",
     "jest-fetch-mock": "^3.0.3",
-    "leaflet": "^1.6.0",
     "microbundle": "^0.12.0-next.8",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
@@ -88,5 +87,8 @@
     "ts-jest": "^25.3.1",
     "typescript": "^3.8.3"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "optionalDependencies": {
+    "leaflet": "^1.6.0"
+  }
 }
