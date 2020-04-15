@@ -9,4 +9,4 @@ export { default as LocationIQProvider } from './providers/locationIQProvider';
 export { default as OpenCageProvider } from './providers/openCageProvider';
 export { default as OpenStreetMapProvider } from './providers/openStreetMapProvider';
 
-export { default as Provider } from './providers/provider';
+export { default as JsonProvider } from './providers/provider';

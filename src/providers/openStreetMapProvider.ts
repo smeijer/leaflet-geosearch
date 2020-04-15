@@ -40,10 +40,9 @@ export default class OpenStreetMapProvider extends AbstractProvider<
   constructor(options: OpenStreetMapProviderOptions = {}) {
     super(options);
 
-    this.searchUrl =
-      options.searchUrl || 'https://nominatim.openstreetmap.org/search';
-    this.reverseUrl =
-      options.reverseUrl || 'https://nominatim.openstreetmap.org/reverse';
+    const host = 'https://nominatim.openstreetmap.org';
+    this.searchUrl = options.searchUrl || `${host}/search`;
+    this.reverseUrl = options.reverseUrl || `${host}/reverse`;
   }
 
   endpoint({ query, type }: EndpointArgument): string {

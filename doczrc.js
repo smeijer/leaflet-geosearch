@@ -22,6 +22,7 @@ export default {
         'LocationIQ',
         'OpenCage',
         'OpenStreetMap',
+        'Custom Providers',
       ],
     },
   ],
