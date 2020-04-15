@@ -23,7 +23,7 @@
   },
   "scripts": {
     "clean": "rimraf ./dist",
-    "build": "run-s clean \"run-p build:dist build:lib\"",
+    "build": "run-p build:dist build:lib",
     "build:dist": "microbundle build --external leaflet --format es,cjs,umd",
     "build:lib": "tsc",
     "build:watch": "npm run build:dist -- --compress false --watch",
@@ -32,7 +32,7 @@
     "docz:dev": "docz dev",
     "docz:build": "docz build --base /leaflet-geosearch/",
     "docz:serve": "docz build && docz serve",
-    "docs:update": "npm run lib:build && npm run docz:build && git checkout gh-pages && find .docz/dist -name '*.js.map' -delete && cp -r .docz/dist/* . && git add . &&  git commit -m \"update docs\" && git checkout -"
+    "docs:update": "run-s clean build && npm run docz:build && git checkout gh-pages && find .docz/dist -name '*.js.map' -delete && cp -r .docz/dist/* . && git add . &&  git commit -m \"update docs\" && git checkout - && git push origin gh-pages"
   },
   "mangle": {
     "regex": "^_"
