@@ -12,6 +12,17 @@ export default {
   menu: [
     { name: 'Introduction' },
     { name: 'Usage' },
-    { name: 'Providers', menu: ['Bing', 'Esri', 'Google', 'LocationIQ', 'OpenCage', 'OpenStreetMap'] },
+    { name: 'Leaflet Control' },
+    {
+      name: 'Providers',
+      menu: [
+        'Bing',
+        'Esri',
+        'Google',
+        'LocationIQ',
+        'OpenCage',
+        'OpenStreetMap',
+      ],
+    },
   ],
 };

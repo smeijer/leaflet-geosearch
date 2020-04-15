@@ -1,0 +1,14 @@
+.props > div > div > div > * {
+  font-family: Inconsolata;
+  font-size: 85%;
+}
+
+.props > div > div > div > div:first-child {
+  min-width: 175px;
+  color: var(--theme-ui-colors-props-text,#2D3747);
+}
+
+.props > div > div > div > div:nth-child(2) {
+  opacity: .8;
+}
+

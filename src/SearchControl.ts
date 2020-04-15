@@ -12,8 +12,9 @@ import {
   ESCAPE_KEY,
 } from './constants';
 import AbstractProvider, { SearchResult } from './providers/provider';
+import { Provider } from './providers';
 
-const defaultOptions: Omit<SearchControlOptions, 'provider'> = {
+const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   position: 'topleft',
   style: 'button',
   showMarker: true,
@@ -65,9 +66,15 @@ const mapHandlers: MapHandler[] = [
 const UNINITIALIZED_ERR =
   'Leaflet must be loaded before instantiating the GeoSearch control';
 
-interface SearchControlOptions {
-  provider: AbstractProvider;
+interface SearchControlProps {
+  /** the provider to use for searching */
+  provider: Provider;
+  /** the leaflet position to render the element in */
   position: ControlPosition;
+  /**
+   * the stye of the search element
+   * @default bar
+   **/
   style: 'button' | 'bar';
 
   marker: MarkerOptions;
@@ -102,8 +109,8 @@ interface SearchControlOptions {
   keepResult: boolean;
 }
 
-export type SearchControlInputOptions = Partial<SearchControlOptions> & {
-  provider: AbstractProvider;
+export type SearchControlOptions = Partial<SearchControlProps> & {
+  provider: Provider;
 };
 
 interface Selection {
@@ -112,20 +119,20 @@ interface Selection {
 }
 
 interface SearchControl {
-  options: Omit<SearchControlOptions, 'provider'> & {
-    provider?: SearchControlOptions['provider'];
+  options: Omit<SearchControlProps, 'provider'> & {
+    provider?: SearchControlProps['provider'];
   };
   markers: FeatureGroup;
   handlersDisabled: boolean;
   searchElement: SearchElement;
   resultList: ResultList;
-  classNames: SearchControlOptions['classNames'];
+  classNames: SearchControlProps['classNames'];
   container: HTMLDivElement;
   input: HTMLInputElement;
   map: Map;
 
   // [key: string]: any;
-  initialize(options: SearchControlOptions): void;
+  initialize(options: SearchControlProps): void;
   onSubmit(result: Selection): void;
   onClick(event: Event): void;
   clearResults(event?: KeyboardEvent | null, force?: boolean): void;
@@ -148,7 +155,7 @@ const Control: SearchControl = {
   handlersDisabled: false,
   classNames: defaultOptions.classNames,
 
-  initialize(options: SearchControlInputOptions) {
+  initialize(options: SearchControlOptions) {
     if (!L) {
       throw new Error(UNINITIALIZED_ERR);
     }
