@@ -7,8 +7,7 @@ test('Can localize texts', () => {
     searchLabel,
   });
 
-  const { input } = control.elements;
-  expect(input.getAttribute('placeholder')).toEqual(searchLabel);
+  expect(control.input.getAttribute('placeholder')).toEqual(searchLabel);
 });
 
 test('It will search when enter key is pressed', () => {
@@ -22,8 +21,7 @@ test('It will search when enter key is pressed', () => {
 
   control.onSubmit = jest.fn();
 
-  const { input } = control.elements;
-  input.dispatchEvent(
+  control.input.dispatchEvent(
     new KeyboardEvent('keypress', {
       keyCode: 13,
     }),

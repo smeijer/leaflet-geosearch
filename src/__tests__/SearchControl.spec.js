@@ -28,7 +28,7 @@ test('Can add geosearch control to leaflet', () => {
     provider,
   }).addTo(map);
 
-  expect(div.contains(control.searchElement.elements.container)).toEqual(true);
+  expect(div.contains(control.searchElement.container)).toEqual(true);
 });
 
 test('It toggles the active class when the search button is clicked', () => {
@@ -39,8 +39,10 @@ test('It toggles the active class when the search button is clicked', () => {
     provider,
   }).addTo(map);
 
-  const { button } = control.elements;
-  const { container } = control.searchElement.elements;
+  const {
+    button,
+    searchElement: { container },
+  } = control;
 
   button.click(new Event('click'));
   expect(container.className).toEqual(expect.stringMatching(/active/));

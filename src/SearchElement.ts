@@ -42,6 +42,10 @@ export default class SearchElement {
       this.container,
       {
         autocomplete: 'none',
+        onClick: stopPropagation,
+        onDblClick: stopPropagation,
+        touchStart: stopPropagation,
+        touchEnd: stopPropagation,
       },
     );
 
@@ -55,8 +59,17 @@ export default class SearchElement {
         onInput: this.onInput,
         onKeyUp: (e) => this.onKeyUp(e),
         onKeyPress: (e) => this.onKeyPress(e),
-        onFocus: () => this.onFocus(),
-        onBlur: () => this.onBlur(),
+        onFocus: this.onFocus,
+        onBlur: this.onBlur,
+
+        // For some reason, leaflet is blocking the 'touchstart', manually give
+        // focus to the input onClick
+        // > Ignored attempt to cancel a touchstart event with cancelable=false,
+        // > for example because scrolling is in progress and cannot be interrupted.
+        onClick: () => {
+          this.input.focus();
+          this.input.dispatchEvent(new Event('focus'));
+        },
       },
     );
 

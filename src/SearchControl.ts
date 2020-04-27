@@ -3,7 +3,12 @@ import SearchElement from './SearchElement';
 import ResultList from './resultList';
 import debounce from './lib/debounce';
 
-import { createElement, addClassName, removeClassName } from './domUtils';
+import {
+  createElement,
+  addClassName,
+  removeClassName,
+  stopPropagation,
+} from './domUtils';
 import {
   ENTER_KEY,
   SPECIAL_KEYS,
@@ -25,6 +30,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
     draggable: false,
   },
   maxMarkers: 1,
+  maxSuggestions: 5,
   retainZoomLevel: false,
   animateZoom: true,
   searchLabel: 'Enter address',
@@ -105,6 +111,7 @@ interface SearchControlProps {
 
   autoComplete: boolean;
   autoCompleteDelay: number;
+  maxSuggestions: number;
   autoClose: boolean;
   keepResult: boolean;
 }
@@ -123,12 +130,13 @@ interface SearchControl {
     provider?: SearchControlProps['provider'];
   };
   markers: FeatureGroup;
-  handlersDisabled: boolean;
   searchElement: SearchElement;
   resultList: ResultList;
   classNames: SearchControlProps['classNames'];
   container: HTMLDivElement;
   input: HTMLInputElement;
+  button: HTMLAnchorElement;
+  resetButton: HTMLAnchorElement;
   map: Map;
 
   // [key: string]: any;
@@ -151,9 +159,8 @@ interface SearchControl {
 
 // @ts-ignore
 const Control: SearchControl = {
-  options: defaultOptions,
-  handlersDisabled: false,
-  classNames: defaultOptions.classNames,
+  options: { ...defaultOptions },
+  classNames: { ...defaultOptions.classNames },
 
   initialize(options: SearchControlOptions) {
     if (!L) {
@@ -165,17 +172,23 @@ const Control: SearchControl = {
     }
 
     // merge given options with control defaults
-    Object.assign(this.options, options);
-    Object.assign(this.classNames, options.classNames);
+    this.options = { ...this.options, ...options };
+    this.classNames = { ...this.classNames, ...options.classNames };
 
     this.markers = new L.FeatureGroup();
-    this.classNames.container += ` geosearch-${this.options.style}`;
+    this.classNames.container += ` leaflet-geosearch-${this.options.style}`;
 
     this.searchElement = new SearchElement({
+      searchLabel: this.options.searchLabel,
+      classNames: {
+        container: this.classNames.container,
+        form: this.classNames.form,
+        input: this.classNames.input,
+      },
       handleSubmit: (result) => this.onSubmit(result),
     });
 
-    const button = createElement<HTMLAnchorElement>(
+    this.button = createElement<HTMLAnchorElement>(
       'a',
       this.classNames.button,
       this.searchElement.container,
@@ -183,15 +196,16 @@ const Control: SearchControl = {
         title: this.options.searchLabel,
         href: '#',
         onClick: (e) => this.onClick(e),
+        onDblClick: (e) => stopPropagation(e),
       },
     );
 
-    const resetButton = createElement<HTMLAnchorElement>(
+    this.resetButton = createElement<HTMLAnchorElement>(
       'a',
       this.classNames.resetButton,
       this.searchElement.form,
       {
-        text: 'X',
+        text: '×',
         href: '#',
         onClick: () => this.clearResults(null, true),
       },
@@ -199,7 +213,7 @@ const Control: SearchControl = {
 
     if (this.options.autoComplete) {
       this.resultList = new ResultList({
-        handleClick: ({ result }) => {
+        handleClick: ({ result }): void => {
           this.searchElement.input.value = result.label;
           this.onSubmit({ query: result.label, data: result });
         },
@@ -231,7 +245,9 @@ const Control: SearchControl = {
 
     this.searchElement.form.addEventListener(
       'mouseenter',
-      (e) => this.disableHandlers(e),
+      (e): void => {
+        this.disableHandlers(e);
+      },
       true,
     );
 
@@ -243,7 +259,9 @@ const Control: SearchControl = {
 
     this.searchElement.form.addEventListener(
       'click',
-      (e) => e.preventDefault(),
+      (e) => {
+        e.preventDefault();
+      },
       false,
     );
   },
@@ -263,7 +281,7 @@ const Control: SearchControl = {
 
       this.container = createElement<HTMLDivElement>(
         'div',
-        'leaflet-control-geosearch bar',
+        'leaflet-control-geosearch leaflet-geosearch-bar',
       );
 
       this.container.appendChild(this.searchElement.form);
@@ -281,12 +299,14 @@ const Control: SearchControl = {
   onClick(event: Event) {
     event.preventDefault();
 
-    if (this.container.classList.contains('active')) {
-      removeClassName(this.container, 'active');
+    const { container, input } = this.searchElement;
+
+    if (container.classList.contains('active')) {
+      removeClassName(container, 'active');
       this.clearResults();
     } else {
-      addClassName(this.container, 'active');
-      this.input.focus();
+      addClassName(container, 'active');
+      input.focus();
     }
   },
 
@@ -367,7 +387,8 @@ const Control: SearchControl = {
     const { provider } = this.options;
 
     if (query.length) {
-      const results = await provider!.search({ query });
+      let results = await provider!.search({ query });
+      results = results.slice(0, this.options.maxSuggestions);
       this.resultList.render(results);
     } else {
       this.resultList.clear();
