@@ -20,6 +20,7 @@ export default {
         'Bing',
         'Esri',
         'Google',
+        'Here',
         'LocationIQ',
         'OpenCage',
         'OpenStreetMap',

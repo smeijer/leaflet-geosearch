@@ -2,6 +2,7 @@ import {
   BingProvider,
   EsriProvider,
   GoogleProvider,
+  HereProvider,
   LocationIQProvider,
   OpenCageProvider,
   OpenStreetMapProvider,
@@ -16,6 +17,10 @@ export default {
 
   Google: new GoogleProvider({
     params: { key: process.env.GATSBY_GOOGLE_API_KEY },
+  }),
+
+  Here: new HereProvider({
+    params: { apiKey: process.env.GATSBY_HERE_API_KEY },
   }),
 
   LocationIQ: new LocationIQProvider({
