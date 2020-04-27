@@ -17,6 +17,7 @@ export default {
     {
       name: 'Providers',
       menu: [
+        'Algolia',
         'Bing',
         'Esri',
         'Google',

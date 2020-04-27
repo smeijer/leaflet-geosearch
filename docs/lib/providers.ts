@@ -1,4 +1,5 @@
 import {
+  AlgoliaProvider,
   BingProvider,
   EsriProvider,
   GoogleProvider,
@@ -9,6 +10,8 @@ import {
 } from 'leaflet-geosearch';
 
 export default {
+  Algolia: new AlgoliaProvider(),
+
   Bing: new BingProvider({
     params: { key: process.env.GATSBY_BING_API_KEY },
   }),
