@@ -11,11 +11,12 @@ import styles from './Map.module.css';
 
 export interface MapProps {
   provider?: 'OpenStreetMap' | 'Google' | 'Bing';
+  controlOptions: any;
   providerOptions: any;
 }
 
 function Map(props: MapProps): ReactElement {
-  const { provider = 'OpenStreetMap' } = props;
+  const { provider = 'OpenStreetMap', controlOptions = {} } = props;
 
   const ref = useRef(null);
   const control = useRef(null);
@@ -31,6 +32,7 @@ function Map(props: MapProps): ReactElement {
       control.current = GeoSearchControl({
         style: 'bar',
         provider: providers[provider],
+        ...controlOptions,
       });
 
       ref.current.leafletElement.addControl(control.current);

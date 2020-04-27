@@ -19,11 +19,27 @@ See [Leaflet Control](/leaflet-control) for more info about the the options this
     <Map provider="OpenStreetMap" />
 </Playground>
 
+```js
+import { SearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+
+const searchControl = new SearchControl({
+  provider: new OpenStreetMapProvider(),
+});
+
+map.addControl(searchControl);
+```
+
+## Style
+
+<Playground>
+    <Map provider="OpenStreetMap" controlOptions={{ style: 'button' }} />
+</Playground>
 
 ```js
 import { SearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 
 const searchControl = new SearchControl({
+  style: 'button',
   provider: new OpenStreetMapProvider(),
 });
 
