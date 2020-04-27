@@ -106,6 +106,15 @@
   text-indent: 8px;
 }
 
+.leaflet-touch .leaflet-geosearch-bar form {
+  border: 2px solid rgba(0,0,0,0.2);
+  box-shadow: none;
+}
+
+.leaflet-touch .leaflet-geosearch-bar form input {
+  height: 30px;
+}
+
 .leaflet-control-geosearch .results {
   background: #fff;
 }
@@ -160,6 +169,7 @@
   display: block;
   height: auto;
   width: 400px;
+  max-width: calc(100% - 120px);
   margin: 10px auto 0;
   cursor: auto;
   z-index: 1000;
@@ -203,6 +213,10 @@
   text-decoration: none;
   background-color: #fff;
   border-radius: 0 4px 4px 0;
+}
+
+.leaflet-touch .leaflet-control-geosearch a.reset {
+  line-height: 30px;
 }
 
 .leaflet-control-geosearch a.reset:hover {
