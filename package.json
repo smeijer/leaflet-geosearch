@@ -24,8 +24,9 @@
   "scripts": {
     "clean": "rimraf ./dist",
     "build": "run-p build:dist build:lib",
-    "build:dist": "microbundle build --external leaflet --format es,cjs,umd",
+    "build:dist": "microbundle build --external leaflet --format es,cjs,umd && npm run build:css",
     "build:lib": "tsc",
+    "build:css": "cp ./assets/css/leaflet.css ./dist/leaflet-geosearch.css",
     "build:watch": "npm run build:dist -- --compress false --watch",
     "test": "jest",
     "lint": "tsc --noEmit && eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
