@@ -1,8 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target":"esnext",
-    "module": "esnext",
+    "target":"ES2015",
+    "module": "ES2015",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "jsx": "react",
