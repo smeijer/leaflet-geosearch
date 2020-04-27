@@ -33,7 +33,7 @@ describe('GoogleProvider', () => {
       },
     });
 
-    const results = await provider.search({ query: 'leeuwarden' });
-    t.is(results[0].label, 'Leeuwarden, Nederland');
+    const results = await provider.search({ query: 'Madurodam' });
+    t.is(results[0].label, 'Madurodam');
   });
 });

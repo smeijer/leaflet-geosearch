@@ -9,7 +9,7 @@ describe('OpenStreetMapProvider', function () {
   test('Can fetch results', async () => {
     const provider = new Provider();
 
-    const results = await provider.search({ query: 'nederland' });
+    const results = await provider.search({ query: 'Madurodam' });
     const result = results[0];
 
     expect(result.label).toBeTruthy();
@@ -28,7 +28,7 @@ describe('OpenStreetMapProvider', function () {
       },
     });
 
-    const results = await provider.search({ query: 'nederland' });
-    expect(results[0].label, 'Nederland');
+    const results = await provider.search({ query: 'Madurodam' });
+    expect(results[0].label, 'Madurodam');
   });
 });

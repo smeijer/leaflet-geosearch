@@ -7,7 +7,7 @@ test.skip('Can fetch results with OpenCage', async () => {
     },
   });
 
-  const results = await provider.search({ query: 'netherlands' });
+  const results = await provider.search({ query: 'Madurodam' });
   const result = results[0];
 
   t.truthy(result.label);
@@ -27,6 +27,6 @@ test.skip('Can get localized results', async () => {
     },
   });
 
-  const results = await provider.search({ query: 'nederland' });
-  t.is(results[0].label, 'Nederland');
+  const results = await provider.search({ query: 'Madurodam' });
+  t.is(results[0].label, 'Madurodam');
 });
