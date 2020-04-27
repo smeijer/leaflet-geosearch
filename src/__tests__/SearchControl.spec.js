@@ -78,7 +78,7 @@ test('Change view on result', () => {
 
   map.setView = jest.fn();
 
-  const control = new SearchControl({}).addTo(map);
+  const control = new SearchControl({ provider: jest.fn() }).addTo(map);
 
   control.showResult({ x: 50, y: 0 }, { query: 'none' });
 
