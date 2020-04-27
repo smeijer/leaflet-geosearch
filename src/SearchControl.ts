@@ -471,7 +471,10 @@ const Control: SearchControl = {
   centerMap(result) {
     const { retainZoomLevel, animateZoom } = this.options;
 
-    const resultBounds = new L.LatLngBounds(result.bounds);
+    const resultBounds = result.bounds
+      ? new L.LatLngBounds(result.bounds)
+      : new L.LatLng(result.y, result.x).toBounds(10);
+
     const bounds = resultBounds.isValid()
       ? resultBounds
       : this.markers.getBounds();

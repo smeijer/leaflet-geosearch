@@ -10,7 +10,7 @@ export interface SearchResult<TRawResult = any> {
   x: number;
   y: number;
   label: string;
-  bounds: BoundsTuple;
+  bounds: BoundsTuple | null;
   raw: TRawResult;
 }
 
