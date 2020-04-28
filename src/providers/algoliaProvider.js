@@ -38,7 +38,7 @@ export default class Provider extends BaseProvider {
       stringBuilder.push(r.administrative[0]);
     }
     // Zip code
-    if (r.postcode) {
+    if (r.postcode && r.postcode.length == 1) {
       stringBuilder.push(r.postcode[0]);
     }
     // Country
