@@ -26,7 +26,7 @@
     "build": "run-p build:dist build:lib build:css",
     "build:dist": "microbundle build --external leaflet --format es,cjs,umd",
     "build:lib": "tsc",
-    "build:css": "cp ./assets/css/leaflet.css ./dist/leaflet-geosearch.css",
+    "build:css": "mkdir dist && cp ./assets/css/leaflet.css ./dist/leaflet-geosearch.css",
     "build:watch": "npm run build:dist -- --compress false --watch",
     "test": "jest",
     "lint": "tsc --noEmit && eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
