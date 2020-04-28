@@ -40,6 +40,7 @@ export default class ResultList {
     });
 
     if (results.length > 0) {
+      addClassName(this.container.parentElement, 'open');
       addClassName(this.container, 'active');
     }
 
@@ -69,6 +70,7 @@ export default class ResultList {
       this.container.removeChild(this.container.lastChild);
     }
 
+    removeClassName(this.container.parentElement, 'open');
     removeClassName(this.container, 'active');
   }
 

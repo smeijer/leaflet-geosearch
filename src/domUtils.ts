@@ -60,7 +60,7 @@ export const cx = (...classNames: (string | undefined)[]): string =>
   classNames.filter(Boolean).join(' ').trim();
 
 export function addClassName(
-  element: Element,
+  element: Element | null,
   className: string | string[],
 ): void {
   if (!element || !element.classList) {
@@ -77,7 +77,7 @@ export function addClassName(
 }
 
 export function removeClassName(
-  element: Element,
+  element: Element | null,
   className: string | string[],
 ): void {
   if (!element || !element.classList) {
