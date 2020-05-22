@@ -1,0 +1,10 @@
+node_modules
+coverage
+*.log
+/lib/
+/dist/
+.idea
+.env
+.tmp
+.docz
+.rts2_cache*
