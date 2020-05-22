@@ -11,6 +11,7 @@
   "unpkg": "dist/geosearch.umd.js",
   "source": "src/index.ts",
   "types": "dist/types.d.ts",
+  "amdName": "GeoSearch",
   "exports": {
     ".": {
       "browser": "./dist/geosearch.module.js",
