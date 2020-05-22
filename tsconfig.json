@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target":"ES2015",
+    "target": "ES2015",
     "module": "ES2015",
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -16,13 +16,6 @@
     "outDir": "lib",
     "declaration": true
   },
-  "include": [
-    "src",
-    "typings"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "**/*.spec.js"
-  ]
+  "include": ["src", "typings"],
+  "exclude": ["node_modules", "**/*.spec.ts", "**/*.spec.js"]
 }

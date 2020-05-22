@@ -1,11 +1,19 @@
 {
   "documentation": "https://opencagedata.com/api",
-  "licenses": [{ "name": "see attribution guide", "url": "https://opencagedata.com/credits" }],
+  "licenses": [
+    {
+      "name": "see attribution guide",
+      "url": "https://opencagedata.com/credits"
+    }
+  ],
   "rate": { "limit": 2500, "remaining": 2498, "reset": 1586736000 },
   "results": [
     {
       "annotations": {
-        "DMS": { "lat": "52\u00b0 5' 56.74884'' N", "lng": "4\u00b0 17' 56.55444'' E" },
+        "DMS": {
+          "lat": "52\u00b0 5' 56.74884'' N",
+          "lng": "4\u00b0 17' 56.55444'' E"
+        },
         "MGRS": "31UET8898172856",
         "Maidenhead": "JO22dc53vs",
         "Mercator": { "x": 478567.267, "y": 6784324.747 },
@@ -15,7 +23,12 @@
           "url": "https://www.openstreetmap.org/?mlat=52.09910&mlon=4.29904#map=16/52.09910/4.29904"
         },
         "UN_M49": {
-          "regions": { "EUROPE": "150", "NL": "528", "WESTERN_EUROPE": "155", "WORLD": "001" },
+          "regions": {
+            "EUROPE": "150",
+            "NL": "528",
+            "WESTERN_EUROPE": "155",
+            "WORLD": "001"
+          },
           "statistical_groupings": ["MEDC"]
         },
         "callingcode": 31,
@@ -38,8 +51,18 @@
         "qibla": 124.62,
         "roadinfo": { "drive_on": "right", "speed_in": "km/h" },
         "sun": {
-          "rise": { "apparent": 1586667180, "astronomical": 1586659500, "civil": 1586665020, "nautical": 1586662440 },
-          "set": { "apparent": 1586716500, "astronomical": 1586724240, "civil": 1586718660, "nautical": 1586721300 }
+          "rise": {
+            "apparent": 1586667180,
+            "astronomical": 1586659500,
+            "civil": 1586665020,
+            "nautical": 1586662440
+          },
+          "set": {
+            "apparent": 1586716500,
+            "astronomical": 1586724240,
+            "civil": 1586718660,
+            "nautical": 1586721300
+          }
         },
         "timezone": {
           "name": "Europe/Amsterdam",
@@ -80,7 +103,10 @@
     },
     {
       "annotations": {
-        "DMS": { "lat": "52\u00b0 5' 50.28756'' N", "lng": "4\u00b0 18' 11.78064'' E" },
+        "DMS": {
+          "lat": "52\u00b0 5' 50.28756'' N",
+          "lng": "4\u00b0 18' 11.78064'' E"
+        },
         "MGRS": "31UET8927472661",
         "Maidenhead": "JO22dc63ji",
         "Mercator": { "x": 479038.092, "y": 6784000.335 },
@@ -90,7 +116,12 @@
           "url": "https://www.openstreetmap.org/?mlat=52.09730&mlon=4.30327#map=16/52.09730/4.30327"
         },
         "UN_M49": {
-          "regions": { "EUROPE": "150", "NL": "528", "WESTERN_EUROPE": "155", "WORLD": "001" },
+          "regions": {
+            "EUROPE": "150",
+            "NL": "528",
+            "WESTERN_EUROPE": "155",
+            "WORLD": "001"
+          },
           "statistical_groupings": ["MEDC"]
         },
         "callingcode": 31,
@@ -118,8 +149,18 @@
           "speed_in": "km/h"
         },
         "sun": {
-          "rise": { "apparent": 1586667180, "astronomical": 1586659500, "civil": 1586665020, "nautical": 1586662440 },
-          "set": { "apparent": 1586716500, "astronomical": 1586724240, "civil": 1586718660, "nautical": 1586721300 }
+          "rise": {
+            "apparent": 1586667180,
+            "astronomical": 1586659500,
+            "civil": 1586665020,
+            "nautical": 1586662440
+          },
+          "set": {
+            "apparent": 1586716500,
+            "astronomical": 1586724240,
+            "civil": 1586718660,
+            "nautical": 1586721300
+          }
         },
         "timezone": {
           "name": "Europe/Amsterdam",
@@ -158,7 +199,10 @@
     },
     {
       "annotations": {
-        "DMS": { "lat": "52\u00b0 5' 52.90188'' N", "lng": "4\u00b0 17' 44.11788'' E" },
+        "DMS": {
+          "lat": "52\u00b0 5' 52.90188'' N",
+          "lng": "4\u00b0 17' 44.11788'' E"
+        },
         "MGRS": "31UET8874672733",
         "Maidenhead": "JO22dc53lm",
         "Mercator": { "x": 478182.702, "y": 6784131.595 },
@@ -168,7 +212,12 @@
           "url": "https://www.openstreetmap.org/?mlat=52.09803&mlon=4.29559#map=16/52.09803/4.29559"
         },
         "UN_M49": {
-          "regions": { "EUROPE": "150", "NL": "528", "WESTERN_EUROPE": "155", "WORLD": "001" },
+          "regions": {
+            "EUROPE": "150",
+            "NL": "528",
+            "WESTERN_EUROPE": "155",
+            "WORLD": "001"
+          },
           "statistical_groupings": ["MEDC"]
         },
         "callingcode": 31,
@@ -196,8 +245,18 @@
           "speed_in": "km/h"
         },
         "sun": {
-          "rise": { "apparent": 1586667180, "astronomical": 1586659500, "civil": 1586665020, "nautical": 1586662440 },
-          "set": { "apparent": 1586716500, "astronomical": 1586724240, "civil": 1586718660, "nautical": 1586721300 }
+          "rise": {
+            "apparent": 1586667180,
+            "astronomical": 1586659500,
+            "civil": 1586665020,
+            "nautical": 1586662440
+          },
+          "set": {
+            "apparent": 1586716500,
+            "astronomical": 1586724240,
+            "civil": 1586718660,
+            "nautical": 1586721300
+          }
         },
         "timezone": {
           "name": "Europe/Amsterdam",
@@ -236,8 +295,14 @@
     }
   ],
   "status": { "code": 200, "message": "OK" },
-  "stay_informed": { "blog": "https://blog.opencagedata.com", "twitter": "https://twitter.com/opencagedata" },
+  "stay_informed": {
+    "blog": "https://blog.opencagedata.com",
+    "twitter": "https://twitter.com/opencagedata"
+  },
   "thanks": "For using an OpenCage API",
-  "timestamp": { "created_http": "Sun, 12 Apr 2020 18:57:00 GMT", "created_unix": 1586717820 },
+  "timestamp": {
+    "created_http": "Sun, 12 Apr 2020 18:57:00 GMT",
+    "created_unix": 1586717820
+  },
   "total_results": 8
 }

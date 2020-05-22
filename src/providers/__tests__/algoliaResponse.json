@@ -19,40 +19,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -63,22 +40,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2584RZ"
-      ],
+      "postcode": ["2584RZ"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Binnenhof (Madurodam)"
-        ]
+        "default": ["Binnenhof (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0992,
@@ -262,9 +233,7 @@
               "value": "Binnenhof (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -289,40 +258,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -333,22 +279,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2584RZ"
-      ],
+      "postcode": ["2584RZ"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Domtoren (Madurodam)"
-        ]
+        "default": ["Domtoren (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.099,
@@ -532,9 +472,7 @@
               "value": "Domtoren (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -559,40 +497,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -603,22 +518,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2597LC"
-      ],
+      "postcode": ["2597LC"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Drakensteyn (Madurodam)"
-        ]
+        "default": ["Drakensteyn (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.099,
@@ -802,9 +711,7 @@
               "value": "Drakensteyn (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -829,40 +736,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -873,22 +757,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2597LC"
-      ],
+      "postcode": ["2597LC"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Euromast (Madurodam)"
-        ]
+        "default": ["Euromast (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0997,
@@ -1072,9 +950,7 @@
               "value": "Euromast (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -1099,40 +975,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -1143,22 +996,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2584RZ"
-      ],
+      "postcode": ["2584RZ"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Jordaan (Madurodam)"
-        ]
+        "default": ["Jordaan (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0991,
@@ -1342,9 +1189,7 @@
               "value": "Jordaan (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -1369,40 +1214,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -1413,22 +1235,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2584RZ"
-      ],
+      "postcode": ["2584RZ"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Kinderdijk (Madurodam)"
-        ]
+        "default": ["Kinderdijk (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0991,
@@ -1612,9 +1428,7 @@
               "value": "Kinderdijk (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -1639,40 +1453,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -1683,22 +1474,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2597LC"
-      ],
+      "postcode": ["2597LC"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Maasvlakte (Madurodam)"
-        ]
+        "default": ["Maasvlakte (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0999,
@@ -1882,9 +1667,7 @@
               "value": "Maasvlakte (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -1909,40 +1692,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -1953,22 +1713,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2597LC"
-      ],
+      "postcode": ["2597LC"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Maeslantkering (Madurodam)"
-        ]
+        "default": ["Maeslantkering (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0996,
@@ -2152,9 +1906,7 @@
               "value": "Maeslantkering (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -2179,40 +1931,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -2223,22 +1952,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2584RZ"
-      ],
+      "postcode": ["2584RZ"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Mauritshuis (Madurodam)"
-        ]
+        "default": ["Mauritshuis (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0992,
@@ -2422,9 +2145,7 @@
               "value": "Mauritshuis (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -2449,40 +2170,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -2493,22 +2191,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2597LC"
-      ],
+      "postcode": ["2597LC"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Muiderslot (Madurodam)"
-        ]
+        "default": ["Muiderslot (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0991,
@@ -2692,9 +2384,7 @@
               "value": "Muiderslot (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -2719,40 +2409,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -2763,22 +2430,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2584RZ"
-      ],
+      "postcode": ["2584RZ"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Prinsenhof (Madurodam)"
-        ]
+        "default": ["Prinsenhof (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0992,
@@ -2962,9 +2623,7 @@
               "value": "Prinsenhof (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -2989,40 +2648,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -3033,22 +2669,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2584RZ"
-      ],
+      "postcode": ["2584RZ"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Rijksmuseum (Madurodam)"
-        ]
+        "default": ["Rijksmuseum (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0991,
@@ -3232,9 +2862,7 @@
               "value": "Rijksmuseum (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -3259,40 +2887,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -3303,22 +2908,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2597LC"
-      ],
+      "postcode": ["2597LC"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Schiphol (Madurodam)"
-        ]
+        "default": ["Schiphol (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0994,
@@ -3502,9 +3101,7 @@
               "value": "Schiphol (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -3529,40 +3126,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -3573,22 +3147,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2584RZ"
-      ],
+      "postcode": ["2584RZ"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Vredespaleis (Madurodam)"
-        ]
+        "default": ["Vredespaleis (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.099,
@@ -3772,9 +3340,7 @@
               "value": "Vredespaleis (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -3799,40 +3365,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -3843,22 +3386,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2584RZ"
-      ],
+      "postcode": ["2584RZ"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Westerkerk (Madurodam)"
-        ]
+        "default": ["Westerkerk (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.099,
@@ -4042,9 +3579,7 @@
               "value": "Westerkerk (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -4069,40 +3604,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": true,
       "importance": 27,
@@ -4113,25 +3625,17 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2597LC"
-      ],
+      "postcode": ["2597LC"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
-      "suburb": [
-        "Den Haag"
-      ],
+      "suburb": ["Den Haag"],
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Erasmusbrug (Madurodam)"
-        ]
+        "default": ["Erasmusbrug (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0999,
@@ -4322,9 +3826,7 @@
               "value": "Erasmusbrug (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -4349,40 +3851,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -4393,22 +3872,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2597LC"
-      ],
+      "postcode": ["2597LC"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Beemster Polder (Madurodam)"
-        ]
+        "default": ["Beemster Polder (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0994,
@@ -4592,9 +4065,7 @@
               "value": "Beemster Polder (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -4619,40 +4090,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -4663,22 +4111,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2597LC"
-      ],
+      "postcode": ["2597LC"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Delftse Poort (Madurodam)"
-        ]
+        "default": ["Delftse Poort (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0996,
@@ -4862,9 +4304,7 @@
               "value": "Delftse Poort (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -4889,40 +4329,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -4933,22 +4350,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2597LC"
-      ],
+      "postcode": ["2597LC"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Haven Rotterdam (Madurodam)"
-        ]
+        "default": ["Haven Rotterdam (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0996,
@@ -5132,9 +4543,7 @@
               "value": "Haven Rotterdam (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }
@@ -5159,40 +4568,17 @@
       },
       "is_country": false,
       "city": {
-        "ar": [
-          "لاهاي"
-        ],
-        "default": [
-          "Den Haag",
-          "'s-Gravenhage"
-        ],
-        "ru": [
-          "Гаага"
-        ],
-        "pt": [
-          "A Haia"
-        ],
-        "en": [
-          "The Hague"
-        ],
-        "it": [
-          "L'Aia"
-        ],
-        "fr": [
-          "La Haye"
-        ],
-        "pl": [
-          "Haga"
-        ],
-        "ro": [
-          "Haga"
-        ],
-        "es": [
-          "La Haya"
-        ],
-        "zh": [
-          "海牙"
-        ]
+        "ar": ["لاهاي"],
+        "default": ["Den Haag", "'s-Gravenhage"],
+        "ru": ["Гаага"],
+        "pt": ["A Haia"],
+        "en": ["The Hague"],
+        "it": ["L'Aia"],
+        "fr": ["La Haye"],
+        "pl": ["Haga"],
+        "ro": ["Haga"],
+        "es": ["La Haya"],
+        "zh": ["海牙"]
       },
       "is_highway": false,
       "importance": 30,
@@ -5203,22 +4589,16 @@
         "address",
         "source/osm"
       ],
-      "postcode": [
-        "2597LC"
-      ],
+      "postcode": ["2597LC"],
       "population": 525745,
       "country_code": "nl",
       "is_city": false,
       "is_popular": false,
-      "administrative": [
-        "Zuid-Holland"
-      ],
+      "administrative": ["Zuid-Holland"],
       "admin_level": 15,
       "is_suburb": false,
       "locale_names": {
-        "default": [
-          "Hoofdkantoor VROM (Madurodam)"
-        ]
+        "default": ["Hoofdkantoor VROM (Madurodam)"]
       },
       "_geoloc": {
         "lat": 52.0997,
@@ -5402,9 +4782,7 @@
               "value": "Hoofdkantoor VROM (<em>Madurodam</em>)",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "madurodam"
-              ]
+              "matchedWords": ["madurodam"]
             }
           ]
         }

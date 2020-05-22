@@ -58,7 +58,7 @@ class MyProvider extends JsonProvider {
   parse({ data }) {
     // Note that `data` is the raw result returned by the server. This
     // method should return data in the SearchResult format.
-    return data.map(x => ({
+    return data.map((x) => ({
       x: data.x,
       y: data.y,
       label: data.label,
@@ -69,6 +69,7 @@ class MyProvider extends JsonProvider {
 ```
 
 ## Sharing
+
 When you've build a custom provider that can be used by others, please consider opening a [pull-request][2], or publishing it to `npm`.
 
 [1]: /providers/openstreetmap

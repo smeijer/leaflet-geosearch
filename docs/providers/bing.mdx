@@ -16,22 +16,23 @@ For more options and configurations, see the [Microsoft developer docs][2].
   <Map provider="Bing" />
 </Playground>
 
-
 ```js
 import { BingProvider } from 'leaflet-geosearch';
 
 const provider = new BingProvider({
   params: {
-    key: '__YOUR_BING_KEY__'
+    key: '__YOUR_BING_KEY__',
   },
 });
 
 // add to leaflet
 import { GeoSearchControl } from 'leaflet-geosearch';
 
-map.addControl(new GeoSearchControl({
-  provider,
-}));
+map.addControl(
+  new GeoSearchControl({
+    provider,
+  }),
+);
 ```
 
 [1]: https://docs.microsoft.com/en-us/bingmaps/getting-started/bing-maps-dev-center-help/getting-a-bing-maps-key

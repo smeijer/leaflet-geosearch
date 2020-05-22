@@ -15,18 +15,20 @@ For more options and configurations, see the [OpenStreetMap Nominatim wiki][1].
   <Map provider="OpenStreetMap" />
 </Playground>
 
-
 ```js
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 
 const provider = new OpenStreetMapProvider();
 
 // add to leaflet
-import { GeoSearchControl } from 'leaflet-geosearch'; import {OpenStreetMapProvider} from "./index";
+import { GeoSearchControl } from 'leaflet-geosearch';
+import { OpenStreetMapProvider } from './index';
 
-map.addControl(new GeoSearchControl({
-  provider,
-}));
+map.addControl(
+  new GeoSearchControl({
+    provider,
+  }),
+);
 ```
 
 ## Authentication
@@ -51,7 +53,7 @@ All options defined next to the `params` key, would have been added to the reque
 const provider = new OpenStreetMapProvider({
   params: {
     'accept-language': 'nl', // render results in Dutch
-    'countrycodes': 'nl',    // limit search results to the Netherlands
+    countrycodes: 'nl', // limit search results to the Netherlands
   },
 });
 ```

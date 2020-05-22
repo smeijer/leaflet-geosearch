@@ -16,7 +16,7 @@ There are two ways in which `leaflet-geosearch` can be used. Direct usage, for e
 All providers can be used without leaflet. You might want to bind them to a form;
 
 <Playground>
-    <Search provider="OpenStreetMap" />
+  <Search provider="OpenStreetMap" />
 </Playground>
 
 ```js
@@ -27,14 +27,14 @@ const results = await provider.search({ query: input.value });
 ```
 
 ## Using the leaflet control
+
 Or add the `GeoSearchControl` to the leaflet map instance, to render a search control on your map;
 
 See [Leaflet Control](/leaflet-control) for more info about the the options this control provides.
 
 <Playground>
-    <Map provider="OpenStreetMap" />
+  <Map provider="OpenStreetMap" />
 </Playground>
-
 
 ```js
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
@@ -52,13 +52,13 @@ The search event of all providers return an array of `result` objects. The base 
 
 ```ts
 interface result {
-  x: number;              // lon
-  y: number;              // lat
-  label: string;          // formatted address
+  x: number; // lon
+  y: number; // lat
+  label: string; // formatted address
   bounds: [
-    [number, number],     // south, west - lat, lon
-    [number, number],     // north, east - lat, lon
-  ],
-  raw: any,               // raw provider result
+    [number, number], // south, west - lat, lon
+    [number, number], // north, east - lat, lon
+  ];
+  raw: any; // raw provider result
 }
 ```
