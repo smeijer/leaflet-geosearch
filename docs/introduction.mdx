@@ -25,6 +25,43 @@ Although this project is named `leaflet-geosearch`, this library is also usable 
 npm install leaflet-geosearch
 ```
 
+- Include the CSS file somewhere, where you do this depends a bit on your build pipeline.
+
+```js
+import 'node_modules/leaflet-geosearch/dist/geosearch.css';
+```
+
+## Using a CDN
+
+To load leaflet-geosearch from a CDN instead of using a bundler take the following preparation steps:
+
+Include the CSS file in the `head` section of your page:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"
+/>
+```
+
+Include the JavaScript file before the closing `body` tag, if you're using it with the leaflet, make sure to include it **after** leaflet's javascript file
+
+```html
+<!-- Make sure you put this AFtER leaflet.js, when using with leaflet -->
+<script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
+```
+
+Now you're ready to use the control or providers. Just remember that your "import" syntax will be a bit different from what the docs are using.
+
+```js
+// when the docs use an import:
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+const provider = new OpenStreetMapProvider();
+
+// you want to get it of the window global
+const provider = new GeoSearch.OpenStreetMapProvider();
+```
+
 ## Providers
 
 `leaflet-geosearch` uses so-called "providers" to take care of building the correct service URL and parsing the retrieved data into a uniform format. Thanks to this architecture, it is trivial to add your own providers, so you can use your own geocoding service.
