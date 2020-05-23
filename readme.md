@@ -1,18 +1,12 @@
-## LOOKING FOR MAINTAINERS
-
-See: [#172](https://github.com/smeijer/leaflet-geosearch/issues/172) for more info.
-
----
-
 # Leaflet.GeoSearch
 
-[![Join the chat at https://gitter.im/smeijer/leaflet-geosearch](https://badges.gitter.im/smeijer/leaflet-geosearch.svg)](https://gitter.im/smeijer/leaflet-geosearch?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+**Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
 
-[![build status](https://img.shields.io/travis/smeijer/leaflet-geosearch/master.svg?style=flat-square)][9]
-
-[![NPM](https://nodei.co/npm/leaflet-geosearch.png?downloads=true)][10]
+![animation of geosearch](./docs/assets/img/geosearch.gif)
 
 ## Installation
+
+**more docs @** https://smeijer.github.io/leaflet-geosearch/#installation
 
 with npm:
 
@@ -26,69 +20,43 @@ or yarn:
 yarn add leaflet-geosearch
 ```
 
-or bower:
-
-```bash
-bower install leaflet-geosearch
-```
-
-**TypeScript**
-
-If you use TypeScript then consider to install types:
-
-```bash
-npm install --save-dev @types/leaflet-geosearch
-```
-
-or yarn:
-
-```bash
-yarn add @types/leaflet-geosearch -D
-```
-
----
-
-If you don’t use [npm][11], you may grab the latest [UMD][12] build from
-[unpkg][13] (either a [development][14] or a [production][15] build). The UMD build
-exports a global called `window.GeoSearch` if you add it to your page via a
-`<script>` tag.
-
-We _don’t_ recommend UMD builds for any serious application.
-
 ## Browser support / Polyfills
+
+**more docs @** https://smeijer.github.io/leaflet-geosearch/#browser-support--polyfills
 
 This library is written with the latest technologies in mind. Thereby it is required to include some polyfills when you wish to support older browsers. These polyfills are recommended for IE and Safari support:
 
-- [babel-polyfill][16], for `array.includes` support.
-- [whatwg-fetch][17], for `fetch` requests.
+- [babel-polyfill], for `array.includes` support.
+- [unfetch], for `fetch` requests.
 
 # About
 
 This library adds support for geocoding _(address lookup, a.k.a. geoseaching)_
-to your (web) application. It comes with controls to be embedded in your
-[Leaflet][1]
-map.
+to your (web) application. It comes with controls to be embedded in your [Leaflet] map.
 
-Check out the [demo][2] for various possibilities.
+Check out the [docs] for various possibilities.
 
 The library uses so-called "providers" to take care of building the correct
 service URL and parsing the retrieved data into a uniform format. Thanks to this
 architecture, it is pretty easy to add your own providers, so you can use
 your own geocoding service(s).
 
-The control comes with a default set of six providers:
+The control comes with a number of default providers:
 
-- [Bing](#bing-provider).
-- [Esri](#esri-provider).
-- [Google](#google-provider).
-- [OpenStreetMap](#openstreetmap-provider).
-- [LocationIQ](#locationiq-provider).
-- [OpenCage](#opencage-provider).
+- [Algolia]
+- [Bing]
+- [Esri]
+- [Google]
+- [LocationIQ]
+- [OpenCage]
+- [OpenStreetMap]
 
 Although this project is still named `leaflet-geosearch`, this library is also
 usable without LeafletJS, and does not have any dependencies whatsoever.
 
 # Usage
+
+**more docs @** https://smeijer.github.io/leaflet-geosearch/usage
 
 Let's first start with an little example on how to use this control without
 leaflet. For example as an address lookup on a webshop order form. Perhaps to
@@ -158,7 +126,7 @@ use your debugger)
 # Providers
 
 When `OpenStreetMap` does not match your needs; you can also choose to use the
-`Bing`, `Esri`, `Google` `LocationIQ`, or `OpenCage` providers. Those providers do however require API
+`Algolia`, `Bing`, `Esri`, `Google` `LocationIQ`, or `OpenCage` providers. Most of those providers do however require API
 keys. See the documentation pages on the relevant organisations on how to obtain
 these keys.
 
@@ -170,86 +138,6 @@ to their endpoints. There is only one `special property`, and that is the `param
 option. The difference being; that `params` will be included in the endpoint url.
 Often being used for `API KEYS`, where as the other attributes can be used for
 provider configuration.
-
-## Bing Provider
-
-**note**: Bing services require an API key. [Obtain here][7].
-For more options and configurations, see the [MSDN developer docs][6].
-
-```js
-import { BingProvider } from 'leaflet-geosearch';
-
-const provider = new BingProvider({
-  params: {
-    key: '__YOUR_BING_KEY__',
-  },
-});
-```
-
-## Esri Provider
-
-For more options and configurations, see the [ArcGIS developer docs][3].
-
-```js
-import { EsriProvider } from 'leaflet-geosearch';
-
-const provider = new EsriProvider();
-```
-
-## Google Provider
-
-**note**: Google services require an API key. [Obtain here][8].
-For more options and configurations, see the [Google Maps developer docs][4].
-
-```js
-import { GoogleProvider } from 'leaflet-geosearch';
-
-const provider = new GoogleProvider({
-  params: {
-    key: '__YOUR_GOOGLE_KEY__',
-  },
-});
-```
-
-## OpenStreetMap Provider
-
-For more options and configurations, see the [OpenStreetMap Nominatim wiki][5].
-
-```js
-import { OpenStreetMapProvider } from 'leaflet-geosearch';
-
-const provider = new OpenStreetMapProvider();
-```
-
-## LocationIQ Provider
-
-**note**: LocationIQ services require an API key. [Obtain here][18].
-For more options and configurations, see the [LocationIQ developer docs][19].
-
-```js
-import { LocationIQProvider } from 'leaflet-geosearch';
-
-const provider = new LocationIQProvider({
-  params: {
-    key: '__YOUR_LOCATIONIQ_KEY__',
-  },
-});
-```
-
-## OpenCage Provider
-
-**note**: OpenCage services require an API key. [Obtain here][20].
-For more options and configurations, see the [OpenCage developer docs][21].
-
-```js
-import { OpenCageProvider } from 'leaflet-geosearch';
-
-const provider = new OpenCageProvider({
-  params: {
-    key: '__YOUR_OPENCAGE_KEY__',
-  },
-});
-```
 
 # Using with LeafletJS
 
@@ -379,24 +267,14 @@ Bing does not support `CORS`, and requires `jsonp` to be used instead.
 In case you decide to write your own provider, please consider submitting a PR
 to share your work with us.
 
-[1]: http://leafletjs.com
-[2]: http://smeijer.github.io/leaflet-geosearch
-[3]: https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm
-[4]: https://developers.google.com/maps/documentation/geocoding/start
-[5]: http://wiki.openstreetmap.org/wiki/Nominatim
-[6]: https://msdn.microsoft.com/en-us/library/ff701714.aspx
-[7]: https://msdn.microsoft.com/nl-nl/library/ff428642.aspx
-[8]: https://developers.google.com/maps/documentation/javascript/get-api-key
-[9]: https://travis-ci.org/smeijer/leaflet-geosearch
-[10]: https://nodei.co/npm/leaflet-geosearch
-[11]: https://www.npmjs.com
-[12]: https://unpkg.com/leaflet-geosearch@latest/dist/
-[13]: https://unpkg.com
-[14]: https://unpkg.com/leaflet-geosearch@latest/dist/bundle.js
-[15]: https://unpkg.com/leaflet-geosearch@latest/dist/bundle.min.js
-[16]: https://www.npmjs.com/package/babel-polyfill
-[17]: https://www.npmjs.com/package/whatwg-fetch
-[18]: https://locationiq.org
-[19]: https://locationiq.org/#docs
-[20]: https://geocoder.opencagedata.com
-[21]: https://geocoder.opencagedata.com/api
+[leaflet]: http://leafletjs.com
+[docs]: https://smeijer.github.io/leaflet-geosearch
+[babel-polyfill]: https://npmjs.com/babel-polyfill
+[unfetch]: https://npmjs.com/unfetch
+[algolia]: https://smeijer.github.io/leaflet-geosearch/providers/algolia
+[bing]: https://smeijer.github.io/leaflet-geosearch/providers/bing
+[esri]: https://smeijer.github.io/leaflet-geosearch/providers/esri
+[google]: https://smeijer.github.io/leaflet-geosearch/providers/google
+[locationiq]: https://smeijer.github.io/leaflet-geosearch/providers/locationiq
+[opencage]: https://smeijer.github.io/leaflet-geosearch/providers/opencage
+[openstreetmap]: https://smeijer.github.io/leaflet-geosearch/providers/openstreetmap
