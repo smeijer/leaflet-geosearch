@@ -19,13 +19,20 @@ function Search(props: SearchProps): ReactElement {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    provider.search({ query }).then((results: object[]) => setResults(results.slice(0, 5)));
+    provider
+      .search({ query })
+      .then((results: object[]) => setResults(results.slice(0, 5)));
   }, [query]);
 
   return (
     <div className={styles.search}>
       <form>
-        <input type="text" placeholder="search" value={query} onChange={(e) => setQuery(e.target.value)} />
+        <input
+          type="text"
+          placeholder="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
       </form>
 
       <div className={styles.result}>

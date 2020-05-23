@@ -1,13 +1,13 @@
-import React from 'react'
-import { Playground, PlaygroundProps } from 'docz'
+import React from 'react';
+import { Playground as DoczPlayground, PlaygroundProps } from 'docz';
 import styles from './Playground.module.css';
 
-
-export default (props: PlaygroundProps) => {
+function Playground(props: PlaygroundProps) {
   return (
     <div className={styles.root}>
-      <Playground {...props} />
+      <DoczPlayground {...props} />
     </div>
-  )
+  );
 }
 
+export default Playground;
