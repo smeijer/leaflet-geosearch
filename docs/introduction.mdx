@@ -25,7 +25,7 @@ Although this project is named `leaflet-geosearch`, this library is also usable 
 npm install leaflet-geosearch
 ```
 
-- Include the CSS file somewhere, where you do this depends a bit on your build pipeline.
+Include the CSS file somewhere. Where you do this depends a bit on your build pipeline.
 
 ```js
 import 'node_modules/leaflet-geosearch/dist/geosearch.css';
@@ -33,7 +33,7 @@ import 'node_modules/leaflet-geosearch/dist/geosearch.css';
 
 ## Using a CDN
 
-To load leaflet-geosearch from a CDN instead of using a bundler take the following preparation steps:
+To load `leaflet-geosearch` from a CDN instead of using a bundler take the following preparation steps:
 
 Include the CSS file in the `head` section of your page:
 
@@ -60,6 +60,25 @@ const provider = new OpenStreetMapProvider();
 
 // you want to get it of the window global
 const provider = new GeoSearch.OpenStreetMapProvider();
+```
+
+## Example
+
+A basic working example would look like:
+
+```js
+// Either get GeoSearch from the window global, or import from `leaflet-geosearch`
+// import * as GeoSearch from 'leaflet-geosearch';
+
+const map = L.map('map').setView([51.505, -0.09], 13);
+
+L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+const search = new GeoSearch.GeoSearchControl({
+  provider: new GeoSearch.OpenStreetMapProvider(),
+});
+
+map.addControl(search);
 ```
 
 ## Providers
