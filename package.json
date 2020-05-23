@@ -23,7 +23,7 @@
     "./": "./"
   },
   "scripts": {
-    "clean": "rimraf ./dist",
+    "clean": "rimraf ./dist .docz/dist",
     "start": "concurrently npm:build:watch npm:docz:dev",
     "build": "run-p build:dist build:lib build:css",
     "build:dist": "microbundle build --external leaflet --globals leaflet=L --format es,cjs,umd",
@@ -35,14 +35,11 @@
     "docz:dev": "docz dev",
     "docz:build": "docz build --base /leaflet-geosearch/",
     "docz:serve": "docz build && docz serve",
-    "docs:update": "run-s clean build && npm run docz:build && git checkout gh-pages && find .docz/dist -name '*.js.map' -delete && cp -r .docz/dist/* . && git add . &&  git commit -m \"update docs\" && git checkout - && git push origin gh-pages",
+    "docs:update": "run-s clean build docz:build && git checkout gh-pages && find . -maxdepth 1 -type f -not -path '*/\\.*' -delete && cp -r .docz/dist/* . && git add . &&  git commit -m \"update docs\" && git checkout - && git push origin gh-pages",
     "prepublish": "run-s test clean build",
     "ci:lint": "eslint '{docs,src,test}/**/*.{js,ts,tsx}' -c ./.eslintrc.js",
     "ci:tsc": "tsc --noEmit --project ./tsconfig.json",
     "ci:test": "jest --ci"
-  },
-  "mangle": {
-    "regex": "^_"
   },
   "files": [
     "src",
