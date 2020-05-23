@@ -1,0 +1,70 @@
+{
+  "items": [
+    {
+      "title": "Madurodam",
+      "id": "here:pds:place:528u1703-2f80762a07494e6b9d5442d7ca773402",
+      "resultType": "place",
+      "address": {
+        "label": "Madurodam, George Maduroplein 1, 2584 RZ Den Haag, Nederland",
+        "countryCode": "NLD",
+        "countryName": "Nederland",
+        "state": "Zuid-Holland",
+        "county": "Den Haag",
+        "city": "Den Haag",
+        "district": "Van Stolkpark/Scheveningse Bosjes",
+        "street": "George Maduroplein",
+        "postalCode": "2584 RZ",
+        "houseNumber": "1"
+      },
+      "position": {
+        "lat": 52.0991,
+        "lng": 4.29904
+      },
+      "access": [
+        {
+          "lat": 52.09909,
+          "lng": 4.2995
+        }
+      ],
+      "categories": [
+        {
+          "id": "300-3000-0000"
+        },
+        {
+          "id": "300-3000-0025"
+        },
+        {
+          "id": "300-3100-0000"
+        },
+        {
+          "id": "550-5520-0207"
+        }
+      ],
+      "contacts": [
+        {
+          "phone": [
+            {
+              "value": "+31704162400"
+            }
+          ],
+          "www": [
+            {
+              "value": "http://www.madurodam.nl"
+            }
+          ],
+          "email": [
+            {
+              "value": "info@madurodam.nl"
+            }
+          ]
+        }
+      ],
+      "scoring": {
+        "queryScore": 1.0,
+        "fieldScore": {
+          "placeName": 1.0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+---
+name: Usage
+route: /usage
+---
+
+import Playground from './components/Playground';
+import Map from './components/Map';
+import Search from './components/Search';
+
+# Usage
+
+There are two ways in which `leaflet-geosearch` can be used. Direct usage, for example for address forms, or embedded in a leaflet map to search for points of interest.
+
+## Using the providers directly
+
+All providers can be used without leaflet. You might want to bind them to a form;
+
+<Playground>
+  <Search provider="OpenStreetMap" />
+</Playground>
+
+```js
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+
+const provider = new OpenStreetMapProvider();
+const results = await provider.search({ query: input.value });
+```
+
+## Using the leaflet control
+
+Or add the `GeoSearchControl` to the leaflet map instance, to render a search control on your map;
+
+See [Leaflet Control](/leaflet-control) for more info about the the options this control provides.
+
+<Playground>
+  <Map provider="OpenStreetMap" />
+</Playground>
+
+```js
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+
+const searchControl = new GeoSearchControl({
+  provider: new OpenStreetMapProvider(),
+});
+
+map.addControl(searchControl);
+```
+
+## Results
+
+The search event of all providers return an array of `result` objects. The base structure is uniform between the providers. It contains objects matching the following interface:
+
+```ts
+interface result {
+  x: number; // lon
+  y: number; // lat
+  label: string; // formatted address
+  bounds: [
+    [number, number], // south, west - lat, lon
+    [number, number], // north, east - lat, lon
+  ];
+  raw: any; // raw provider result
+}
+```

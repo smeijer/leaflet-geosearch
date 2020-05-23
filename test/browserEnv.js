@@ -1,4 +1,4 @@
-/* eslint-disable import/newline-after-import, no-undef */
+/* eslint-disable no-undef, @typescript-eslint/no-var-requires */
 const browserEnv = require('browser-env');
 browserEnv();
 

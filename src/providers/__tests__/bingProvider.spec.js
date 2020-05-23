@@ -1,33 +1,76 @@
-import test from 'ava';
 import Provider from '../bingProvider';
+import fixtures from './bingResponse.json';
 
-test.skip('Can fetch results with Bing Provider', async (t) => {
-  const provider = new Provider({
-    params: {
-      key: process.env.BING_API_KEY,
-    },
+describe('BingProvider', () => {
+  const RealDate = Date;
+
+  function mockDate(value) {
+    global.Date = class extends RealDate {
+      constructor() {
+        super();
+        return new RealDate(value);
+      }
+
+      static now() {
+        return new RealDate(value).getTime();
+      }
+    };
+  }
+
+  const now = RealDate.now();
+  const callbackName = `BING_JSONP_CB_${now}`;
+
+  beforeAll(() => {
+    fetch.mockResponse(async () => ({
+      body: `${callbackName}(${JSON.stringify(fixtures)})`,
+    }));
+
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const domUtils = require('../../domUtils');
+
+    jest
+      .spyOn(domUtils, 'createScriptElement')
+      .mockImplementation(jest.fn(async () => fixtures));
   });
 
-  const results = await provider.search({ query: 'nederland' });
-  const result = results[0];
-
-  t.truthy(result.label);
-  t.true(result.x > 5 && result.x < 6);
-  t.true(result.y > 50 && result.y < 55);
-  t.true(result.bounds[0][0] > result.bounds[0][1]);
-  t.true(result.bounds[1][0] > result.bounds[1][1]);
-  t.true(result.bounds[0][0] < result.bounds[1][0]);
-  t.true(result.bounds[0][1] < result.bounds[1][1]);
-});
-
-test.skip('Can get localized results', async (t) => {
-  const provider = new Provider({
-    params: {
-      key: process.env.BING_API_KEY,
-      c: 'nl',
-    },
+  afterAll(() => {
+    global.Date = RealDate;
   });
 
-  const results = await provider.search({ query: 'leeuwarden' });
-  t.is(results[0].label, 'Leeuwarden, Nederland');
+  test('Can fetch results', async () => {
+    mockDate(now);
+
+    const provider = new Provider({
+      params: {
+        key: process.env.GATSBY_BING_API_KEY,
+      },
+    });
+
+    const results = await provider.search({ query: 'Madurodam' });
+    const result = results[0];
+
+    expect(result.label).toBeTruthy();
+    expect(result.x).toEqual(
+      fixtures.resourceSets[0].resources[0].point.coordinates[1],
+    );
+    expect(result.y).toEqual(
+      fixtures.resourceSets[0].resources[0].point.coordinates[0],
+    );
+    expect(result.bounds[0][0]).toBeGreaterThan(result.bounds[0][1]);
+    expect(result.bounds[1][0]).toBeGreaterThan(result.bounds[1][1]);
+    expect(result.bounds[0][0]).toBeLessThan(result.bounds[1][0]);
+    expect(result.bounds[0][1]).toBeLessThan(result.bounds[1][1]);
+  });
+
+  test.skip('Can get localized results', async () => {
+    const provider = new Provider({
+      params: {
+        key: process.env.BING_API_KEY,
+        c: 'nl',
+      },
+    });
+
+    const results = await provider.search({ query: 'Madurodam' });
+    t.is(results[0].label, 'Leeuwarden, Nederland');
+  });
 });

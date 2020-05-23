@@ -1,0 +1,18 @@
+{
+  "spatialReference": { "wkid": 4326, "latestWkid": 4326 },
+  "locations": [
+    {
+      "name": "Madurodam",
+      "extent": {
+        "xmin": -43.34610999999996,
+        "ymin": -22.876299999999961,
+        "xmax": -43.336109999999955,
+        "ymax": -22.866299999999963
+      },
+      "feature": {
+        "geometry": { "x": -43.341109999999958, "y": -22.871299999999962 },
+        "attributes": { "Score": 100, "Addr_Type": "POI" }
+      }
+    }
+  ]
+}

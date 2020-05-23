@@ -1,0 +1,47 @@
+{
+  "authenticationResultCode": "ValidCredentials",
+  "brandLogoUri": "http://dev.virtualearth.net/Branding/logo_powered_by.png",
+  "copyright": "Copyright © 2020 Microsoft and its suppliers. All rights reserved. This API cannot be accessed and the content and any results may not be used, reproduced or transmitted in any manner without express written permission from Microsoft Corporation.",
+  "resourceSets": [
+    {
+      "estimatedTotal": 1,
+      "resources": [
+        {
+          "__type": "Location:http://schemas.microsoft.com/search/local/ws/rest/v1",
+          "bbox": [
+            52.099399566650391,
+            4.2973999977111816,
+            52.099601745605469,
+            4.2975997924804687
+          ],
+          "name": "Madurodam, Netherlands",
+          "point": {
+            "type": "Point",
+            "coordinates": [52.0994987487793, 4.2975001335144043]
+          },
+          "address": {
+            "adminDistrict": "South Holland",
+            "adminDistrict2": "Den Haag",
+            "countryRegion": "Netherlands",
+            "formattedAddress": "Madurodam, Netherlands",
+            "locality": "The Hague"
+          },
+          "confidence": "Medium",
+          "entityType": "PointOfInterest",
+          "geocodePoints": [
+            {
+              "type": "Point",
+              "coordinates": [52.0994987487793, 4.2975001335144043],
+              "calculationMethod": "Rooftop",
+              "usageTypes": ["Display"]
+            }
+          ],
+          "matchCodes": ["Good"]
+        }
+      ]
+    }
+  ],
+  "statusCode": 200,
+  "statusDescription": "OK",
+  "traceId": "56a5b1e99b4549ef94a7e1abd40b9565|DU00000B73|0.0.0.1|Ref A: 0E2DFA825EB14686A5B329384E966858 Ref B: DB3EDGE0807 Ref C: 2020-04-12T18:55:40Z"
+}

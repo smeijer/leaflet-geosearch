@@ -1,0 +1,39 @@
+---
+name: OpenCage
+menu: Providers
+route: /providers/opencage
+---
+
+import Playground from '../components/Playground';
+import Map from '../components/Map';
+
+# OpenCage Provider
+
+**note**: OpenCage services require an API key. [Obtain here][1].
+For more options and configurations, see the [OpenCage developer docs][2].
+
+<Playground>
+  <Map provider="OpenCage" />
+</Playground>
+
+```js
+import { OpenCageProvider } from 'leaflet-geosearch';
+
+const provider = new OpenCageProvider({
+  params: {
+    key: '__YOUR_OPENCAGE_KEY__',
+  },
+});
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+  }),
+);
+```
+
+[1]: https://geocoder.opencagedata.com
+[2]: https://geocoder.opencagedata.com/api

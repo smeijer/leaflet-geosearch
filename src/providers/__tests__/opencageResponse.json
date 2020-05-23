@@ -1,0 +1,308 @@
+{
+  "documentation": "https://opencagedata.com/api",
+  "licenses": [
+    {
+      "name": "see attribution guide",
+      "url": "https://opencagedata.com/credits"
+    }
+  ],
+  "rate": { "limit": 2500, "remaining": 2498, "reset": 1586736000 },
+  "results": [
+    {
+      "annotations": {
+        "DMS": {
+          "lat": "52\u00b0 5' 56.74884'' N",
+          "lng": "4\u00b0 17' 56.55444'' E"
+        },
+        "MGRS": "31UET8898172856",
+        "Maidenhead": "JO22dc53vs",
+        "Mercator": { "x": 478567.267, "y": 6784324.747 },
+        "OSM": {
+          "edit_url": "https://www.openstreetmap.org/edit?node=2590910713#map=16/52.09910/4.29904",
+          "note_url": "https://www.openstreetmap.org/note/new#map=16/52.09910/4.29904&layers=N",
+          "url": "https://www.openstreetmap.org/?mlat=52.09910&mlon=4.29904#map=16/52.09910/4.29904"
+        },
+        "UN_M49": {
+          "regions": {
+            "EUROPE": "150",
+            "NL": "528",
+            "WESTERN_EUROPE": "155",
+            "WORLD": "001"
+          },
+          "statistical_groupings": ["MEDC"]
+        },
+        "callingcode": 31,
+        "currency": {
+          "alternate_symbols": [],
+          "decimal_mark": ",",
+          "html_entity": "&#x20AC;",
+          "iso_code": "EUR",
+          "iso_numeric": "978",
+          "name": "Euro",
+          "smallest_denomination": 1,
+          "subunit": "Cent",
+          "subunit_to_unit": 100,
+          "symbol": "\u20ac",
+          "symbol_first": 1,
+          "thousands_separator": "."
+        },
+        "flag": "\ud83c\uddf3\ud83c\uddf1",
+        "geohash": "u1703u67nzwdx0xp9m14",
+        "qibla": 124.62,
+        "roadinfo": { "drive_on": "right", "speed_in": "km/h" },
+        "sun": {
+          "rise": {
+            "apparent": 1586667180,
+            "astronomical": 1586659500,
+            "civil": 1586665020,
+            "nautical": 1586662440
+          },
+          "set": {
+            "apparent": 1586716500,
+            "astronomical": 1586724240,
+            "civil": 1586718660,
+            "nautical": 1586721300
+          }
+        },
+        "timezone": {
+          "name": "Europe/Amsterdam",
+          "now_in_dst": 1,
+          "offset_sec": 7200,
+          "offset_string": "+0200",
+          "short_name": "CEST"
+        },
+        "what3words": { "words": "dolphin.sleep.deputy" },
+        "wikidata": "Q747322"
+      },
+      "bounds": {
+        "northeast": { "lat": 52.0991469, "lng": 4.2990929 },
+        "southwest": { "lat": 52.0990469, "lng": 4.2989929 }
+      },
+      "components": {
+        "ISO_3166-1_alpha-2": "NL",
+        "ISO_3166-1_alpha-3": "NLD",
+        "_category": "outdoors/recreation",
+        "_type": "theme_park",
+        "city": "Den Haag",
+        "continent": "Europe",
+        "country": "Nederland",
+        "country_code": "nl",
+        "house_number": "1",
+        "neighbourhood": "Archipelbuurt",
+        "pedestrian": "George Maduroplein",
+        "political_union": "European Union",
+        "postcode": "2584RZ",
+        "state": "Zuid-Holland",
+        "state_code": "ZH",
+        "suburb": "Den Haag",
+        "theme_park": "Madurodam"
+      },
+      "confidence": 9,
+      "formatted": "Madurodam, George Maduroplein 1, 2584 RZ Den Haag, Nederland",
+      "geometry": { "lat": 52.0990969, "lng": 4.2990429 }
+    },
+    {
+      "annotations": {
+        "DMS": {
+          "lat": "52\u00b0 5' 50.28756'' N",
+          "lng": "4\u00b0 18' 11.78064'' E"
+        },
+        "MGRS": "31UET8927472661",
+        "Maidenhead": "JO22dc63ji",
+        "Mercator": { "x": 479038.092, "y": 6784000.335 },
+        "OSM": {
+          "edit_url": "https://www.openstreetmap.org/edit?node=1200925962#map=16/52.09730/4.30327",
+          "note_url": "https://www.openstreetmap.org/note/new#map=16/52.09730/4.30327&layers=N",
+          "url": "https://www.openstreetmap.org/?mlat=52.09730&mlon=4.30327#map=16/52.09730/4.30327"
+        },
+        "UN_M49": {
+          "regions": {
+            "EUROPE": "150",
+            "NL": "528",
+            "WESTERN_EUROPE": "155",
+            "WORLD": "001"
+          },
+          "statistical_groupings": ["MEDC"]
+        },
+        "callingcode": 31,
+        "currency": {
+          "alternate_symbols": [],
+          "decimal_mark": ",",
+          "html_entity": "&#x20AC;",
+          "iso_code": "EUR",
+          "iso_numeric": "978",
+          "name": "Euro",
+          "smallest_denomination": 1,
+          "subunit": "Cent",
+          "subunit_to_unit": 100,
+          "symbol": "\u20ac",
+          "symbol_first": 1,
+          "thousands_separator": "."
+        },
+        "flag": "\ud83c\uddf3\ud83c\uddf1",
+        "geohash": "u1703uj8c902p5bxj985",
+        "qibla": 124.62,
+        "roadinfo": {
+          "drive_on": "right",
+          "road": "Hubertusviaduct / Madurodam",
+          "road_type": "motorway_junction",
+          "speed_in": "km/h"
+        },
+        "sun": {
+          "rise": {
+            "apparent": 1586667180,
+            "astronomical": 1586659500,
+            "civil": 1586665020,
+            "nautical": 1586662440
+          },
+          "set": {
+            "apparent": 1586716500,
+            "astronomical": 1586724240,
+            "civil": 1586718660,
+            "nautical": 1586721300
+          }
+        },
+        "timezone": {
+          "name": "Europe/Amsterdam",
+          "now_in_dst": 1,
+          "offset_sec": 7200,
+          "offset_string": "+0200",
+          "short_name": "CEST"
+        },
+        "what3words": { "words": "keeps.sank.offshore" }
+      },
+      "bounds": {
+        "northeast": { "lat": 52.0973521, "lng": 4.3033224 },
+        "southwest": { "lat": 52.0972521, "lng": 4.3032224 }
+      },
+      "components": {
+        "ISO_3166-1_alpha-2": "NL",
+        "ISO_3166-1_alpha-3": "NLD",
+        "_category": "road",
+        "_type": "road",
+        "city": "Den Haag",
+        "continent": "Europe",
+        "country": "Nederland",
+        "country_code": "nl",
+        "neighbourhood": "Archipelbuurt",
+        "political_union": "European Union",
+        "postcode": "2585WB",
+        "road": "Hubertusviaduct / Madurodam",
+        "road_type": "motorway_junction",
+        "state": "Zuid-Holland",
+        "state_code": "ZH",
+        "suburb": "Den Haag"
+      },
+      "confidence": 9,
+      "formatted": "Hubertusviaduct / Madurodam, 2585 WB Den Haag, Nederland",
+      "geometry": { "lat": 52.0973021, "lng": 4.3032724 }
+    },
+    {
+      "annotations": {
+        "DMS": {
+          "lat": "52\u00b0 5' 52.90188'' N",
+          "lng": "4\u00b0 17' 44.11788'' E"
+        },
+        "MGRS": "31UET8874672733",
+        "Maidenhead": "JO22dc53lm",
+        "Mercator": { "x": 478182.702, "y": 6784131.595 },
+        "OSM": {
+          "edit_url": "https://www.openstreetmap.org/edit?node=1200785922#map=16/52.09803/4.29559",
+          "note_url": "https://www.openstreetmap.org/note/new#map=16/52.09803/4.29559&layers=N",
+          "url": "https://www.openstreetmap.org/?mlat=52.09803&mlon=4.29559#map=16/52.09803/4.29559"
+        },
+        "UN_M49": {
+          "regions": {
+            "EUROPE": "150",
+            "NL": "528",
+            "WESTERN_EUROPE": "155",
+            "WORLD": "001"
+          },
+          "statistical_groupings": ["MEDC"]
+        },
+        "callingcode": 31,
+        "currency": {
+          "alternate_symbols": [],
+          "decimal_mark": ",",
+          "html_entity": "&#x20AC;",
+          "iso_code": "EUR",
+          "iso_numeric": "978",
+          "name": "Euro",
+          "smallest_denomination": 1,
+          "subunit": "Cent",
+          "subunit_to_unit": 100,
+          "symbol": "\u20ac",
+          "symbol_first": 1,
+          "thousands_separator": "."
+        },
+        "flag": "\ud83c\uddf3\ud83c\uddf1",
+        "geohash": "u1703spvn2qu162jek1e",
+        "qibla": 124.61,
+        "roadinfo": {
+          "drive_on": "right",
+          "road": "Hubertusviaduct / Madurodam",
+          "road_type": "motorway_junction",
+          "speed_in": "km/h"
+        },
+        "sun": {
+          "rise": {
+            "apparent": 1586667180,
+            "astronomical": 1586659500,
+            "civil": 1586665020,
+            "nautical": 1586662440
+          },
+          "set": {
+            "apparent": 1586716500,
+            "astronomical": 1586724240,
+            "civil": 1586718660,
+            "nautical": 1586721300
+          }
+        },
+        "timezone": {
+          "name": "Europe/Amsterdam",
+          "now_in_dst": 1,
+          "offset_sec": 7200,
+          "offset_string": "+0200",
+          "short_name": "CEST"
+        },
+        "what3words": { "words": "soulful.guitars.knocking" }
+      },
+      "bounds": {
+        "northeast": { "lat": 52.0980783, "lng": 4.2956383 },
+        "southwest": { "lat": 52.0979783, "lng": 4.2955383 }
+      },
+      "components": {
+        "ISO_3166-1_alpha-2": "NL",
+        "ISO_3166-1_alpha-3": "NLD",
+        "_category": "road",
+        "_type": "road",
+        "city": "Den Haag",
+        "continent": "Europe",
+        "country": "Nederland",
+        "country_code": "nl",
+        "neighbourhood": "Archipelbuurt",
+        "political_union": "European Union",
+        "postcode": "2585 JC",
+        "road": "Hubertusviaduct / Madurodam",
+        "road_type": "motorway_junction",
+        "state": "Zuid-Holland",
+        "state_code": "ZH",
+        "suburb": "Den Haag"
+      },
+      "confidence": 9,
+      "formatted": "Hubertusviaduct / Madurodam, 2585 JC Den Haag, Nederland",
+      "geometry": { "lat": 52.0980283, "lng": 4.2955883 }
+    }
+  ],
+  "status": { "code": 200, "message": "OK" },
+  "stay_informed": {
+    "blog": "https://blog.opencagedata.com",
+    "twitter": "https://twitter.com/opencagedata"
+  },
+  "thanks": "For using an OpenCage API",
+  "timestamp": {
+    "created_http": "Sun, 12 Apr 2020 18:57:00 GMT",
+    "created_unix": 1586717820
+  },
+  "total_results": 8
+}

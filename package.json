@@ -1,39 +1,55 @@
 {
   "name": "leaflet-geosearch",
-  "version": "2.6.0",
+  "version": "3.0.0",
+  "description": "Adds support for address lookup (a.k.a. geocoding / geoseaching) to Leaflet.",
   "publishConfig": {
     "tag": "latest"
   },
-  "description": "Adds support for address lookup (a.k.a. geocoding / geoseaching) to Leaflet.",
-  "main": "lib/index.js",
-  "module": "src/index.js",
+  "main": "dist/geosearch.js",
+  "umd:main": "dist/geosearch.umd.js",
+  "module": "dist/geosearch.module.js",
+  "unpkg": "dist/geosearch.umd.js",
+  "source": "src/index.ts",
+  "types": "dist/types.d.ts",
+  "amdName": "GeoSearch",
+  "exports": {
+    ".": {
+      "browser": "./dist/geosearch.module.js",
+      "umd": "./dist/geosearch.umd.js",
+      "import": "./dist/geosearch.module.js",
+      "require": "./dist/geosearch.js"
+    },
+    "./package.json": "./package.json",
+    "./": "./"
+  },
   "scripts": {
-    "build:commonjs": "babel src --out-dir lib --ignore *.spec.js",
-    "build:umd": "cross-env NODE_ENV=development webpack",
-    "build:umd:min": "cross-env NODE_ENV=production webpack",
-    "build:watch": "npm run build:umd -- --watch",
-    "build": "npm run clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min && npm run build:docs",
-    "build:docs": "cross-env NODE_ENV=production webpack --config webpack.docs.config.babel.js",
-    "clean": "rimraf lib dist",
-    "lint": "esw src webpack.config --color",
-    "lint:fix": "npm run lint -- --fix",
-    "lint:watch": "npm run lint -- --watch",
-    "prepublish": "npm run lint && npm run test && npm run build",
-    "test": "ava",
-    "test:watch": "ava -w",
-    "test:cover": "nyc ava",
-    "test:report": "nyc report --reporter html",
-    "start": "webpack-dev-server"
+    "clean": "rimraf ./dist",
+    "start": "concurrently npm:build:watch npm:docz:dev",
+    "build": "run-p build:dist build:lib build:css",
+    "build:dist": "microbundle build --external leaflet --globals leaflet=L --format es,cjs,umd",
+    "build:lib": "tsc",
+    "build:css": "mkdir -p dist && cp ./assets/css/leaflet.css ./dist/geosearch.css",
+    "build:watch": "npm run build:dist -- --compress false --watch",
+    "test": "jest",
+    "lint": "tsc --noEmit && eslint '{docs,src,test}/**/*.{js,ts,tsx}' --quiet --fix && prettier '**/*.{md,mdx,json}' --write",
+    "docz:dev": "docz dev",
+    "docz:build": "docz build --base /leaflet-geosearch/",
+    "docz:serve": "docz build && docz serve",
+    "docs:update": "run-s clean build && npm run docz:build && git checkout gh-pages && find .docz/dist -name '*.js.map' -delete && cp -r .docz/dist/* . && git add . &&  git commit -m \"update docs\" && git checkout - && git push origin gh-pages",
+    "prepublish": "run-s test clean build",
+    "ci:lint": "eslint '{docs,src,test}/**/*.{js,ts,tsx}' -c ./.eslintrc.js",
+    "ci:tsc": "tsc --noEmit --project ./tsconfig.json",
+    "ci:test": "jest --ci"
+  },
+  "mangle": {
+    "regex": "^_"
   },
   "files": [
     "src",
-    "lib",
     "dist",
+    "lib",
     "assets"
   ],
-  "directories": {
-    "example": "example"
-  },
   "keywords": [
     "geolocation",
     "geocoding",
@@ -53,59 +69,41 @@
   "homepage": "https://github.com/smeijer/leaflet-geosearch#readme",
   "license": "MIT",
   "devDependencies": {
-    "ava": "^0.17.0",
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.21.0",
-    "babel-eslint": "^7.1.1",
-    "babel-loader": "^6.2.10",
-    "babel-plugin-transform-class-properties": "^6.19.0",
-    "babel-plugin-transform-export-extensions": "^6.8.0",
-    "babel-plugin-transform-object-rest-spread": "^6.20.2",
-    "babel-plugin-transform-react-jsx": "^6.8.0",
-    "babel-polyfill": "^6.23.0",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-power-assert": "^1.0.0",
-    "browser-env": "^2.0.19",
-    "cross-env": "^3.1.3",
-    "css-loader": "^0.26.1",
-    "dotenv": "^2.0.0",
-    "eslint": "^3.12.2",
-    "eslint-config-airbnb": "^13.0.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.8.0",
-    "eslint-watch": "^2.1.14",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "fast-async": "^6.1.2",
-    "leaflet": "^1.0.2",
-    "lodash.merge": "^4.6.0",
-    "microlight": "0.0.7",
-    "node-fetch": "^1.6.3",
-    "npm": "^4.0.5",
-    "power-assert": "^1.4.2",
-    "preact": "^8.1.0",
-    "raw-loader": "^0.5.1",
-    "rimraf": "^2.5.4",
-    "style-loader": "^0.13.1",
-    "testdouble": "^1.10.1",
-    "webpack": "^1.14.0",
-    "webpack-dev-server": "^3.1.11",
-    "whatwg-fetch": "^2.0.3"
+    "@types/jest": "^25.2.1",
+    "@types/lodash.debounce": "^4.0.6",
+    "@types/react-dom": "^16.9.6",
+    "@types/react-leaflet": "^2.5.1",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "concurrently": "^5.2.0",
+    "docz": "^2.3.1",
+    "docz-theme-default": "^1.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.19.0",
+    "gatsby-plugin-react-leaflet": "^2.0.12",
+    "husky": "^4.2.5",
+    "jest": "^25.3.0",
+    "jest-fetch-mock": "^3.0.3",
+    "lint-staged": "^10.2.6",
+    "microbundle": "^0.12.0-next.8",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-leaflet": "^2.6.3",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^25.3.1",
+    "typescript": "^3.8.3"
   },
-  "dependencies": {
-    "lodash.debounce": "^4.0.8",
-    "nodent-runtime": "^3.0.4"
+  "dependencies": {},
+  "optionalDependencies": {
+    "leaflet": "^1.6.0"
   },
-  "ava": {
-    "files": [
-      "./src/**/__tests__/**.spec.js"
-    ],
-    "require": [
-      "nodent-runtime",
-      "dotenv/config",
-      "babel-core/register",
-      "./test/browserEnv"
-    ],
-    "babel": "inherit"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
