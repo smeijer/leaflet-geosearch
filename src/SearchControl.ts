@@ -298,6 +298,7 @@ const Control: SearchControl = {
 
   onClick(event: Event) {
     event.preventDefault();
+    event.stopPropagation();
 
     const { container, input } = this.searchElement;
 
