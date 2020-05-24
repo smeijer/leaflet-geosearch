@@ -41,9 +41,6 @@
     "ci:tsc": "tsc --noEmit --project ./tsconfig.json",
     "ci:test": "jest --ci"
   },
-  "mangle": {
-    "regex": "^_"
-  },
   "files": [
     "src",
     "dist",
