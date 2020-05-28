@@ -68,15 +68,41 @@ export default class Provider extends AbstractProvider<
   }
 
   /**
+   * Find index of value with best match
+   * (full, fallback to partial, and then to 0)
+   */
+  findBestMatchLevelIndex(vms: ValueMatch[]): number {
+    const match =
+      vms.find((vm) => vm.matchLevel === 'full') ||
+      vms.find((vm) => vm.matchLevel === 'partial');
+    return match ? vms.indexOf(match) : 0;
+  }
+
+  /**
    * Algolia not provides labels for hits, so
    * we will implement that builder ourselves
    */
   getLabel(result: RawResult): string {
     return [
-      result.locale_names?.default, // Building + Street
-      result.city?.default,
-      result.administrative?.[0], // State / Province
-      result.postcode?.[0], // Zip code / Postal code
+      // Building + Street
+      result.locale_names?.default[
+        this.findBestMatchLevelIndex(
+          result._highlightResult.locale_names.default,
+        )
+      ],
+      // City
+      result.city?.default[
+        this.findBestMatchLevelIndex(result._highlightResult.city.default)
+      ],
+      // Administrative (State / Province)
+      result.administrative[
+        this.findBestMatchLevelIndex(result._highlightResult.administrative)
+      ],
+      // Zip code / Postal code
+      result.postcode?.[
+        this.findBestMatchLevelIndex(result._highlightResult.postcode)
+      ],
+      // Country
       result.country?.default,
     ]
       .filter(Boolean)
