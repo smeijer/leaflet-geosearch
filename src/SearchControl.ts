@@ -51,24 +51,6 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   keepResult: false,
 };
 
-const wasHandlerEnabled: { [key in MapHandler]?: boolean } = {};
-type MapHandler =
-  | 'dragging'
-  | 'touchZoom'
-  | 'doubleClickZoom'
-  | 'scrollWheelZoom'
-  | 'boxZoom'
-  | 'keyboard';
-
-const mapHandlers: MapHandler[] = [
-  'dragging',
-  'touchZoom',
-  'doubleClickZoom',
-  'scrollWheelZoom',
-  'boxZoom',
-  'keyboard',
-];
-
 const UNINITIALIZED_ERR =
   'Leaflet must be loaded before instantiating the GeoSearch control';
 
@@ -146,8 +128,6 @@ interface SearchControl {
   clearResults(event?: KeyboardEvent | null, force?: boolean): void;
   autoSearch(event: KeyboardEvent): void;
   selectResult(event: KeyboardEvent): void;
-  disableHandlers(event: Event): void;
-  restoreHandlers(event?: Event): void;
   showResult(result: SearchResult, query: Selection): void;
   addMarker(result: SearchResult, selection: Selection): void;
   centerMap(result: SearchResult): void;
@@ -196,9 +176,10 @@ const Control: SearchControl = {
         title: this.options.searchLabel,
         href: '#',
         onClick: (e) => this.onClick(e),
-        onDblClick: (e) => stopPropagation(e),
       },
     );
+
+    L.DomEvent.disableClickPropagation(this.button);
 
     this.resetButton = createElement<HTMLAnchorElement>(
       'a',
@@ -210,6 +191,8 @@ const Control: SearchControl = {
         onClick: () => this.clearResults(null, true),
       },
     );
+
+    L.DomEvent.disableClickPropagation(this.resetButton);
 
     if (this.options.autoComplete) {
       this.resultList = new ResultList({
@@ -244,20 +227,6 @@ const Control: SearchControl = {
     }
 
     this.searchElement.form.addEventListener(
-      'mouseenter',
-      (e): void => {
-        this.disableHandlers(e);
-      },
-      true,
-    );
-
-    this.searchElement.form.addEventListener(
-      'mouseleave',
-      () => this.restoreHandlers(),
-      true,
-    );
-
-    this.searchElement.form.addEventListener(
       'click',
       (e) => {
         e.preventDefault();
@@ -288,6 +257,7 @@ const Control: SearchControl = {
       root!.appendChild(this.container);
     }
 
+    L.DomEvent.disableClickPropagation(this.searchElement.form);
     return this.searchElement.container;
   },
 
@@ -309,29 +279,6 @@ const Control: SearchControl = {
       addClassName(container, 'active');
       input.focus();
     }
-  },
-
-  disableHandlers(event) {
-    if (!this.searchElement.form.contains(event.target as Node)) {
-      return;
-    }
-
-    mapHandlers.forEach((handler) => {
-      wasHandlerEnabled[handler] = this.map[handler]?.enabled();
-      this.map[handler]?.disable();
-    });
-  },
-
-  restoreHandlers(event: Event) {
-    if (event && !this.searchElement.form.includes(event.target as Node)) {
-      return;
-    }
-
-    mapHandlers.forEach((handler) => {
-      if (wasHandlerEnabled[handler]) {
-        this.map[handler]?.enable();
-      }
-    });
   },
 
   selectResult(event) {
@@ -436,7 +383,6 @@ const Control: SearchControl = {
       removeClassName(container, 'active');
     }
 
-    this.restoreHandlers();
     this.clearResults();
   },
 
