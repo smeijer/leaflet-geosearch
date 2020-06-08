@@ -197,6 +197,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "dkobia",
+      "name": "David Kobia",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/184092?v=4",
+      "profile": "http://www.kobia.net/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
