@@ -152,6 +152,15 @@
         "test",
         "ideas"
       ]
+    },
+    {
+      "login": "heiglandreas",
+      "name": "Andreas Heigl",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/91998?v=4",
+      "profile": "http://andreas.heigl.org/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
