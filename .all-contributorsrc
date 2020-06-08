@@ -51,6 +51,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "fredrikekelund",
+      "name": "Fredrik Ekelund",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1101677?v=4",
+      "profile": "http://fredrik.computer/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
