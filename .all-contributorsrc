@@ -296,6 +296,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "stuartpb",
+      "name": "Stuart P. Bentley",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/572196?v=4",
+      "profile": "https://stuartpb.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
