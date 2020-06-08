@@ -78,6 +78,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "cajus",
+      "name": "Cajus Pollmeier",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/722353?v=4",
+      "profile": "https://github.com/cajus",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
