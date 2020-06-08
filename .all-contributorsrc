@@ -114,6 +114,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "thet",
+      "name": "Johannes Raggam",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/170891?v=4",
+      "profile": "http://programmatic.pro/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
