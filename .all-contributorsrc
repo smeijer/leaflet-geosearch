@@ -287,6 +287,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "snkashis",
+      "name": "Steve",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/361323?v=4",
+      "profile": "http://snkashis.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
