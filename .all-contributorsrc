@@ -332,6 +332,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "IvelinYR",
+      "name": "Ivelin Ralev",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/18220037?v=4",
+      "profile": "https://github.com/IvelinYR",
+      "contributions": [
+        "code",
+        "test",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7

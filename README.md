@@ -1,6 +1,6 @@
 # Leaflet.GeoSearch
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-35-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-36-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -334,6 +334,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/joshrainwater"><img src="https://avatars1.githubusercontent.com/u/1697347?v=4" width="100px;" alt=""/><br /><sub><b>joshrainwater</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=joshrainwater" title="Code">💻</a></td>
     <td align="center"><a href="https://maxlath.eu/"><img src="https://avatars2.githubusercontent.com/u/1596934?v=4" width="100px;" alt=""/><br /><sub><b>maxlath</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=maxlath" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/pwldp"><img src="https://avatars1.githubusercontent.com/u/4376083?v=4" width="100px;" alt=""/><br /><sub><b>Dariusz Pawlak</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=pwldp" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/IvelinYR"><img src="https://avatars3.githubusercontent.com/u/18220037?v=4" width="100px;" alt=""/><br /><sub><b>Ivelin Ralev</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=IvelinYR" title="Code">💻</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=IvelinYR" title="Tests">⚠️</a> <a href="#ideas-IvelinYR" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
