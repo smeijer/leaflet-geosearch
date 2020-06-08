@@ -1,6 +1,6 @@
 # Leaflet.GeoSearch
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-25-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-26-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -322,6 +322,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/francislavoie"><img src="https://avatars3.githubusercontent.com/u/2111701?v=4" width="100px;" alt=""/><br /><sub><b>Francis Lavoie</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=francislavoie" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/summerisgone"><img src="https://avatars0.githubusercontent.com/u/106999?v=4" width="100px;" alt=""/><br /><sub><b>Ivan Gromov</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=summerisgone" title="Code">💻</a></td>
     <td align="center"><a href="https://twitter.com/deadbeef404"><img src="https://avatars2.githubusercontent.com/u/2100675?v=4" width="100px;" alt=""/><br /><sub><b>Jason Pettett</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=deadbeef404" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/3limin4t0r"><img src="https://avatars2.githubusercontent.com/u/1522964?v=4" width="100px;" alt=""/><br /><sub><b>Johan</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=3limin4t0r" title="Code">💻</a></td>
   </tr>
 </table>
 
