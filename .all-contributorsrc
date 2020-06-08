@@ -33,6 +33,15 @@
         "test",
         "ideas"
       ]
+    },
+    {
+      "login": "hubnerd",
+      "name": "David Hubner",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2099902?v=4",
+      "profile": "https://github.com/hubnerd",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
