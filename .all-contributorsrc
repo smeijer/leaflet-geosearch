@@ -42,6 +42,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ninio",
+      "name": "Nikolay Ninarski",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1941633?v=4",
+      "profile": "https://ninarski.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
