@@ -60,6 +60,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ivoire",
+      "name": "Rémi Duraffort",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2114999?v=4",
+      "profile": "https://blog.duraffort.fr/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
