@@ -132,6 +132,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "timwis",
+      "name": "Tim Wisniewski",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/761444?v=4",
+      "profile": "https://timwis.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

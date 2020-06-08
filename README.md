@@ -1,6 +1,6 @@
 # Leaflet.GeoSearch
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-14-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -306,6 +306,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/emiltem"><img src="https://avatars0.githubusercontent.com/u/2720652?v=4" width="100px;" alt=""/><br /><sub><b>emiltem</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=emiltem" title="Code">💻</a></td>
     <td align="center"><a href="http://programmatic.pro/"><img src="https://avatars3.githubusercontent.com/u/170891?v=4" width="100px;" alt=""/><br /><sub><b>Johannes Raggam</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=thet" title="Code">💻</a></td>
     <td align="center"><a href="https://nathancahill.com/"><img src="https://avatars0.githubusercontent.com/u/1383872?v=4" width="100px;" alt=""/><br /><sub><b>Nathan Cahill</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=nathancahill" title="Code">💻</a></td>
+    <td align="center"><a href="https://timwis.com/"><img src="https://avatars3.githubusercontent.com/u/761444?v=4" width="100px;" alt=""/><br /><sub><b>Tim Wisniewski</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=timwis" title="Code">💻</a></td>
   </tr>
 </table>
 
