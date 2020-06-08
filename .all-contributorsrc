@@ -188,6 +188,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "chrismcband",
+      "name": "Chris McDonald",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/196567?v=4",
+      "profile": "http://www.opencoder.co.uk/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
