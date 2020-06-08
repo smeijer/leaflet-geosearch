@@ -87,6 +87,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "dandv",
+      "name": "Dan Dascalescu",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/33569?v=4",
+      "profile": "https://dandascalescu.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
