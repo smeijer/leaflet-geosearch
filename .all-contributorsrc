@@ -141,6 +141,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "kaoru",
+      "name": "Alex Balhatchet",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/89070?v=4",
+      "profile": "http://kaoru.slackwise.net/",
+      "contributions": [
+        "code",
+        "test",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7
