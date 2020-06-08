@@ -161,6 +161,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "konfiot",
+      "name": "Arthur Toussaint",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/961690?v=4",
+      "profile": "https://github.com/konfiot",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
