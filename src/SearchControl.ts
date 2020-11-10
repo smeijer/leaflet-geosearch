@@ -356,10 +356,8 @@ const Control: SearchControl = {
   showResult(result, query) {
     const { autoClose } = this.options;
 
-    // @ts-ignore
-    const markers = Object.keys(this.markers._layers);
+    const markers = this.markers.getLayers();
     if (markers.length >= this.options.maxMarkers) {
-      // @ts-ignore
       this.markers.removeLayer(markers[0]);
     }
 
