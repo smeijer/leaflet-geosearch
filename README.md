@@ -223,6 +223,7 @@ new GeoSearchControl({
   autoClose: false, // optional: true|false  - default false
   searchLabel: 'Enter address', // optional: string      - default 'Enter address'
   keepResult: false, // optional: true|false  - default false
+  updateMap: true, // optional: true|false  - default true
 });
 ```
 
@@ -246,6 +247,8 @@ only panned.
 `autoClose` closes the result list if a result is selected by click/enter.
 
 `keepResult` is used to keep the selected result in the search field. This prevents markers to disappear while using the `autoClose` feature.
+
+`updateMap` controls whether or not the map re-centers on the selection.
 
 **Events**
 

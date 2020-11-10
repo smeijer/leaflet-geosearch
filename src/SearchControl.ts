@@ -49,6 +49,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   autoCompleteDelay: 250,
   autoClose: false,
   keepResult: false,
+  updateMap: true,
 };
 
 const UNINITIALIZED_ERR =
@@ -96,6 +97,7 @@ interface SearchControlProps {
   maxSuggestions: number;
   autoClose: boolean;
   keepResult: boolean;
+  updateMap: boolean;
 }
 
 export type SearchControlOptions = Partial<SearchControlProps> & {
@@ -354,7 +356,7 @@ const Control: SearchControl = {
   },
 
   showResult(result, query) {
-    const { autoClose } = this.options;
+    const { autoClose, updateMap } = this.options;
 
     const markers = this.markers.getLayers();
     if (markers.length >= this.options.maxMarkers) {
@@ -362,7 +364,10 @@ const Control: SearchControl = {
     }
 
     const marker = this.addMarker(result, query);
-    this.centerMap(result);
+
+    if (updateMap) {
+      this.centerMap(result);
+    }
 
     this.map.fireEvent('geosearch/showlocation', {
       location: result,
