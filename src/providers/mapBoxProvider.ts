@@ -12,6 +12,7 @@ export type RequestResult = {
 export interface RawResult {
   center: [string, string];
   text: string;
+  place_name: string;
   bbox: [string, string, string, string];
 }
 
@@ -54,7 +55,7 @@ export default class MapBoxProvider extends AbstractProvider<
       return {
         x: Number(r.center[0]),
         y: Number(r.center[1]),
-        label: r.text,
+        label: r.place_name ? r.place_name : r.text,
         bounds,
         raw: r,
       };
