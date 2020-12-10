@@ -29,13 +29,13 @@ export default class ResultList {
     this.resultItem = createElement<HTMLDivElement>('div', cx(classNames.item));
   }
 
-  render(results: SearchResult[] = []): void {
+  render(results: SearchResult[] = [], resultFormater: Function): void {
     this.clear();
 
     results.forEach((result, idx) => {
       const child = this.resultItem.cloneNode(true) as HTMLDivElement;
       child.setAttribute('data-key', `${idx}`);
-      child.innerHTML = result.label;
+      child.innerHTML = resultFormater(result);
       this.container.appendChild(child);
     });
 

@@ -25,6 +25,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   showMarker: true,
   showPopup: false,
   popupFormat: ({ result }) => `${result.label}`,
+  resultFormat: ({ result }) => `${result.label}`,
   marker: {
     icon: L && L.Icon ? new L.Icon.Default() : undefined,
     draggable: false,
@@ -74,6 +75,8 @@ interface SearchControlProps {
     query: Selection;
     result: SearchResult<T>;
   }): string;
+
+  resultFormat<T = any>(args: { result: SearchResult<T> }): string;
 
   searchLabel: string;
   notFoundMessage: string;
@@ -339,7 +342,7 @@ const Control: SearchControl = {
     if (query.length) {
       let results = await provider!.search({ query });
       results = results.slice(0, this.options.maxSuggestions);
-      this.resultList.render(results);
+      this.resultList.render(results, this.options.resultFormat);
     } else {
       this.resultList.clear();
     }
