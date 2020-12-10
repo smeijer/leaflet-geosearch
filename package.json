@@ -1,6 +1,6 @@
 {
-  "name": "@mrsimpson/leaflet-geosearch",
-  "version": "3.1.0-mrsimpson-2",
+  "name": "leaflet-geosearch",
+  "version": "3.1.0",
   "description": "Adds support for address lookup (a.k.a. geocoding / geoseaching) to Leaflet.",
   "publishConfig": {
     "tag": "latest"
@@ -98,9 +98,7 @@
     "ts-jest": "^25.3.1",
     "typescript": "^3.8.3"
   },
-  "dependencies": {
-    "leaflet": "^1.6.0"
-  },
+  "dependencies": {},
   "optionalDependencies": {
     "leaflet": "^1.6.0"
   },
@@ -108,10 +106,5 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "directories": {
-    "doc": "docs",
-    "lib": "lib",
-    "test": "test"
   }
 }
