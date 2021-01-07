@@ -373,6 +373,15 @@
         "ideas",
         "code"
       ]
+    },
+    {
+      "login": "mrsimpson",
+      "name": "Oliver Jägle",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/17176678?v=4",
+      "profile": "https://github.com/mrsimpson",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
