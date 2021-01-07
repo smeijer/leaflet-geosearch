@@ -42,8 +42,8 @@
     "ci:tsc": "tsc --noEmit --project ./tsconfig.json",
     "ci:test": "jest --ci",
     "bump:patch": "npm version patch -m 'release: cut the %s release'",
-    "bump:minor": "npm version patch -m 'release: cut the %s release'",
-    "bump:major": "npm version patch -m 'release: cut the %s release'"
+    "bump:minor": "npm version minor -m 'release: cut the %s release'",
+    "bump:major": "npm version major -m 'release: cut the %s release'"
   },
   "files": [
     "src",
