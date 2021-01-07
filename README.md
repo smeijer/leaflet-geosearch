@@ -1,6 +1,9 @@
 # Leaflet.GeoSearch
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-39-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -216,7 +219,8 @@ new GeoSearchControl({
     icon: new L.Icon.Default(),
     draggable: false,
   },
-  popupFormat: ({ query, result }) => result.label, // optional: function    - default returns result label
+  popupFormat: ({ query, result }) => result.label, // optional: function    - default returns result label,
+  resultFormat: ({ result }) => result.label, // optional: function    - default returns result label
   maxMarkers: 1, // optional: number      - default 1
   retainZoomLevel: false, // optional: true|false  - default false
   animateZoom: true, // optional: true|false  - default true
@@ -233,6 +237,8 @@ open a popup with the location text.
 `marker` can be set to any instance of a (custom) `L.Icon`.
 
 `popupFormat` is callback function for displaying text on popup.
+
+`resultFormat` is callback function for modifying the search result texts (e. g. in order to hide address components or change its ordering).
 
 `maxMarker` determines how many last results are kept in memory. Default 1, but
 perhaps you want to show the last `x` results when searching for new queries as
@@ -348,6 +354,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
