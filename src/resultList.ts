@@ -35,7 +35,7 @@ export default class ResultList {
     results.forEach((result, idx) => {
       const child = this.resultItem.cloneNode(true) as HTMLDivElement;
       child.setAttribute('data-key', `${idx}`);
-      child.innerHTML = resultFormat(result);
+      child.innerHTML = resultFormat({ result });
       this.container.appendChild(child);
     });
 
