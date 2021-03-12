@@ -1,6 +1,6 @@
 {
   "name": "leaflet-geosearch",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Adds support for address lookup (a.k.a. geocoding / geoseaching) to Leaflet.",
   "publishConfig": {
     "tag": "latest"
@@ -98,7 +98,9 @@
     "ts-jest": "^25.3.1",
     "typescript": "^3.8.3"
   },
-  "dependencies": {},
+  "dependencies": {
+    "leaflet": "^1.6.0"
+  },
   "optionalDependencies": {
     "leaflet": "^1.6.0"
   },
