@@ -10,7 +10,7 @@
   "module": "dist/geosearch.module.js",
   "unpkg": "dist/geosearch.umd.js",
   "source": "src/index.ts",
-  "types": "dist/types.d.ts",
+  "types": "dist/index.d.ts",
   "amdName": "GeoSearch",
   "exports": {
     ".": {
