@@ -432,7 +432,11 @@ const Control: SearchControl = {
       ? resultBounds
       : this.markers.getBounds();
 
-    if (!retainZoomLevel && resultBounds.isValid()) {
+    if(!retainZoomLevel && resultBounds.isValid() && !result.bounds){
+      this.map.setView(bounds.getCenter(), this.getZoom(), {
+        animate: animateZoom,
+      });
+    } else if (!retainZoomLevel && resultBounds.isValid()) {
       this.map.fitBounds(bounds, { animate: animateZoom });
     } else {
       this.map.setView(bounds.getCenter(), this.getZoom(), {
