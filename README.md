@@ -1,7 +1,7 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-41-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-42-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -349,6 +349,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/CoryLR"><img src="https://avatars3.githubusercontent.com/u/19614782?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Cory Leigh Rahman</b></sub></a><br /><a href="#ideas-CoryLR" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=CoryLR" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/mrsimpson"><img src="https://avatars3.githubusercontent.com/u/17176678?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Oliver Jägle</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=mrsimpson" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Dusty211"><img src="https://avatars.githubusercontent.com/u/45924716?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kyle Houghton</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=Dusty211" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/nikitauskas"><img src="https://avatars.githubusercontent.com/u/6033577?v=4?s=100" width="100px;" alt=""/><br /><sub><b>nikitauskas</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=nikitauskas" title="Code">💻</a></td>
   </tr>
 </table>
 
