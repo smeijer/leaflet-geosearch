@@ -5,5 +5,6 @@ export { default as GoogleProvider } from './googleProvider';
 export { default as LocationIQProvider } from './locationIQProvider';
 export { default as OpenCageProvider } from './openCageProvider';
 export { default as OpenStreetMapProvider } from './openStreetMapProvider';
+export { default as MapBoxProvider } from './mapBoxProvider';
 
 export { default as Provider } from './provider';
