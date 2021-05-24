@@ -54,6 +54,7 @@ The control comes with a number of default providers:
 - [LocationIQ]
 - [OpenCage]
 - [OpenStreetMap]
+- [Mapbox](https://docs.mapbox.com/help/tutorials/local-search-geocoding-api/)
 
 Although this project is still named `leaflet-geosearch`, this library is also
 usable without LeafletJS, and does not have any dependencies whatsoever.
@@ -165,6 +166,55 @@ const searchControl = new GeoSearchControl({
 
 const map = new L.Map('map');
 map.addControl(searchControl);
+```
+
+
+# Using with react-leaflet
+
+Usage with `react-leaflet` is similar to the usage with plain Leaflet. This example
+uses the new MapBoxProvider and adds an api key to the `params` list when accessing
+the remote API. Note the `useMap` hook which is the only notable diffrence to the
+leaflet example.
+
+```jsx
+import { GeoSearchControl, MapBoxProvider } from 'leaflet-geosearch';
+import {useMap} from 'react-leaflet';
+const SearchField = ({apiKey}) => {
+  const provider = new MapBoxProvider({ params: {
+    access_token: apiKey
+  }});
+
+  // @ts-ignore
+  const searchControl = new GeoSearchControl({
+    provider: provider,
+  });
+
+  const map = useMap();
+  useEffect(() => {
+    map.addControl(searchControl);
+    return () => map.removeControl(searchControl);
+  }, [])
+
+  return null;
+}
+```
+
+The `useEffect` hook used in `SearchField` even allows for conditional rendering of the
+search field.
+
+```jsx
+import {MapContainer} from 'react-leaflet';
+const MyMap = () => {
+    // ...
+    return (
+        <MapContainer>
+          {showSearch && <SearchField apiKey={apiKey} />}
+
+          {/* ... */}
+        </MapContainer>
+    );
+}
+
 ```
 
 ## GeoSearchControl
