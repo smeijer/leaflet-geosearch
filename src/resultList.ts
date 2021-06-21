@@ -4,9 +4,11 @@ import { SearchResult } from './providers/provider';
 interface ResultListProps {
   handleClick: (args: { result: SearchResult }) => void;
   classNames?: {
-    container?: string;
+    resultlist?: string;
     item?: string;
+    notfound?: string;
   };
+  notFoundMessage?: string;
 }
 
 export default class ResultList {
@@ -16,13 +18,26 @@ export default class ResultList {
 
   container: HTMLDivElement;
   resultItem: HTMLDivElement;
+  notFoundMessage?: HTMLDivElement;
 
-  constructor({ handleClick, classNames = {} }: ResultListProps) {
+  constructor({
+    handleClick,
+    classNames = {},
+    notFoundMessage,
+  }: ResultListProps) {
     this.handleClick = handleClick;
+    this.notFoundMessage = !!notFoundMessage
+      ? createElement<HTMLDivElement>(
+          'div',
+          cx(classNames.notfound),
+          undefined,
+          { html: notFoundMessage! },
+        )
+      : undefined;
 
     this.container = createElement<HTMLDivElement>(
       'div',
-      cx('results', classNames.container),
+      cx('results', classNames.resultlist),
     );
     this.container.addEventListener('click', this.onClick, true);
 
@@ -42,6 +57,9 @@ export default class ResultList {
     if (results.length > 0) {
       addClassName(this.container.parentElement, 'open');
       addClassName(this.container, 'active');
+    } else if (!!this.notFoundMessage) {
+      this.container.appendChild(this.notFoundMessage);
+      addClassName(this.container.parentElement, 'open');
     }
 
     this.results = results;

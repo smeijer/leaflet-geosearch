@@ -212,6 +212,10 @@
   border-right: none;
 }
 
+.leaflet-bar-notfound {
+  font-style: italic;
+}
+
 .leaflet-control-geosearch a.reset {
   color: black;
   font-weight: bold;
