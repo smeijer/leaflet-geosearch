@@ -1,7 +1,9 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-42-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -55,6 +57,7 @@ The control comes with a number of default providers:
 - [OpenCage]
 - [OpenStreetMap]
 - [Mapbox](https://docs.mapbox.com/help/tutorials/local-search-geocoding-api/)
+- [GeoApiFR](https://geo.api.gouv.fr/adresse)
 
 Although this project is still named `leaflet-geosearch`, this library is also
 usable without LeafletJS, and does not have any dependencies whatsoever.
@@ -168,7 +171,6 @@ const map = new L.Map('map');
 map.addControl(searchControl);
 ```
 
-
 # Using with react-leaflet
 
 Usage with `react-leaflet` is similar to the usage with plain Leaflet. This example
@@ -178,11 +180,13 @@ leaflet example.
 
 ```jsx
 import { GeoSearchControl, MapBoxProvider } from 'leaflet-geosearch';
-import {useMap} from 'react-leaflet';
-const SearchField = ({apiKey}) => {
-  const provider = new MapBoxProvider({ params: {
-    access_token: apiKey
-  }});
+import { useMap } from 'react-leaflet';
+const SearchField = ({ apiKey }) => {
+  const provider = new MapBoxProvider({
+    params: {
+      access_token: apiKey,
+    },
+  });
 
   // @ts-ignore
   const searchControl = new GeoSearchControl({
@@ -193,28 +197,27 @@ const SearchField = ({apiKey}) => {
   useEffect(() => {
     map.addControl(searchControl);
     return () => map.removeControl(searchControl);
-  }, [])
+  }, []);
 
   return null;
-}
+};
 ```
 
 The `useEffect` hook used in `SearchField` even allows for conditional rendering of the
 search field.
 
 ```jsx
-import {MapContainer} from 'react-leaflet';
+import { MapContainer } from 'react-leaflet';
 const MyMap = () => {
-    // ...
-    return (
-        <MapContainer>
-          {showSearch && <SearchField apiKey={apiKey} />}
+  // ...
+  return (
+    <MapContainer>
+      {showSearch && <SearchField apiKey={apiKey} />}
 
-          {/* ... */}
-        </MapContainer>
-    );
-}
-
+      {/* ... */}
+    </MapContainer>
+  );
+};
 ```
 
 ## GeoSearchControl
