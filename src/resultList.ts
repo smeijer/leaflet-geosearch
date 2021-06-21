@@ -6,6 +6,7 @@ interface ResultListProps {
   classNames?: {
     resultlist?: string;
     item?: string;
+    notfound?: string;
   };
   notFoundMessage?: string;
 }
@@ -14,10 +15,10 @@ export default class ResultList {
   handleClick?: (args: { result: SearchResult }) => void;
   selected = -1;
   results: SearchResult[] = [];
-  notFoundMessage?: string;
 
   container: HTMLDivElement;
   resultItem: HTMLDivElement;
+  notFoundMessage?: HTMLDivElement;
 
   constructor({
     handleClick,
@@ -25,7 +26,14 @@ export default class ResultList {
     notFoundMessage,
   }: ResultListProps) {
     this.handleClick = handleClick;
-    this.notFoundMessage = notFoundMessage;
+    this.notFoundMessage = !!notFoundMessage
+      ? createElement<HTMLDivElement>(
+          'div',
+          cx(classNames.notfound),
+          undefined,
+          { html: notFoundMessage! },
+        )
+      : undefined;
 
     this.container = createElement<HTMLDivElement>(
       'div',
@@ -50,7 +58,7 @@ export default class ResultList {
       addClassName(this.container.parentElement, 'open');
       addClassName(this.container, 'active');
     } else if (!!this.notFoundMessage) {
-      this.container.innerHTML = this.notFoundMessage;
+      this.container.appendChild(this.notFoundMessage);
       addClassName(this.container.parentElement, 'open');
     }
 

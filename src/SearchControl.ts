@@ -47,6 +47,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
     input: '',
     resultlist: '',
     item: '',
+    notfound: 'leaflet-bar-notfound',
   },
   autoComplete: true,
   autoCompleteDelay: 250,
@@ -97,6 +98,7 @@ interface SearchControlProps {
     input: string;
     resultlist: string;
     item: string;
+    notfound: string;
   };
 
   autoComplete: boolean;
@@ -212,6 +214,7 @@ const Control: SearchControl = {
         classNames: {
           resultlist: this.classNames.resultlist,
           item: this.classNames.item,
+          notfound: this.classNames.notfound,
         },
         notFoundMessage: this.options.notFoundMessage,
       });
