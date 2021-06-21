@@ -45,6 +45,8 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
     msgbox: 'leaflet-bar message',
     form: '',
     input: '',
+    resultlist: '',
+    item: '',
   },
   autoComplete: true,
   autoCompleteDelay: 250,
@@ -93,6 +95,8 @@ interface SearchControlProps {
     msgbox: string;
     form: string;
     input: string;
+    resultlist: string;
+    item: string;
   };
 
   autoComplete: boolean;
@@ -205,6 +209,11 @@ const Control: SearchControl = {
           this.searchElement.input.value = result.label;
           this.onSubmit({ query: result.label, data: result });
         },
+        classNames: {
+          resultlist: this.classNames.resultlist,
+          item: this.classNames.item,
+        },
+        notFoundMessage: this.options.notFoundMessage,
       });
 
       this.searchElement.form.appendChild(this.resultList.container);

@@ -4,25 +4,32 @@ import { SearchResult } from './providers/provider';
 interface ResultListProps {
   handleClick: (args: { result: SearchResult }) => void;
   classNames?: {
-    container?: string;
+    resultlist?: string;
     item?: string;
   };
+  notFoundMessage?: string;
 }
 
 export default class ResultList {
   handleClick?: (args: { result: SearchResult }) => void;
   selected = -1;
   results: SearchResult[] = [];
+  notFoundMessage?: string;
 
   container: HTMLDivElement;
   resultItem: HTMLDivElement;
 
-  constructor({ handleClick, classNames = {} }: ResultListProps) {
+  constructor({
+    handleClick,
+    classNames = {},
+    notFoundMessage,
+  }: ResultListProps) {
     this.handleClick = handleClick;
+    this.notFoundMessage = notFoundMessage;
 
     this.container = createElement<HTMLDivElement>(
       'div',
-      cx('results', classNames.container),
+      cx('results', classNames.resultlist),
     );
     this.container.addEventListener('click', this.onClick, true);
 
@@ -42,6 +49,9 @@ export default class ResultList {
     if (results.length > 0) {
       addClassName(this.container.parentElement, 'open');
       addClassName(this.container, 'active');
+    } else if (!!this.notFoundMessage) {
+      this.container.innerHTML = this.notFoundMessage;
+      addClassName(this.container.parentElement, 'open');
     }
 
     this.results = results;
