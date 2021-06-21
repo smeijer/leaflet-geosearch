@@ -1,0 +1,53 @@
+---
+name: GeoApiFr
+menu: Providers
+route: /providers/geoapifr
+---
+
+import Playground from '../components/Playground';
+import Map from '../components/Map';
+
+# GeoApiFr Provider
+
+For more options and configurations, see the [Geo Api FR][1].
+
+<Playground>
+  <Map provider="GeoApiFr" />
+</Playground>
+
+```js
+import { GeoApiFrProvider } from 'leaflet-geosearch';
+
+const provider = new GeoApiFrProvider();
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+  }),
+);
+```
+
+## Optional parameters
+
+Geo Api FR supports a number of [optional parameters][2]. As the api requires those parameters to be added to the url, they can be added to the `params` key of the provider.
+
+All options defined next to the `params` key, would have been added to the request body.
+
+```js
+const provider = new OpenStreetMapProvider({
+  searchUrl: 'https://api-adresse.data.gouv.fr/search',
+  reverseUrl: 'https://api-adresse.data.gouv.fr/reverse',
+  params: {
+    type: 'municipality', // limit search results to city
+    autocomplete: 1, // Use in autocomplete mode (search in prefix mode)
+    lat: 0, // Latitude in degree
+    lon: 0, // Longitude in degree
+  },
+});
+```
+
+[1]: https://geo.api.gouv.fr/
+[2]: https://geo.api.gouv.fr/adresse
