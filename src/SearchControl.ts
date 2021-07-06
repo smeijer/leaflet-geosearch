@@ -1,4 +1,5 @@
-import L, { ControlPosition, FeatureGroup, MarkerOptions, Map } from 'leaflet';
+import * as L from 'leaflet'
+import { ControlPosition, FeatureGroup, MarkerOptions, Map } from 'leaflet';
 import SearchElement from './SearchElement';
 import ResultList from './resultList';
 import debounce from './lib/debounce';
