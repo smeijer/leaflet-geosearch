@@ -7,6 +7,7 @@ import {
   LocationIQProvider,
   OpenCageProvider,
   OpenStreetMapProvider,
+  GeoApiFrProvider,
 } from 'leaflet-geosearch';
 
 export default {
@@ -35,4 +36,6 @@ export default {
   }),
 
   OpenStreetMap: new OpenStreetMapProvider(),
+
+  GeoApiFr: new GeoApiFrProvider(),
 };
