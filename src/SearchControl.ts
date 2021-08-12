@@ -35,7 +35,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   retainZoomLevel: false,
   animateZoom: true,
   searchLabel: 'Enter address',
-  notFoundMessage: 'Sorry, that address could not be found.',
+  notFoundMessage: '',
   messageHideDelay: 3000,
   zoomLevel: 18,
   classNames: {
