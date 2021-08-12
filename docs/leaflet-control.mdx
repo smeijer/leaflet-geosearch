@@ -49,7 +49,9 @@ map.addControl(searchControl);
 <Playground>
   <Map
     provider="OpenStreetMap"
-    controlOptions={{ notFoundMessage: 'No errors founds' }}
+    controlOptions={{
+      notFoundMessage: 'Sorry, that address could not be found.',
+    }}
   />
 </Playground>
 
@@ -57,7 +59,7 @@ map.addControl(searchControl);
 import { SearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 
 const searchControl = new SearchControl({
-  notFoundMessage: 'No errors founds',
+  notFoundMessage: 'Sorry, that address could not be found.',
   provider: new OpenStreetMapProvider(),
 });
 
