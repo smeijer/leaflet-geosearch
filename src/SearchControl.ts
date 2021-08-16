@@ -35,7 +35,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   retainZoomLevel: false,
   animateZoom: true,
   searchLabel: 'Enter address',
-  notFoundMessage: 'Sorry, that address could not be found.',
+  notFoundMessage: '',
   messageHideDelay: 3000,
   zoomLevel: 18,
   classNames: {
@@ -45,6 +45,9 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
     msgbox: 'leaflet-bar message',
     form: '',
     input: '',
+    resultlist: '',
+    item: '',
+    notfound: 'leaflet-bar-notfound',
   },
   autoComplete: true,
   autoCompleteDelay: 250,
@@ -93,6 +96,9 @@ interface SearchControlProps {
     msgbox: string;
     form: string;
     input: string;
+    resultlist: string;
+    item: string;
+    notfound: string;
   };
 
   autoComplete: boolean;
@@ -205,6 +211,12 @@ const Control: SearchControl = {
           this.searchElement.input.value = result.label;
           this.onSubmit({ query: result.label, data: result });
         },
+        classNames: {
+          resultlist: this.classNames.resultlist,
+          item: this.classNames.item,
+          notfound: this.classNames.notfound,
+        },
+        notFoundMessage: this.options.notFoundMessage,
       });
 
       this.searchElement.form.appendChild(this.resultList.container);
