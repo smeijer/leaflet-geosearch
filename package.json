@@ -20,7 +20,7 @@
       "require": "./dist/geosearch.js"
     },
     "./package.json": "./package.json",
-    "./": "./"
+    "./*": "./*"
   },
   "scripts": {
     "clean": "rimraf ./dist .docz/dist",
