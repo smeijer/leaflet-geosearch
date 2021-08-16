@@ -400,6 +400,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "patou",
+      "name": "Patrice De Saint Steban",
+      "avatar_url": "https://avatars.githubusercontent.com/u/841858?v=4",
+      "profile": "https://github.com/patou",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
