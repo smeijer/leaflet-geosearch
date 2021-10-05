@@ -428,6 +428,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "grigorpavlov",
+      "name": "Grigor Pavlov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/21351616?v=4",
+      "profile": "https://github.com/grigorpavlov",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
