@@ -25,6 +25,7 @@ export default {
         'LocationIQ',
         'OpenCage',
         'OpenStreetMap',
+        'Pelias',
         'Custom Providers',
       ],
     },
