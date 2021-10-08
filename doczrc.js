@@ -20,6 +20,7 @@ export default {
         'Algolia',
         'Bing',
         'Esri',
+        'Geocode Earth',
         'Google',
         'Here',
         'LocationIQ',

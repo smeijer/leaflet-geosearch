@@ -1,0 +1,71 @@
+---
+name: Geocode Earth
+menu: Providers
+route: /providers/geocode-earth
+---
+
+import Playground from '../components/Playground';
+import Map from '../components/Map';
+
+# Geocode Earth Provider
+
+Geocode Earth is a hosted version of Pelias run by the core maintainers of the FOSS project.
+
+**note**: Geocode Earth services require an API key, grab a [free trial key][1] from their website.
+
+For more options and configurations, see the [documentation][2].
+
+<Playground>
+  <Map provider="GeocodeEarth" />
+</Playground>
+
+```js
+import { GeocodeEarthProvider } from 'leaflet-geosearch';
+
+// grab an API key from https://geocode.earth
+const provider = new GeocodeEarthProvider({
+  params: {
+    api_key: '__YOUR_GEOCODE_EARTH_KEY__',
+  },
+});
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+  }),
+);
+```
+
+
+## Optional parameters
+
+Geocode Earth supports a wide range of number of [optional parameters][2] which can be applied to every request using the `params` object:
+
+```js
+const provider = new GeocodeEarthProvider({
+  params: {
+    size: 5, // limit the total number of results returned
+    lang: 'nl', // render results in Dutch
+    'boundary.country': 'NL', // limit search results to the Netherlands
+    layers: 'address,street', // limmit which layers are queried
+  },
+});
+```
+
+Or individually on a per-request basis:
+
+```js
+const results = await provider.search({
+  query: {
+    text: 'example',
+    'focus.point.lat': 1.11, // score results nearer to the focus point higher
+    'focus.point.lon': 2.22,
+  },
+});
+```
+
+[1]: https://geocode.earth/
+[2]: https://geocode.earth/docs/
