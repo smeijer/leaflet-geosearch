@@ -437,6 +437,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "missinglink",
+      "name": "Peter Johnson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/738069?v=4",
+      "profile": "https://geocode.earth",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
