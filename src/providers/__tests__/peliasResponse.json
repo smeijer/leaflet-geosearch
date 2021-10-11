@@ -1,0 +1,407 @@
+{
+  "geocoding": {
+    "version": "0.2",
+    "attribution": "https://geocode.earth/guidelines",
+    "query": {
+      "text": "pelias",
+      "parser": "pelias",
+      "parsed_text": {
+        "subject": "pelias"
+      },
+      "size": 10,
+      "layers": [
+        "street",
+        "venue",
+        "locality",
+        "neighbourhood",
+        "county",
+        "localadmin",
+        "region",
+        "macrocounty",
+        "country",
+        "macroregion",
+        "borough",
+        "postalcode",
+        "macrohood",
+        "marinearea",
+        "disputed",
+        "dependency",
+        "empire",
+        "continent",
+        "ocean"
+      ],
+      "private": false,
+      "lang": {
+        "name": "English",
+        "iso6391": "en",
+        "iso6393": "eng",
+        "via": "header",
+        "defaulted": false
+      },
+      "querySize": 20
+    },
+    "warnings": [
+      "performance optimization: excluding 'address' layer"
+    ],
+    "engine": {
+      "name": "Pelias",
+      "author": "Mapzen",
+      "version": "1.0"
+    },
+    "timestamp": 1633697770106
+  },
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          22.999231,
+          39.390835
+        ]
+      },
+      "properties": {
+        "id": "node/2631570458",
+        "gid": "openstreetmap:venue:node/2631570458",
+        "layer": "venue",
+        "source": "openstreetmap",
+        "source_id": "node/2631570458",
+        "country_code": "GR",
+        "name": "Pelias",
+        "accuracy": "point",
+        "country": "Greece",
+        "country_gid": "whosonfirst:country:85633171",
+        "country_a": "GRC",
+        "region": "Thessaly",
+        "region_gid": "whosonfirst:region:85684685",
+        "region_a": "TS",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Pelias, TS, Greece",
+        "addendum": {
+          "osm": {
+            "website": "www.peliashotel.gr"
+          }
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.539115,
+          60.908174
+        ]
+      },
+      "properties": {
+        "id": "node/6341953008",
+        "gid": "openstreetmap:venue:node/6341953008",
+        "layer": "venue",
+        "source": "openstreetmap",
+        "source_id": "node/6341953008",
+        "country_code": "NO",
+        "name": "Pelias norsk skadedyrkontroll",
+        "housenumber": "59",
+        "street": "Martensvegen",
+        "postalcode": "2409",
+        "accuracy": "point",
+        "country": "Norway",
+        "country_gid": "whosonfirst:country:85633341",
+        "country_a": "NOR",
+        "region": "Innlandet",
+        "region_gid": "whosonfirst:region:1527947263",
+        "localadmin": "Elverum",
+        "localadmin_gid": "whosonfirst:localadmin:1159297469",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Pelias norsk skadedyrkontroll, Elverum, Norway",
+        "addendum": {
+          "osm": {
+            "website": "https://pelias.no/",
+            "phone": "+47 33 33 00 00"
+          }
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.981907,
+          -29.939019
+        ]
+      },
+      "properties": {
+        "id": "polyline:24349300",
+        "gid": "openstreetmap:street:polyline:24349300",
+        "layer": "street",
+        "source": "openstreetmap",
+        "source_id": "polyline:24349300",
+        "country_code": "ZA",
+        "name": "Pelias Place",
+        "street": "Pelias Place",
+        "accuracy": "centroid",
+        "country": "South Africa",
+        "country_gid": "whosonfirst:country:85633813",
+        "country_a": "ZAF",
+        "region": "Kwazulu-Natal",
+        "region_gid": "whosonfirst:region:85688911",
+        "region_a": "NL",
+        "county": "eThekwini",
+        "county_gid": "whosonfirst:county:1108730571",
+        "county_a": "ET",
+        "continent": "Africa",
+        "continent_gid": "whosonfirst:continent:102191573",
+        "label": "Pelias Place, NL, South Africa"
+      },
+      "bbox": [
+        30.981231,
+        -29.93952,
+        30.982589,
+        -29.938511
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.127491,
+          -21.938032
+        ]
+      },
+      "properties": {
+        "id": "polyline:23395079",
+        "gid": "openstreetmap:street:polyline:23395079",
+        "layer": "street",
+        "source": "openstreetmap",
+        "source_id": "polyline:23395079",
+        "country_code": "AU",
+        "name": "Pelias Street",
+        "street": "Pelias Street",
+        "accuracy": "centroid",
+        "country": "Australia",
+        "country_gid": "whosonfirst:country:85632793",
+        "country_a": "AUS",
+        "region": "Western Australia",
+        "region_gid": "whosonfirst:region:85681439",
+        "region_a": "WA",
+        "county": "Exmouth",
+        "county_gid": "whosonfirst:county:102049323",
+        "county_a": "EX",
+        "localadmin": "Exmouth",
+        "localadmin_gid": "whosonfirst:localadmin:404547261",
+        "locality": "Exmouth",
+        "locality_gid": "whosonfirst:locality:101937165",
+        "continent": "Oceania",
+        "continent_gid": "whosonfirst:continent:102191583",
+        "label": "Pelias Street, Exmouth, WA, Australia"
+      },
+      "bbox": [
+        114.124938,
+        -21.93829,
+        114.130027,
+        -21.937611
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.854135,
+          9.680108
+        ]
+      },
+      "properties": {
+        "id": "polyline:21756510",
+        "gid": "openstreetmap:street:polyline:21756510",
+        "layer": "street",
+        "source": "openstreetmap",
+        "source_id": "polyline:21756510",
+        "country_code": "PH",
+        "name": "F. Pelias",
+        "street": "F. Pelias",
+        "accuracy": "centroid",
+        "country": "Philippines",
+        "country_gid": "whosonfirst:country:85632509",
+        "country_a": "PHL",
+        "region": "Bohol",
+        "region_gid": "whosonfirst:region:85675933",
+        "region_a": "BO",
+        "county": "Tagbilaran City",
+        "county_gid": "whosonfirst:county:1108699607",
+        "continent": "Asia",
+        "continent_gid": "whosonfirst:continent:102191569",
+        "label": "F. Pelias, BO, Philippines"
+      },
+      "bbox": [
+        123.853164,
+        9.679871,
+        123.855064,
+        9.680231
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.31722,
+          -66.05479
+        ]
+      },
+      "properties": {
+        "id": "6623050",
+        "gid": "geonames:venue:6623050",
+        "layer": "venue",
+        "source": "geonames",
+        "source_id": "6623050",
+        "country_code": "AQ",
+        "name": "Pelias Bluff",
+        "accuracy": "point",
+        "country": "Antarctica",
+        "country_gid": "whosonfirst:country:85632715",
+        "country_a": "ATA",
+        "continent": "Antarctica",
+        "continent_gid": "whosonfirst:continent:102191579",
+        "label": "Pelias Bluff, Antarctica",
+        "addendum": {
+          "geonames": {
+            "feature_code": "SLP"
+          }
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.070734,
+          43.423036
+        ]
+      },
+      "properties": {
+        "id": "polyline:10453562",
+        "gid": "openstreetmap:street:polyline:10453562",
+        "layer": "street",
+        "source": "openstreetmap",
+        "source_id": "polyline:10453562",
+        "country_code": "ES",
+        "name": "Calle Las Pelías",
+        "street": "Calle Las Pelías",
+        "accuracy": "centroid",
+        "country": "Spain",
+        "country_gid": "whosonfirst:country:85633129",
+        "country_a": "ESP",
+        "macroregion": "Cantabria",
+        "macroregion_gid": "whosonfirst:macroregion:404227371",
+        "region": "Cantabria",
+        "region_gid": "whosonfirst:region:85682833",
+        "region_a": "CB",
+        "localadmin": "Suances",
+        "localadmin_gid": "whosonfirst:localadmin:404342231",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Calle Las Pelías, Suances, CB, Spain"
+      },
+      "bbox": [
+        -4.072311,
+        43.420791,
+        -4.06891,
+        43.425346
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.73333,
+          5.7
+        ]
+      },
+      "properties": {
+        "id": "1309815263",
+        "gid": "whosonfirst:locality:1309815263",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "1309815263",
+        "country_code": "MY",
+        "name": "Kampong Pelias",
+        "accuracy": "centroid",
+        "country": "Malaysia",
+        "country_gid": "whosonfirst:country:85632739",
+        "country_a": "MYS",
+        "region": "Kelantan",
+        "region_gid": "whosonfirst:region:85675145",
+        "region_a": "KTN",
+        "county": "Jeli",
+        "county_gid": "whosonfirst:county:890490101",
+        "locality": "Kampong Pelias",
+        "locality_gid": "whosonfirst:locality:1309815263",
+        "continent": "Asia",
+        "continent_gid": "whosonfirst:continent:102191569",
+        "label": "Kampong Pelias, KTN, Malaysia",
+        "addendum": {
+          "concordances": {
+            "gn:id": 1765795
+          }
+        }
+      },
+      "bbox": [
+        101.71333,
+        5.68,
+        101.75333,
+        5.72
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.73333,
+          5.7
+        ]
+      },
+      "properties": {
+        "id": "1751307",
+        "gid": "geonames:venue:1751307",
+        "layer": "venue",
+        "source": "geonames",
+        "source_id": "1751307",
+        "country_code": "MY",
+        "name": "Sungai Pelias",
+        "accuracy": "point",
+        "country": "Malaysia",
+        "country_gid": "whosonfirst:country:85632739",
+        "country_a": "MYS",
+        "region": "Kelantan",
+        "region_gid": "whosonfirst:region:85675145",
+        "region_a": "KTN",
+        "county": "Jeli",
+        "county_gid": "whosonfirst:county:890490101",
+        "county_a": "JE",
+        "continent": "Asia",
+        "continent_gid": "whosonfirst:continent:102191569",
+        "label": "Sungai Pelias, KTN, Malaysia",
+        "addendum": {
+          "geonames": {
+            "feature_code": "STM"
+          }
+        }
+      }
+    }
+  ],
+  "bbox": [
+    -61.31722,
+    -66.05479,
+    123.855064,
+    60.908174
+  ]
+}
