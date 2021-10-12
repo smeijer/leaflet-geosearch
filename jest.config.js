@@ -15,6 +15,7 @@ module.exports = {
   },
   automock: false,
   setupFiles: ['./jest.setup.js'],
+  setupFilesAfterEnv: ['./jest.extend.js'],
   globals: {
     'ts-jest': {
       tsConfig: {

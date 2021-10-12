@@ -20,6 +20,6 @@ describe('HereProvider', () => {
     expect(result.x).toEqual(+fixtures.items[0].position.lng);
     expect(result.y).toEqual(+fixtures.items[0].position.lat);
     // here provider doesn't return bounds :(
-    expect(result.bounds).toBeFalsy();
+    expect(result.bounds).toBeValidBounds();
   });
 });

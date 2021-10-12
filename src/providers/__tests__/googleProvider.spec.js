@@ -19,10 +19,7 @@ describe('GoogleProvider', () => {
     expect(result.label).toBeTruthy();
     expect(result.x).toEqual(fixtures.results[0].geometry.location.lng);
     expect(result.y).toEqual(fixtures.results[0].geometry.location.lat);
-    expect(result.bounds[0][0]).toBeGreaterThan(result.bounds[0][1]);
-    expect(result.bounds[1][0]).toBeGreaterThan(result.bounds[1][1]);
-    expect(result.bounds[0][0]).toBeLessThan(result.bounds[1][0]);
-    expect(result.bounds[0][1]).toBeLessThan(result.bounds[1][1]);
+    expect(result.bounds).toBeValidBounds();
   });
 
   test.skip('Can get localized results', async () => {
