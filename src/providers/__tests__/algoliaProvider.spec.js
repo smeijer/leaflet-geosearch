@@ -15,5 +15,6 @@ describe('AlgoliaProvider', () => {
     expect(result.label).toBeTruthy();
     expect(result.x).toEqual(fixtures.hits[0]._geoloc.lng);
     expect(result.y).toEqual(fixtures.hits[0]._geoloc.lat);
+    expect(result.bounds).toBeValidBounds();
   });
 });

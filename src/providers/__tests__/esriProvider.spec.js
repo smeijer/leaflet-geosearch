@@ -15,9 +15,6 @@ describe('EsriProvider', () => {
     expect(result.label).toBeTruthy();
     expect(result.x).toEqual(fixtures.locations[0].feature.geometry.x);
     expect(result.y).toEqual(fixtures.locations[0].feature.geometry.y);
-    expect(result.bounds[0][0]).toBeGreaterThan(result.bounds[0][1]);
-    expect(result.bounds[1][0]).toBeGreaterThan(result.bounds[1][1]);
-    expect(result.bounds[0][0]).toBeLessThan(result.bounds[1][0]);
-    expect(result.bounds[0][1]).toBeLessThan(result.bounds[1][1]);
+    expect(result.bounds).toBeValidBounds();
   });
 });
