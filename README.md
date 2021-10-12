@@ -1,7 +1,9 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-47-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -50,10 +52,12 @@ The control comes with a number of default providers:
 - [Algolia]
 - [Bing]
 - [Esri]
+- [Geocode Earth]
 - [Google]
 - [LocationIQ]
 - [OpenCage]
 - [OpenStreetMap]
+- [Pelias]
 - [Mapbox](https://docs.mapbox.com/help/tutorials/local-search-geocoding-api/)
 - [GeoApiFR](https://geo.api.gouv.fr/adresse)
 
@@ -132,7 +136,7 @@ use your debugger)
 # Providers
 
 When `OpenStreetMap` does not match your needs; you can also choose to use the
-`Algolia`, `Bing`, `Esri`, `Google` `LocationIQ`, or `OpenCage` providers. Most of those providers do however require API
+`Algolia`, `Bing`, `Esri`, `Geocode Earth`, `Google`, `LocationIQ`, `OpenCage`, or `Pelias` providers. Most of those providers do however require API
 keys. See the documentation pages on the relevant organisations on how to obtain
 these keys.
 
@@ -335,10 +339,12 @@ to share your work with us.
 [algolia]: https://smeijer.github.io/leaflet-geosearch/providers/algolia
 [bing]: https://smeijer.github.io/leaflet-geosearch/providers/bing
 [esri]: https://smeijer.github.io/leaflet-geosearch/providers/esri
+[geocode earth]: https://smeijer.github.io/leaflet-geosearch/providers/geocode-earth
 [google]: https://smeijer.github.io/leaflet-geosearch/providers/google
 [locationiq]: https://smeijer.github.io/leaflet-geosearch/providers/locationiq
 [opencage]: https://smeijer.github.io/leaflet-geosearch/providers/opencage
 [openstreetmap]: https://smeijer.github.io/leaflet-geosearch/providers/openstreetmap
+[pelias]: https://smeijer.github.io/leaflet-geosearch/providers/pelias
 
 ## Contributors ✨
 
