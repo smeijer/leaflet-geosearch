@@ -1,9 +1,7 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-47-orange.svg?style=flat-square)](#contributors-)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-48-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -414,6 +412,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/HolyMarcell"><img src="https://avatars.githubusercontent.com/u/2223520?v=4?s=100" width="100px;" alt=""/><br /><sub><b>HolyMarcell</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=HolyMarcell" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/grigorpavlov"><img src="https://avatars.githubusercontent.com/u/21351616?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Grigor Pavlov</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=grigorpavlov" title="Code">💻</a></td>
     <td align="center"><a href="https://geocode.earth"><img src="https://avatars.githubusercontent.com/u/738069?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Peter Johnson</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=missinglink" title="Code">💻</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=missinglink" title="Tests">⚠️</a></td>
+    <td align="center"><a href="http://about.me/arnaudferrand"><img src="https://avatars.githubusercontent.com/u/1741320?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Arnaud Ferrand</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=tsamaya" title="Documentation">📖</a></td>
   </tr>
 </table>
 
