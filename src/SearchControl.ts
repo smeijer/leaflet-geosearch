@@ -164,7 +164,7 @@ const Control: SearchControl = {
     }
 
     // merge given options with control defaults
-    this.options = { ...this.options, ...options };
+    this.options = { ...defaultOptions, ...options };
     this.classNames = { ...this.classNames, ...options.classNames };
 
     this.markers = new L.FeatureGroup();
