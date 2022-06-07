@@ -83,6 +83,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [setup]
     timeout-minutes: 5
+    strategy:
+      matrix:
+        leaflet: ["1.6.0", "1.7.1", "1.8.0"]
     steps:
       - uses: actions/checkout@v2
 
@@ -95,6 +98,9 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: install specific leaflet version
+        run: npm install leaflet@${{ matrix.leaflet }}
 
       - name: unit tests
         run: npm run ci:test

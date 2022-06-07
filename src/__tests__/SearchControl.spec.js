@@ -84,3 +84,9 @@ test('Change view on result', () => {
 
   expect(map.setView).toHaveBeenCalled();
 });
+
+test('Default options are applied', () => {
+  const control = new SearchControl({ provider: jest.fn() });
+
+  expect(control.options).toEqual(expect.objectContaining({ style: 'button' }));
+});
