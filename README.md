@@ -1,7 +1,9 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-48-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -329,6 +331,9 @@ Bing does not support `CORS`, and requires `jsonp` to be used instead.
 
 In case you decide to write your own provider, please consider submitting a PR
 to share your work with us.
+
+You can use the docs as "development environment". Please run `npm run start` to get up and running. The docs will
+refresh when you change source files.
 
 [leaflet]: http://leafletjs.com
 [docs]: https://smeijer.github.io/leaflet-geosearch
