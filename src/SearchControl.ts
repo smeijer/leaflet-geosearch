@@ -136,6 +136,8 @@ interface SearchControl {
   // [key: string]: any;
   initialize(options: SearchControlProps): void;
   onSubmit(result: Selection): void;
+  open(): void;
+  close(): void;
   onClick(event: Event): void;
   clearResults(event?: KeyboardEvent | null, force?: boolean): void;
   autoSearch(event: KeyboardEvent): void;
@@ -200,7 +202,13 @@ const Control: SearchControl = {
       {
         text: '×',
         href: '#',
-        onClick: () => this.clearResults(null, true),
+        onClick: () => {
+          if (this.searchElement.input.value === '') {
+            this.close();
+          } else {
+            this.clearResults(null, true);
+          }
+        },
       },
     );
 
@@ -284,18 +292,28 @@ const Control: SearchControl = {
     return this;
   },
 
+  open() {
+    const { container, input } = this.searchElement;
+    addClassName(container, 'active');
+    input.focus();
+  },
+
+  close() {
+    const { container } = this.searchElement;
+    removeClassName(container, 'active');
+    this.clearResults();
+  },
+
   onClick(event: Event) {
     event.preventDefault();
     event.stopPropagation();
 
-    const { container, input } = this.searchElement;
+    const { container } = this.searchElement;
 
     if (container.classList.contains('active')) {
-      removeClassName(container, 'active');
-      this.clearResults();
+      this.close();
     } else {
-      addClassName(container, 'active');
-      input.focus();
+      this.open();
     }
   },
 
