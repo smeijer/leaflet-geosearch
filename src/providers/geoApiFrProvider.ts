@@ -76,7 +76,7 @@ export default class GeoApiFrProvider extends AbstractProvider<
     return result.data.features.map((r) => ({
       x: r.geometry.coordinates[0],
       y: r.geometry.coordinates[1],
-      label: r.properties.label,
+      label: r.properties.postcode + " " + r.properties.label,
       bounds: null,
       raw: r,
     }));
