@@ -70,6 +70,7 @@
   "homepage": "https://github.com/smeijer/leaflet-geosearch#readme",
   "license": "MIT",
   "devDependencies": {
+    "@types/google.maps": "^3.50.2",
     "@types/jest": "^25.2.1",
     "@types/lodash.debounce": "^4.0.6",
     "@types/react-dom": "^16.9.6",
@@ -99,7 +100,8 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "leaflet": "^1.6.0"
+    "leaflet": "^1.6.0",
+    "@googlemaps/js-api-loader": "^1.14.3"
   },
   "optionalDependencies": {
     "leaflet": "^1.6.0"
