@@ -4,6 +4,7 @@ import {
   EsriProvider,
   GeocodeEarthProvider,
   GoogleProvider,
+  LegacyGoogleProvider,
   HereProvider,
   LocationIQProvider,
   OpenCageProvider,
@@ -27,6 +28,10 @@ export default {
   }),
 
   Google: new GoogleProvider({
+    params: { key: process.env.GATSBY_GOOGLE_API_KEY },
+  }),
+
+  LegacyGoogle: new LegacyGoogleProvider({
     params: { key: process.env.GATSBY_GOOGLE_API_KEY },
   }),
 
