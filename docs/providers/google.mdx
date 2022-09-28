@@ -9,8 +9,9 @@ import Map from '../components/Map';
 
 # Google Provider
 
-**note**: Google services require an API key. [Obtain here][1].
-For more options and configurations, see the [Google Maps developer docs][2].
+**<u>note</u>**: Google services require an API key enabled for both the Geocoding API and
+the Maps JavaScript API. [Obtain here][1]. For more options and configurations,
+see the [Google Maps developer docs][2].
 
 <Playground>
   <Map provider="Google" />
@@ -47,5 +48,5 @@ new GoogleProvider({ ...params });
 ```
 
 [1]: https://developers.google.com/maps/documentation/javascript/get-api-key
-[2]: https://developers.google.com/maps/documentation/geocoding/start
-[3]: https://developers.google.com/maps/documentation/geocoding/intro#geocoding
+[2]: https://developers.google.com/maps/documentation/javascript/overview
+[3]: https://googlemaps.github.io/js-api-loader/interfaces/LoaderOptions.html
