@@ -9,8 +9,8 @@ import Map from '../components/Map';
 
 # Google Provider
 
-**<u>note</u>**: Google services require an API key enabled for both the Geocoding API and
-the Maps JavaScript API. [Obtain here][1]. For more options and configurations,
+**<u>note</u>**: Google services require an API key enabled for _both_ the **Geocoding API** and
+the **Maps JavaScript API** (more on key configuration below). [Obtain here][1]. For more options and configurations,
 see the [Google Maps developer docs][2].
 
 <Playground>
@@ -47,6 +47,17 @@ const params = {
 new GoogleProvider({ ...params });
 ```
 
+## Configuring your API key
+
+### Application restrictions (highly recommended)
+
+Because your API key will be exposed with each request from the client, it is _highly_ recommended that you should add an application restriction to any of your public-facing keys to limit the HTTP referrers from which requests will be accepted - for more information on how to configure this restriction, see [the documentation][4].
+
+### API restrictions (optional)
+
+Your may choose not to apply any API restrictions to your key, leaving it in an "Unrestricted" state. However, if you do wish to limit the APIs that can be accessed with your key, you will need to make sure that it as configured to at least make use of _both_ the **Geocoding API** and the **Maps JavaScript API** in order for web client-based geocoding to work.
+
 [1]: https://developers.google.com/maps/documentation/javascript/get-api-key
 [2]: https://developers.google.com/maps/documentation/javascript/overview
 [3]: https://googlemaps.github.io/js-api-loader/interfaces/LoaderOptions.html
+[4]: https://cloud.google.com/docs/authentication/api-keys#http
