@@ -13,9 +13,9 @@ export function createElement<T extends HTMLElement = HTMLElement>(
   Object.keys(attributes).forEach((key) => {
     if (typeof attributes[key] === 'function') {
       // IE doesn't support startsWith
-      const type = (key.indexOf('on') === 0
-        ? key.substr(2).toLowerCase()
-        : key) as keyof HTMLElementEventMap;
+      const type = (
+        key.indexOf('on') === 0 ? key.substr(2).toLowerCase() : key
+      ) as keyof HTMLElementEventMap;
       el.addEventListener(type, attributes[key] as () => void);
     } else if (key === 'html') {
       el.innerHTML = attributes[key] as string;
