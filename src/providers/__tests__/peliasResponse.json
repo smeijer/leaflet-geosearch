@@ -40,9 +40,7 @@
       },
       "querySize": 20
     },
-    "warnings": [
-      "performance optimization: excluding 'address' layer"
-    ],
+    "warnings": ["performance optimization: excluding 'address' layer"],
     "engine": {
       "name": "Pelias",
       "author": "Mapzen",
@@ -56,10 +54,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          22.999231,
-          39.390835
-        ]
+        "coordinates": [22.999231, 39.390835]
       },
       "properties": {
         "id": "node/2631570458",
@@ -90,10 +85,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          11.539115,
-          60.908174
-        ]
+        "coordinates": [11.539115, 60.908174]
       },
       "properties": {
         "id": "node/6341953008",
@@ -129,10 +121,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          30.981907,
-          -29.939019
-        ]
+        "coordinates": [30.981907, -29.939019]
       },
       "properties": {
         "id": "polyline:24349300",
@@ -157,21 +146,13 @@
         "continent_gid": "whosonfirst:continent:102191573",
         "label": "Pelias Place, NL, South Africa"
       },
-      "bbox": [
-        30.981231,
-        -29.93952,
-        30.982589,
-        -29.938511
-      ]
+      "bbox": [30.981231, -29.93952, 30.982589, -29.938511]
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          114.127491,
-          -21.938032
-        ]
+        "coordinates": [114.127491, -21.938032]
       },
       "properties": {
         "id": "polyline:23395079",
@@ -200,21 +181,13 @@
         "continent_gid": "whosonfirst:continent:102191583",
         "label": "Pelias Street, Exmouth, WA, Australia"
       },
-      "bbox": [
-        114.124938,
-        -21.93829,
-        114.130027,
-        -21.937611
-      ]
+      "bbox": [114.124938, -21.93829, 114.130027, -21.937611]
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          123.854135,
-          9.680108
-        ]
+        "coordinates": [123.854135, 9.680108]
       },
       "properties": {
         "id": "polyline:21756510",
@@ -238,21 +211,13 @@
         "continent_gid": "whosonfirst:continent:102191569",
         "label": "F. Pelias, BO, Philippines"
       },
-      "bbox": [
-        123.853164,
-        9.679871,
-        123.855064,
-        9.680231
-      ]
+      "bbox": [123.853164, 9.679871, 123.855064, 9.680231]
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -61.31722,
-          -66.05479
-        ]
+        "coordinates": [-61.31722, -66.05479]
       },
       "properties": {
         "id": "6623050",
@@ -280,10 +245,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -4.070734,
-          43.423036
-        ]
+        "coordinates": [-4.070734, 43.423036]
       },
       "properties": {
         "id": "polyline:10453562",
@@ -309,21 +271,13 @@
         "continent_gid": "whosonfirst:continent:102191581",
         "label": "Calle Las Pelías, Suances, CB, Spain"
       },
-      "bbox": [
-        -4.072311,
-        43.420791,
-        -4.06891,
-        43.425346
-      ]
+      "bbox": [-4.072311, 43.420791, -4.06891, 43.425346]
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          101.73333,
-          5.7
-        ]
+        "coordinates": [101.73333, 5.7]
       },
       "properties": {
         "id": "1309815263",
@@ -353,21 +307,13 @@
           }
         }
       },
-      "bbox": [
-        101.71333,
-        5.68,
-        101.75333,
-        5.72
-      ]
+      "bbox": [101.71333, 5.68, 101.75333, 5.72]
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          101.73333,
-          5.7
-        ]
+        "coordinates": [101.73333, 5.7]
       },
       "properties": {
         "id": "1751307",
@@ -398,10 +344,5 @@
       }
     }
   ],
-  "bbox": [
-    -61.31722,
-    -66.05479,
-    123.855064,
-    60.908174
-  ]
+  "bbox": [-61.31722, -66.05479, 123.855064, 60.908174]
 }

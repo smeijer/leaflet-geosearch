@@ -26,12 +26,6 @@ beforeEach(async () => {
 
 describe('GoogleProvider', () => {
   test('Can fetch results', async () => {
-    beforeAll(() => {
-      options = {
-        apiKey: process.env.GOOGLE_API_KEY,
-      };
-    });
-
     const results = await provider.search({ query: 'Madurodam' });
     const result = results[0];
 
@@ -44,13 +38,6 @@ describe('GoogleProvider', () => {
   });
 
   test.skip('Can get localized results', async () => {
-    beforeAll(() => {
-      options = {
-        apiKey: process.env.GOOGLE_API_KEY,
-        language: 'nl',
-      };
-    });
-
     const results = await provider.search({ query: 'Madurodam' });
     expect(results[0].label).toEqual(
       'George Maduroplein 1, 2584 RZ Den Haag, Netherlands',

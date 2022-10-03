@@ -3,6 +3,16 @@ name: CI
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+  push:
+    branches:
+      # Match SemVer major release branches, e.g. "2.x" or ".x"
+      - '[0-9]+.x'
+      - 'main'
+      - 'next'
+      - 'alpha'
+      - 'beta'
+      - 'develop'
+      - '!all-contributors/**'
 
 env:
   NODE_VERSION: "16.x"
@@ -110,3 +120,70 @@ jobs:
           GATSBY_LOCATIONIQ_API_KEY: ${{ secrets.LOCATIONIQ_API_KEY }}
           GATSBY_OPENCAGE_API_KEY: ${{ secrets.OPENCAGE_API_KEY }}
           GATSBY_HERE_API_KEY: ${{ secrets.HERE_API_KEY }}
+
+  update-docs:
+    name: Update docs
+    runs-on: ubuntu-latest
+    needs: [tests, typescript]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "${{ env.NODE_VERSION }}"
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+
+      - name: update docs
+        run: npm run docs:update
+
+  release:
+    needs: [tests, typescript]
+    if: github.event_name == 'push' && github.repository == 'smeijer/leaflet-geosearch'
+    runs-on: ubuntu-latest
+    environment: npm
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.0
+
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '${{ env.NODE_VERSION }}'
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Build
+        run: npm run build
+
+      - name: Release
+        uses: cycjimmy/semantic-release-action@v2
+        with:
+          semantic_version: 17
+          branches: |
+            [
+              '+([0-9])?(.{+([0-9]),x}).x',
+              'main',
+              'next',
+              { name: 'alpha', prerelease: true },
+              { name: 'beta', prerelease: true }
+            ]
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

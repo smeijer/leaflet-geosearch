@@ -44,7 +44,10 @@ export default class ResultList {
     this.resultItem = createElement<HTMLDivElement>('div', cx(classNames.item));
   }
 
-  render(results: SearchResult[] = [], resultFormat: Function): void {
+  render(
+    results: SearchResult[] = [],
+    resultFormat: (args: { result: SearchResult }) => string,
+  ): void {
     this.clear();
 
     results.forEach((result, idx) => {
