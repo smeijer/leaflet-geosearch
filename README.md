@@ -1,7 +1,7 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-49-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-51-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -417,10 +417,11 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center"><a href="https://github.com/grigorpavlov"><img src="https://avatars.githubusercontent.com/u/21351616?v=4?s=100" width="100px;" alt="Grigor Pavlov"/><br /><sub><b>Grigor Pavlov</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=grigorpavlov" title="Code">💻</a></td>
       <td align="center"><a href="https://geocode.earth"><img src="https://avatars.githubusercontent.com/u/738069?v=4?s=100" width="100px;" alt="Peter Johnson"/><br /><sub><b>Peter Johnson</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=missinglink" title="Code">💻</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=missinglink" title="Tests">⚠️</a></td>
       <td align="center"><a href="http://about.me/arnaudferrand"><img src="https://avatars.githubusercontent.com/u/1741320?v=4?s=100" width="100px;" alt="Arnaud Ferrand"/><br /><sub><b>Arnaud Ferrand</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=tsamaya" title="Documentation">📖</a></td>
-      <td align="center"><a href="https://github.com/darrenklein"><img src="https://avatars.githubusercontent.com/u/6743861?v=4?s=100" width="100px;" alt="Darren"/><br /><sub><b>Darren</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=darrenklein" title="Code">💻</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=darrenklein" title="Tests">⚠️</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=darrenklein" title="Documentation">📖</a></td>
+      <td align="center"><a href="https://github.com/kstratis"><img src="https://avatars.githubusercontent.com/u/1859806?v=4?s=100" width="100px;" alt="Konstantinos Stratis"/><br /><sub><b>Konstantinos Stratis</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=kstratis" title="Code">💻</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=kstratis" title="Tests">⚠️</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=kstratis" title="Documentation">📖</a></td>
     </tr>
     <tr>
-      <td align="center"><a href="https://github.com/kstratis"><img src="https://avatars.githubusercontent.com/u/1859806?v=4?s=100" width="100px;" alt="Konstantinos Stratis"/><br /><sub><b>Konstantinos Stratis</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=kstratis" title="Code">💻</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=kstratis" title="Tests">⚠️</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=kstratis" title="Documentation">📖</a></td>
+      <td align="center"><a href="https://github.com/darrenklein"><img src="https://avatars.githubusercontent.com/u/6743861?v=4?s=100" width="100px;" alt="Darren"/><br /><sub><b>Darren</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=darrenklein" title="Code">💻</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=darrenklein" title="Tests">⚠️</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=darrenklein" title="Documentation">📖</a></td>
+      <td align="center"><a href="https://paulschreiber.com/"><img src="https://avatars.githubusercontent.com/u/86784?v=4?s=100" width="100px;" alt="Paul Schreiber"/><br /><sub><b>Paul Schreiber</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=paulschreiber" title="Code">💻</a></td>
     </tr>
   </tbody>
   <tfoot>

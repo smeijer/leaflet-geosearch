@@ -478,6 +478,15 @@
         "test",
         "doc"
       ]
+    },
+    {
+      "login": "paulschreiber",
+      "name": "Paul Schreiber",
+      "avatar_url": "https://avatars.githubusercontent.com/u/86784?v=4",
+      "profile": "https://paulschreiber.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
