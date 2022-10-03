@@ -19,11 +19,7 @@ For more options and configurations, see the [Google Maps developer docs][2].
 ```js
 import { GoogleProvider } from 'leaflet-geosearch';
 
-const provider = new GoogleProvider({
-  params: {
-    key: '__YOUR_GOOGLE_KEY__',
-  },
-});
+const provider = new GoogleProvider({ apiKey: '__YOUR_GOOGLE_KEY__' });
 
 // add to leaflet
 import { GeoSearchControl } from 'leaflet-geosearch';
@@ -38,18 +34,16 @@ map.addControl(
 
 ## Optional parameters
 
-Google supports a number of [optional parameters][3]. As Google requires those parameters to be added to the url, they can be added to the `params` key of the provider.
-
-All options defined next to the `params` key, would have been added to the request body.
+Google supports a number of [optional parameters][3] which must be specified when loading the JavaScript API.
 
 ```js
-const provider = new GoogleProvider({
-  params: {
-    key: '__YOUR_GOOGLE_KEY__',
-    language: 'nl', // render results in Dutch
-    region: 'nl', // prioritize matches within The Netherlands
-  },
-});
+const params = {
+  apiKey: '__YOUR_GOOGLE_KEY__',
+  language: 'nl', // render results in Dutch
+  region: 'nl', // prioritize matches within The Netherlands
+};
+
+new GoogleProvider({ ...params });
 ```
 
 [1]: https://developers.google.com/maps/documentation/javascript/get-api-key
