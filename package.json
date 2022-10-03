@@ -100,11 +100,13 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "leaflet": "^1.6.0",
-    "@googlemaps/js-api-loader": "^1.14.3"
+    "leaflet": "^1.6.0"
   },
   "optionalDependencies": {
     "leaflet": "^1.6.0"
+  },
+  "peerDependencies": {
+    "@googlemaps/js-api-loader": "^1.14.3"
   },
   "husky": {
     "hooks": {
