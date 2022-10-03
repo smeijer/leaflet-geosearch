@@ -216,7 +216,7 @@
   font-style: italic;
 }
 
-.leaflet-control-geosearch a.reset {
+.leaflet-control-geosearch button.reset {
   color: black;
   font-weight: bold;
   position: absolute;
@@ -231,10 +231,10 @@
   border-radius: 0 4px 4px 0;
 }
 
-.leaflet-touch .leaflet-control-geosearch a.reset {
+.leaflet-touch .leaflet-control-geosearch button.reset {
   line-height: 30px;
 }
 
-.leaflet-control-geosearch a.reset:hover {
+.leaflet-control-geosearch button.reset:hover {
   background: #f5f5f5;
 }
