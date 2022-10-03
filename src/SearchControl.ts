@@ -84,6 +84,7 @@ interface SearchControlProps {
   resultFormat<T = any>(args: { result: SearchResult<T> }): string;
 
   searchLabel: string;
+  clearSearchLabel: string;
   notFoundMessage: string;
   messageHideDelay: number;
 
