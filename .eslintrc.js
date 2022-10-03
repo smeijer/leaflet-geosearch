@@ -2,7 +2,6 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
     'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
     'plugin:react/recommended',
   ],
@@ -13,6 +12,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/ban-ts-ignore': 0,
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
     curly: ['error', 'all'],
   },
   settings: {

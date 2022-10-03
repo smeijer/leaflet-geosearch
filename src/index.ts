@@ -7,6 +7,7 @@ export { default as BingProvider } from './providers/bingProvider';
 export { default as EsriProvider } from './providers/esriProvider';
 export { default as GeocodeEarthProvider } from './providers/geocodeEarthProvider';
 export { default as GoogleProvider } from './providers/googleProvider';
+export { default as LegacyGoogleProvider } from './providers/legacyGoogleProvider';
 export { default as HereProvider } from './providers/hereProvider';
 export { default as LocationIQProvider } from './providers/locationIQProvider';
 export { default as OpenCageProvider } from './providers/openCageProvider';

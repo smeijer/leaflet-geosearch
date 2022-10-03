@@ -456,6 +456,47 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "kstratis",
+      "name": "Konstantinos Stratis",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1859806?v=4",
+      "profile": "https://github.com/kstratis",
+      "contributions": [
+        "code",
+        "test",
+        "doc"
+      ]
+    },
+    {
+      "login": "darrenklein",
+      "name": "Darren",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6743861?v=4",
+      "profile": "https://github.com/darrenklein",
+      "contributions": [
+        "code",
+        "test",
+        "doc"
+      ]
+    },
+    {
+      "login": "paulschreiber",
+      "name": "Paul Schreiber",
+      "avatar_url": "https://avatars.githubusercontent.com/u/86784?v=4",
+      "profile": "https://paulschreiber.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "nsilvestri",
+      "name": "Nick Silvestri",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33607815?v=4",
+      "profile": "https://nsilvestri.me/",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
