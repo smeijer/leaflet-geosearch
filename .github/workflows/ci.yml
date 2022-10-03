@@ -123,6 +123,7 @@ jobs:
 
   update-docs:
     name: Update docs
+    if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     needs: [tests, typescript]
     steps:
