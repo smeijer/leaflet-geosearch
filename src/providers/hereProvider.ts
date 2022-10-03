@@ -41,7 +41,7 @@ export default class HereProvider extends AbstractProvider<
   RequestResult,
   RawResult
 > {
-  searchUrl = 'https://geocode.search.hereapi.com/v1/geocode';
+  searchUrl = 'https://geocode.search.hereapi.com/v1/autosuggest';
 
   endpoint({ query }: EndpointArgument): string {
     const params = typeof query === 'string' ? { q: query } : query;
@@ -49,12 +49,14 @@ export default class HereProvider extends AbstractProvider<
   }
 
   parse(response: ParseArgument<RequestResult>): SearchResult<RawResult>[] {
-    return response.data.items.map((r) => ({
-      x: r.position.lng,
-      y: r.position.lat,
-      label: r.address.label,
-      bounds: null,
-      raw: r,
-    }));
+    return response.data.items
+      .filter((r) => r.position !== undefined)
+      .map((r) => ({
+        x: r.position.lng,
+        y: r.position.lat,
+        label: r.address.label,
+        bounds: null,
+        raw: r,
+      }));
   }
 }
