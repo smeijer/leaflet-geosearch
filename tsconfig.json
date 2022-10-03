@@ -9,7 +9,7 @@
     "allowJs": true,
     "pretty": true,
     "strict": true,
-    "rootDir": "src",
+    "rootDirs": ["src", "docs"],
     "sourceMap": true,
     "removeComments": false,
     "noEmitHelpers": false,

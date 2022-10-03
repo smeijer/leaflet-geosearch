@@ -4,6 +4,7 @@ import {
   EsriProvider,
   GeocodeEarthProvider,
   GoogleProvider,
+  LegacyGoogleProvider,
   HereProvider,
   LocationIQProvider,
   OpenCageProvider,
@@ -22,11 +23,12 @@ export default {
   Esri: new EsriProvider(),
 
   GeocodeEarth: new GeocodeEarthProvider({
-    // eslint-disable-next-line @typescript-eslint/camelcase
     params: { api_key: process.env.GATSBY_GEOCODEEARTH_API_KEY },
   }),
 
-  Google: new GoogleProvider({
+  Google: new GoogleProvider({ apiKey: process.env.GATSBY_GOOGLE_API_KEY }),
+
+  LegacyGoogle: new LegacyGoogleProvider({
     params: { key: process.env.GATSBY_GOOGLE_API_KEY },
   }),
 

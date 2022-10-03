@@ -9,8 +9,9 @@ import Map from '../components/Map';
 
 # Google Provider
 
-**note**: Google services require an API key. [Obtain here][1].
-For more options and configurations, see the [Google Maps developer docs][2].
+**<u>note</u>**: Google services require an API key enabled for _both_ the **Geocoding API** and
+the **Maps JavaScript API** (more on key configuration below). [Obtain here][1]. For more options and configurations,
+see the [Google Maps developer docs][2].
 
 <Playground>
   <Map provider="Google" />
@@ -19,11 +20,7 @@ For more options and configurations, see the [Google Maps developer docs][2].
 ```js
 import { GoogleProvider } from 'leaflet-geosearch';
 
-const provider = new GoogleProvider({
-  params: {
-    key: '__YOUR_GOOGLE_KEY__',
-  },
-});
+const provider = new GoogleProvider({ apiKey: '__YOUR_GOOGLE_KEY__' });
 
 // add to leaflet
 import { GeoSearchControl } from 'leaflet-geosearch';
@@ -31,26 +28,36 @@ import { GeoSearchControl } from 'leaflet-geosearch';
 map.addControl(
   new GeoSearchControl({
     provider,
+    style: 'bar',
   }),
 );
 ```
 
 ## Optional parameters
 
-Google supports a number of [optional parameters][3]. As Google requires those parameters to be added to the url, they can be added to the `params` key of the provider.
-
-All options defined next to the `params` key, would have been added to the request body.
+Google supports a number of [optional parameters][3] which must be specified when loading the JavaScript API.
 
 ```js
-const provider = new GoogleProvider({
-  params: {
-    key: '__YOUR_GOOGLE_KEY__',
-    language: 'nl', // render results in Dutch
-    region: 'nl', // prioritize matches within The Netherlands
-  },
-});
+const params = {
+  apiKey: '__YOUR_GOOGLE_KEY__',
+  language: 'nl', // render results in Dutch
+  region: 'nl', // prioritize matches within The Netherlands
+};
+
+new GoogleProvider({ ...params });
 ```
 
+## Configuring your API key
+
+### Application restrictions (highly recommended)
+
+Because your API key will be exposed with each request from the client, it is _highly_ recommended that you should add an application restriction to any of your public-facing keys to limit the HTTP referrers from which requests will be accepted - for more information on how to configure this restriction, see [the documentation][4].
+
+### API restrictions (optional)
+
+Your may choose not to apply any API restrictions to your key, leaving it in an "Unrestricted" state. However, if you do wish to limit the APIs that can be accessed with your key, you will need to make sure that it as configured to at least make use of _both_ the **Geocoding API** and the **Maps JavaScript API** in order for web client-based geocoding to work.
+
 [1]: https://developers.google.com/maps/documentation/javascript/get-api-key
-[2]: https://developers.google.com/maps/documentation/geocoding/start
-[3]: https://developers.google.com/maps/documentation/geocoding/intro#geocoding
+[2]: https://developers.google.com/maps/documentation/javascript/overview
+[3]: https://googlemaps.github.io/js-api-loader/interfaces/LoaderOptions.html
+[4]: https://cloud.google.com/docs/authentication/api-keys#http

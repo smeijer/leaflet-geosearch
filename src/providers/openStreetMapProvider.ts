@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import AbstractProvider, {
   EndpointArgument,
   ParseArgument,

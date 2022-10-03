@@ -41,6 +41,7 @@ import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 
 const searchControl = new GeoSearchControl({
   provider: new OpenStreetMapProvider(),
+  style: 'bar',
 });
 
 map.addControl(searchControl);
