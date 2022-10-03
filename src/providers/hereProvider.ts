@@ -2,8 +2,8 @@ import AbstractProvider, {
   EndpointArgument,
   LatLng,
   ParseArgument,
-  SearchResult
-} from "./provider";
+  SearchResult,
+} from './provider';
 
 export interface RequestResult {
   items: RawResult[];
@@ -37,12 +37,14 @@ export interface RawResult {
   };
 }
 
-export default class HereProvider extends AbstractProvider<RequestResult,
-  RawResult> {
-  searchUrl = "https://geocode.search.hereapi.com/v1/autosuggest";
+export default class HereProvider extends AbstractProvider<
+  RequestResult,
+  RawResult
+> {
+  searchUrl = 'https://geocode.search.hereapi.com/v1/autosuggest';
 
   endpoint({ query }: EndpointArgument): string {
-    const params = typeof query === "string" ? { q: query } : query;
+    const params = typeof query === 'string' ? { q: query } : query;
     return this.getUrl(this.searchUrl, params);
   }
 
@@ -54,7 +56,7 @@ export default class HereProvider extends AbstractProvider<RequestResult,
         y: r.position.lat,
         label: r.address.label,
         bounds: null,
-        raw: r
+        raw: r,
       }));
   }
 }
