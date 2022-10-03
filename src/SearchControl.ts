@@ -36,6 +36,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   retainZoomLevel: false,
   animateZoom: true,
   searchLabel: 'Enter address',
+  clearSearchLabel: 'Clear search',
   notFoundMessage: '',
   messageHideDelay: 3000,
   zoomLevel: 18,
@@ -83,6 +84,7 @@ interface SearchControlProps {
   resultFormat<T = any>(args: { result: SearchResult<T> }): string;
 
   searchLabel: string;
+  clearSearchLabel: string;
   notFoundMessage: string;
   messageHideDelay: number;
 
@@ -196,12 +198,12 @@ const Control: SearchControl = {
     L.DomEvent.disableClickPropagation(this.button);
 
     this.resetButton = createElement<HTMLAnchorElement>(
-      'a',
+      'button',
       this.classNames.resetButton,
       this.searchElement.form,
       {
         text: '×',
-        href: '#',
+        'aria-label': this.options.clearSearchLabel,
         onClick: () => {
           if (this.searchElement.input.value === '') {
             this.close();
