@@ -26,17 +26,19 @@ export default class GoogleProvider extends AbstractProvider<
   RequestResult,
   google.maps.GeocoderResult
 > {
-  loader: Promise<google.maps.Geocoder>;
+  loader: Promise<google.maps.Geocoder> | null = null;
   geocoder: google.maps.Geocoder | null = null;
 
   constructor(options: GoogleProviderOptions) {
     super(options);
 
-    this.loader = new Loader(options).load().then((google) => {
-      const geocoder = new google.maps.Geocoder();
-      this.geocoder = geocoder;
-      return geocoder;
-    });
+    if (typeof window !== 'undefined') {
+      this.loader = new Loader(options).load().then((google) => {
+        const geocoder = new google.maps.Geocoder();
+        this.geocoder = geocoder;
+        return geocoder;
+      });
+    }
   }
 
   endpoint({ query }: EndpointArgument): never {
@@ -67,6 +69,12 @@ export default class GoogleProvider extends AbstractProvider<
     options: SearchArgument,
   ): Promise<SearchResult<google.maps.GeocoderResult>[]> {
     const geocoder = this.geocoder || (await this.loader);
+
+    if (!geocoder) {
+      throw new Error(
+        'GoogleMaps GeoCoder is not loaded. Are you trying to run this server side?',
+      );
+    }
 
     const response = await geocoder
       .geocode({ address: options.query }, (response) => ({
