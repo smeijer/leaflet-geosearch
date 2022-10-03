@@ -1,59 +1,92 @@
 import AbstractProvider, {
   EndpointArgument,
-  LatLng,
   ParseArgument,
+  ProviderOptions,
+  SearchArgument,
   SearchResult,
 } from './provider';
+import { Loader, LoaderOptions } from '@googlemaps/js-api-loader';
 
-export interface RequestResult {
-  results: RawResult[];
-  status: string;
+interface RequestResult {
+  results: google.maps.GeocoderResult[];
+  status?: google.maps.GeocoderStatus;
 }
 
-export interface RawResult {
-  address_components: {
-    long_name: string;
-    short_name: string;
-    types: string[];
-  }[];
-  formatted_address: string;
-  geometry: {
-    location: LatLng;
-    location_type: string;
-    viewport: {
-      northeast: LatLng;
-      southwest: LatLng;
-    };
-  };
-  place_id: string;
-  plus_code: {
-    compound_code: string;
-    global_code: string;
-  };
-  types: string[];
+interface GeocodeError {
+  code: Exclude<google.maps.GeocoderStatus, google.maps.GeocoderStatus.OK>;
+  endpoint: 'GEOCODER_GEOCODE';
+  message: string;
+  name: 'MapsRequestError';
+  stack: string;
 }
+
+export type GoogleProviderOptions = LoaderOptions & ProviderOptions;
 
 export default class GoogleProvider extends AbstractProvider<
   RequestResult,
-  RawResult
+  google.maps.GeocoderResult
 > {
-  searchUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
+  loader: Promise<google.maps.Geocoder> | null = null;
+  geocoder: google.maps.Geocoder | null = null;
 
-  endpoint({ query }: EndpointArgument) {
-    const params = typeof query === 'string' ? { address: query } : query;
-    return this.getUrl(this.searchUrl, params);
+  constructor(options: GoogleProviderOptions) {
+    super(options);
+
+    if (typeof window !== 'undefined') {
+      this.loader = new Loader(options).load().then((google) => {
+        const geocoder = new google.maps.Geocoder();
+        this.geocoder = geocoder;
+        return geocoder;
+      });
+    }
   }
 
-  parse(result: ParseArgument<RequestResult>): SearchResult<RawResult>[] {
-    return result.data.results.map((r) => ({
-      x: r.geometry.location.lng,
-      y: r.geometry.location.lat,
-      label: r.formatted_address,
-      bounds: [
-        [r.geometry.viewport.southwest.lat, r.geometry.viewport.southwest.lng], // s, w
-        [r.geometry.viewport.northeast.lat, r.geometry.viewport.northeast.lng], // n, e
-      ],
-      raw: r,
-    }));
+  endpoint({ query }: EndpointArgument): never {
+    throw new Error('Method not implemented.');
+  }
+
+  parse(
+    response: ParseArgument<RequestResult>,
+  ): SearchResult<google.maps.GeocoderResult>[] {
+    return response.data.results.map((r) => {
+      const { lat, lng } = r.geometry.location.toJSON();
+      const { east, north, south, west } = r.geometry.viewport.toJSON();
+
+      return {
+        x: lng,
+        y: lat,
+        label: r.formatted_address,
+        bounds: [
+          [south, west],
+          [north, east],
+        ],
+        raw: r,
+      };
+    });
+  }
+
+  async search(
+    options: SearchArgument,
+  ): Promise<SearchResult<google.maps.GeocoderResult>[]> {
+    const geocoder = this.geocoder || (await this.loader);
+
+    if (!geocoder) {
+      throw new Error(
+        'GoogleMaps GeoCoder is not loaded. Are you trying to run this server side?',
+      );
+    }
+
+    const response = await geocoder
+      .geocode({ address: options.query }, (response) => ({
+        results: response,
+      }))
+      .catch((e: GeocodeError) => {
+        if (e.code !== 'ZERO_RESULTS') {
+          console.error(`${e.code}: ${e.message}`);
+        }
+        return { results: [] };
+      });
+
+    return this.parse({ data: response });
   }
 }

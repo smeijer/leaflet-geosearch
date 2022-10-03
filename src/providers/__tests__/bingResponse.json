@@ -9,7 +9,9 @@
         {
           "__type": "Location:http://schemas.microsoft.com/search/local/ws/rest/v1",
           "bbox": [
-            52.099399566650391, 4.2973999977111816, 52.099601745605469,
+            52.099399566650391,
+            4.2973999977111816,
+            52.099601745605469,
             4.2975997924804687
           ],
           "name": "Madurodam, Netherlands",
