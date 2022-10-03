@@ -467,6 +467,17 @@
         "test",
         "doc"
       ]
+    },
+    {
+      "login": "darrenklein",
+      "name": "Darren",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6743861?v=4",
+      "profile": "https://github.com/darrenklein",
+      "contributions": [
+        "code",
+        "test",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
