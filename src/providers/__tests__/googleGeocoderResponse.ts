@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 const geocoderGeocoderResponse: google.maps.GeocoderResult = {
   address_components: [
     {
