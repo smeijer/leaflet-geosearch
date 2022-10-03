@@ -1,6 +1,7 @@
 import AbstractProvider, {
   EndpointArgument,
   ParseArgument,
+  ProviderOptions,
   SearchArgument,
   SearchResult,
 } from './provider';
@@ -19,16 +20,16 @@ interface GeocodeError {
   stack: string;
 }
 
+export type GoogleProviderOptions = LoaderOptions & ProviderOptions;
+
 export default class GoogleProvider extends AbstractProvider<
   RequestResult,
   google.maps.GeocoderResult
 > {
   geocoder: () => Promise<google.maps.Geocoder>;
-  googleApiOptions: LoaderOptions;
 
-  constructor(googleApiOptions: LoaderOptions) {
-    super();
-    this.googleApiOptions = googleApiOptions;
+  constructor(options: GoogleProviderOptions) {
+    super(options);
     this.geocoder = this.memoizeGeocoder(this.fetchGeocoder);
   }
 
@@ -66,9 +67,11 @@ export default class GoogleProvider extends AbstractProvider<
   }
 
   async fetchGeocoder() {
-    return await new Loader(this.googleApiOptions).load().then((google) => {
-      return new google.maps.Geocoder();
-    });
+    return await new Loader(this.options as GoogleProviderOptions)
+      .load()
+      .then((google) => {
+        return new google.maps.Geocoder();
+      });
   }
 
   async search(
