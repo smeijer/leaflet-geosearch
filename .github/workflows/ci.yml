@@ -121,6 +121,33 @@ jobs:
           GATSBY_OPENCAGE_API_KEY: ${{ secrets.OPENCAGE_API_KEY }}
           GATSBY_HERE_API_KEY: ${{ secrets.HERE_API_KEY }}
 
+  update-docs:
+    name: Update docs
+    runs-on: ubuntu-latest
+    needs: [tests, typescript]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "${{ env.NODE_VERSION }}"
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+
+      - name: update docs
+        run: npm run docs:update
+
   release:
     needs: [tests, typescript]
     if: github.event_name == 'push' && github.repository == 'smeijer/leaflet-geosearch'
