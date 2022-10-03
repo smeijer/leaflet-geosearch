@@ -458,6 +458,17 @@
       ]
     },
     {
+      "login": "kstratis",
+      "name": "Konstantinos Stratis",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1859806?v=4",
+      "profile": "https://github.com/kstratis",
+      "contributions": [
+        "code",
+        "test",
+        "doc"
+      ]
+    },
+    {
       "login": "darrenklein",
       "name": "Darren",
       "avatar_url": "https://avatars.githubusercontent.com/u/6743861?v=4",
