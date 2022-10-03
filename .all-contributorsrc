@@ -487,6 +487,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "nsilvestri",
+      "name": "Nick Silvestri",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33607815?v=4",
+      "profile": "https://nsilvestri.me/",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
