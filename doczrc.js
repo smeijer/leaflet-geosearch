@@ -28,6 +28,7 @@ export default {
         'OpenStreetMap',
         'Pelias',
         'Custom Providers',
+        'Geoapify',
       ],
     },
   ],

@@ -11,6 +11,7 @@ import {
   OpenStreetMapProvider,
   PeliasProvider,
   GeoApiFrProvider,
+  GeoapifyProvider,
 } from 'leaflet-geosearch';
 
 export default {
@@ -42,6 +43,10 @@ export default {
 
   OpenCage: new OpenCageProvider({
     params: { key: process.env.GATSBY_OPENCAGE_API_KEY },
+  }),
+
+  Geoapify: new GeoapifyProvider({
+    params: { apiKey: process.env.GATSBY_GEOAPIFY_API_KEY },
   }),
 
   OpenStreetMap: new OpenStreetMapProvider(),

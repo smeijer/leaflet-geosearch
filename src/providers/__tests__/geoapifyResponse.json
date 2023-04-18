@@ -1,0 +1,65 @@
+{
+  "results": [
+    {
+      "datasource": {
+        "sourcename": "openstreetmap",
+        "attribution": "© OpenStreetMap contributors",
+        "license": "Open Database License",
+        "url": "https://www.openstreetmap.org/copyright"
+      },
+      "country": "United States",
+      "country_code": "us",
+      "state": "Illinois",
+      "county": "Cook County",
+      "city": "Chicago",
+      "postcode": "60607",
+      "suburb": "Near West Side",
+      "street": "West Van Buren Street",
+      "housenumber": "1214-1224",
+      "lon": -87.65816734222005,
+      "lat": 41.87695205,
+      "state_code": "IL",
+      "formatted": "1214-1224 West Van Buren Street, Chicago, IL 60607, United States of America",
+      "address_line1": "1214-1224 West Van Buren Street",
+      "address_line2": "Chicago, IL 60607, United States of America",
+      "category": "building",
+      "timezone": {
+        "name": "America/Chicago",
+        "offset_STD": "-06:00",
+        "offset_STD_seconds": -21600,
+        "offset_DST": "-05:00",
+        "offset_DST_seconds": -18000,
+        "abbreviation_STD": "CST",
+        "abbreviation_DST": "CDT"
+      },
+      "result_type": "building",
+      "rank": {
+        "importance": 0.60001,
+        "popularity": 6.686411370288237,
+        "confidence": 1,
+        "confidence_city_level": 1,
+        "confidence_street_level": 1,
+        "match_type": "full_match"
+      },
+      "place_id": "515888ea691fea55c0598074fbf63ff04440f00102f9013076880c00000000c00203",
+      "bbox": {
+        "lon1": -87.658723,
+        "lat1": 41.8765924,
+        "lon2": -87.6576007,
+        "lat2": 41.8770888
+      }
+    }
+  ],
+  "query": {
+    "text": "1214-1224 West Van Buren Street, Chicago, IL 60607, United States of America",
+    "parsed": {
+      "housenumber": "1214-1224",
+      "street": "west van buren street",
+      "postcode": "60607",
+      "city": "chicago",
+      "state": "il",
+      "country": "united states of america",
+      "expected_type": "building"
+    }
+  }
+}

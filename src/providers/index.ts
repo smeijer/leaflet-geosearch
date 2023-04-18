@@ -10,5 +10,6 @@ export { default as OpenStreetMapProvider } from './openStreetMapProvider';
 export { default as PeliasProvider } from './peliasProvider';
 export { default as MapBoxProvider } from './mapBoxProvider';
 export { default as GeoApiFrProvider } from './geoApiFrProvider';
+export { default as GeoapifyProvider } from './geoapifyProvider';
 
 export { default as Provider } from './provider';

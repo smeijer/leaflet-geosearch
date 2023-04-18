@@ -1,0 +1,40 @@
+---
+name: Geoapify
+menu: Providers
+route: /providers/geoapify
+---
+
+import Playground from '../components/Playground';
+import Map from '../components/Map';
+
+# Geoapify Provider
+
+**note**: Geoapify services require an API key. [Obtain geoapify][1].
+For more options and configurations, see the [Geoapify developer docs][2].
+
+<Playground>
+  <Map provider="Geoapify" />
+</Playground>
+
+```js
+import { GeoapifyProvider } from 'leaflet-geosearch';
+
+const provider = new GeoapifyProvider({
+  params: {
+    apiKey: '__YOUR_HERE_KEY__',
+  },
+});
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+    style: 'bar',
+  }),
+);
+```
+
+[1]: https://apidocs.geoapify.com/
+[2]: https://apidocs.geoapify.com/docs/geocoding/forward-geocoding/#geocode-addresses
