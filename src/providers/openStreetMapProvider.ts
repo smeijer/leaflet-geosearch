@@ -11,7 +11,7 @@ export type RequestResult = RawResult[];
 
 export interface RawResult {
   place_id: string;
-  license: string;
+  licence: string;
   osm_type: string;
   osm_id: number;
   boundingbox: [string, string, string, string];
