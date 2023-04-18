@@ -33,7 +33,7 @@ describe('Geoapify', () => {
     const results = await provider.search({ query: 'Chicago' });
     t.is(
       results[0].label,
-      '1214-1224 West Van Buren Street, Chicago, IL 60607, United States of America'
+      '1214-1224 West Van Buren Street, Chicago, IL 60607, United States of America',
     );
   });
 });
