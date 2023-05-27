@@ -52,12 +52,9 @@
     "assets"
   ],
   "keywords": [
-    "geolocation",
-    "geocoding",
-    "plugins",
+    "maps",
     "leaflet",
-    "geo",
-    "map"
+    "geocoding"
   ],
   "repository": {
     "type": "git",
