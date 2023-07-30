@@ -20,16 +20,16 @@
 
 /* magnifying glass */
 .leaflet-control-geosearch a.leaflet-bar-part:before {
-  top: 15px;
-  left: 13px;
+  top: 17px;
+  left: 15px;
   width: 6px;
   border-top: 2px solid #555;
   transform: rotateZ(45deg);
 }
 
 .leaflet-control-geosearch a.leaflet-bar-part:after {
-  top: 8px;
-  left: 8px;
+  top: 10px;
+  left: 10px;
   height: 8px;
   width: 8px;
   border-radius: 50%;
