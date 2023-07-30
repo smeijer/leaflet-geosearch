@@ -74,7 +74,7 @@
   display: none;
   position: absolute;
   top: 0;
-  left: 36px;
+  left: 30px;
   border-radius: 0 4px 4px 0;
   background-color: #fff;
   background-clip: padding-box;
@@ -94,7 +94,7 @@
 
 .leaflet-geosearch-button.active .leaflet-bar-part {
   border-radius: 4px 0 0 4px;
-  width: 36px;
+  width: 30px;
 }
 
 .leaflet-geosearch-button form {
