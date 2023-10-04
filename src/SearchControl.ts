@@ -397,7 +397,7 @@ const Control: SearchControl = {
     if (coords) {
       results = coords;
     } else {
-        results = await provider!.search(query);
+      results = await provider!.search(query);
     }
 
     if (results && results.length > 0) {
