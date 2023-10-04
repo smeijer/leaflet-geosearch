@@ -14,9 +14,9 @@ export function validateCoords(query) {
           y: lat,
           label: q,
           bounds: null,
-          raw: {}
-      },
-    ];
+          raw: {},
+        },
+      ];
     }
   }
   return false;
