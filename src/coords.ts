@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 export function validateCoords(query) {
-    const q = query.trim();
+  const q = query.trim();
     const regex = /^(-?[0-9]*\.?\s*[0-9]*)\s*,?\s*(-?[0-9]*\.?[0-9]*)$/g;
     const match = regex.exec(q);
     if (match) {
