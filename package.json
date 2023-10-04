@@ -17,7 +17,8 @@
       "browser": "./dist/geosearch.module.js",
       "umd": "./dist/geosearch.umd.js",
       "import": "./dist/geosearch.module.js",
-      "require": "./dist/geosearch.js"
+      "require": "./dist/geosearch.js",
+      "types": "./dist/index.d.ts"
     },
     "./package.json": "./package.json",
     "./*": "./*"
