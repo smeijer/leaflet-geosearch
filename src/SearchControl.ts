@@ -3,6 +3,7 @@ import { ControlPosition, FeatureGroup, MarkerOptions, Map } from 'leaflet';
 import SearchElement from './SearchElement';
 import ResultList from './resultList';
 import debounce from './lib/debounce';
+import { validateCoords } from './coords';
 
 import {
   createElement,
@@ -373,7 +374,13 @@ const Control: SearchControl = {
     const { provider } = this.options;
 
     if (query.length) {
-      let results = await provider!.search({ query });
+      let results = [];
+      const coords = validateCoords(query);
+      if (coords) {
+        results = coords;
+      } else {
+        results = await provider!.search({ query });
+      }
       results = results.slice(0, this.options.maxSuggestions);
       this.resultList.render(results, this.options.resultFormat);
     } else {
@@ -385,7 +392,13 @@ const Control: SearchControl = {
     this.resultList.clear();
     const { provider } = this.options;
 
-    const results = await provider!.search(query);
+    let results = [];
+    const coords = validateCoords(query);
+    if (coords) {
+      results = coords;
+    } else {
+      results = await provider!.search(query);
+    }
 
     if (results && results.length > 0) {
       this.showResult(results[0], query);
