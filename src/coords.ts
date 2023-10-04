@@ -8,14 +8,16 @@ export function validateCoords(query) {
     const lat = Number(match[1]);
     const lng = Number(match[2]);
     if (-90 < lat < 90 && -180 < lng < 180) {
-            return [{
-                x: lng,
-                y: lat,
-                label: q,
-                bounds: null,
-                raw: {}
-            }];
-        }
+      return [
+        {
+          x: lng,
+          y: lat,
+          label: q,
+          bounds: null,
+          raw: {}
+      },
+    ];
     }
-    return false;
+  }
+  return false;
 }
