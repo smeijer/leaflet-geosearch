@@ -375,7 +375,7 @@ const Control: SearchControl = {
 
     if (query.length) {
       var results = [];
-      const coords = validateCoords({query});
+      const coords = validateCoords(query);
       if (coords) {
         results = coords;
       } else {
