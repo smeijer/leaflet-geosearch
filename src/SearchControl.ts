@@ -389,6 +389,7 @@ const Control: SearchControl = {
   },
 
   async onSubmit(query) {
+    this.resultList.clear();
     const { provider } = this.options;
 
     var results = [];
