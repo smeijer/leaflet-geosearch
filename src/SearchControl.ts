@@ -379,7 +379,7 @@ const Control: SearchControl = {
       if (coords) {
         results = coords;
       } else {
-        results = await provider!.search({query});
+        results = await provider!.search({ query });
       }
       results = results.slice(0, this.options.maxSuggestions);
       this.resultList.render(results, this.options.resultFormat);
