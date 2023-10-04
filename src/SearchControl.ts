@@ -374,7 +374,7 @@ const Control: SearchControl = {
     const { provider } = this.options;
 
     if (query.length) {
-      var results = [];
+      const results = [];
       const coords = validateCoords(query);
       if (coords) {
         results = coords;
