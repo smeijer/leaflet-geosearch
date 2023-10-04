@@ -395,7 +395,7 @@ const Control: SearchControl = {
     var results = [];
     const coords = validateCoords(query);
     if (coords) {
-        results = coords;
+      results = coords;
     } else {
         results = await provider!.search(query);
     }
