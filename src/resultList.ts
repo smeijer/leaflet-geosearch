@@ -110,7 +110,6 @@ export default class ResultList {
     }
 
     const idx = Number(target.getAttribute('data-key'));
-    this.clear();
     this.handleClick({ result: this.results[idx] });
   };
 }
