@@ -7,10 +7,7 @@ import OpenStreetMapProvider, {
 interface RequestResultWithError extends RequestResult {
   error?: string;
 }
-import {
-  ParseArgument,
-  SearchResult,
-} from './provider';
+import { ParseArgument, SearchResult } from './provider';
 
 export default class LocationIQProvider extends OpenStreetMapProvider {
   constructor(options: OpenStreetMapProviderOptions) {
@@ -21,7 +18,9 @@ export default class LocationIQProvider extends OpenStreetMapProvider {
     });
   }
 
-  parse(response: ParseArgument<RequestResultWithError>): SearchResult<RawResult>[] {
+  parse(
+    response: ParseArgument<RequestResultWithError>,
+  ): SearchResult<RawResult>[] {
     if (response.data.error) {
       return [];
     }
