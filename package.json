@@ -99,7 +99,7 @@
     "typescript": "^4.8.4"
   },
   "optionalDependencies": {
-    "@googlemaps/js-api-loader": "^1.14.3",
+    "@googlemaps/js-api-loader": "^1.16.6",
     "leaflet": "^1.6.0"
   },
   "husky": {
