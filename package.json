@@ -37,7 +37,7 @@
     "docz:dev": "docz dev",
     "docz:build": "docz build --base /leaflet-geosearch/",
     "docz:serve": "docz build && docz serve",
-    "docs:update": "run-s clean build docz:build && git checkout gh-pages && find . -maxdepth 1 -type f -not -path '*/\\.*' -delete && cp -r .docz/dist/* . && git add . && (git diff --exit-code || git commit -m \"update docs\") && git checkout - && git push origin gh-pages",
+    "docs:update": "run-s clean build docz:build && git checkout gh-pages && find . -maxdepth 1 -type f -not -path '*/\\.*' -delete && cp -r .docz/dist/* . && git add . && (git diff --staged --exit-code || git commit -m \"update docs\") && git checkout - && git push origin gh-pages",
     "prepublish": "run-s test clean build",
     "ci:lint": "eslint '{docs,src,test}/**/*.{js,ts,tsx}' -c ./.eslintrc.js",
     "ci:tsc": "tsc --noEmit --project ./tsconfig.json",
