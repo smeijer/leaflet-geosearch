@@ -512,7 +512,7 @@
       "name": "Tim Hirzel",
       "avatar_url": "https://avatars.githubusercontent.com/u/2903129?v=4",
       "profile": "https://github.com/t1m0thy",
-       "contributions": [
+      "contributions": [
         "code"
       ]
     },
@@ -521,6 +521,15 @@
       "name": "David Barina",
       "avatar_url": "https://avatars.githubusercontent.com/u/11453671?v=4",
       "profile": "http://www.fit.vutbr.cz/~ibarina/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mugu-fatman",
+      "name": "mugu-fatman",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62667193?v=4",
+      "profile": "https://github.com/mugu-fatman",
       "contributions": [
         "code"
       ]
