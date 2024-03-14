@@ -1,7 +1,7 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-56-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-57-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -428,6 +428,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/t1m0thy"><img src="https://avatars.githubusercontent.com/u/2903129?v=4?s=100" width="100px;" alt="Tim Hirzel"/><br /><sub><b>Tim Hirzel</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=t1m0thy" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://www.fit.vutbr.cz/~ibarina/"><img src="https://avatars.githubusercontent.com/u/11453671?v=4?s=100" width="100px;" alt="David Barina"/><br /><sub><b>David Barina</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=xbarin02" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/mugu-fatman"><img src="https://avatars.githubusercontent.com/u/62667193?v=4?s=100" width="100px;" alt="mugu-fatman"/><br /><sub><b>mugu-fatman</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=mugu-fatman" title="Code">💻</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="http://zachstednick.com"><img src="https://avatars.githubusercontent.com/u/345365?v=4?s=100" width="100px;" alt="Zach Stednick"/><br /><sub><b>Zach Stednick</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=stedy" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>

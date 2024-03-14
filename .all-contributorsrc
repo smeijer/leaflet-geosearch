@@ -533,6 +533,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "stedy",
+      "name": "Zach Stednick",
+      "avatar_url": "https://avatars.githubusercontent.com/u/345365?v=4",
+      "profile": "http://zachstednick.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
