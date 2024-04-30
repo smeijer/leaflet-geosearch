@@ -1,4 +1,3 @@
-export { default as AlgoliaProvider } from './algoliaProvider';
 export { default as BingProvider } from './bingProvider';
 export { default as EsriProvider } from './esriProvider';
 export { default as GeocodeEarthProvider } from './geocodeEarthProvider';

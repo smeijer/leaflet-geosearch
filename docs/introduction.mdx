@@ -11,7 +11,7 @@ import Map from './components/Map';
 
 `leaflet-geosearch` adds support for geocoding (address lookup, a.k.a. geoseaching) to your (web) application. It comes with controls to be embedded in your Leaflet map.
 
-We support the following providers out-of-the-box; [Algolia](./providers/algolia), [Bing](./providers/bing), [Esri](./providers/esri), [Google](./providers/google), [OpenStreetMap](./providers/openstreetmap), [LocationIQ](./providers/locationiq), [OpenCage](./providers/opencage).
+We support the following providers out-of-the-box: [Bing](./providers/bing), [Esri](./providers/esri), [Google](./providers/google), [OpenStreetMap](./providers/openstreetmap), [LocationIQ](./providers/locationiq), [OpenCage](./providers/opencage).
 
 Although this project is named `leaflet-geosearch`, this library is also usable without LeafletJS, and does not have any dependencies on Leaflet whatsoever.
 
@@ -85,7 +85,7 @@ map.addControl(search);
 
 `leaflet-geosearch` uses so-called "providers" to take care of building the correct service URL and parsing the retrieved data into a uniform format. Thanks to this architecture, it is trivial to add your own providers, so you can use your own geocoding service.
 
-When [`OpenStreetMap`](./providers/openstreetmap) does not match your needs; you can also choose to use the [Algolia](./providers/algolia), [`Bing`](./providers/bing), [`Esri`](./providers/esri), [`Google`](./providers/google), [`LocationIQ`](./providers/locationiq), or [`OpenCage`](./providers/opencage) providers. Most of those providers do however require `API keys`. See the documentation pages on the relevant organisations on how to obtain these keys.
+When [`OpenStreetMap`](./providers/openstreetmap) does not match your needs; you can also choose to use the [`Bing`](./providers/bing), [`Esri`](./providers/esri), [`Google`](./providers/google), [`LocationIQ`](./providers/locationiq), or [`OpenCage`](./providers/opencage) providers. Most of those providers do however require `API keys`. See the documentation pages on the relevant organisations on how to obtain these keys.
 
 In case you decide to write your own provider, please consider submitting a PR to share your work with us.
 
