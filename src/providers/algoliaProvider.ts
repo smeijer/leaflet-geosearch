@@ -5,7 +5,7 @@ import AbstractProvider, {
   SearchResult,
 } from './provider';
 
-interface RequestResult {
+export interface RequestResult {
   hits: RawResult[];
 }
 
@@ -16,7 +16,7 @@ interface ValueMatch {
   fullyHighlighted?: boolean;
 }
 
-interface RawResult {
+export interface RawResult {
   country: { [key: string]: string };
   country_code: string;
   city: { [key: string]: string[] };
@@ -86,21 +86,21 @@ export default class Provider extends AbstractProvider<
     return [
       // Building + Street
       result.locale_names?.default[
-        this.findBestMatchLevelIndex(
-          result._highlightResult.locale_names.default,
-        )
+      this.findBestMatchLevelIndex(
+        result._highlightResult.locale_names.default,
+      )
       ],
       // City
       result.city?.default[
-        this.findBestMatchLevelIndex(result._highlightResult.city.default)
+      this.findBestMatchLevelIndex(result._highlightResult.city.default)
       ],
       // Administrative (State / Province)
       result.administrative[
-        this.findBestMatchLevelIndex(result._highlightResult.administrative)
+      this.findBestMatchLevelIndex(result._highlightResult.administrative)
       ],
       // Zip code / Postal code
       result.postcode?.[
-        this.findBestMatchLevelIndex(result._highlightResult.postcode)
+      this.findBestMatchLevelIndex(result._highlightResult.postcode)
       ],
       // Country
       result.country?.default,
