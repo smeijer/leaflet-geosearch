@@ -1,7 +1,7 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-57-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-58-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -431,6 +431,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="http://zachstednick.com"><img src="https://avatars.githubusercontent.com/u/345365?v=4?s=100" width="100px;" alt="Zach Stednick"/><br /><sub><b>Zach Stednick</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=stedy" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/mtmail"><img src="https://avatars.githubusercontent.com/u/3727288?v=4?s=100" width="100px;" alt="mtmail"/><br /><sub><b>mtmail</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=mtmail" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
