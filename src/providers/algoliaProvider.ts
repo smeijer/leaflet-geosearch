@@ -5,7 +5,7 @@ import AbstractProvider, {
   SearchResult,
 } from './provider';
 
-interface RequestResult {
+export interface RequestResult {
   hits: RawResult[];
 }
 
@@ -16,7 +16,7 @@ interface ValueMatch {
   fullyHighlighted?: boolean;
 }
 
-interface RawResult {
+export interface RawResult {
   country: { [key: string]: string };
   country_code: string;
   city: { [key: string]: string[] };

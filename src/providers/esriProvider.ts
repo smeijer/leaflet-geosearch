@@ -4,12 +4,12 @@ import AbstractProvider, {
   SearchResult,
 } from './provider';
 
-interface RequestResult {
+export interface RequestResult {
   spatialReference: { wkid: number; latestWkid: number };
   locations: RawResult[];
 }
 
-interface RawResult {
+export interface RawResult {
   name: string;
   extent: {
     xmin: number;
