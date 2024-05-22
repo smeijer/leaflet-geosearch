@@ -7,12 +7,12 @@ import AbstractProvider, {
 } from './provider';
 import { Loader, LoaderOptions } from '@googlemaps/js-api-loader';
 
-interface RequestResult {
+export interface RequestResult {
   results: google.maps.GeocoderResult[];
   status?: google.maps.GeocoderStatus;
 }
 
-interface GeocodeError {
+export interface GeocodeError {
   code: Exclude<google.maps.GeocoderStatus, google.maps.GeocoderStatus.OK>;
   endpoint: 'GEOCODER_GEOCODE';
   message: string;
