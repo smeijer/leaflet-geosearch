@@ -16,5 +16,6 @@ export { default as PeliasProvider } from './providers/peliasProvider';
 export { default as MapBoxProvider } from './providers/mapBoxProvider';
 export { default as GeoApiFrProvider } from './providers/geoApiFrProvider';
 export { default as GeoapifyProvider } from './providers/geoapifyProvider';
+export { default as AMapProvider } from './providers/amapProvider';
 
 export { default as JsonProvider } from './providers/provider';
