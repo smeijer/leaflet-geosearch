@@ -11,6 +11,7 @@ import {
   PeliasProvider,
   GeoApiFrProvider,
   GeoapifyProvider,
+  AMapProvider,
 } from 'leaflet-geosearch';
 
 export default {
@@ -51,4 +52,8 @@ export default {
   Pelias: new PeliasProvider(),
 
   GeoApiFr: new GeoApiFrProvider(),
+
+  AMap: new AMapProvider({
+    params: { key: process.env.GATSBY_AMAP_API_KEY },
+  }),
 };
