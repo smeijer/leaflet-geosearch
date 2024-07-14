@@ -38,7 +38,7 @@ export default class AMapProvider extends AbstractProvider<
   }
 
   parse(response: ParseArgument<RequestResult>): SearchResult<RawResult>[] {
-    const records = response.data.geocodes;
+    const records = response.data.geocodes ?? [];
 
     return records.map((r) => ({
       x: Number(r.location.substring(0, r.location.indexOf(','))),
