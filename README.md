@@ -182,6 +182,8 @@ leaflet example.
 ```jsx
 import { GeoSearchControl, MapBoxProvider } from 'leaflet-geosearch';
 import { useMap } from 'react-leaflet';
+import "leaflet-geosearch/assets/css/leaflet.css";
+
 const SearchField = ({ apiKey }) => {
   const provider = new MapBoxProvider({
     params: {
