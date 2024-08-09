@@ -41,7 +41,7 @@ export default class HereProvider extends AbstractProvider<
   RequestResult,
   RawResult
 > {
-  searchUrl = 'https://geocode.search.hereapi.com/v1/autosuggest';
+  searchUrl = 'https://geocode.search.hereapi.com/v1/geocode';
 
   endpoint({ query }: EndpointArgument): string {
     const params = typeof query === 'string' ? { q: query } : query;
