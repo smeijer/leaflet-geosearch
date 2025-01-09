@@ -1,0 +1,68 @@
+{
+  "response": {
+    "GeoObjectCollection": {
+      "metaDataProperty": {
+        "GeocoderResponseMetaData": {
+          "request": "Dubai, Mohammed Bin Rashid Boulevard, 1",
+          "found": "1",
+          "results": "10"
+        }
+      },
+      "featureMember": [
+        {
+          "GeoObject": {
+            "metaDataProperty": {
+              "GeocoderMetaData": {
+                "kind": "house",
+                "text": "UAE, Dubai, Mohammed Bin Rashid Boulevard, 1",
+                "precision": "exact",
+                "Address": {
+                  "country_code": "UAE",
+                  "postal_code": "00000",
+                  "formatted": "Dubai, Mohammed Bin Rashid Boulevard, 1",
+                  "Components": [
+                    {
+                      "kind": "country",
+                      "name": "UAE"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Emirate of Dubai"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Dubai"
+                    },
+                    {
+                      "kind": "locality",
+                      "name": "Dubai"
+                    },
+                    {
+                      "kind": "street",
+                      "name": "Mohammed Bin Rashid Boulevard"
+                    },
+                    {
+                      "kind": "house",
+                      "name": "1"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "UAE, Dubai",
+            "name": "Mohammed Bin Rashid Boulevard, 1",
+            "boundedBy": {
+              "Envelope": {
+                "lowerCorner": "25.196563 55.274149",
+                "upperCorner": "25.197612 55.274183"
+              }
+            },
+            "Point": {
+              "pos": "25.1973 55.274243"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

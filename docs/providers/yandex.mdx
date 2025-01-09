@@ -1,0 +1,41 @@
+---
+name: Yandex
+menu: Providers
+route: /providers/yandex
+---
+
+import Playground from '../components/Playground';
+import Map from '../components/Map';
+
+# Yandex Provider
+
+**note**: Yandex Map services require an API key. [Obtain here][1].
+For more options and configurations, see the [Yandex Geocoder API Developer Docs][2].
+
+<Playground>
+  <Map provider="Yandex" />
+</Playground>
+
+```js
+import { YandexProvider } from 'leaflet-geosearch';
+
+const provider = new YandexProvider({
+  params: {
+    apikey: '__YOUR_YANDEX_KEY__',
+    lang: 'en_US', // Specifies the language of the results. The default is set to 'en_US'. (required)
+  },
+});
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+    style: 'bar',
+  }),
+);
+```
+
+[1]: https://developer.tech.yandex.com/
+[2]: https://yandex.com/dev/geocode/doc/en/

@@ -120,6 +120,7 @@ jobs:
           GATSBY_LOCATIONIQ_API_KEY: ${{ secrets.LOCATIONIQ_API_KEY }}
           GATSBY_OPENCAGE_API_KEY: ${{ secrets.OPENCAGE_API_KEY }}
           GATSBY_HERE_API_KEY: ${{ secrets.HERE_API_KEY }}
+          GATSBY_YANDEX_API_KEY: ${{ secrets.YANDEX_API_KEY }}
 
   update-docs:
     name: Update docs
