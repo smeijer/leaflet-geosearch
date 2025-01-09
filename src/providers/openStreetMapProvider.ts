@@ -5,7 +5,6 @@ import AbstractProvider, {
   RequestType,
   SearchResult,
 } from './provider';
-import hasShape from '../lib/hasShape';
 
 export type RequestResult = RawResult[];
 

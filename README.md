@@ -1,7 +1,9 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-58-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -10,7 +12,7 @@
 
 ## Installation
 
-**more docs @** https://smeijer.github.io/leaflet-geosearch/#installation
+**more docs @** <https://smeijer.github.io/leaflet-geosearch/#installation>
 
 with npm:
 
@@ -26,7 +28,7 @@ yarn add leaflet-geosearch
 
 ## Browser support / Polyfills
 
-**more docs @** https://smeijer.github.io/leaflet-geosearch/#browser-support--polyfills
+**more docs @** <https://smeijer.github.io/leaflet-geosearch/#browser-support--polyfills>
 
 This library is written with the latest technologies in mind. Thereby it is required to include some polyfills when you wish to support older browsers. These polyfills are recommended for IE and Safari support:
 
@@ -65,7 +67,7 @@ usable without LeafletJS, and does not have any dependencies whatsoever.
 
 # Usage
 
-**more docs @** https://smeijer.github.io/leaflet-geosearch/usage
+**more docs @** <https://smeijer.github.io/leaflet-geosearch/usage>
 
 Let's first start with an little example on how to use this control without
 leaflet. For example as an address lookup on a webshop order form. Perhaps to
