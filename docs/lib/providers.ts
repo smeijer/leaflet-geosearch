@@ -1,6 +1,9 @@
 import {
+  AMapProvider,
   BingProvider,
   EsriProvider,
+  GeoApiFrProvider,
+  GeoapifyProvider,
   GeocodeEarthProvider,
   GoogleProvider,
   LegacyGoogleProvider,
@@ -9,17 +12,23 @@ import {
   OpenCageProvider,
   OpenStreetMapProvider,
   PeliasProvider,
-  GeoApiFrProvider,
-  GeoapifyProvider,
-  AMapProvider,
 } from 'leaflet-geosearch';
 
 export default {
+  AMap: new AMapProvider({
+    params: { key: process.env.GATSBY_AMAP_API_KEY },
+  }),
   Bing: new BingProvider({
     params: { key: process.env.GATSBY_BING_API_KEY },
   }),
 
   Esri: new EsriProvider(),
+
+  GeoApiFr: new GeoApiFrProvider(),
+
+  Geoapify: new GeoapifyProvider({
+    params: { apiKey: process.env.GATSBY_GEOAPIFY_API_KEY },
+  }),
 
   GeocodeEarth: new GeocodeEarthProvider({
     params: { api_key: process.env.GATSBY_GEOCODEEARTH_API_KEY },
@@ -43,17 +52,7 @@ export default {
     params: { key: process.env.GATSBY_OPENCAGE_API_KEY },
   }),
 
-  Geoapify: new GeoapifyProvider({
-    params: { apiKey: process.env.GATSBY_GEOAPIFY_API_KEY },
-  }),
-
   OpenStreetMap: new OpenStreetMapProvider(),
 
   Pelias: new PeliasProvider(),
-
-  GeoApiFr: new GeoApiFrProvider(),
-
-  AMap: new AMapProvider({
-    params: { key: process.env.GATSBY_AMAP_API_KEY },
-  }),
 };
