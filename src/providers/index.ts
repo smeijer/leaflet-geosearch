@@ -1,3 +1,4 @@
+export { default as AMapProvider } from './amapProvider';
 export { default as BingProvider } from './bingProvider';
 export { default as CivilDefenseMapProvider } from './civilDefenseMapProvider';
 export { default as EsriProvider } from './esriProvider';
