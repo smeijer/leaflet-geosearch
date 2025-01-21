@@ -65,7 +65,7 @@
   "bugs": {
     "url": "https://github.com/smeijer/leaflet-geosearch/issues"
   },
-  "homepage": "https://github.com/smeijer/leaflet-geosearch#readme",
+  "homepage": "https://smeijer.github.io/leaflet-geosearch",
   "license": "MIT",
   "devDependencies": {
     "@emotion/core": "^10.3.1",
