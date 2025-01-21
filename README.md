@@ -50,6 +50,7 @@ your own geocoding service(s).
 The control comes with a number of default providers:
 
 - [Algolia]
+- [AMap]
 - [Bing]
 - [Esri]
 - [Geocode Earth]
@@ -343,6 +344,7 @@ refresh when you change source files.
 [babel-polyfill]: https://npmjs.com/babel-polyfill
 [unfetch]: https://npmjs.com/unfetch
 [algolia]: https://smeijer.github.io/leaflet-geosearch/providers/algolia
+[AMap]: https://smeijer.github.io/leaflet-geosearch/providers/amap
 [bing]: https://smeijer.github.io/leaflet-geosearch/providers/bing
 [esri]: https://smeijer.github.io/leaflet-geosearch/providers/esri
 [geocode earth]: https://smeijer.github.io/leaflet-geosearch/providers/geocode-earth
