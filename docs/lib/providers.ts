@@ -18,7 +18,6 @@ export default {
   AMap: new AMapProvider({
     params: { key: process.env.GATSBY_AMAP_API_KEY },
   }),
-  
   Bing: new BingProvider({
     params: { key: process.env.GATSBY_BING_API_KEY },
   }),
