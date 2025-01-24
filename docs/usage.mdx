@@ -42,6 +42,7 @@ import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 const searchControl = new GeoSearchControl({
   provider: new OpenStreetMapProvider(),
   style: 'bar',
+  resetButton: '🔍', // Example of using a magnifying glass icon
 });
 
 map.addControl(searchControl);

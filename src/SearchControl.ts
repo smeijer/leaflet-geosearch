@@ -56,6 +56,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   autoClose: false,
   keepResult: false,
   updateMap: true,
+  resetButton: '×',
 };
 
 const UNINITIALIZED_ERR =
@@ -110,6 +111,7 @@ interface SearchControlProps {
   autoClose: boolean;
   keepResult: boolean;
   updateMap: boolean;
+  resetButton: string;
 }
 
 export type SearchControlOptions = Partial<SearchControlProps> & {
@@ -202,7 +204,7 @@ const Control: SearchControl = {
       this.classNames.resetButton,
       this.searchElement.form,
       {
-        text: '×',
+        text: this.options.resetButton,
         'aria-label': this.options.clearSearchLabel,
         onClick: () => {
           if (this.searchElement.input.value === '') {
