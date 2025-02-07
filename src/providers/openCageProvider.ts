@@ -1,4 +1,5 @@
 import AbstractProvider, {
+  BoundsTuple,
   EndpointArgument,
   LatLng,
   ParseArgument,
@@ -94,16 +95,22 @@ export default class OpenCageProvider extends AbstractProvider<
   }
 
   parse(response: ParseArgument<RequestResult>): SearchResult<RawResult>[] {
-    return response.data.results.map((r) => ({
-      x: r.geometry.lng,
-      y: r.geometry.lat,
-      label: r.formatted,
-      bounds: [
-        [r.bounds.southwest.lat, r.bounds.southwest.lng], // s, w
-        [r.bounds.northeast.lat, r.bounds.northeast.lng], // n, e
-      ],
-      raw: r,
-    }));
+    return response.data.results.map((r) => {
+      let bounds = null;
+      if (r.bounds) {
+        bounds = [
+          [r.bounds.southwest.lat, r.bounds.southwest.lng], // s, w
+          [r.bounds.northeast.lat, r.bounds.northeast.lng], // n, e
+        ] as BoundsTuple;
+      }
+      return {
+        x: r.geometry.lng,
+        y: r.geometry.lat,
+        label: r.formatted,
+        bounds,
+        raw: r,
+      };
+    });
   }
 
   async search(options: SearchArgument): Promise<SearchResult<RawResult>[]> {
