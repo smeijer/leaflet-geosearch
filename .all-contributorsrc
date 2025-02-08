@@ -568,7 +568,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/8878055?v=4",
       "profile": "https://www.ramazansancar.com.tr/?utm_source=github&utm_medium=bio&utm_campaign=@ramazansancar",
       "contributions": [
-        "code"
+        "code",
+        "maintenance",
+        "review"
       ]
     }
   ],
