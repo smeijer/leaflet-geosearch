@@ -54,7 +54,7 @@ function Map(props: MapProps): ReactElement {
   return (
     <div>
       <BaseMap ref={ref} viewport={viewport} id="map" className={styles.map}>
-        <TileLayer url="//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer url="//tile.openstreetmap.org/{z}/{x}/{y}.png" />
       </BaseMap>
     </div>
   );
