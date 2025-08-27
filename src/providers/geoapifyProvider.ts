@@ -1,4 +1,5 @@
 import AbstractProvider, {
+  BoundsTuple,
   EndpointArgument,
   ParseArgument,
   ProviderOptions,
@@ -24,7 +25,7 @@ export interface RawResult {
   lat: string;
   state_code: string;
   formatted: string;
-  bbox: BBox;
+  bbox?: BBox;
 }
 
 export interface RawQuery {
@@ -81,15 +82,21 @@ export default class GeoapifyProvider extends AbstractProvider<
     const records = Array.isArray(response.data.results)
       ? response.data.results
       : [response.data.results];
-    return records.map((r) => ({
-      x: Number(r.lon),
-      y: Number(r.lat),
-      label: r.formatted,
-      bounds: [
-        [parseFloat(r.bbox.lat1), parseFloat(r.bbox.lon1)], // s, w
-        [parseFloat(r.bbox.lat2), parseFloat(r.bbox.lon2)], // n, e
-      ],
-      raw: r,
-    }));
+    return records.map((r) => {
+      let bounds = null;
+      if (r.bbox) {
+        bounds = [
+          [parseFloat(r.bbox.lat1), parseFloat(r.bbox.lon1)], // s, w
+          [parseFloat(r.bbox.lat2), parseFloat(r.bbox.lon2)], // n, e
+        ] as BoundsTuple;
+      }
+      return {
+        x: Number(r.lon),
+        y: Number(r.lat),
+        label: r.formatted,
+        bounds,
+        raw: r,
+      };
+    });
   }
 }
