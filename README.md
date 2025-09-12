@@ -1,7 +1,9 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-60-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
@@ -183,7 +185,7 @@ leaflet example.
 ```jsx
 import { GeoSearchControl, MapBoxProvider } from 'leaflet-geosearch';
 import { useMap } from 'react-leaflet';
-import "leaflet-geosearch/assets/css/leaflet.css";
+import 'leaflet-geosearch/assets/css/leaflet.css';
 
 const SearchField = ({ apiKey }) => {
   const provider = new MapBoxProvider({
@@ -342,7 +344,7 @@ refresh when you change source files.
 [babel-polyfill]: https://npmjs.com/babel-polyfill
 [unfetch]: https://npmjs.com/unfetch
 [algolia]: https://smeijer.github.io/leaflet-geosearch/providers/algolia
-[AMap]: https://smeijer.github.io/leaflet-geosearch/providers/amap
+[amap]: https://smeijer.github.io/leaflet-geosearch/providers/amap
 [bing]: https://smeijer.github.io/leaflet-geosearch/providers/bing
 [esri]: https://smeijer.github.io/leaflet-geosearch/providers/esri
 [geocode earth]: https://smeijer.github.io/leaflet-geosearch/providers/geocode-earth

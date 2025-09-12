@@ -11,18 +11,15 @@ module.exports = {
   },
   testMatch: ['**/*.spec.js'],
   transform: {
-    '^.+\\.(t|j)sx?$': 'ts-jest',
-  },
-  automock: false,
-  setupFiles: ['./jest.setup.js'],
-  setupFilesAfterEnv: ['./jest.extend.js'],
-  globals: {
-    'ts-jest': {
-      tsConfig: {
+    '^.+\\.(t|j)sx?$': ['ts-jest', {
+      tsconfig: {
         ...tsConfig.compilerOptions,
         noEmit: false,
         outDir: '.tsCache',
       },
-    },
+    }],
   },
+  automock: false,
+  setupFiles: ['./jest.setup.js'],
+  setupFilesAfterEnv: ['./jest.extend.js'],
 };

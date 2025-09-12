@@ -8,3 +8,4 @@ coverage
 .tmp
 .docz
 .rts2_cache*
+pnpm-lock.yaml
