@@ -1,16 +1,18 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-60-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-**Demo and Docs: [smeijer.github.io/leaflet-geosearch](https://smeijer.github.io/leaflet-geosearch)**
+**Demo and Docs: [leaflet-geosearch](https://leaflet-geosearch.meijer.works)**
 
 ![animation of geosearch](./docs/assets/img/geosearch.gif)
 
 ## Installation
 
-**more docs @** <https://smeijer.github.io/leaflet-geosearch/#installation>
+**more docs @** [leaflet-geosearch / installation](https://leaflet-geosearch.meijer.works/#installation)
 
 with npm:
 
@@ -26,7 +28,7 @@ yarn add leaflet-geosearch
 
 ## Browser support / Polyfills
 
-**more docs @** <https://smeijer.github.io/leaflet-geosearch/#browser-support--polyfills>
+**more docs @** [leaflet-geosearch / browser-support / polyfills](https://leaflet-geosearch.meijer.works/#browser-support--polyfills)
 
 This library is written with the latest technologies in mind. Thereby it is required to include some polyfills when you wish to support older browsers. These polyfills are recommended for IE and Safari support:
 
@@ -66,7 +68,7 @@ usable without LeafletJS, and does not have any dependencies whatsoever.
 
 # Usage
 
-**more docs @** <https://smeijer.github.io/leaflet-geosearch/usage>
+**more docs @** [leaflet-geosearch / usage](https://leaflet-geosearch.meijer.works/usage)
 
 Let's first start with an little example on how to use this control without
 leaflet. For example as an address lookup on a webshop order form. Perhaps to
@@ -183,7 +185,7 @@ leaflet example.
 ```jsx
 import { GeoSearchControl, MapBoxProvider } from 'leaflet-geosearch';
 import { useMap } from 'react-leaflet';
-import "leaflet-geosearch/assets/css/leaflet.css";
+import 'leaflet-geosearch/assets/css/leaflet.css';
 
 const SearchField = ({ apiKey }) => {
   const provider = new MapBoxProvider({
@@ -338,19 +340,19 @@ You can use the docs as "development environment". Please run `npm run start` to
 refresh when you change source files.
 
 [leaflet]: http://leafletjs.com
-[docs]: https://smeijer.github.io/leaflet-geosearch
+[docs]: https://leaflet-geosearch.meijer.works
 [babel-polyfill]: https://npmjs.com/babel-polyfill
 [unfetch]: https://npmjs.com/unfetch
-[algolia]: https://smeijer.github.io/leaflet-geosearch/providers/algolia
-[AMap]: https://smeijer.github.io/leaflet-geosearch/providers/amap
-[bing]: https://smeijer.github.io/leaflet-geosearch/providers/bing
-[esri]: https://smeijer.github.io/leaflet-geosearch/providers/esri
-[geocode earth]: https://smeijer.github.io/leaflet-geosearch/providers/geocode-earth
-[google]: https://smeijer.github.io/leaflet-geosearch/providers/google
-[locationiq]: https://smeijer.github.io/leaflet-geosearch/providers/locationiq
-[opencage]: https://smeijer.github.io/leaflet-geosearch/providers/opencage
-[openstreetmap]: https://smeijer.github.io/leaflet-geosearch/providers/openstreetmap
-[pelias]: https://smeijer.github.io/leaflet-geosearch/providers/pelias
+[algolia]: https://leaflet-geosearch.meijer.works/providers/algolia
+[amap]: https://leaflet-geosearch.meijer.works/providers/amap
+[bing]: https://leaflet-geosearch.meijer.works/providers/bing
+[esri]: https://leaflet-geosearch.meijer.works/providers/esri
+[geocode earth]: https://leaflet-geosearch.meijer.works/providers/geocode-earth
+[google]: https://leaflet-geosearch.meijer.works/providers/google
+[locationiq]: https://leaflet-geosearch.meijer.works/providers/locationiq
+[opencage]: https://leaflet-geosearch.meijer.works/providers/opencage
+[openstreetmap]: https://leaflet-geosearch.meijer.works/providers/openstreetmap
+[pelias]: https://leaflet-geosearch.meijer.works/providers/pelias
 
 ## Contributors ✨
 
