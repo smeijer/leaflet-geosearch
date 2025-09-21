@@ -446,7 +446,7 @@ const Control: SearchControl = {
     }
 
     if (options.draggable) {
-      marker.on('dragend', (args) => {
+      marker.on('dragend', (args: L.DragEndEvent) => {
         this.map.fireEvent('geosearch/marker/dragend', {
           location: marker.getLatLng(),
           event: args,
