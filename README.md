@@ -179,7 +179,7 @@ map.addControl(searchControl);
 
 Usage with `react-leaflet` is similar to the usage with plain Leaflet. This example
 uses the new MapBoxProvider and adds an api key to the `params` list when accessing
-the remote API. Note the `useMap` hook which is the only notable diffrence to the
+the remote API. Note the `useMap` hook which is the only notable difference to the
 leaflet example.
 
 ```jsx
