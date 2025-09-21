@@ -37,7 +37,7 @@ This library is written with the latest technologies in mind. Thereby it is requ
 
 # About
 
-This library adds support for geocoding _(address lookup, a.k.a. geoseaching)_
+This library adds support for geocoding _(address lookup, a.k.a. geosearching)_
 to your (web) application. It comes with controls to be embedded in your [Leaflet] map.
 
 Check out the [docs] for various possibilities.
