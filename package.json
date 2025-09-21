@@ -1,7 +1,7 @@
 {
   "name": "leaflet-geosearch",
   "version": "3.6.1",
-  "description": "Adds support for address lookup (a.k.a. geocoding / geoseaching) to Leaflet.",
+  "description": "Adds support for address lookup (a.k.a. geocoding / geosearching) to Leaflet.",
   "publishConfig": {
     "tag": "latest"
   },
@@ -35,7 +35,7 @@
     "test": "jest",
     "lint": "tsc --noEmit && eslint \"{docs,src,test}/**/*.{js,ts,tsx}\" --quiet --fix && prettier \"**/*.{md,mdx,json}\" --write",
     "docz:dev": "docz dev",
-    "docz:build": "cross-env NODE_OPTIONS=--openssl-legacy-provider docz build --base /leaflet-geosearch/",
+    "docz:build": "cross-env NODE_OPTIONS=--openssl-legacy-provider docz build",
     "docz:serve": "docz build && docz serve",
     "docs:update": "run-s clean build docz:build && git checkout gh-pages && find . -maxdepth 1 -type f -not -path '*/\\.*' -delete && cp -r .docz/dist/* . && git add . && (git diff --staged --exit-code || git commit -m \"update docs\") && git checkout - && git push origin gh-pages",
     "prepublish": "run-s test clean build",
@@ -65,7 +65,7 @@
   "bugs": {
     "url": "https://github.com/smeijer/leaflet-geosearch/issues"
   },
-  "homepage": "https://smeijer.github.io/leaflet-geosearch",
+  "homepage": "https://leaflet-geosearch.meijer.works",
   "license": "MIT",
   "devDependencies": {
     "@emotion/core": "^10.3.1",
