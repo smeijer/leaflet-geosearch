@@ -38,7 +38,7 @@ export default class SearchElement {
 
     this.form = createElement<HTMLFormElement>(
       'form',
-      ['', classNames.form].join(' '),
+      cx('', classNames.form),
       this.container,
       {
         autocomplete: 'none',
@@ -51,7 +51,7 @@ export default class SearchElement {
 
     this.input = createElement<HTMLInputElement>(
       'input',
-      ['glass', classNames.input].join(' '),
+      cx('glass', classNames.input),
       this.form,
       {
         type: 'text',
