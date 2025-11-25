@@ -1,0 +1,51 @@
+---
+name: PdokNl
+menu: Providers
+route: /providers/pdoknl
+---
+
+import Playground from '../components/Playground';
+import Map from '../components/Map';
+
+# PdokNl Provider
+
+For more options and configurations, see the [PDOK Locatieserver][1].
+
+<Playground>
+  <Map provider="PdokNl" />
+</Playground>
+
+```js
+import { PdokNlProvider } from 'leaflet-geosearch';
+
+const provider = new PdokNlProvider();
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+    style: 'bar',
+  }),
+);
+```
+
+## Optional parameters
+
+PDOK Locatieserver supports a number of [optional parameters][2]. As the api requires those parameters to be added to the url, they can be added to the `params` key of the provider.
+
+All options defined next to the `params` key, would have been added to the request body.
+
+```js
+const provider = new PdokNlProvider({
+  params: {
+    fq: 'gemeentenaam:Leiden', // limit search results to municipality
+    lat: 0, // Latitude in degree
+    lon: 0, // Longitude in degree
+  },
+});
+```
+
+[1]: https://www.pdok.nl/pdok-locatieserver
+[2]: https://api.pdok.nl/bzk/locatieserver/search/v3_1/ui/#/Locatieserver/suggest
