@@ -572,6 +572,15 @@
         "maintenance",
         "review"
       ]
+    },
+    {
+      "login": "simon04",
+      "name": "Simon Legner",
+      "avatar_url": "https://avatars.githubusercontent.com/u/782446?v=4",
+      "profile": "https://github.com/simon04",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
