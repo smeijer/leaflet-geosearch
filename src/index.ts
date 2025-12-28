@@ -17,5 +17,6 @@ export { default as MapBoxProvider } from './providers/mapBoxProvider';
 export { default as OpenCageProvider } from './providers/openCageProvider';
 export { default as OpenStreetMapProvider } from './providers/openStreetMapProvider';
 export { default as PeliasProvider } from './providers/peliasProvider';
+export { default as PdokNlProvider } from './providers/pdokNlProvider';
 
 export { default as JsonProvider } from './providers/provider';
