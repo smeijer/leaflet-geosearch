@@ -39,8 +39,8 @@ All options defined next to the `params` key, would have been added to the reque
 
 ```js
 const provider = new GeoApiFrProvider({
-  searchUrl: 'https://api-adresse.data.gouv.fr/search',
-  reverseUrl: 'https://api-adresse.data.gouv.fr/reverse',
+  searchUrl: 'https://data.geopf.fr/geocodage/search',
+  reverseUrl: 'https://data.geopf.fr/geocodage/reverse',
   params: {
     type: 'municipality', // limit search results to city
     autocomplete: 1, // Use in autocomplete mode (search in prefix mode)
@@ -50,5 +50,5 @@ const provider = new GeoApiFrProvider({
 });
 ```
 
-[1]: https://geo.api.gouv.fr/
-[2]: https://geo.api.gouv.fr/adresse
+[1]: https://geoservices.ign.fr/documentation/services/services-geoplateforme/geocodage
+[2]: https://data.geopf.fr/geocodage/openapi

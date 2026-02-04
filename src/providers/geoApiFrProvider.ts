@@ -55,9 +55,9 @@ export default class GeoApiFrProvider extends AbstractProvider<
   constructor(options: GeoApiFrProviderOptions = {}) {
     super(options);
 
-    const host = 'https://api-adresse.data.gouv.fr';
-    this.searchUrl = options.searchUrl || `${host}/search`;
-    this.reverseUrl = options.reverseUrl || `${host}/reverse`;
+    const base = 'https://data.geopf.fr/geocodage';
+    this.searchUrl = options.searchUrl || `${base}/search`;
+    this.reverseUrl = options.reverseUrl || `${base}/reverse`;
   }
 
   endpoint({ query, type }: EndpointArgument) {
