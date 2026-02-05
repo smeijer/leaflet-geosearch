@@ -1,9 +1,7 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-60-orange.svg?style=flat-square)](#contributors-)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-61-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [leaflet-geosearch](https://leaflet-geosearch.meijer.works)**
@@ -442,6 +440,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/mtmail"><img src="https://avatars.githubusercontent.com/u/3727288?v=4?s=100" width="100px;" alt="mtmail"/><br /><sub><b>mtmail</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=mtmail" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/franciscofsales"><img src="https://avatars.githubusercontent.com/u/7977645?v=4?s=100" width="100px;" alt="Francisco Sales"/><br /><sub><b>Francisco Sales</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=franciscofsales" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.ramazansancar.com.tr/?utm_source=github&utm_medium=bio&utm_campaign=@ramazansancar"><img src="https://avatars.githubusercontent.com/u/8878055?v=4?s=100" width="100px;" alt="Ramazan Sancar"/><br /><sub><b>Ramazan Sancar</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=ramazansancar" title="Code">💻</a> <a href="#maintenance-ramazansancar" title="Maintenance">🚧</a> <a href="https://github.com/smeijer/leaflet-geosearch/pulls?q=is%3Apr+reviewed-by%3Aramazansancar" title="Reviewed Pull Requests">👀</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/JaZo"><img src="https://avatars.githubusercontent.com/u/3475007?v=4?s=100" width="100px;" alt="Jasper Zonneveld"/><br /><sub><b>Jasper Zonneveld</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=JaZo" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
