@@ -192,6 +192,7 @@ const Control: SearchControl = {
       this.searchElement.container,
       {
         title: this.options.searchLabel,
+        'aria-label': this.options.searchLabel,
         href: '#',
         onClick: (e) => this.onClick(e),
       },
