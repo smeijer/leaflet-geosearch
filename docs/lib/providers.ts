@@ -11,6 +11,7 @@ import {
   LocationIQProvider,
   OpenCageProvider,
   OpenStreetMapProvider,
+  PdokNlProvider,
   PeliasProvider,
 } from 'leaflet-geosearch';
 
@@ -53,6 +54,8 @@ export default {
   }),
 
   OpenStreetMap: new OpenStreetMapProvider(),
+
+  PdokNl: new PdokNlProvider(),
 
   Pelias: new PeliasProvider(),
 };
