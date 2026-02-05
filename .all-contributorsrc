@@ -572,6 +572,15 @@
         "maintenance",
         "review"
       ]
+    },
+    {
+      "login": "JaZo",
+      "name": "Jasper Zonneveld",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3475007?v=4",
+      "profile": "https://github.com/JaZo",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
