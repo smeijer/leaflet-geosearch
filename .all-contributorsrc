@@ -590,6 +590,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "datengraben",
+      "name": "Chris",
+      "avatar_url": "https://avatars.githubusercontent.com/u/105302830?v=4",
+      "profile": "https://datengraben.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
