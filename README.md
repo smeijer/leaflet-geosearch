@@ -56,6 +56,7 @@ The control comes with a number of default providers:
 - [LocationIQ]
 - [OpenCage]
 - [OpenStreetMap]
+- [PdokNl]
 - [Pelias]
 - [Mapbox](https://docs.mapbox.com/help/tutorials/local-search-geocoding-api/)
 - [GeoApiFR](https://geo.api.gouv.fr/adresse)
@@ -350,6 +351,7 @@ refresh when you change source files.
 [locationiq]: https://leaflet-geosearch.meijer.works/providers/locationiq
 [opencage]: https://leaflet-geosearch.meijer.works/providers/opencage
 [openstreetmap]: https://leaflet-geosearch.meijer.works/providers/openstreetmap
+[pdoknl]: https://leaflet-geosearch.meijer.works/providers/pdoknl
 [pelias]: https://leaflet-geosearch.meijer.works/providers/pelias
 
 ## Contributors ✨

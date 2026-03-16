@@ -1,0 +1,64 @@
+{
+  "response": {
+    "numFound": 49,
+    "start": 0,
+    "maxScore": 10.934887,
+    "numFoundExact": true,
+    "docs": [
+      {
+        "weergavenaam": "3e Binnenvestgracht, 2312NR Leiden",
+        "id": "pcd-f14950155195f418398b6eda76d66adb",
+        "centroide_ll": "POINT(4.49093267 52.16412132)"
+      },
+      {
+        "weergavenaam": "3e Binnenvestgracht 23L-1, 2312NR Leiden",
+        "id": "adr-37dba6d7e92c0ccca8fc738005057bd9",
+        "centroide_ll": "POINT(4.49157312 52.16420333)"
+      },
+      {
+        "weergavenaam": "3e Binnenvestgracht 23L-2, 2312NR Leiden",
+        "id": "adr-fd7be59d3e4ea77dafba1e8fd69017e6",
+        "centroide_ll": "POINT(4.49157 52.16425474)"
+      },
+      {
+        "weergavenaam": "3e Binnenvestgracht 23T-1, 2312NR Leiden",
+        "id": "adr-763525b75ad60b4e13fdf3d00b195912",
+        "centroide_ll": "POINT(4.49202289 52.164203)"
+      },
+      {
+        "weergavenaam": "3e Binnenvestgracht 23A, 2312NR Leiden",
+        "id": "adr-6d98d9468e29425d0ad81dcfdbe00f7d",
+        "centroide_ll": "POINT(4.49098397 52.16416908)"
+      }
+    ]
+  },
+  "highlighting": {
+    "pcd-f14950155195f418398b6eda76d66adb": {
+      "suggest": ["<b>3e</b> <b>Binnenvestgracht</b>, <b>2312</b> NR Leiden"]
+    },
+    "adr-37dba6d7e92c0ccca8fc738005057bd9": {
+      "suggest": [
+        "<b>3e</b> <b>Binnenvestgracht</b> <b>23L</b>-1, <b>2312NR</b> Leiden"
+      ]
+    },
+    "adr-fd7be59d3e4ea77dafba1e8fd69017e6": {
+      "suggest": [
+        "<b>3e</b> <b>Binnenvestgracht</b> <b>23L</b>-2, <b>2312NR</b> Leiden"
+      ]
+    },
+    "adr-763525b75ad60b4e13fdf3d00b195912": {
+      "suggest": [
+        "<b>3e</b> <b>Binnenvestgracht</b> <b>23T</b>-1, <b>2312NR</b> Leiden"
+      ]
+    },
+    "adr-6d98d9468e29425d0ad81dcfdbe00f7d": {
+      "suggest": [
+        "<b>3e</b> <b>Binnenvestgracht</b> <b>23A</b>, <b>2312NR</b> Leiden"
+      ]
+    }
+  },
+  "spellcheck": {
+    "suggestions": [],
+    "collations": []
+  }
+}
