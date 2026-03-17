@@ -15,7 +15,11 @@ on:
       - '!all-contributors/**'
 
 env:
-  NODE_VERSION: "20.x"
+  NODE_VERSION: "24.x"
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: write
 
 jobs:
   setup:
@@ -23,15 +27,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: "${{ env.NODE_VERSION }}"
 
       - name: Cache node modules
         id: cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: node_modules
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
@@ -46,11 +50,11 @@ jobs:
     needs: [setup]
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: "${{ env.NODE_VERSION }}"
 
@@ -59,7 +63,7 @@ jobs:
           git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
 
       - name: Cache node modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: node_modules
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
@@ -73,14 +77,14 @@ jobs:
     needs: [setup]
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: "${{ env.NODE_VERSION }}"
 
       - name: Cache node modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: node_modules
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
@@ -97,14 +101,14 @@ jobs:
       matrix:
         leaflet: ["1.6.0", "1.7.1", "1.8.0", "1.9.0"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: "${{ env.NODE_VERSION }}"
 
       - name: Cache node modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: node_modules
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
@@ -128,16 +132,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: [tests, typescript]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: "${{ env.NODE_VERSION }}"
 
       - name: Cache node modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: node_modules
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
@@ -159,14 +163,14 @@ jobs:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.12.0
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '${{ env.NODE_VERSION }}'
 
       - name: Cache node modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: node_modules
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
@@ -175,9 +179,9 @@ jobs:
         run: npm run build
 
       - name: Release
-        uses: cycjimmy/semantic-release-action@v2
+        uses: cycjimmy/semantic-release-action@v6
         with:
-          semantic_version: 17
+          semantic_version: 25
           branches: |
             [
               '+([0-9])?(.{+([0-9]),x}).x',
@@ -189,4 +193,4 @@ jobs:
             ]
         env:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
