@@ -124,6 +124,19 @@
   height: 30px;
 }
 
+/**
+ * Match color of .leaflet-control-attribution, .leaflet-control-scale-line
+ * since CSS is not dark mode compatible
+ */
+.leaflet-control-geosearch {
+  color: #333;
+}
+
+.leaflet-control-geosearch form input {
+  color: #333;
+  background-color: #fff;
+}
+
 .leaflet-control-geosearch .results {
   background: #fff;
 }
