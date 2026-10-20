@@ -54,6 +54,7 @@
     "ci:lint": "eslint \"{docs,src,test}/**/*.{js,ts,tsx}\" -c ./.eslintrc.js",
     "ci:tsc": "tsc --noEmit --project ./tsconfig.test.json",
     "ci:test": "vitest run",
+    "ci:package": "publint --pack npm && attw --pack . --ignore-rules unexpected-module-syntax",
     "bump:patch": "npm version patch -m 'release: cut the %s release'",
     "bump:minor": "npm version minor -m 'release: cut the %s release'",
     "bump:major": "npm version major -m 'release: cut the %s release'"
@@ -86,6 +87,7 @@
     "@types/google.maps": "^3.53.1"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
     "@emotion/core": "^10.3.1",
     "@types/leaflet": "^1.9.20",
     "@types/lodash.debounce": "^4.0.6",
@@ -109,6 +111,7 @@
     "msw": "^3.0.3",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
+    "publint": "^0.3.25",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-leaflet": "^2.6.3",
