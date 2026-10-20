@@ -1,4 +1,5 @@
 import AbstractProvider, {
+  ProviderParams,
   EndpointArgument,
   ParseArgument,
   SearchResult,
@@ -31,7 +32,8 @@ export default class EsriProvider extends AbstractProvider<
     'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find';
 
   endpoint({ query }: EndpointArgument): string {
-    const params = typeof query === 'string' ? { text: query } : query;
+    const params: ProviderParams =
+      typeof query === 'string' ? { text: query } : { ...query };
     params.f = 'json';
 
     return this.getUrl(this.searchUrl, params);

@@ -159,6 +159,20 @@ describe('provider endpoints', () => {
     expect(params(url).format).toEqual('jsonv2');
   });
 
+  test.each([
+    ['AMap', new AMapProvider()],
+    ['Bing', new BingProvider()],
+    ['CivilDefenseMap', new CivilDefenseMapProvider()],
+    ['Esri', new EsriProvider()],
+    ['Geoapify', new GeoapifyProvider()],
+    ['OpenCage', new OpenCageProvider()],
+  ])('%s does not modify an object query', (_, provider) => {
+    const query = { city: 'Den Haag' };
+    provider.endpoint({ query, type: RequestType.SEARCH, jsonp: 'cb' });
+
+    expect(query).toEqual({ city: 'Den Haag' });
+  });
+
   test('OpenStreetMap does not modify an object query', () => {
     const query = { street: 'Binnenhof 1', city: 'Den Haag' };
     new OpenStreetMapProvider().endpoint({ query, type: RequestType.SEARCH });

@@ -1,4 +1,5 @@
 import AbstractProvider, {
+  ProviderParams,
   EndpointArgument,
   ParseArgument,
   SearchArgument,
@@ -51,7 +52,8 @@ export default class BingProvider extends AbstractProvider<
   searchUrl = 'https://dev.virtualearth.net/REST/v1/Locations';
 
   endpoint({ query, jsonp }: EndpointArgument & { jsonp: string }): string {
-    const params = typeof query === 'string' ? { q: query } : query;
+    const params: ProviderParams =
+      typeof query === 'string' ? { q: query } : { ...query };
     params.jsonp = jsonp;
 
     return this.getUrl(this.searchUrl, params);

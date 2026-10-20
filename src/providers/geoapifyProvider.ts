@@ -1,4 +1,5 @@
 import AbstractProvider, {
+  ProviderParams,
   BoundsTuple,
   EndpointArgument,
   ParseArgument,
@@ -66,7 +67,8 @@ export default class GeoapifyProvider extends AbstractProvider<
   }
 
   endpoint({ query, type }: EndpointArgument): string {
-    const params = typeof query === 'string' ? { text: query } : query;
+    const params: ProviderParams =
+      typeof query === 'string' ? { text: query } : { ...query };
     params.format = 'json';
 
     switch (type) {
