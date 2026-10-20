@@ -85,7 +85,26 @@ export default abstract class AbstractProvider<
     });
 
     const request = await fetch(url);
-    const json: TRequestResult = await request.json();
+    const json: TRequestResult = await readJson(request);
     return this.parse({ data: json });
+  }
+}
+
+/**
+ * Reads a JSON body. Error responses with a JSON body are still returned, as
+ * some providers answer "no results" that way. Error responses that aren't
+ * JSON (e.g. an html block page) throw an error that mentions the status.
+ */
+export async function readJson<T>(response: Response): Promise<T> {
+  try {
+    return await response.json();
+  } catch (error) {
+    if (!response.ok) {
+      throw new Error(
+        `Request failed with status ${response.status} ${response.statusText}`.trim(),
+      );
+    }
+
+    throw error;
   }
 }

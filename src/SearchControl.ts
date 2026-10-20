@@ -145,6 +145,11 @@ interface SearchControl {
   onClick(event: Event): void;
   clearResults(event?: KeyboardEvent | null, force?: boolean): void;
   autoSearch(event: KeyboardEvent): void;
+  handleError(
+    error: unknown,
+    query: string,
+    source: 'autocomplete' | 'submit',
+  ): void;
   selectResult(event: KeyboardEvent): void;
   showResult(result: SearchResult, query: Selection): void;
   addMarker(result: SearchResult, selection: Selection): void;
@@ -376,7 +381,13 @@ const Control: SearchControl = {
     const { provider } = this.options;
 
     if (query.length) {
-      let results = await provider!.search({ query });
+      let results;
+      try {
+        results = await provider!.search({ query });
+      } catch (error) {
+        this.handleError(error, query, 'autocomplete');
+        return;
+      }
       results = results.slice(0, this.options.maxSuggestions);
       this.resultList.render(results, this.options.resultFormat);
     } else {
@@ -389,11 +400,25 @@ const Control: SearchControl = {
     this.resultList?.clear();
     const { provider } = this.options;
 
-    const results = await provider!.search(query);
+    let results;
+    try {
+      results = await provider!.search(query);
+    } catch (error) {
+      this.handleError(error, query.query, 'submit');
+      return;
+    }
 
     if (results && results.length > 0) {
       this.showResult(results[0], query);
     }
+  },
+
+  handleError(error, query, source) {
+    const { searchElement } = this;
+    addClassName(searchElement.container, 'error');
+    searchElement.hasError = true;
+
+    this.map?.fire('geosearch/error', { error, query, source });
   },
 
   showResult(result, query) {

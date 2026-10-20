@@ -57,11 +57,11 @@ export default class SearchElement {
         type: 'text',
         placeholder: searchLabel || 'search',
         name: 'geosearch',
-        onInput: this.onInput,
+        onInput: () => this.onInput(),
         onKeyUp: (e) => this.onKeyUp(e),
         onKeyPress: (e) => this.onKeyPress(e),
-        onFocus: this.onFocus,
-        onBlur: this.onBlur,
+        onFocus: () => this.onFocus(),
+        onBlur: () => this.onBlur(),
 
         // For some reason, leaflet is blocking the 'touchstart', manually give
         // focus to the input onClick
@@ -89,8 +89,15 @@ export default class SearchElement {
     stopPropagation(event);
     replaceClassName(this.container, 'error', 'pending');
 
-    await this.handleSubmit({ query: this.input.value });
-    removeClassName(this.container, 'pending');
+    try {
+      await this.handleSubmit({ query: this.input.value });
+    } catch (error) {
+      addClassName(this.container, 'error');
+      this.hasError = true;
+      throw error;
+    } finally {
+      removeClassName(this.container, 'pending');
+    }
   }
 
   onInput(): void {

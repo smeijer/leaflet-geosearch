@@ -5,6 +5,7 @@ import AbstractProvider, {
   SearchResult,
   RequestType,
   SearchArgument,
+  readJson,
 } from './provider';
 
 interface Doc {
@@ -120,7 +121,7 @@ export default class PdokNlProvider extends AbstractProvider<
     });
 
     const json = await fetch(url)
-      .then((response) => response.json())
+      .then((response) => readJson<RequestResult>(response))
       .then((json: RequestResult) => {
         // If there are no results found but there are spellcheck corrections, we search again using the corrected query.
         if (json.response.numFound < 1) {
@@ -129,8 +130,8 @@ export default class PdokNlProvider extends AbstractProvider<
               query: json.spellcheck.collations[1].collationQuery,
             });
 
-            return fetch(url).then(
-              (response): Promise<RequestResult> => response.json(),
+            return fetch(url).then((response) =>
+              readJson<RequestResult>(response),
             );
           }
         }
