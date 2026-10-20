@@ -31,16 +31,29 @@ map.addControl(
 );
 ```
 
-## Authentication
+## Usage policy
 
-Note that OpenStreetMap is open, but not free without limits. They do have a [Usage Policy][3] just like the other providers. Provide the `email` property to opt-in for authenticated requests.
+The public Nominatim server (`nominatim.openstreetmap.org`) is free, but it has a [usage policy][3]. The short version:
+
+- your app must be identifiable. Browsers send a referer, which is enough. Where that is missing (e.g. in an app built with Electron), add the `email` parameter.
+- search-as-you-type is not allowed on the public server, and it doesn't work well anyway, because Nominatim can't search partial words. Turn off `autoComplete` on the control, or run your own Nominatim, or use another provider for autocomplete.
+- keep the number of requests low. The control can help with `minQueryLength`, `autoCompleteDelay` and `cacheSize`.
+
+The `email` parameter is not a login and doesn't give you more requests. It lets the Nominatim admins tell your (small) traffic apart from scrapers they need to block.
 
 ```js
 const provider = new OpenStreetMapProvider({
   params: {
-    email: 'john@example.com', // auth for large number of requests
+    email: 'john@example.com', // identifies your app to the Nominatim admins
   },
 });
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+    autoComplete: false, // search-as-you-type is not allowed on nominatim.openstreetmap.org
+  }),
+);
 ```
 
 ## Optional parameters
@@ -55,6 +68,7 @@ const provider = new OpenStreetMapProvider({
     'accept-language': 'nl', // render results in Dutch
     countrycodes: 'nl', // limit search results to the Netherlands
     addressdetails: 1, // include additional address detail parts
+    format: 'jsonv2', // the default is json
   },
 });
 ```
