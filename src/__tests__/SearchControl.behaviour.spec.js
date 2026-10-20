@@ -585,12 +585,24 @@ describe('SearchControl', () => {
       expect(control.resultList).toBeUndefined();
     });
 
-    test('submitting fails because there is no result list (bug, #347)', async () => {
-      const { control } = setup({ autoComplete: false });
+    test('submitting shows the first result (#347)', async () => {
+      const { control, provider } = setup({ autoComplete: false });
 
-      await expect(control.onSubmit({ query: 'den' })).rejects.toThrow(
-        TypeError,
-      );
+      await control.onSubmit({ query: 'den' });
+
+      expect(provider.search).toHaveBeenCalledWith({ query: 'den' });
+      expect(control.markers.getLayers()).toHaveLength(1);
+    });
+
+    test('enter in the input submits (#347)', async () => {
+      const { control, provider, input } = setup({ autoComplete: false });
+      input.value = 'den';
+
+      key(input, 'keypress', KEY.enter);
+      await vi.advanceTimersByTimeAsync(0);
+
+      expect(provider.search).toHaveBeenCalledWith({ query: 'den' });
+      expect(control.markers.getLayers()).toHaveLength(1);
     });
   });
 });

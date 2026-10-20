@@ -385,7 +385,8 @@ const Control: SearchControl = {
   },
 
   async onSubmit(query) {
-    this.resultList.clear();
+    // there is no result list when autoComplete is disabled
+    this.resultList?.clear();
     const { provider } = this.options;
 
     const results = await provider!.search(query);
