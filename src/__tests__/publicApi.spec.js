@@ -1,0 +1,80 @@
+import * as api from '../index';
+import SearchControl from '../SearchControl';
+
+// The public surface of the package. Removing an export or changing a
+// default here is a breaking change and needs a major release.
+
+test('exports', () => {
+  expect(Object.keys(api).sort()).toEqual([
+    'AMapProvider',
+    'BingProvider',
+    'CivilDefenseMapProvider',
+    'EsriProvider',
+    'GeoApiFrProvider',
+    'GeoSearchControl',
+    'GeoapifyProvider',
+    'GeocodeEarthProvider',
+    'GoogleProvider',
+    'HereProvider',
+    'JsonProvider',
+    'LegacyGoogleProvider',
+    'LocationIQProvider',
+    'MapBoxProvider',
+    'OpenCageProvider',
+    'OpenStreetMapProvider',
+    'PdokNlProvider',
+    'PeliasProvider',
+    'SearchControl',
+    'SearchElement',
+  ]);
+
+  expect(api.GeoSearchControl).toBe(api.SearchControl);
+});
+
+test('SearchControl default options', () => {
+  const provider = { search: () => Promise.resolve([]) };
+  const { options } = new SearchControl({ provider });
+
+  const { marker, popupFormat, resultFormat, ...rest } = options;
+
+  expect(rest).toEqual({
+    provider,
+    position: 'topleft',
+    style: 'button',
+    showMarker: true,
+    showPopup: false,
+    maxMarkers: 1,
+    maxSuggestions: 5,
+    retainZoomLevel: false,
+    animateZoom: true,
+    searchLabel: 'Enter address',
+    clearSearchLabel: 'Clear search',
+    notFoundMessage: '',
+    messageHideDelay: 3000,
+    zoomLevel: 18,
+    classNames: {
+      container: 'leaflet-bar leaflet-control leaflet-control-geosearch',
+      button: 'leaflet-bar-part leaflet-bar-part-single',
+      resetButton: 'reset',
+      msgbox: 'leaflet-bar message',
+      form: '',
+      input: '',
+      resultlist: '',
+      item: '',
+      notfound: 'leaflet-bar-notfound',
+    },
+    autoComplete: true,
+    autoCompleteDelay: 250,
+    autoClose: false,
+    keepResult: false,
+    updateMap: true,
+    resetButton: '×',
+  });
+
+  expect(marker.draggable).toBe(false);
+  expect(marker.icon).toBeInstanceOf(L.Icon.Default);
+
+  const result = { label: 'Den Haag' };
+  expect(popupFormat({ result })).toEqual('Den Haag');
+  expect(resultFormat({ result })).toEqual('Den Haag');
+});

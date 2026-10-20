@@ -34,7 +34,11 @@ export default defineConfig(({ mode }) => ({
     environmentOptions: {
       happyDOM: {
         // provider requests are cross-origin; MSW answers them instead
-        settings: { fetch: { disableSameOriginPolicy: true } },
+        settings: {
+          fetch: { disableSameOriginPolicy: true },
+          // JSONP <script> tags are never loaded in tests; don't log an error for them
+          handleDisabledFileLoadingAsSuccess: true,
+        },
       },
     },
     globals: true,
