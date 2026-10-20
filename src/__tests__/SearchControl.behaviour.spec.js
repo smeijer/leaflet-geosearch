@@ -298,8 +298,10 @@ describe('SearchControl', () => {
       expect(input.value).toEqual('den');
     });
 
-    test('enter submits the selected result and searches again (current behaviour)', async () => {
-      const { control, provider, input } = setup();
+    test('enter shows the selected result without searching again (#288)', async () => {
+      const { control, provider, input, map } = setup();
+      const listener = vi.fn();
+      map.on('geosearch/showlocation', listener);
       await type(input, 'den');
       key(input, 'keydown', KEY.down);
       key(input, 'keydown', KEY.down);
@@ -307,14 +309,45 @@ describe('SearchControl', () => {
       key(input, 'keydown', KEY.enter);
       await vi.advanceTimersByTimeAsync(0);
 
-      // the selected suggestion is passed along, yet the provider is queried again
+      expect(provider.search).toHaveBeenCalledTimes(1);
+      expect(listener.mock.calls[0][0].location).toBe(results[1]);
+      expect(control.markers.getLayers()[0].getLatLng()).toEqual(
+        L.latLng(52.37, 4.9),
+      );
+    });
+
+    test('enter without a selection searches for the typed text', async () => {
+      const { provider, input } = setup();
+      await type(input, 'den');
+
+      key(input, 'keydown', KEY.enter);
+      await vi.advanceTimersByTimeAsync(0);
+
+      expect(provider.search).toHaveBeenCalledTimes(2);
+      expect(provider.search).toHaveBeenLastCalledWith({
+        query: 'den',
+        data: undefined,
+      });
+    });
+
+    test('requeryOnSelect searches again with the selected suggestion', async () => {
+      const { control, provider, input } = setup({ requeryOnSelect: true });
+      await type(input, 'den');
+      key(input, 'keydown', KEY.down);
+      key(input, 'keydown', KEY.down);
+
+      key(input, 'keydown', KEY.enter);
+      await vi.advanceTimersByTimeAsync(0);
+
       expect(provider.search).toHaveBeenCalledTimes(2);
       expect(provider.search).toHaveBeenLastCalledWith({
         query: 'Amsterdam',
         data: results[1],
       });
       // the first result of the new search is shown
-      expect(control.markers.getLayers()).toHaveLength(1);
+      expect(control.markers.getLayers()[0].getLatLng()).toEqual(
+        L.latLng(52.08, 4.3),
+      );
     });
 
     test('escape clears the input, the suggestions and the markers', async () => {
@@ -331,7 +364,7 @@ describe('SearchControl', () => {
   });
 
   describe('selecting a suggestion with the mouse', () => {
-    test('copies the label and searches again with the result as data (current behaviour)', async () => {
+    test('copies the label and shows the result without searching again (#288)', async () => {
       const { control, provider, input } = setup();
       await type(input, 'ams');
 
@@ -339,12 +372,27 @@ describe('SearchControl', () => {
       await vi.advanceTimersByTimeAsync(0);
 
       expect(input.value).toEqual('Amsterdam');
+      expect(provider.search).toHaveBeenCalledTimes(1);
+      expect(control.markers.getLayers()[0].getLatLng()).toEqual(
+        L.latLng(52.37, 4.9),
+      );
+      expect(control.resultList.container.children.length).toEqual(0);
+    });
+
+    test('suggestions without coordinates are still searched again', async () => {
+      const partial = [{ label: 'Amsterdam', bounds: null, raw: {} }];
+      const { control, provider, input } = setup({}, partial);
+      await type(input, 'ams');
+      provider.search.mockResolvedValueOnce([results[1]]);
+
+      control.resultList.container.children[0].click();
+      await vi.advanceTimersByTimeAsync(0);
+
       expect(provider.search).toHaveBeenCalledTimes(2);
       expect(provider.search).toHaveBeenLastCalledWith({
         query: 'Amsterdam',
-        data: results[1],
+        data: partial[0],
       });
-      expect(control.resultList.container.children.length).toEqual(0);
     });
   });
 

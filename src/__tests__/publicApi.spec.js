@@ -69,6 +69,7 @@ test('SearchControl default options', () => {
     keepResult: false,
     updateMap: true,
     resetButton: '×',
+    requeryOnSelect: false,
   });
 
   expect(marker.draggable).toBe(false);

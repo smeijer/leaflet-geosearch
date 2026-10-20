@@ -286,6 +286,7 @@ new GeoSearchControl({
   searchLabel: 'Enter address', // optional: string      - default 'Enter address'
   keepResult: false, // optional: true|false  - default false
   updateMap: true, // optional: true|false  - default true
+  requeryOnSelect: false, // optional: true|false  - default false
 });
 ```
 
@@ -313,6 +314,8 @@ only panned.
 `keepResult` is used to keep the selected result in the search field. This prevents markers to disappear while using the `autoClose` feature.
 
 `updateMap` controls whether or not the map re-centers on the selection.
+
+`requeryOnSelect` searches the provider again when a suggestion is picked. By default the picked suggestion is shown directly when it has coordinates, which saves a request. Turn it on if your provider returns more details on a full search than in its suggestions.
 
 **Events**
 

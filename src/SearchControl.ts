@@ -57,7 +57,12 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   keepResult: false,
   updateMap: true,
   resetButton: '×',
+  requeryOnSelect: false,
 };
+
+function hasPosition(result?: SearchResult): result is SearchResult {
+  return !!result && Number.isFinite(result.x) && Number.isFinite(result.y);
+}
 
 const UNINITIALIZED_ERR =
   'Leaflet must be loaded before instantiating the GeoSearch control';
@@ -112,6 +117,12 @@ interface SearchControlProps {
   keepResult: boolean;
   updateMap: boolean;
   resetButton: string;
+  /**
+   * search the provider again when a suggestion is picked, even if the
+   * suggestion already has coordinates (the previous behaviour)
+   * @default false
+   */
+  requeryOnSelect: boolean;
 }
 
 export type SearchControlOptions = Partial<SearchControlProps> & {
@@ -398,7 +409,13 @@ const Control: SearchControl = {
   async onSubmit(query) {
     // there is no result list when autoComplete is disabled
     this.resultList?.clear();
-    const { provider } = this.options;
+    const { provider, requeryOnSelect } = this.options;
+
+    // a picked suggestion with coordinates has all we need to show it
+    if (!requeryOnSelect && hasPosition(query.data)) {
+      this.showResult(query.data, query);
+      return;
+    }
 
     let results;
     try {
