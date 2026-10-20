@@ -81,3 +81,13 @@ test('SearchControl default options', () => {
   expect(popupFormat({ result })).toEqual('Den Haag');
   expect(resultFormat({ result })).toEqual('Den Haag');
 });
+
+test('SearchControl works with and without new, and creates one class', () => {
+  const provider = { search: () => Promise.resolve([]) };
+  const called = SearchControl({ provider });
+  const constructed = new SearchControl({ provider });
+
+  expect(called).toBeInstanceOf(L.Control);
+  expect(constructed).toBeInstanceOf(L.Control);
+  expect(constructed.constructor).toBe(called.constructor);
+});

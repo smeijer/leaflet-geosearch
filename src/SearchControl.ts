@@ -700,11 +700,19 @@ const Control: SearchControl = {
   },
 };
 
+// extend creates a new class on every call, so it's only done once
+let LControl:
+  | (new (...options: any[]) => SearchControl & L.Control)
+  | undefined;
+
 export default function SearchControl(...options: any[]) {
   if (!L) {
     throw new Error(UNINITIALIZED_ERR);
   }
 
-  const LControl = L.Control.extend(Control);
+  if (!LControl) {
+    LControl = L.Control.extend(Control);
+  }
+
   return new LControl(...options);
 }
