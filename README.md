@@ -1,7 +1,9 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-63-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [leaflet-geosearch](https://leaflet-geosearch.meijer.works)**
@@ -324,6 +326,14 @@ map.on('geosearch/showlocation', yourEventHandler);
 
 ```js
 map.on('geosearch/marker/dragend', yourEventHandler);
+```
+
+`geosearch/error` is fired when a search fails, for example when the provider can't be reached. The event has the `error`, the `query` and the `source` (`'autocomplete'` or `'submit'`). The control also shows its error state until the user types again.
+
+```js
+map.on('geosearch/error', ({ error, query, source }) => {
+  console.warn(`search for "${query}" failed`, error);
+});
 ```
 
 # Development
