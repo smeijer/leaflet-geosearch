@@ -1,5 +1,10 @@
 import * as L from 'leaflet';
-import { ControlPosition, FeatureGroup, MarkerOptions, Map } from 'leaflet';
+import {
+  ControlPosition,
+  FeatureGroup,
+  MarkerOptions,
+  Map as LeafletMap,
+} from 'leaflet';
 import SearchElement from './SearchElement';
 import ResultList from './resultList';
 import debounce from './lib/debounce';
@@ -21,6 +26,7 @@ import {
 import AbstractProvider, {
   BoundsTuple,
   PointTuple,
+  SearchArgument,
   SearchResult,
 } from './providers/provider';
 import { Provider } from './providers';
@@ -65,6 +71,8 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   updateMap: true,
   resetButton: '×',
   requeryOnSelect: false,
+  minQueryLength: 1,
+  cacheSize: 0,
 };
 
 function withoutUndefined<T extends object>(value?: T): Partial<T> {
@@ -164,6 +172,17 @@ interface SearchControlProps {
    * @default false
    */
   requeryOnSelect: boolean;
+  /**
+   * the number of characters to type before autocomplete searches
+   * @default 1
+   */
+  minQueryLength: number;
+  /**
+   * how many search results to keep in memory, so the same text isn't
+   * requested twice. 0 disables the cache
+   * @default 0
+   */
+  cacheSize: number;
 }
 
 export type SearchControlOptions = Partial<SearchControlProps> & {
@@ -187,12 +206,14 @@ interface SearchControl {
   input: HTMLInputElement;
   button: HTMLAnchorElement;
   resetButton: HTMLAnchorElement;
-  map: Map;
+  map: LeafletMap;
   /** text of the last autocomplete search, to skip repeats */
   lastQuery: string;
   /** increments whenever pending autocomplete results become stale */
   searchId: number;
   abortController?: AbortController;
+  /** recent results by query text, oldest first (see cacheSize) */
+  cache?: Map<string, SearchResult[]>;
 
   // [key: string]: any;
   initialize(options: SearchControlProps): void;
@@ -203,6 +224,9 @@ interface SearchControl {
   clearResults(event?: KeyboardEvent | null, force?: boolean): void;
   autoSearch(event: KeyboardEvent): void;
   cancelSearch(): void;
+  searchProvider(
+    args: SearchArgument & { data?: SearchResult },
+  ): Promise<SearchResult[]>;
   handleError(
     error: unknown,
     query: string,
@@ -214,7 +238,7 @@ interface SearchControl {
   centerMap(result: SearchResult): void;
   closeResults(): void;
   getZoom(): number;
-  onAdd(map: Map): HTMLDivElement;
+  onAdd(map: LeafletMap): HTMLDivElement;
   onRemove(): SearchControl;
 }
 
@@ -339,7 +363,7 @@ const Control: SearchControl = {
     );
   },
 
-  onAdd(map: Map) {
+  onAdd(map: LeafletMap) {
     const { showMarker, style } = this.options;
 
     this.map = map;
@@ -448,9 +472,7 @@ const Control: SearchControl = {
     }
 
     const query = (event.target as HTMLInputElement).value;
-    const { provider } = this.options;
-
-    if (!query.length) {
+    if (!query.length || query.length < this.options.minQueryLength) {
       this.cancelSearch();
       this.lastQuery = '';
       this.resultList.clear();
@@ -473,7 +495,10 @@ const Control: SearchControl = {
 
     let results;
     try {
-      results = await provider!.search({ query, signal: controller?.signal });
+      results = await this.searchProvider({
+        query,
+        signal: controller?.signal,
+      });
     } catch (error) {
       // errors of cancelled searches (including the abort itself) don't matter
       if (id === this.searchId) {
@@ -491,6 +516,30 @@ const Control: SearchControl = {
     this.abortController = undefined;
     results = results.slice(0, this.options.maxSuggestions);
     this.resultList.render(results, this.options.resultFormat);
+  },
+
+  async searchProvider(args) {
+    const { provider, cacheSize } = this.options;
+    const cache = cacheSize > 0 ? (this.cache = this.cache || new Map()) : null;
+    const cached = cache?.get(args.query);
+
+    if (cache && cached) {
+      // move to the end, it is the most recently used now
+      cache.delete(args.query);
+      cache.set(args.query, cached);
+      return cached;
+    }
+
+    const results = await provider!.search(args);
+
+    if (cache) {
+      cache.set(args.query, results);
+      while (cache.size > cacheSize) {
+        cache.delete(cache.keys().next().value as string);
+      }
+    }
+
+    return results;
   },
 
   cancelSearch() {
@@ -513,7 +562,9 @@ const Control: SearchControl = {
 
     let results;
     try {
-      results = await provider!.search(query);
+      results = query.data
+        ? await provider!.search(query)
+        : await this.searchProvider(query);
     } catch (error) {
       this.handleError(error, query.query, 'submit');
       return;

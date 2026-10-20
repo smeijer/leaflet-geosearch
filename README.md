@@ -287,6 +287,8 @@ new GeoSearchControl({
   keepResult: false, // optional: true|false  - default false
   updateMap: true, // optional: true|false  - default true
   requeryOnSelect: false, // optional: true|false  - default false
+  minQueryLength: 1, // optional: number      - default 1
+  cacheSize: 0, // optional: number      - default 0
 });
 ```
 
@@ -318,6 +320,10 @@ only panned.
 `updateMap` controls whether or not the map re-centers on the selection.
 
 `requeryOnSelect` searches the provider again when a suggestion is picked. By default the picked suggestion is shown directly when it has coordinates, which saves a request. Turn it on if your provider returns more details on a full search than in its suggestions.
+
+`minQueryLength` is the number of characters to type before the autocomplete searches. Pressing enter always searches.
+
+`cacheSize` keeps the results of the last searches in memory, so typing the same text again (or pressing enter after the suggestions showed up) doesn't send another request. `0` turns the cache off.
 
 **Events**
 

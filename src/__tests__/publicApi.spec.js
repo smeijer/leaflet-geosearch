@@ -70,6 +70,8 @@ test('SearchControl default options', () => {
     updateMap: true,
     resetButton: '×',
     requeryOnSelect: false,
+    minQueryLength: 1,
+    cacheSize: 0,
   });
 
   expect(marker.draggable).toBe(false);
