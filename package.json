@@ -60,6 +60,8 @@
   },
   "files": [
     "src",
+    "!src/**/__tests__",
+    "!src/gatsby-theme-docz",
     "dist",
     "lib",
     "assets",

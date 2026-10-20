@@ -18,10 +18,5 @@
     "types": ["google.maps"]
   },
   "include": ["src", "typings"],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "**/*.spec.js",
-    "src/gatsby-theme-docz"
-  ]
+  "exclude": ["node_modules", "src/**/__tests__/**", "src/gatsby-theme-docz"]
 }
