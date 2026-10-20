@@ -541,6 +541,19 @@ describe('SearchControl', () => {
       expect(listener).toHaveBeenCalledTimes(1);
       expect(listener.mock.calls[0][0].location).toEqual(new L.LatLng(1, 2));
     });
+
+    test('events work without the fireEvent alias (removed in Leaflet 2)', async () => {
+      const { control, map } = setup({ marker: { draggable: true } });
+      map.fireEvent = undefined;
+      const listener = vi.fn();
+      map.on('geosearch/showlocation', listener);
+      map.on('geosearch/marker/dragend', listener);
+
+      await control.onSubmit({ query: 'den' });
+      control.markers.getLayers()[0].fire('dragend');
+
+      expect(listener).toHaveBeenCalledTimes(2);
+    });
   });
 
   describe('updating the map', () => {

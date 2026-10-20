@@ -1126,7 +1126,7 @@ const Control: SearchControl = {
         this.centerMap(result);
       }
 
-      this.map.fireEvent('geosearch/showlocation', {
+      this.map.fire('geosearch/showlocation', {
         location: result,
         marker,
         provider,
@@ -1187,7 +1187,7 @@ const Control: SearchControl = {
 
     if (options.draggable) {
       marker.on('dragend', (args: L.DragEndEvent) => {
-        this.map.fireEvent('geosearch/marker/dragend', {
+        this.map.fire('geosearch/marker/dragend', {
           location: marker.getLatLng(),
           event: args,
         });
