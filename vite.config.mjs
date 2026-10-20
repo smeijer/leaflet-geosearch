@@ -27,6 +27,9 @@ export default defineConfig(({ mode }) => {
   const { entry, formats, fileNames } = entries[mode] || entries.production;
 
   return {
+    // @googlemaps/js-api-loader reads process.env.NODE_ENV, which doesn't
+    // exist in a browser loading the bundle with a script tag
+    define: mode === 'test' ? {} : { 'process.env.NODE_ENV': '"production"' },
     build: {
       // match the syntax level of the previous microbundle output
       target: 'es2016',

@@ -5,7 +5,11 @@ import AbstractProvider, {
   SearchArgument,
   SearchResult,
 } from './provider';
-import { Loader, LoaderOptions } from '@googlemaps/js-api-loader';
+import {
+  APIOptions,
+  importLibrary,
+  setOptions,
+} from '@googlemaps/js-api-loader';
 
 export interface RequestResult {
   results: google.maps.GeocoderResult[];
@@ -20,7 +24,78 @@ export interface GeocodeError {
   stack: string;
 }
 
-export type GoogleProviderOptions = LoaderOptions & ProviderOptions;
+// the options of @googlemaps/js-api-loader 1.x, which this provider used to
+// pass on as they were. they keep working with the 2.x loader
+export interface GoogleProviderOptions extends ProviderOptions {
+  apiKey: string;
+  /** Maps JavaScript API version, sent as `v` */
+  version?: string;
+  language?: string;
+  region?: string;
+  libraries?: string[];
+  mapIds?: string[];
+  authReferrerPolicy?: string;
+  channel?: string;
+  client?: string;
+  solutionChannel?: string;
+  /** @deprecated not supported by the 2.x loader, ignored */
+  id?: string;
+  /** @deprecated ignored, the loader uses the nonce of a script on the page */
+  nonce?: string;
+  /** @deprecated not supported by the 2.x loader, ignored */
+  retries?: number;
+  /** @deprecated ignored, the API always loads from maps.googleapis.com */
+  url?: string;
+}
+
+const IGNORED_OPTIONS = ['id', 'nonce', 'retries', 'url'] as const;
+
+function apiOptions(options: GoogleProviderOptions): APIOptions {
+  const ignored = IGNORED_OPTIONS.filter((key) => options[key] !== undefined);
+  if (ignored.length > 0) {
+    console.warn(
+      `GoogleProvider: the ${ignored.join(', ')} option(s) are not ` +
+        'supported anymore and are ignored',
+    );
+  }
+
+  const given: Record<string, unknown> = {
+    key: options.apiKey,
+    v: options.version,
+    language: options.language,
+    region: options.region,
+    libraries: options.libraries,
+    mapIds: options.mapIds,
+    authReferrerPolicy: options.authReferrerPolicy,
+    channel: options.channel,
+    client: options.client,
+    solutionChannel: options.solutionChannel,
+  };
+
+  // every key ends up in the script url, so leave out the unset ones
+  const result: Record<string, unknown> = {};
+  Object.keys(given).forEach((key) => {
+    if (given[key] !== undefined) {
+      result[key] = given[key];
+    }
+  });
+
+  return result as APIOptions;
+}
+
+async function loadGeocoder(
+  options: GoogleProviderOptions,
+): Promise<google.maps.Geocoder> {
+  // the Maps API is already on the page (a script tag, or a library like
+  // GoogleMutant). loading it a second time breaks it
+  if (typeof google !== 'undefined' && google.maps?.Geocoder) {
+    return new google.maps.Geocoder();
+  }
+
+  setOptions(apiOptions(options));
+  const { Geocoder } = await importLibrary('geocoding');
+  return new Geocoder();
+}
 
 export default class GoogleProvider extends AbstractProvider<
   RequestResult,
@@ -33,8 +108,7 @@ export default class GoogleProvider extends AbstractProvider<
     super(options);
 
     if (typeof window !== 'undefined') {
-      this.loader = new Loader(options).load().then((google) => {
-        const geocoder = new google.maps.Geocoder();
+      this.loader = loadGeocoder(options).then((geocoder) => {
         this.geocoder = geocoder;
         return geocoder;
       });

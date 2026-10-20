@@ -47,6 +47,10 @@ const params = {
 new GoogleProvider({ ...params });
 ```
 
+The provider loads the Maps JavaScript API with [@googlemaps/js-api-loader][5]. These [options][3] are passed on: `apiKey`, `version`, `language`, `region`, `libraries`, `mapIds`, `authReferrerPolicy`, `channel`, `client` and `solutionChannel`. `url`, `nonce`, `retries` and `id` worked with older versions of the loader and are ignored now (with a warning in the console).
+
+If the page already loaded the Maps JavaScript API (with a script tag, or another library like GoogleMutant), the provider uses it and doesn't load it again. The options above don't apply then.
+
 ## Configuring your API key
 
 ### Application restrictions (highly recommended)
@@ -61,3 +65,4 @@ Your may choose not to apply any API restrictions to your key, leaving it in an 
 [2]: https://developers.google.com/maps/documentation/javascript/overview
 [3]: https://googlemaps.github.io/js-api-loader/interfaces/LoaderOptions.html
 [4]: https://cloud.google.com/docs/authentication/api-keys#http
+[5]: https://github.com/googlemaps/js-api-loader
