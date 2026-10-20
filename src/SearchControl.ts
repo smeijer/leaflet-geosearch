@@ -9,6 +9,7 @@ import {
   addClassName,
   removeClassName,
   stopPropagation,
+  escapeHtml,
 } from './domUtils';
 import {
   ENTER_KEY,
@@ -25,8 +26,10 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   style: 'button',
   showMarker: true,
   showPopup: false,
-  popupFormat: ({ result }) => `${result.label}`,
-  resultFormat: ({ result }) => `${result.label}`,
+  // labels come from the provider (e.g. user edited OpenStreetMap data), so
+  // they are escaped before being used as html
+  popupFormat: ({ result }) => escapeHtml(result.label),
+  resultFormat: ({ result }) => escapeHtml(result.label),
   marker: {
     icon: L && L.Icon ? new L.Icon.Default() : undefined,
     draggable: false,

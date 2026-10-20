@@ -299,6 +299,8 @@ open a popup with the location text.
 
 `resultFormat` is callback function for modifying the search result texts (e. g. in order to hide address components or change its ordering).
 
+Both return html. The default ones escape the label, since it comes from the provider. If you build your own html, escape the parts that come from the result, e.g. with the `escapeHtml` helper of your framework.
+
 `maxMarker` determines how many last results are kept in memory. Default 1, but
 perhaps you want to show the last `x` results when searching for new queries as
 well.
