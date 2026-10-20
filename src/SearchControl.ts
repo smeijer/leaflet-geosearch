@@ -63,6 +63,21 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   requeryOnSelect: false,
 };
 
+function withoutUndefined<T extends object>(value?: T): Partial<T> {
+  const result: Partial<T> = {};
+  if (!value) {
+    return result;
+  }
+
+  (Object.keys(value) as (keyof T)[]).forEach((key) => {
+    if (value[key] !== undefined) {
+      result[key] = value[key];
+    }
+  });
+
+  return result;
+}
+
 function hasPosition(result?: SearchResult): result is SearchResult {
   return !!result && Number.isFinite(result.x) && Number.isFinite(result.y);
 }
@@ -194,9 +209,18 @@ const Control: SearchControl = {
       throw new Error('Provider is missing from options');
     }
 
-    // merge given options with control defaults
-    this.options = { ...defaultOptions, ...options };
-    this.classNames = { ...this.classNames, ...options.classNames };
+    // merge given options with control defaults. undefined values, like unset
+    // props of a wrapper component, keep the default
+    const given = withoutUndefined(options);
+    this.options = {
+      ...defaultOptions,
+      ...given,
+      marker: { ...defaultOptions.marker, ...withoutUndefined(given.marker) },
+    };
+    this.classNames = {
+      ...this.classNames,
+      ...withoutUndefined(given.classNames),
+    };
 
     this.markers = new L.FeatureGroup();
     this.classNames.container += ` leaflet-geosearch-${this.options.style}`;
