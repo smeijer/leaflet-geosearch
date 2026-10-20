@@ -8,7 +8,7 @@ function setup(options = {}) {
   div.id = randomId();
   document.body.appendChild(div);
 
-  const map = L.map(div, { center: [0, 0], zoom: 2 });
+  const map = new L.Map(div, { center: [0, 0], zoom: 2 });
   vi.spyOn(map, 'setView').mockReturnThis();
   const provider = { search: vi.fn(async () => [result]) };
   const control = new SearchControl({ provider, ...options }).addTo(map);
@@ -74,7 +74,7 @@ describe('option merging', () => {
   });
 
   test('a custom marker icon replaces the default one', () => {
-    const icon = L.divIcon();
+    const icon = new L.DivIcon();
     const { control } = setup({ marker: { icon } });
 
     expect(control.options.marker.icon).toBe(icon);

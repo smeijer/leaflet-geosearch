@@ -6,7 +6,7 @@ function createMapInstance(options, id = randomId()) {
   div.setAttribute('id', id);
 
   document.body.appendChild(div);
-  const map = new L.map(div, options);
+  const map = new L.Map(div, options);
 
   return { map, div, id };
 }
