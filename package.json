@@ -17,11 +17,11 @@
   ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "browser": "./dist/geosearch.module.js",
       "umd": "./dist/geosearch.umd.js",
       "import": "./dist/geosearch.module.js",
-      "require": "./dist/geosearch.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/geosearch.js"
     },
     "./providers": {
       "types": "./dist/providers/index.d.ts",
