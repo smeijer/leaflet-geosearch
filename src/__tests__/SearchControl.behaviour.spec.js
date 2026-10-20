@@ -517,12 +517,10 @@ describe('SearchControl', () => {
 
       control.showResult(results[0], { query: 'den' });
 
-      expect(map.fitBounds).toHaveBeenCalledWith(
-        L.latLngBounds(results[0].bounds),
-        {
-          animate: true,
-        },
-      );
+      // plain arrays, so maps of another Leaflet copy accept them too
+      expect(map.fitBounds).toHaveBeenCalledWith(results[0].bounds, {
+        animate: true,
+      });
       expect(map.setView).not.toHaveBeenCalled();
     });
 
@@ -532,12 +530,67 @@ describe('SearchControl', () => {
       control.showResult(results[1], { query: 'ams' });
 
       expect(map.setView).toHaveBeenCalledTimes(1);
-      const [center, zoom, options] = map.setView.mock.calls[0];
-      expect(center.lat).toBeCloseTo(52.37, 5);
-      expect(center.lng).toBeCloseTo(4.9, 5);
-      expect(zoom).toEqual(15);
-      expect(options).toEqual({ animate: false });
+      expect(map.setView).toHaveBeenCalledWith([52.37, 4.9], 15, {
+        animate: false,
+      });
     });
+
+    test('retainZoomLevel centers on the bounds of a result', () => {
+      const { control, map } = setup({ retainZoomLevel: true });
+      vi.spyOn(map, 'getZoom').mockReturnValue(7);
+
+      control.showResult(results[0], { query: 'den' });
+
+      const [center] = map.setView.mock.calls[0];
+      expect(center[0]).toBeCloseTo(52.05, 5);
+      expect(center[1]).toBeCloseTo(4.3, 5);
+    });
+
+    test('bounds given as numeric strings are converted', () => {
+      const { control, map } = setup();
+
+      control.showResult(
+        {
+          ...results[0],
+          bounds: [
+            ['52.0', '4.2'],
+            ['52.1', '4.4'],
+          ],
+        },
+        { query: 'den' },
+      );
+
+      expect(map.fitBounds).toHaveBeenCalledWith(results[0].bounds, {
+        animate: true,
+      });
+    });
+
+    test.each([
+      [
+        'NaN values',
+        [
+          [NaN, 4.2],
+          [52.1, 4.4],
+        ],
+      ],
+      ['missing corner', [[52.0, 4.2]]],
+      ['wrong shape', [[52.0], [52.1, 4.4]]],
+      ['not an array', { south: 52 }],
+    ])(
+      'invalid bounds (%s) fall back to the result position (#253)',
+      (_, bounds) => {
+        const { control, map } = setup();
+
+        expect(() =>
+          control.showResult({ ...results[0], bounds }, { query: 'den' }),
+        ).not.toThrow();
+
+        expect(map.fitBounds).not.toHaveBeenCalled();
+        expect(map.setView).toHaveBeenCalledWith([52.08, 4.3], 18, {
+          animate: true,
+        });
+      },
+    );
 
     test('retainZoomLevel keeps the current zoom, even for results with bounds', () => {
       const { control, map } = setup({ retainZoomLevel: true });

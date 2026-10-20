@@ -18,7 +18,11 @@ import {
   ARROW_DOWN_KEY,
   ESCAPE_KEY,
 } from './constants';
-import AbstractProvider, { SearchResult } from './providers/provider';
+import AbstractProvider, {
+  BoundsTuple,
+  PointTuple,
+  SearchResult,
+} from './providers/provider';
 import { Provider } from './providers';
 
 const defaultOptions: Omit<SearchControlProps, 'provider'> = {
@@ -76,6 +80,25 @@ function withoutUndefined<T extends object>(value?: T): Partial<T> {
   });
 
   return result;
+}
+
+function toBoundsTuple(bounds?: BoundsTuple | null): BoundsTuple | null {
+  if (!Array.isArray(bounds) || bounds.length !== 2) {
+    return null;
+  }
+
+  const points = bounds.map((point) =>
+    Array.isArray(point) ? point.map(Number) : [],
+  );
+  const valid = points.every(
+    (point) => point.length === 2 && point.every(Number.isFinite),
+  );
+
+  return valid ? (points as BoundsTuple) : null;
+}
+
+function centerOf([[south, west], [north, east]]: BoundsTuple): PointTuple {
+  return [(south + north) / 2, (west + east) / 2];
 }
 
 function hasPosition(result?: SearchResult): result is SearchResult {
@@ -574,26 +597,29 @@ const Control: SearchControl = {
 
   centerMap(result) {
     const { retainZoomLevel, animateZoom } = this.options;
+    const options = { animate: animateZoom };
 
-    const resultBounds = result.bounds
-      ? new L.LatLngBounds(result.bounds)
-      : new L.LatLng(result.y, result.x).toBounds(10);
+    // plain arrays instead of Leaflet objects: a map created with another copy
+    // of Leaflet doesn't recognize our instances ("Bounds are not valid")
+    const bounds = toBoundsTuple(result.bounds);
 
-    const bounds = resultBounds.isValid()
-      ? resultBounds
-      : this.markers.getBounds();
-
-    if (!retainZoomLevel && resultBounds.isValid() && !result.bounds) {
-      this.map.setView(bounds.getCenter(), this.getZoom(), {
-        animate: animateZoom,
-      });
-    } else if (!retainZoomLevel && resultBounds.isValid()) {
-      this.map.fitBounds(bounds, { animate: animateZoom });
-    } else {
-      this.map.setView(bounds.getCenter(), this.getZoom(), {
-        animate: animateZoom,
-      });
+    if (!retainZoomLevel && bounds) {
+      this.map.fitBounds(bounds, options);
+      return;
     }
+
+    const center = bounds
+      ? centerOf(bounds)
+      : hasPosition(result)
+      ? ([result.y, result.x] as PointTuple)
+      : null;
+
+    // nothing usable to move the map to
+    if (!center) {
+      return;
+    }
+
+    this.map.setView(center, this.getZoom(), options);
   },
 
   getZoom(): number {
