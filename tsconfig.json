@@ -14,8 +14,14 @@
     "removeComments": false,
     "noEmitHelpers": false,
     "outDir": "lib",
-    "declaration": true
+    "declaration": true,
+    "types": ["google.maps"]
   },
   "include": ["src", "typings"],
-  "exclude": ["node_modules", "**/*.spec.ts", "**/*.spec.js"]
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.spec.js",
+    "src/gatsby-theme-docz"
+  ]
 }

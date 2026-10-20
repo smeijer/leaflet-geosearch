@@ -26,12 +26,13 @@
   "scripts": {
     "clean": "rimraf ./dist .docz/dist",
     "start": "concurrently npm:build:watch npm:docz:dev",
-    "build": "run-p build:dist build:lib build:css && npm run build:compat",
-    "build:dist": "microbundle build --external leaflet --globals leaflet=L --format es,cjs,umd",
-    "build:compat": "cp ./dist/geosearch.umd.js ./dist/bundle.min.js",
+    "build": "run-p build:dist build:lib build:types build:css && npm run build:compat",
+    "build:dist": "vite build",
+    "build:compat": "node scripts/copy.mjs dist/geosearch.umd.js dist/bundle.min.js",
     "build:lib": "tsc",
-    "build:css": "mkdir -p dist && cp ./assets/css/leaflet.css ./dist/geosearch.css",
-    "build:watch": "npm run build:dist -- --compress false --watch",
+    "build:types": "tsc -p tsconfig.types.json",
+    "build:css": "node scripts/copy.mjs assets/css/leaflet.css dist/geosearch.css",
+    "build:watch": "vite build --watch",
     "test": "jest",
     "lint": "tsc --noEmit && eslint \"{docs,src,test}/**/*.{js,ts,tsx}\" --quiet --fix && prettier \"**/*.{md,mdx,json}\" --write",
     "docz:dev": "docz dev",
@@ -91,7 +92,6 @@
     "jest-environment-jsdom": "^29.1.2",
     "jest-fetch-mock": "^3.0.3",
     "lint-staged": "^13.0.3",
-    "microbundle": "^0.15.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
     "react": "^16.13.1",
@@ -99,7 +99,8 @@
     "react-leaflet": "^2.6.3",
     "rimraf": "^3.0.2",
     "ts-jest": "^29.0.3",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "vite": "^8.3.4"
   },
   "optionalDependencies": {
     "@googlemaps/js-api-loader": "^1.16.6",
