@@ -29,7 +29,7 @@ import AbstractProvider, {
   SearchArgument,
   SearchResult,
 } from './providers/provider';
-import { Provider } from './providers';
+import { Provider } from './providers/index';
 
 const defaultClassNames: SearchControlProps['classNames'] = {
   container: 'leaflet-bar leaflet-control leaflet-control-geosearch',
