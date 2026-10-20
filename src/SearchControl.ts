@@ -31,6 +31,18 @@ import AbstractProvider, {
 } from './providers/provider';
 import { Provider } from './providers';
 
+const defaultClassNames: SearchControlProps['classNames'] = {
+  container: 'leaflet-bar leaflet-control leaflet-control-geosearch',
+  button: 'leaflet-bar-part leaflet-bar-part-single',
+  resetButton: 'reset',
+  msgbox: 'leaflet-bar message',
+  form: '',
+  input: '',
+  resultlist: '',
+  item: '',
+  notfound: 'leaflet-bar-notfound',
+};
+
 const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   position: 'topleft',
   style: 'button',
@@ -40,8 +52,8 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   // they are escaped before being used as html
   popupFormat: ({ result }) => escapeHtml(result.label),
   resultFormat: ({ result }) => escapeHtml(result.label),
+  // the default icon is added by initialize (see defaultIcon)
   marker: {
-    icon: L && L.Icon ? new L.Icon.Default() : undefined,
     draggable: false,
   },
   maxMarkers: 1,
@@ -53,17 +65,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   notFoundMessage: '',
   messageHideDelay: 3000,
   zoomLevel: 18,
-  classNames: {
-    container: 'leaflet-bar leaflet-control leaflet-control-geosearch',
-    button: 'leaflet-bar-part leaflet-bar-part-single',
-    resetButton: 'reset',
-    msgbox: 'leaflet-bar message',
-    form: '',
-    input: '',
-    resultlist: '',
-    item: '',
-    notfound: 'leaflet-bar-notfound',
-  },
+  classNames: defaultClassNames,
   autoComplete: true,
   autoCompleteDelay: 250,
   autoClose: false,
@@ -111,6 +113,18 @@ function centerOf([[south, west], [north, east]]: BoundsTuple): PointTuple {
 
 function hasPosition(result?: SearchResult): result is SearchResult {
   return !!result && Number.isFinite(result.x) && Number.isFinite(result.y);
+}
+
+let sharedIcon: L.Icon.Default | undefined;
+
+// created on first use instead of when the module loads, so importing the
+// package has no side effects and bundlers can drop what isn't used
+function defaultIcon(): L.Icon.Default {
+  if (!sharedIcon) {
+    sharedIcon = new L.Icon.Default();
+  }
+
+  return sharedIcon;
 }
 
 const UNINITIALIZED_ERR =
@@ -244,8 +258,11 @@ interface SearchControl {
 
 // @ts-ignore
 const Control: SearchControl = {
-  options: { ...defaultOptions },
-  classNames: { ...defaultOptions.classNames },
+  // no copies needed: Control.extend copies the options and initialize
+  // replaces both objects. spreads or property reads here would keep
+  // bundlers from dropping an unused control
+  options: defaultOptions,
+  classNames: defaultClassNames,
 
   initialize(options: SearchControlOptions) {
     if (!L) {
@@ -262,7 +279,11 @@ const Control: SearchControl = {
     this.options = {
       ...defaultOptions,
       ...given,
-      marker: { ...defaultOptions.marker, ...withoutUndefined(given.marker) },
+      marker: {
+        ...defaultOptions.marker,
+        icon: defaultIcon(),
+        ...withoutUndefined(given.marker),
+      },
     };
     this.classNames = {
       ...this.classNames,

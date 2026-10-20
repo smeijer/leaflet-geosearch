@@ -12,6 +12,9 @@
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "amdName": "GeoSearch",
+  "sideEffects": [
+    "*.css"
+  ],
   "exports": {
     ".": {
       "browser": "./dist/geosearch.module.js",

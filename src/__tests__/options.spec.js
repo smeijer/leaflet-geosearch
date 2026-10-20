@@ -46,6 +46,33 @@ describe('option merging', () => {
     expect(control.options.marker.icon).toBeInstanceOf(L.Icon.Default);
   });
 
+  test('the default icon is created by the first control, not on import', async () => {
+    const Default = L.Icon.Default;
+    let created = 0;
+    L.Icon.Default = class extends Default {
+      constructor(...args) {
+        super(...args);
+        created += 1;
+      }
+    };
+
+    try {
+      vi.resetModules();
+      const { default: FreshControl } = await import('../SearchControl');
+      expect(created).toBe(0);
+
+      const provider = { search: async () => [] };
+      const first = new FreshControl({ provider });
+      const second = new FreshControl({ provider });
+
+      expect(created).toBe(1);
+      expect(first.options.marker.icon).toBeInstanceOf(Default);
+      expect(second.options.marker.icon).toBe(first.options.marker.icon);
+    } finally {
+      L.Icon.Default = Default;
+    }
+  });
+
   test('a custom marker icon replaces the default one', () => {
     const icon = L.divIcon();
     const { control } = setup({ marker: { icon } });
