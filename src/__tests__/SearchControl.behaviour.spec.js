@@ -141,7 +141,10 @@ describe('SearchControl', () => {
 
       await vi.advanceTimersByTimeAsync(1);
       expect(provider.search).toHaveBeenCalledTimes(1);
-      expect(provider.search).toHaveBeenCalledWith({ query: 'den' });
+      expect(provider.search).toHaveBeenCalledWith({
+        query: 'den',
+        signal: expect.any(AbortSignal),
+      });
 
       const items = Array.from(control.resultList.container.children);
       expect(items.map((i) => i.textContent)).toEqual([
@@ -162,7 +165,9 @@ describe('SearchControl', () => {
       await vi.advanceTimersByTimeAsync(250);
 
       expect(provider.search).toHaveBeenCalledTimes(1);
-      expect(provider.search).toHaveBeenCalledWith({ query: 'de' });
+      expect(provider.search).toHaveBeenCalledWith(
+        expect.objectContaining({ query: 'de' }),
+      );
     });
 
     test('uses autoCompleteDelay', async () => {
@@ -191,14 +196,15 @@ describe('SearchControl', () => {
       expect(provider.search).not.toHaveBeenCalled();
     });
 
-    test('other keys search again with the same query (current behaviour)', async () => {
+    test("keys that don't change the text don't search again", async () => {
       const { provider, input } = setup();
 
       await type(input, 'den');
       key(input, 'keyup', 16); // shift
+      key(input, 'keyup', 9); // tab
       await vi.advanceTimersByTimeAsync(250);
 
-      expect(provider.search).toHaveBeenCalledTimes(2);
+      expect(provider.search).toHaveBeenCalledTimes(1);
     });
 
     test('an empty input clears the list without searching', async () => {

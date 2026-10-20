@@ -147,6 +147,11 @@ interface SearchControl {
   button: HTMLAnchorElement;
   resetButton: HTMLAnchorElement;
   map: Map;
+  /** text of the last autocomplete search, to skip repeats */
+  lastQuery: string;
+  /** increments whenever pending autocomplete results become stale */
+  searchId: number;
+  abortController?: AbortController;
 
   // [key: string]: any;
   initialize(options: SearchControlProps): void;
@@ -156,6 +161,7 @@ interface SearchControl {
   onClick(event: Event): void;
   clearResults(event?: KeyboardEvent | null, force?: boolean): void;
   autoSearch(event: KeyboardEvent): void;
+  cancelSearch(): void;
   handleError(
     error: unknown,
     query: string,
@@ -251,14 +257,15 @@ const Control: SearchControl = {
 
       this.searchElement.form.appendChild(this.resultList.container);
 
-      this.searchElement.input.addEventListener(
-        'keyup',
-        debounce(
-          (e: KeyboardEvent) => this.autoSearch(e),
-          this.options.autoCompleteDelay,
-        ),
-        true,
+      const autoSearch = debounce(
+        (e: KeyboardEvent) => this.autoSearch(e),
+        this.options.autoCompleteDelay,
       );
+
+      this.searchElement.input.addEventListener('keyup', autoSearch, true);
+      // also covers paste, drag and drop, and mobile keyboards that don't
+      // send key codes
+      this.searchElement.input.addEventListener('input', autoSearch, true);
 
       this.searchElement.input.addEventListener(
         'keydown',
@@ -379,6 +386,8 @@ const Control: SearchControl = {
     }
 
     if (autoComplete) {
+      this.cancelSearch();
+      this.lastQuery = '';
       this.resultList.clear();
     }
   },
@@ -391,22 +400,57 @@ const Control: SearchControl = {
     const query = (event.target as HTMLInputElement).value;
     const { provider } = this.options;
 
-    if (query.length) {
-      let results;
-      try {
-        results = await provider!.search({ query });
-      } catch (error) {
-        this.handleError(error, query, 'autocomplete');
-        return;
-      }
-      results = results.slice(0, this.options.maxSuggestions);
-      this.resultList.render(results, this.options.resultFormat);
-    } else {
+    if (!query.length) {
+      this.cancelSearch();
+      this.lastQuery = '';
       this.resultList.clear();
+      return;
     }
+
+    // keys like shift or tab don't change the text, no need to search again
+    if (query === this.lastQuery) {
+      return;
+    }
+
+    this.cancelSearch();
+    this.lastQuery = query;
+    const id = this.searchId;
+    const controller =
+      typeof AbortController === 'undefined'
+        ? undefined
+        : new AbortController();
+    this.abortController = controller;
+
+    let results;
+    try {
+      results = await provider!.search({ query, signal: controller?.signal });
+    } catch (error) {
+      // errors of cancelled searches (including the abort itself) don't matter
+      if (id === this.searchId) {
+        this.lastQuery = '';
+        this.handleError(error, query, 'autocomplete');
+      }
+      return;
+    }
+
+    // a newer search, a submit or a clear happened while this one was running
+    if (id !== this.searchId) {
+      return;
+    }
+
+    this.abortController = undefined;
+    results = results.slice(0, this.options.maxSuggestions);
+    this.resultList.render(results, this.options.resultFormat);
+  },
+
+  cancelSearch() {
+    this.abortController?.abort();
+    this.abortController = undefined;
+    this.searchId = (this.searchId || 0) + 1;
   },
 
   async onSubmit(query) {
+    this.cancelSearch();
     // there is no result list when autoComplete is disabled
     this.resultList?.clear();
     const { provider, requeryOnSelect } = this.options;

@@ -120,7 +120,7 @@ export default class PdokNlProvider extends AbstractProvider<
       query: options.query,
     });
 
-    const json = await fetch(url)
+    const json = await fetch(url, { signal: options.signal })
       .then((response) => readJson<RequestResult>(response))
       .then((json: RequestResult) => {
         // If there are no results found but there are spellcheck corrections, we search again using the corrected query.
@@ -130,7 +130,7 @@ export default class PdokNlProvider extends AbstractProvider<
               query: json.spellcheck.collations[1].collationQuery,
             });
 
-            return fetch(url).then((response) =>
+            return fetch(url, { signal: options.signal }).then((response) =>
               readJson<RequestResult>(response),
             );
           }

@@ -34,6 +34,8 @@ export interface EndpointArgument {
 
 export interface SearchArgument {
   query: string;
+  /** aborts the request, e.g. when a newer search starts */
+  signal?: AbortSignal;
 }
 
 export interface ParseArgument<TData> {
@@ -84,7 +86,7 @@ export default abstract class AbstractProvider<
       type: RequestType.SEARCH,
     });
 
-    const request = await fetch(url);
+    const request = await fetch(url, { signal: options.signal });
     const json: TRequestResult = await readJson(request);
     return this.parse({ data: json });
   }
