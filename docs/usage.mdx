@@ -26,6 +26,12 @@ const provider = new OpenStreetMapProvider();
 const results = await provider.search({ query: input.value });
 ```
 
+`leaflet-geosearch` imports Leaflet, which only runs in a browser. For server-side rendering (Next.js, Nuxt, ...), import the providers from `leaflet-geosearch/providers`. It has the same providers and doesn't import Leaflet:
+
+```js
+import { OpenStreetMapProvider } from 'leaflet-geosearch/providers';
+```
+
 ## Using the leaflet control
 
 Or add the `GeoSearchControl` to the leaflet map instance, to render a search control on your map;

@@ -112,6 +112,19 @@ provider.search({ query: '...' }).then(function (result) {
 });
 ```
 
+## Server-side rendering
+
+`leaflet-geosearch` imports Leaflet, and Leaflet only runs in a browser. On a
+server (Next.js, Nuxt, ...) that ends in `window is not defined`. If you only
+need the providers, import them from `leaflet-geosearch/providers` instead. It
+has the same providers and doesn't import Leaflet:
+
+```js
+import { OpenStreetMapProvider } from 'leaflet-geosearch/providers';
+```
+
+The search control needs Leaflet, so only create it in the browser.
+
 ## Results
 
 The `search` event of all providers return an array of `result objects`. The

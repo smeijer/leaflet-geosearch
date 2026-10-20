@@ -1,4 +1,5 @@
 import * as api from '../index';
+import * as providersApi from '../providers';
 import SearchControl from '../SearchControl';
 
 // The public surface of the package. Removing an export or changing a
@@ -29,6 +30,16 @@ test('exports', () => {
   ]);
 
   expect(api.GeoSearchControl).toBe(api.SearchControl);
+});
+
+test('leaflet-geosearch/providers exports', () => {
+  const control = ['GeoSearchControl', 'SearchControl', 'SearchElement'];
+  const providers = Object.keys(api).filter((key) => !control.includes(key));
+
+  expect(Object.keys(providersApi).sort()).toEqual(
+    [...providers, 'Provider'].sort(),
+  );
+  providers.forEach((key) => expect(providersApi[key]).toBe(api[key]));
 });
 
 test('SearchControl default options', () => {

@@ -16,3 +16,4 @@ export { default as PdokNlProvider } from './pdokNlProvider';
 export { default as PeliasProvider } from './peliasProvider';
 
 export { default as Provider } from './provider';
+export { default as JsonProvider } from './provider';

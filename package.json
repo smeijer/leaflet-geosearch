@@ -23,6 +23,12 @@
       "require": "./dist/geosearch.js",
       "types": "./dist/index.d.ts"
     },
+    "./providers": {
+      "types": "./dist/providers/index.d.ts",
+      "browser": "./dist/providers.module.js",
+      "import": "./dist/providers.module.js",
+      "require": "./dist/providers.js"
+    },
     "./package.json": "./package.json",
     "./*": "./*"
   },
@@ -30,7 +36,7 @@
     "clean": "rimraf ./dist .docz/dist",
     "start": "concurrently npm:build:watch npm:docz:dev",
     "build": "run-p build:dist build:lib build:types build:css && npm run build:compat",
-    "build:dist": "vite build",
+    "build:dist": "vite build && vite build --mode providers",
     "build:compat": "node scripts/copy.mjs dist/geosearch.umd.js dist/bundle.min.js",
     "build:lib": "tsc",
     "build:types": "tsc -p tsconfig.types.json",
@@ -56,7 +62,8 @@
     "src",
     "dist",
     "lib",
-    "assets"
+    "assets",
+    "providers"
   ],
   "keywords": [
     "maps",
