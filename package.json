@@ -46,7 +46,7 @@
     "docs:update": "run-s clean build docz:build && git checkout gh-pages && find . -maxdepth 1 -type f -not -path '*/\\.*' -delete && cp -r .docz/dist/* . && git add . && (git diff --staged --exit-code || git commit -m \"update docs\") && git checkout - && git push origin gh-pages",
     "prepublish": "run-s test clean build",
     "ci:lint": "eslint \"{docs,src,test}/**/*.{js,ts,tsx}\" -c ./.eslintrc.js",
-    "ci:tsc": "tsc --noEmit --project ./tsconfig.json",
+    "ci:tsc": "tsc --noEmit --project ./tsconfig.test.json",
     "ci:test": "vitest run",
     "bump:patch": "npm version patch -m 'release: cut the %s release'",
     "bump:minor": "npm version minor -m 'release: cut the %s release'",

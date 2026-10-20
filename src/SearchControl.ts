@@ -700,12 +700,18 @@ const Control: SearchControl = {
   },
 };
 
+// SearchControl works with and without new, the type allows both (#334)
+interface SearchControlConstructor {
+  new (...options: any[]): SearchControl & L.Control;
+  (...options: any[]): SearchControl & L.Control;
+}
+
 // extend creates a new class on every call, so it's only done once
 let LControl:
   | (new (...options: any[]) => SearchControl & L.Control)
   | undefined;
 
-export default function SearchControl(...options: any[]) {
+const SearchControl = function SearchControl(...options: any[]) {
   if (!L) {
     throw new Error(UNINITIALIZED_ERR);
   }
@@ -715,4 +721,6 @@ export default function SearchControl(...options: any[]) {
   }
 
   return new LControl(...options);
-}
+} as SearchControlConstructor;
+
+export default SearchControl;
