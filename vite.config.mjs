@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 
 const fileNames = {
   es: 'geosearch.module.js',
@@ -6,7 +6,7 @@ const fileNames = {
   umd: 'geosearch.umd.js',
 };
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   build: {
     // match the syntax level of the previous microbundle output
     target: 'es2016',
@@ -29,4 +29,18 @@ export default defineConfig({
       },
     },
   },
-});
+  test: {
+    environment: 'happy-dom',
+    environmentOptions: {
+      happyDOM: {
+        // provider requests are cross-origin; MSW answers them instead
+        settings: { fetch: { disableSameOriginPolicy: true } },
+      },
+    },
+    globals: true,
+    include: ['src/**/*.spec.js'],
+    setupFiles: ['./vitest.setup.js'],
+    // expose all .env variables (not only VITE_*) to tests through process.env
+    env: loadEnv(mode, process.cwd(), ''),
+  },
+}));

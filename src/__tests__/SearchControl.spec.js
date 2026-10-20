@@ -23,7 +23,7 @@ test('Can init leaflet', () => {
 test('Can add geosearch control to leaflet', () => {
   const { div, map } = createMapInstance();
 
-  const provider = { search: jest.fn() };
+  const provider = { search: vi.fn() };
   const control = new SearchControl({
     provider,
   }).addTo(map);
@@ -34,7 +34,7 @@ test('Can add geosearch control to leaflet', () => {
 test('It toggles the active class when the search button is clicked', () => {
   const { map } = createMapInstance();
 
-  const provider = { search: jest.fn() };
+  const provider = { search: vi.fn() };
   const control = new SearchControl({
     provider,
   }).addTo(map);
@@ -57,13 +57,13 @@ test('Shows result on submit', async () => {
   const query = 'some city';
   const result = [{ x: 0, y: 50 }];
 
-  const provider = { search: jest.fn(async () => result) };
+  const provider = { search: vi.fn(async () => result) };
 
   const control = new SearchControl({
     provider,
   }).addTo(map);
 
-  control.showResult = jest.fn();
+  control.showResult = vi.fn();
   await control.onSubmit('some city');
 
   expect(control.showResult).toHaveBeenCalledWith(result[0], query);
@@ -76,9 +76,9 @@ test('Change view on result', () => {
     animateZoom: false,
   });
 
-  map.setView = jest.fn();
+  map.setView = vi.fn();
 
-  const control = new SearchControl({ provider: jest.fn() }).addTo(map);
+  const control = new SearchControl({ provider: vi.fn() }).addTo(map);
 
   control.showResult({ x: 50, y: 0 }, { query: 'none' });
 
@@ -86,7 +86,7 @@ test('Change view on result', () => {
 });
 
 test('Default options are applied', () => {
-  const control = new SearchControl({ provider: jest.fn() });
+  const control = new SearchControl({ provider: vi.fn() });
 
   expect(control.options).toEqual(expect.objectContaining({ style: 'button' }));
 });

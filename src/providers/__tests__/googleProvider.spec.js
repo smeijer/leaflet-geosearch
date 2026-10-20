@@ -4,9 +4,7 @@ import Provider from '../googleProvider';
 
 const fixtures = [geocoderGeocoderResponse];
 
-jest.mock('@googlemaps/js-api-loader');
-
-jest.spyOn(Loader.prototype, 'load').mockImplementation(async () => {
+vi.spyOn(Loader.prototype, 'load').mockImplementation(async () => {
   return {
     maps: {
       Geocoder: function () {

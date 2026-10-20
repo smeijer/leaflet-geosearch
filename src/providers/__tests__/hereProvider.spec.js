@@ -1,9 +1,10 @@
 import Provider from '../hereProvider';
 import fixtures from './hereResponse.json';
+import { mockResponse } from '../../../test';
 
 describe('HereProvider', () => {
   beforeAll(() => {
-    fetch.mockResponse(async () => ({ body: JSON.stringify(fixtures) }));
+    mockResponse(JSON.stringify(fixtures));
   });
 
   test('Can fetch results', async () => {

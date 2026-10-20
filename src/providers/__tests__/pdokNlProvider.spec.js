@@ -1,9 +1,10 @@
 import Provider from '../pdokNlProvider';
 import fixtures from './pdokNlResponse.json';
+import { mockResponse } from '../../../test';
 
 describe('PdokNlProvider', () => {
   beforeAll(() => {
-    fetch.mockResponse(async () => ({ body: JSON.stringify(fixtures) }));
+    mockResponse(JSON.stringify(fixtures));
   });
 
   test('Can fetch results', async () => {

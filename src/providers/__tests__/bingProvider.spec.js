@@ -1,6 +1,14 @@
 import Provider from '../bingProvider';
 import fixtures from './bingResponse.json';
 
+// Bing uses JSONP instead of fetch, so the script loader is mocked
+vi.mock('../../domUtils', async (importOriginal) => ({
+  ...(await importOriginal()),
+  createScriptElement: vi.fn(
+    async () => (await import('./bingResponse.json')).default,
+  ),
+}));
+
 describe('BingProvider', () => {
   const RealDate = Date;
 
@@ -18,20 +26,6 @@ describe('BingProvider', () => {
   }
 
   const now = RealDate.now();
-  const callbackName = `BING_JSONP_CB_${now}`;
-
-  beforeAll(() => {
-    fetch.mockResponse(async () => ({
-      body: `${callbackName}(${JSON.stringify(fixtures)})`,
-    }));
-
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const domUtils = require('../../domUtils');
-
-    jest
-      .spyOn(domUtils, 'createScriptElement')
-      .mockImplementation(jest.fn(async () => fixtures));
-  });
 
   afterAll(() => {
     global.Date = RealDate;

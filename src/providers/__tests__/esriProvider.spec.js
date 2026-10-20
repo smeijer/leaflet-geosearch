@@ -1,9 +1,10 @@
 import Provider from '../esriProvider';
 import fixtures from './esriResponse.json';
+import { mockResponse } from '../../../test';
 
 describe('EsriProvider', () => {
   beforeAll(() => {
-    fetch.mockResponse(async () => ({ body: JSON.stringify(fixtures) }));
+    mockResponse(JSON.stringify(fixtures));
   });
 
   test('Can fetch results', async () => {

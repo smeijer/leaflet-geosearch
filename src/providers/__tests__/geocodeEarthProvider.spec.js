@@ -1,9 +1,10 @@
 import Provider from '../geocodeEarthProvider';
 import fixture from './peliasResponse.json';
+import { mockResponse } from '../../../test';
 
 describe('GeocodeEarthProvider', function () {
   beforeAll(() => {
-    fetch.mockResponse(async () => ({ body: JSON.stringify(fixture) }));
+    mockResponse(JSON.stringify(fixture));
   });
 
   test('Can fetch results', async () => {

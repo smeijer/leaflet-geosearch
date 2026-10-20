@@ -1,9 +1,10 @@
 import Provider from '../locationIQProvider';
 import fixtures from './locationiqResponse.json';
+import { mockResponse } from '../../../test';
 
 describe('LocationIQProvider', () => {
   beforeAll(() => {
-    fetch.mockResponse(async () => ({ body: JSON.stringify(fixtures) }));
+    mockResponse(JSON.stringify(fixtures));
   });
 
   test('Can fetch results', async () => {

@@ -1,9 +1,10 @@
 import Provider from '../openStreetMapProvider';
 import fixtures from './openstreetmapResponse.json';
+import { mockResponse } from '../../../test';
 
 describe('OpenStreetMapProvider', function () {
   beforeAll(() => {
-    fetch.mockResponse(async () => ({ body: JSON.stringify(fixtures) }));
+    mockResponse(JSON.stringify(fixtures));
   });
 
   test('Can fetch results', async () => {
