@@ -1,4 +1,5 @@
 import AbstractProvider, {
+  ProviderParams,
   EndpointArgument,
   ParseArgument,
   ProviderOptions,
@@ -44,8 +45,16 @@ export default class CivilDefenseMapProvider extends AbstractProvider<
   }
 
   endpoint({ query, type }: EndpointArgument): string {
-    const params = typeof query === 'string' ? { q: query } : query;
-    params.format = 'json';
+    const params: ProviderParams =
+      typeof query === 'string' ? { q: query } : { ...query };
+
+    // json, unless another format (e.g. jsonv2) was asked for
+    if (
+      params.format === undefined &&
+      this.options.params?.format === undefined
+    ) {
+      params.format = 'json';
+    }
 
     switch (type) {
       case RequestType.REVERSE:

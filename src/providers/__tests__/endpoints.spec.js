@@ -140,13 +140,30 @@ describe('provider endpoints', () => {
     });
   });
 
-  test('provider defaults win over user params with the same name (current behaviour)', () => {
-    // OpenStreetMap always sends format=json, even when params.format is set
-    const provider = new OpenStreetMapProvider({
-      params: { format: 'jsonv2' },
+  test.each([
+    ['OpenStreetMap', OpenStreetMapProvider],
+    ['LocationIQ', LocationIQProvider],
+    ['CivilDefenseMap', CivilDefenseMapProvider],
+  ])('%s uses the format from the params (#430)', (_, Provider) => {
+    const provider = new Provider({ params: { format: 'jsonv2' } });
+
+    expect(params(search(provider)).format).toEqual('jsonv2');
+  });
+
+  test('OpenStreetMap uses the format of an object query', () => {
+    const url = new OpenStreetMapProvider().endpoint({
+      query: { q: 'Den Haag', format: 'jsonv2' },
+      type: RequestType.SEARCH,
     });
 
-    expect(params(search(provider)).format).toEqual('json');
+    expect(params(url).format).toEqual('jsonv2');
+  });
+
+  test('OpenStreetMap does not modify an object query', () => {
+    const query = { street: 'Binnenhof 1', city: 'Den Haag' };
+    new OpenStreetMapProvider().endpoint({ query, type: RequestType.SEARCH });
+
+    expect(query).toEqual({ street: 'Binnenhof 1', city: 'Den Haag' });
   });
 
   test('query values are url encoded', () => {

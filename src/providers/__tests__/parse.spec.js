@@ -126,6 +126,33 @@ describe('provider parse edge cases', () => {
     ]);
   });
 
+  test('OpenStreetMap parses jsonv2 records', () => {
+    const [r] = new OpenStreetMapProvider().parse({
+      data: [
+        {
+          place_id: 1,
+          lat: '52.08',
+          lon: '4.31',
+          category: 'boundary',
+          type: 'administrative',
+          place_rank: 16,
+          display_name: 'Den Haag, Zuid-Holland, Nederland',
+          boundingbox: ['52.0', '52.1', '4.2', '4.4'],
+        },
+      ],
+    });
+
+    expect(r).toMatchObject({
+      x: 4.31,
+      y: 52.08,
+      label: 'Den Haag, Zuid-Holland, Nederland',
+      bounds: [
+        [52.0, 4.2],
+        [52.1, 4.4],
+      ],
+    });
+  });
+
   test('Pelias only sets bounds for features with a bbox', () => {
     const results = new PeliasProvider().parse({
       data: {
