@@ -32,8 +32,7 @@ const providers = {
     new GeocodeEarthProvider({
       params: { api_key: process.env.GEOCODEEARTH_API_KEY },
     }),
-  Google: () =>
-    new GoogleProvider({ apiKey: process.env.GOOGLE_API_KEY as string }),
+  Google: () => new GoogleProvider({ apiKey: process.env.GOOGLE_API_KEY }),
   LegacyGoogle: () =>
     new LegacyGoogleProvider({ params: { key: process.env.GOOGLE_API_KEY } }),
   Here: () =>

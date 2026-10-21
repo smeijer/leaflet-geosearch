@@ -158,6 +158,10 @@ jobs:
           LOCATIONIQ_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.LOCATIONIQ_API_KEY || '' }}
           OPENCAGE_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.OPENCAGE_API_KEY || '' }}
 
+      # needs the declarations in dist from the build
+      - name: Type check the docs components
+        run: npm run docs:typecheck
+
       - uses: actions/upload-artifact@v7
         if: github.ref == 'refs/heads/main'
         with:

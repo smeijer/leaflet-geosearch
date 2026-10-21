@@ -48,6 +48,7 @@
     "lint": "tsc --noEmit && eslint \"{src,test}/**/*.{js,ts,tsx}\" --quiet --fix && prettier \"**/*.{md,mdx,json}\" --write",
     "docs:dev": "npm run build && npm --prefix website run dev",
     "docs:build": "npm run build && npm --prefix website run build",
+    "docs:typecheck": "tsc -p website/tsconfig.json",
     "prepublish": "run-s test clean build",
     "ci:lint": "eslint \"{src,test}/**/*.{js,ts,tsx}\"",
     "ci:tsc": "tsc --noEmit --project ./tsconfig.test.json",
