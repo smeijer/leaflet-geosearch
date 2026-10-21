@@ -25,8 +25,12 @@ export default defineConfig(
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
-      // a warning, like in typescript-eslint 5
-      '@typescript-eslint/no-unused-vars': 'warn',
+      // a warning, like in typescript-eslint 5. _name marks an unused
+      // argument that is part of a public signature
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_' },
+      ],
       curly: ['error', 'all'],
     },
   },

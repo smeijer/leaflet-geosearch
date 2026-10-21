@@ -69,7 +69,6 @@ export default class ResultList {
   }
 
   select(index: number): SearchResult {
-    // eslint-disable-next-line no-confusing-arrow
     Array.from(this.container.children).forEach((child, idx) =>
       idx === index
         ? addClassName(child, 'active')

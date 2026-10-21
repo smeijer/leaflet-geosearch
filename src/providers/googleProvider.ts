@@ -116,7 +116,7 @@ export default class GoogleProvider extends AbstractProvider<
     }
   }
 
-  endpoint({ query }: EndpointArgument): never {
+  endpoint(_args: EndpointArgument): never {
     throw new Error('Method not implemented.');
   }
 

@@ -13,7 +13,6 @@ import {
   createElement,
   addClassName,
   removeClassName,
-  stopPropagation,
   escapeHtml,
 } from './domUtils';
 import {
@@ -23,7 +22,7 @@ import {
   ARROW_DOWN_KEY,
   ESCAPE_KEY,
 } from './constants';
-import AbstractProvider, {
+import {
   BoundsTuple,
   PointTuple,
   SearchArgument,
