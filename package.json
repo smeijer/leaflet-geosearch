@@ -54,6 +54,7 @@
     "ci:tsc": "tsc --noEmit --project ./tsconfig.test.json",
     "ci:test": "vitest run",
     "ci:package": "publint --pack npm && attw --pack . --ignore-rules unexpected-module-syntax",
+    "ci:package-types": "node scripts/check-package-types.mjs",
     "bump:patch": "npm version patch -m 'release: cut the %s release'",
     "bump:minor": "npm version minor -m 'release: cut the %s release'",
     "bump:major": "npm version major -m 'release: cut the %s release'"

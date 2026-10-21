@@ -126,6 +126,35 @@ jobs:
           GATSBY_HERE_API_KEY: ${{ secrets.HERE_API_KEY }}
           GATSBY_AMAP_API_KEY: ${{ secrets.AMAP_API_KEY }}
 
+  package:
+    name: Package
+    runs-on: ubuntu-latest
+    needs: [setup]
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "${{ env.NODE_VERSION }}"
+
+      - name: Cache node modules
+        uses: actions/cache@v5
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Build
+        run: npm run build
+
+      # publint and arethetypeswrong on the packed package
+      - name: Check the package
+        run: npm run ci:package
+
+      # installs the packed package in an empty TypeScript project
+      - name: Type check the package
+        run: npm run ci:package-types
+
   docs:
     name: Docs
     runs-on: ubuntu-latest
