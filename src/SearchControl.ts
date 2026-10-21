@@ -683,8 +683,8 @@ const Control: SearchControl = {
     const center = bounds
       ? centerOf(bounds)
       : hasPosition(result)
-      ? ([result.y, result.x] as PointTuple)
-      : null;
+        ? ([result.y, result.x] as PointTuple)
+        : null;
 
     // nothing usable to move the map to
     if (!center) {
@@ -708,8 +708,7 @@ interface SearchControlConstructor {
 
 // extend creates a new class on every call, so it's only done once
 let LControl:
-  | (new (...options: any[]) => SearchControl & L.Control)
-  | undefined;
+  (new (...options: any[]) => SearchControl & L.Control) | undefined;
 
 const SearchControl = function SearchControl(...options: any[]) {
   if (!L) {

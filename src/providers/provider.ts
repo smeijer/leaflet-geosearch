@@ -54,8 +54,7 @@ export interface Provider<TRequestResult, TRawResult> {
 export default abstract class AbstractProvider<
   TRequestResult = any,
   TRawResult = any,
-> implements Provider<TRequestResult, TRawResult>
-{
+> implements Provider<TRequestResult, TRawResult> {
   options: ProviderOptions;
 
   constructor(options: ProviderOptions = {}) {
