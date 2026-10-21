@@ -152,6 +152,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Bundle size
+        run: node scripts/size-report.mjs
+
       # publint and arethetypeswrong on the packed package
       - name: Check the package
         run: npm run ci:package
