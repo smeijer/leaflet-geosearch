@@ -44,7 +44,7 @@ describe('provider endpoints', () => {
     [
       'Esri',
       new EsriProvider(),
-      'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=Den%20Haag&f=json',
+      'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=Den%20Haag&f=json&maxLocations=5',
     ],
     [
       'GeoApiFr',
@@ -243,6 +243,20 @@ describe('provider endpoints', () => {
         .endpoint({ query: { lat: 1, lon: 2 }, type: RequestType.REVERSE })
         .split('?')[0],
     ).toEqual('https://example.com/r');
+  });
+
+  test('Esri asks for five locations unless maxLocations is given (#196)', () => {
+    const fromParams = new EsriProvider({ params: { maxLocations: 2 } });
+    expect(search(fromParams)).toEqual(
+      'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?maxLocations=2&text=Den%20Haag&f=json',
+    );
+
+    const fromQuery = new EsriProvider().endpoint({
+      query: { text: 'Den Haag', maxLocations: 1 },
+      type: RequestType.SEARCH,
+    });
+    expect(fromQuery).toContain('maxLocations=1');
+    expect(fromQuery).not.toContain('maxLocations=5');
   });
 
   test('Pelias uses a custom host', () => {

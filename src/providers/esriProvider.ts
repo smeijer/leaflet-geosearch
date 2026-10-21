@@ -36,6 +36,14 @@ export default class EsriProvider extends AbstractProvider<
       typeof query === 'string' ? { text: query } : { ...query };
     params.f = 'json';
 
+    // find returns a single location unless it is asked for more
+    if (
+      params.maxLocations === undefined &&
+      this.options.params?.maxLocations === undefined
+    ) {
+      params.maxLocations = 5;
+    }
+
     return this.getUrl(this.searchUrl, params);
   }
 

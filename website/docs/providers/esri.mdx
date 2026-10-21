@@ -22,4 +22,10 @@ map.addControl(
 );
 ```
 
+The provider asks for up to 5 locations. Pass `maxLocations` in `params` to change that:
+
+```js
+const provider = new EsriProvider({ params: { maxLocations: 10 } });
+```
+
 [1]: https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm
