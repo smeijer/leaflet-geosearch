@@ -1,3 +1,4 @@
+/// <reference types="google.maps" preserve="true" />
 import AbstractProvider, {
   EndpointArgument,
   ParseArgument,
