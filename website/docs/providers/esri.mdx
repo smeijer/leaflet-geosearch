@@ -28,4 +28,13 @@ The provider asks for up to 5 locations. Pass `maxLocations` in `params` to chan
 const provider = new EsriProvider({ params: { maxLocations: 10 } });
 ```
 
+## API key
+
+Without a key the provider uses the free `geocode.arcgis.com` service. With an [ArcGIS API key][2], pass it as `token`. ArcGIS asks for authenticated requests to go to `geocode-api.arcgis.com`, so the provider sends them there:
+
+```js
+const provider = new EsriProvider({ params: { token: '__YOUR_ARCGIS_KEY__' } });
+```
+
 [1]: https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm
+[2]: https://developers.arcgis.com/documentation/security-and-authentication/api-key-authentication/

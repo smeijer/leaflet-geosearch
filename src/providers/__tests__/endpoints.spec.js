@@ -259,6 +259,17 @@ describe('provider endpoints', () => {
     expect(fromQuery).not.toContain('maxLocations=5');
   });
 
+  test('Esri sends requests with a token to geocode-api.arcgis.com (#318)', () => {
+    const provider = new EsriProvider({ params: { token: 'key' } });
+    expect(search(provider).split('?')[0]).toEqual(
+      'https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer/find',
+    );
+
+    const custom = new EsriProvider({ params: { token: 'key' } });
+    custom.searchUrl = 'https://example.com/find';
+    expect(search(custom).split('?')[0]).toEqual('https://example.com/find');
+  });
+
   test('Pelias uses a custom host', () => {
     const provider = new PeliasProvider({ host: 'https://pelias.example.com' });
 
