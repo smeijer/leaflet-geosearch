@@ -712,4 +712,79 @@ describe('SearchControl', () => {
       expect(control.markers.getLayers()).toHaveLength(1);
     });
   });
+
+  describe('showResultListOnSubmit (#347)', () => {
+    const options = { autoComplete: false, showResultListOnSubmit: true };
+
+    test('enter shows the results to pick from, typing searches nothing', async () => {
+      const { control, provider, input } = setup(options);
+
+      await type(input, 'den');
+      expect(provider.search).not.toHaveBeenCalled();
+
+      input.value = 'den';
+      key(input, 'keydown', KEY.enter);
+      await vi.advanceTimersByTimeAsync(0);
+
+      expect(provider.search).toHaveBeenCalledTimes(1);
+      expect(control.resultList.count()).toEqual(results.length);
+      expect(control.markers.getLayers()).toHaveLength(0);
+    });
+
+    test('arrows and enter pick a result without searching again', async () => {
+      const { control, provider, input } = setup(options);
+      input.value = 'den';
+      key(input, 'keydown', KEY.enter);
+      await vi.advanceTimersByTimeAsync(0);
+
+      key(input, 'keydown', KEY.down);
+      key(input, 'keydown', KEY.enter);
+      await vi.advanceTimersByTimeAsync(0);
+
+      expect(provider.search).toHaveBeenCalledTimes(1);
+      expect(control.markers.getLayers()).toHaveLength(1);
+      expect(control.resultList.container.children).toHaveLength(0);
+    });
+
+    test('clicking a result shows it', async () => {
+      const { control, provider, input } = setup(options);
+      input.value = 'den';
+      key(input, 'keydown', KEY.enter);
+      await vi.advanceTimersByTimeAsync(0);
+
+      control.resultList.container.children[1].click();
+      await vi.advanceTimersByTimeAsync(0);
+
+      expect(provider.search).toHaveBeenCalledTimes(1);
+      expect(input.value).toEqual(results[1].label);
+      expect(control.markers.getLayers()).toHaveLength(1);
+    });
+
+    test('a single result is shown right away', async () => {
+      const { control } = setup(options, [results[0]]);
+
+      await control.onSubmit({ query: 'den' });
+
+      expect(control.markers.getLayers()).toHaveLength(1);
+      expect(control.resultList.container.children).toHaveLength(0);
+    });
+
+    test('no results show notFoundMessage', async () => {
+      const { control } = setup({ ...options, notFoundMessage: 'nothing' }, []);
+
+      await control.onSubmit({ query: 'den' });
+
+      expect(control.resultList.container.textContent).toContain('nothing');
+    });
+
+    test('works together with autoComplete', async () => {
+      const { control, input } = setup({ showResultListOnSubmit: true });
+
+      await control.onSubmit({ query: 'den' });
+
+      expect(control.resultList.count()).toEqual(results.length);
+      expect(control.markers.getLayers()).toHaveLength(0);
+      expect(input).toBeDefined();
+    });
+  });
 });

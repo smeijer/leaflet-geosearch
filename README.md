@@ -303,6 +303,7 @@ new GeoSearchControl({
   requeryOnSelect: false, // optional: true|false  - default false
   minQueryLength: 1, // optional: number      - default 1
   cacheSize: 0, // optional: number      - default 0
+  showResultListOnSubmit: false, // optional: true|false  - default false
 });
 ```
 
@@ -338,6 +339,8 @@ only panned.
 `minQueryLength` is the number of characters to type before the autocomplete searches. Pressing enter always searches.
 
 `cacheSize` keeps the results of the last searches in memory, so typing the same text again (or pressing enter after the suggestions showed up) doesn't send another request. `0` turns the cache off.
+
+`showResultListOnSubmit` shows the results to pick from when enter is pressed, instead of jumping to the first one. A single result is shown right away. Together with `autoComplete: false`, the provider is only searched on enter.
 
 **Events**
 

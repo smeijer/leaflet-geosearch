@@ -84,6 +84,7 @@ test('SearchControl default options', () => {
     requeryOnSelect: false,
     minQueryLength: 1,
     cacheSize: 0,
+    showResultListOnSubmit: false,
   });
 
   expect(marker.draggable).toBe(false);

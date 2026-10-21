@@ -74,6 +74,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   requeryOnSelect: false,
   minQueryLength: 1,
   cacheSize: 0,
+  showResultListOnSubmit: false,
 };
 
 function withoutUndefined<T extends object>(value?: T): Partial<T> {
@@ -196,6 +197,13 @@ interface SearchControlProps {
    * @default 0
    */
   cacheSize: number;
+  /**
+   * pressing enter shows the result list to pick from, instead of jumping
+   * to the first result. Works with autoComplete off too, so the provider
+   * is only searched on enter
+   * @default false
+   */
+  showResultListOnSubmit: boolean;
 }
 
 export type SearchControlOptions = Partial<SearchControlProps> & {
@@ -335,7 +343,7 @@ const Control: SearchControl = {
 
     L.DomEvent.disableClickPropagation(this.resetButton);
 
-    if (this.options.autoComplete) {
+    if (this.options.autoComplete || this.options.showResultListOnSubmit) {
       this.resultList = new ResultList({
         handleClick: ({ result }): void => {
           this.searchElement.input.value = result.label;
@@ -351,15 +359,17 @@ const Control: SearchControl = {
 
       this.searchElement.form.appendChild(this.resultList.container);
 
-      const autoSearch = debounce(
-        (e: KeyboardEvent) => this.autoSearch(e),
-        this.options.autoCompleteDelay,
-      );
+      if (this.options.autoComplete) {
+        const autoSearch = debounce(
+          (e: KeyboardEvent) => this.autoSearch(e),
+          this.options.autoCompleteDelay,
+        );
 
-      this.searchElement.input.addEventListener('keyup', autoSearch, true);
-      // also covers paste, drag and drop, and mobile keyboards that don't
-      // send key codes
-      this.searchElement.input.addEventListener('input', autoSearch, true);
+        this.searchElement.input.addEventListener('keyup', autoSearch, true);
+        // also covers paste, drag and drop, and mobile keyboards that don't
+        // send key codes
+        this.searchElement.input.addEventListener('input', autoSearch, true);
+      }
 
       this.searchElement.input.addEventListener(
         'keydown',
@@ -472,14 +482,14 @@ const Control: SearchControl = {
       return;
     }
 
-    const { keepResult, autoComplete } = this.options;
+    const { keepResult } = this.options;
 
     if (force || !keepResult) {
       this.searchElement.input.value = '';
       this.markers.clearLayers();
     }
 
-    if (autoComplete) {
+    if (this.resultList) {
       this.cancelSearch();
       this.lastQuery = '';
       this.resultList.clear();
@@ -570,7 +580,8 @@ const Control: SearchControl = {
 
   async onSubmit(query) {
     this.cancelSearch();
-    // there is no result list when autoComplete is disabled
+    // there is no result list when autoComplete and showResultListOnSubmit
+    // are off
     this.resultList?.clear();
     const { provider, requeryOnSelect } = this.options;
 
@@ -587,6 +598,15 @@ const Control: SearchControl = {
         : await this.searchProvider(query);
     } catch (error) {
       this.handleError(error, query.query, 'submit');
+      return;
+    }
+
+    // typed text shows its results to pick from (or the not found message),
+    // a single result needs no picking
+    const { showResultListOnSubmit, maxSuggestions, resultFormat } =
+      this.options;
+    if (showResultListOnSubmit && !query.data && results.length !== 1) {
+      this.resultList.render(results.slice(0, maxSuggestions), resultFormat);
       return;
     }
 
