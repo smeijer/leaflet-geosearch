@@ -1,0 +1,98 @@
+import Map from '../components/Map';
+
+# Leaflet Control
+
+To show the search control on your leaflet map, add the `SearchControl` to the leaflet map
+
+<Map provider="OpenStreetMap" />
+
+```js
+import { SearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+
+const searchControl = new SearchControl({
+  provider: new OpenStreetMapProvider(),
+  style: 'bar',
+});
+
+map.addControl(searchControl);
+```
+
+## Style
+
+<Map provider="OpenStreetMap" controlOptions={{ style: 'button' }} />
+
+```js
+import { SearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+
+const searchControl = new SearchControl({
+  style: 'button',
+  provider: new OpenStreetMapProvider(),
+});
+
+map.addControl(searchControl);
+```
+
+## Message if address not found
+
+<Map
+  provider="OpenStreetMap"
+  controlOptions={{
+    notFoundMessage: 'Sorry, that address could not be found.',
+  }}
+/>
+
+```js
+import { SearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+
+const searchControl = new SearchControl({
+  notFoundMessage: 'Sorry, that address could not be found.',
+  provider: new OpenStreetMapProvider(),
+  style: 'bar',
+});
+
+map.addControl(searchControl);
+```
+
+## Options
+
+| Option              | Type                            | Default                                            | Description                                                                                                 |
+| ------------------- | ------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `provider`          | `Provider`                      | (required)                                         | The provider to search with.                                                                                |
+| `style`             | `'button'                       | 'bar'`                                             | `'button'`                                                                                                  | A button that opens the search box, or a bar that is always visible. |
+| `position`          | `ControlPosition`               | `'topleft'`                                        | Where Leaflet puts the control (`button` style).                                                            |
+| `autoComplete`      | `boolean`                       | `true`                                             | Search while typing and show suggestions.                                                                   |
+| `autoCompleteDelay` | `number`                        | `250`                                              | Milliseconds to wait after the last keystroke before searching.                                             |
+| `minQueryLength`    | `number`                        | `1`                                                | Characters to type before autocomplete searches. Pressing enter always searches.                            |
+| `maxSuggestions`    | `number`                        | `5`                                                | How many suggestions to show.                                                                               |
+| `cacheSize`         | `number`                        | `0`                                                | How many search results to keep in memory, so the same text isn't requested twice. `0` turns the cache off. |
+| `requeryOnSelect`   | `boolean`                       | `false`                                            | Search the provider again when a suggestion is picked, even if it has coordinates.                          |
+| `showMarker`        | `boolean`                       | `true`                                             | Show a marker at the result.                                                                                |
+| `showPopup`         | `boolean`                       | `false`                                            | Open a popup on the marker.                                                                                 |
+| `marker`            | `MarkerOptions`                 | `{ icon: new L.Icon.Default(), draggable: false }` | Options for the marker. Missing keys keep their default.                                                    |
+| `maxMarkers`        | `number`                        | `1`                                                | How many result markers stay on the map.                                                                    |
+| `popupFormat`       | `({ query, result }) => string` | the escaped label                                  | The popup content (html).                                                                                   |
+| `resultFormat`      | `({ result }) => string`        | the escaped label                                  | The text of a suggestion (html).                                                                            |
+| `retainZoomLevel`   | `boolean`                       | `false`                                            | Only pan to the result, keep the zoom level.                                                                |
+| `zoomLevel`         | `number`                        | `18`                                               | Zoom level for results without bounds.                                                                      |
+| `animateZoom`       | `boolean`                       | `true`                                             | Animate moving to the result.                                                                               |
+| `updateMap`         | `boolean`                       | `true`                                             | Move the map to the result.                                                                                 |
+| `autoClose`         | `boolean`                       | `false`                                            | Close the control after a result is picked.                                                                 |
+| `keepResult`        | `boolean`                       | `false`                                            | Keep the picked result in the search box.                                                                   |
+| `searchLabel`       | `string`                        | `'Enter address'`                                  | Placeholder of the search box.                                                                              |
+| `clearSearchLabel`  | `string`                        | `'Clear search'`                                   | Label of the reset button.                                                                                  |
+| `notFoundMessage`   | `string`                        | `''`                                               | Shown when a search finds nothing.                                                                          |
+| `messageHideDelay`  | `number`                        | `3000`                                             | Milliseconds before the message hides.                                                                      |
+| `resetButton`       | `string`                        | `'×'`                                              | Text of the reset button.                                                                                   |
+| `classNames`        | `object`                        | see source                                         | Extra class names per element. Missing keys keep their default.                                             |
+
+## Events
+
+| Event                      | Payload                    | When                                                         |
+| -------------------------- | -------------------------- | ------------------------------------------------------------ |
+| `geosearch/showlocation`   | `{ location, marker }`     | A result is shown on the map.                                |
+| `geosearch/marker/dragend` | `{ location, event }`      | A draggable result marker was moved.                         |
+| `geosearch/error`          | `{ error, query, source }` | A search failed. `source` is `'autocomplete'` or `'submit'`. |
+
+```js
+map.on('geosearch/showlocation', ({ location }) => console.log(location.label));
+```
