@@ -9,7 +9,7 @@
     "allowJs": true,
     "pretty": true,
     "strict": true,
-    "rootDirs": ["src", "docs"],
+    "rootDirs": ["src"],
     "sourceMap": true,
     "removeComments": false,
     "noEmitHelpers": false,
@@ -18,5 +18,5 @@
     "types": ["google.maps"]
   },
   "include": ["src", "typings"],
-  "exclude": ["node_modules", "src/**/__tests__/**", "src/gatsby-theme-docz"]
+  "exclude": ["node_modules", "src/**/__tests__/**"]
 }

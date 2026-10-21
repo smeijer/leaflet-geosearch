@@ -4,17 +4,7 @@ import prettierRecommended from 'eslint-plugin-prettier/recommended';
 
 export default defineConfig(
   {
-    ignores: [
-      'dist/',
-      'lib/',
-      'coverage/',
-      '.docz/',
-      '.tmp/',
-      'website/',
-      // the docz site, replaced in #450
-      'docs/',
-      'src/gatsby-theme-docz/',
-    ],
+    ignores: ['dist/', 'lib/', 'coverage/', '.docz/', '.tmp/', 'website/'],
   },
   {
     files: ['**/*.{js,ts,tsx}'],

@@ -6,5 +6,5 @@
     "outDir": "dist"
   },
   "include": ["src", "typings"],
-  "exclude": ["node_modules", "src/**/__tests__/**", "src/gatsby-theme-docz/**"]
+  "exclude": ["node_modules", "src/**/__tests__/**"]
 }
