@@ -17,6 +17,12 @@ on:
 env:
   NODE_VERSION: "24.x"
 
+# a new push to a pull request replaces its running checks. Runs on main and
+# the release branches always finish
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   id-token: write # Required for OIDC
   contents: write
@@ -51,16 +57,10 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
 
       - uses: actions/setup-node@v6
         with:
           node-version: "${{ env.NODE_VERSION }}"
-
-      - name: Fetch all branches
-        run: |
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
 
       - name: Cache node modules
         uses: actions/cache@v5
@@ -69,7 +69,7 @@ jobs:
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: ESLint
-        run: npm run ci:lint -- $(git diff --diff-filter d --name-only origin/${{ github.base_ref }}...HEAD -- '*.js' '*.ts' '*.tsx')
+        run: npm run ci:lint
 
   typescript:
     name: Typescript
@@ -206,9 +206,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: npm
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.12.0
-
       - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
