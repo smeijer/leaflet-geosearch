@@ -59,24 +59,26 @@ your own geocoding service(s).
 
 The control comes with a number of default providers:
 
-- [Algolia]
 - [AMap]
 - [Bing]
 - [Esri]
 - [Geocode Earth]
 - [Google]
+- [Here]
 - [LocationIQ]
 - [OpenCage]
 - [OpenStreetMap]
 - [PdokNl]
 - [Pelias]
-- [Photon](https://github.com/komoot/photon)
+- [Photon]
 - [Mapbox](https://docs.mapbox.com/help/tutorials/local-search-geocoding-api/)
 - [GeoApiFR](https://geo.api.gouv.fr/adresse)
 - [Geoapify](https://apidocs.geoapify.com/docs/geocoding/forward-geocoding/#about)
 
-Although this project is still named `leaflet-geosearch`, this library is also
-usable without LeafletJS, and does not have any dependencies whatsoever.
+Although this project is still named `leaflet-geosearch`, the providers also
+work without Leaflet, for example to look up addresses in a form. Import them
+from `leaflet-geosearch/providers` when Leaflet isn't available, like during
+server-side rendering.
 
 # Usage
 
@@ -163,7 +165,7 @@ use your debugger)
 # Providers
 
 When `OpenStreetMap` does not match your needs; you can also choose to use the
-`Algolia`, `Bing`, `Esri`, `Geocode Earth`, `Google`, `LocationIQ`, `OpenCage`, or `Pelias` providers. Most of those providers do however require API
+`Bing`, `Esri`, `Geocode Earth`, `Google`, `Here`, `LocationIQ`, `OpenCage`, `Pelias` or `Photon` providers. Most of those providers do however require API
 keys. See the documentation pages on the relevant organisations on how to obtain
 these keys.
 
@@ -390,17 +392,18 @@ refresh when you change source files.
 [docs]: https://leaflet-geosearch.meijer.works
 [babel-polyfill]: https://npmjs.com/babel-polyfill
 [unfetch]: https://npmjs.com/unfetch
-[algolia]: https://leaflet-geosearch.meijer.works/providers/algolia
 [amap]: https://leaflet-geosearch.meijer.works/providers/amap
 [bing]: https://leaflet-geosearch.meijer.works/providers/bing
 [esri]: https://leaflet-geosearch.meijer.works/providers/esri
 [geocode earth]: https://leaflet-geosearch.meijer.works/providers/geocode-earth
 [google]: https://leaflet-geosearch.meijer.works/providers/google
+[here]: https://leaflet-geosearch.meijer.works/providers/here
 [locationiq]: https://leaflet-geosearch.meijer.works/providers/locationiq
 [opencage]: https://leaflet-geosearch.meijer.works/providers/opencage
 [openstreetmap]: https://leaflet-geosearch.meijer.works/providers/openstreetmap
 [pdoknl]: https://leaflet-geosearch.meijer.works/providers/pdoknl
 [pelias]: https://leaflet-geosearch.meijer.works/providers/pelias
+[photon]: https://leaflet-geosearch.meijer.works/providers/photon
 
 ## Contributors ✨
 
