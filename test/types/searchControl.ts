@@ -16,4 +16,4 @@ const called = SearchControl({ provider });
 map.addControl(constructed);
 map.addControl(called);
 constructed.getContainer();
-called.options.provider;
+called.setPosition(called.options.position);
