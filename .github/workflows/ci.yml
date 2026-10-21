@@ -230,7 +230,8 @@ jobs:
           git push origin HEAD:gh-pages
 
   release:
-    needs: [tests, typescript]
+    # publish only when every check passed
+    needs: [eslint, typescript, tests, package, docs]
     if: github.event_name == 'push' && github.repository == 'smeijer/leaflet-geosearch'
     runs-on: ubuntu-latest
     environment: npm
@@ -251,7 +252,7 @@ jobs:
         run: npm run build
 
       - name: Release
-        uses: cycjimmy/semantic-release-action@v6
+        uses: cycjimmy/semantic-release-action@v8
         with:
           semantic_version: 25
           branches: |
