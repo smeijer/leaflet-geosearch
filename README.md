@@ -35,6 +35,16 @@ This library is written with the latest technologies in mind. Thereby it is requ
 - [babel-polyfill], for `array.includes` support.
 - [unfetch], for `fetch` requests.
 
+## Upgrading to 5.0
+
+5.0 changes some behaviour, not the API. The full list with examples is in the [upgrade notes](https://leaflet-geosearch.meijer.works/upgrading). In short:
+
+- the default `resultFormat` and `popupFormat` escape the label. Pass your own formatters if your provider returns html on purpose.
+- a picked suggestion is shown right away instead of being searched again. `requeryOnSelect: true` brings the old behaviour back.
+- failed searches fire `geosearch/error` on the map instead of an unhandled promise rejection.
+- the Google provider uses `@googlemaps/js-api-loader` 2. `url`, `nonce`, `retries` and `id` are ignored.
+- the Esri provider asks for up to 5 locations instead of 1.
+
 # About
 
 This library adds support for geocoding _(address lookup, a.k.a. geosearching)_

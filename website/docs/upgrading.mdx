@@ -1,0 +1,56 @@
+# Upgrading to 5.0
+
+5.0 fixes a lot of long-standing issues, and some of those fixes change what you see. The API is the same: nothing was removed or renamed, and the browser support didn't change. If your setup relied on one of the behaviours below, this is how to get it back.
+
+## Labels are escaped
+
+The default `resultFormat` and `popupFormat` escape the label, since it comes from the provider (OpenStreetMap names are user edited). If your provider returns html in its labels on purpose, render it with your own formatters:
+
+```js
+new GeoSearchControl({
+  provider,
+  resultFormat: ({ result }) => result.label,
+  popupFormat: ({ result }) => result.label,
+});
+```
+
+## A picked suggestion isn't searched again
+
+Picking a suggestion (click, or arrows and enter) shows it right away instead of searching the provider a second time. Suggestions without coordinates are still searched. To always search again, like before:
+
+```js
+new GeoSearchControl({ provider, requeryOnSelect: true });
+```
+
+## Failed searches fire an event
+
+A failed search (offline, a server error, a blocked request) used to end in an unhandled promise rejection. Now the control fires `geosearch/error` on the map and shows its error style until the user types again:
+
+```js
+map.on('geosearch/error', ({ error, query, source }) => {
+  console.warn(`search for "${query}" failed`, error);
+});
+```
+
+`control.onSubmit()` resolves in that case instead of rejecting.
+
+## Fewer autocomplete requests
+
+Autocomplete no longer searches again for the same text (keys like shift or tab), drops answers that come back after a newer search started, and also searches after a paste or on mobile keyboards. Custom providers get an optional `signal` in `search()` to cancel outdated requests; ignoring it is fine.
+
+## Options
+
+Options passed as `undefined` keep their default, and `marker` options are merged with the defaults, so `marker: { draggable: true }` keeps the default icon.
+
+## Providers
+
+- **Google** uses `@googlemaps/js-api-loader` 2. The option names stay the same (`apiKey`, `version`, `language`, ...). `url`, `nonce`, `retries` and `id` don't exist in the new loader and are ignored with a warning. If the page already loaded the Maps JavaScript API, the provider uses it instead of loading it again.
+- **Esri** asks for up to 5 locations instead of 1. Set `params.maxLocations` to change that.
+- **OpenStreetMap**, **LocationIQ** and **CivilDefenseMap** use a `format` you pass in `params` instead of always sending `format=json`.
+
+## Package
+
+- the npm package no longer ships the tests, fixtures and the old docs theme.
+- `package.json` has `"sideEffects": ["*.css"]`. Importing the css still works; importing the package only for its side effects keeps nothing, since it has none.
+- `@types/google.maps` is installed with the package.
+- new entry `leaflet-geosearch/providers` with the providers only, without Leaflet. Use it for server-side rendering.
