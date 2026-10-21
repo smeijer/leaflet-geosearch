@@ -99,7 +99,6 @@
     "concurrently": "^7.4.0",
     "cross-env": "^7.0.3",
     "docz": "^2.3.1",
-    "docz-theme-default": "^1.2.0",
     "eslint": "^8.24.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
