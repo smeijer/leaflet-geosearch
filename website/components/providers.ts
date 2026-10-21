@@ -17,6 +17,7 @@ import {
   OpenStreetMapProvider,
   PdokNlProvider,
   PeliasProvider,
+  PhotonProvider,
 } from 'leaflet-geosearch/providers';
 
 // the keys are set at build time (see rspress.config.ts) and end up in the
@@ -48,6 +49,7 @@ const providers = {
   OpenStreetMap: () => new OpenStreetMapProvider(),
   PdokNl: () => new PdokNlProvider(),
   Pelias: () => new PeliasProvider(),
+  Photon: () => new PhotonProvider(),
 };
 
 export type ProviderName = keyof typeof providers;

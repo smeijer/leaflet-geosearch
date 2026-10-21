@@ -60,6 +60,7 @@ The control comes with a number of default providers:
 - [OpenStreetMap]
 - [PdokNl]
 - [Pelias]
+- [Photon](https://github.com/komoot/photon)
 - [Mapbox](https://docs.mapbox.com/help/tutorials/local-search-geocoding-api/)
 - [GeoApiFR](https://geo.api.gouv.fr/adresse)
 - [Geoapify](https://apidocs.geoapify.com/docs/geocoding/forward-geocoding/#about)

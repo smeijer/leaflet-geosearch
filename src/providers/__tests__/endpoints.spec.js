@@ -14,6 +14,7 @@ import {
   OpenStreetMapProvider,
   PdokNlProvider,
   PeliasProvider,
+  PhotonProvider,
 } from '../index';
 import { RequestType } from '../provider';
 
@@ -268,6 +269,21 @@ describe('provider endpoints', () => {
     const custom = new EsriProvider({ params: { token: 'key' } });
     custom.searchUrl = 'https://example.com/find';
     expect(search(custom).split('?')[0]).toEqual('https://example.com/find');
+  });
+
+  test('Photon searches, reverses and takes a custom host', () => {
+    expect(search(new PhotonProvider())).toEqual(
+      'https://photon.komoot.io/api?q=Den%20Haag',
+    );
+    expect(
+      new PhotonProvider().endpoint({
+        query: { lat: 52.08, lon: 4.3 },
+        type: RequestType.REVERSE,
+      }),
+    ).toEqual('https://photon.komoot.io/reverse?lat=52.08&lon=4.3');
+    expect(
+      search(new PhotonProvider({ host: 'https://photon.example.com' })),
+    ).toEqual('https://photon.example.com/api?q=Den%20Haag');
   });
 
   test('Pelias uses a custom host', () => {

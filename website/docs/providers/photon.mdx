@@ -1,0 +1,44 @@
+import Map from '../../components/Map';
+
+# Photon Provider
+
+[Photon][1] is an open-source geocoder for OpenStreetMap data, built for search as you type. It works without an API key.
+
+The public server at `photon.komoot.io` is free for reasonable use, without guarantees. For heavy traffic, run your own server and point the provider to it with `host`.
+
+<Map provider="Photon" />
+
+```js
+import { PhotonProvider } from 'leaflet-geosearch';
+
+const provider = new PhotonProvider();
+
+// or your own server
+const ownProvider = new PhotonProvider({ host: 'https://photon.example.com' });
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+    style: 'bar',
+  }),
+);
+```
+
+## Optional parameters
+
+Photon supports [parameters][2] like `lang`, `limit`, a location bias with `lat`/`lon`, or `bbox`. Pass them in `params`:
+
+```js
+const provider = new PhotonProvider({
+  params: {
+    lang: 'de', // results in German
+    limit: 5,
+  },
+});
+```
+
+[1]: https://github.com/komoot/photon
+[2]: https://github.com/komoot/photon/blob/master/docs/api-v1.md

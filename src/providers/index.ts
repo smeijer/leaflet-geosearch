@@ -14,6 +14,7 @@ export { default as OpenCageProvider } from './openCageProvider';
 export { default as OpenStreetMapProvider } from './openStreetMapProvider';
 export { default as PdokNlProvider } from './pdokNlProvider';
 export { default as PeliasProvider } from './peliasProvider';
+export { default as PhotonProvider } from './photonProvider';
 
 export { default as Provider } from './provider';
 export { default as JsonProvider } from './provider';

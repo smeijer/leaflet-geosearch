@@ -14,5 +14,6 @@
   { "type": "file", "name": "openstreetmap", "label": "OpenStreetMap" },
   { "type": "file", "name": "pdoknl", "label": "PdokNl" },
   { "type": "file", "name": "pelias", "label": "Pelias" },
+  { "type": "file", "name": "photon", "label": "Photon" },
   { "type": "file", "name": "custom-providers", "label": "Custom Providers" }
 ]

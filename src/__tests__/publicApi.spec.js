@@ -25,6 +25,7 @@ test('exports', () => {
     'OpenStreetMapProvider',
     'PdokNlProvider',
     'PeliasProvider',
+    'PhotonProvider',
     'SearchControl',
     'SearchElement',
   ]);
