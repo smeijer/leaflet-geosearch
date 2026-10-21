@@ -4,9 +4,9 @@ import Map from '../components/Map';
 
 `leaflet-geosearch` adds support for geocoding (address lookup, a.k.a. geosearching) to your (web) application. It comes with controls to be embedded in your Leaflet map.
 
-We support the following providers out-of-the-box: [Bing](./providers/bing), [Esri](./providers/esri), [Google](./providers/google), [OpenStreetMap](./providers/openstreetmap), [LocationIQ](./providers/locationiq), [OpenCage](./providers/opencage).
+It comes with providers for [OpenStreetMap](./providers/openstreetmap), [Google](./providers/google), [Bing](./providers/bing), [Esri](./providers/esri), [LocationIQ](./providers/locationiq), [OpenCage](./providers/opencage) and more, see the Providers section. You can also [write your own](./providers/custom-providers).
 
-Although this project is named `leaflet-geosearch`, this library is also usable without LeafletJS, and does not have any dependencies on Leaflet whatsoever.
+Although this project is named `leaflet-geosearch`, the providers also work without Leaflet, for example to look up addresses in a form. Import them from `leaflet-geosearch/providers` when Leaflet isn't available, like during server-side rendering (see [Usage](./usage)).
 
 <Map />
 
@@ -31,7 +31,7 @@ Include the CSS file in the `head` section of your page:
 ```html
 <link
   rel="stylesheet"
-  href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"
+  href="https://unpkg.com/leaflet-geosearch@latest/dist/geosearch.css"
 />
 ```
 
