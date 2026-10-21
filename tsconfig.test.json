@@ -4,10 +4,5 @@
     "noEmit": true
   },
   "include": ["src", "typings", "test/types"],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "**/*.spec.js",
-    "src/gatsby-theme-docz"
-  ]
+  "exclude": ["node_modules", "**/*.spec.ts", "**/*.spec.js"]
 }

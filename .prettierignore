@@ -6,5 +6,6 @@ coverage
 .idea
 .env
 .tmp
-.docz
 .rts2_cache*
+website/doc_build
+website/.rspress

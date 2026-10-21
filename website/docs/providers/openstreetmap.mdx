@@ -1,0 +1,69 @@
+import Map from '../../components/Map';
+
+# OpenStreetMap Provider
+
+For more options and configurations, see the [OpenStreetMap Nominatim wiki][1].
+
+<Map provider="OpenStreetMap" />
+
+```js
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+
+const provider = new OpenStreetMapProvider();
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+    style: 'bar',
+  }),
+);
+```
+
+## Usage policy
+
+The public Nominatim server (`nominatim.openstreetmap.org`) is free, but it has a [usage policy][3]. The short version:
+
+- your app must be identifiable. Browsers send a referer, which is enough. Where that is missing (e.g. in an app built with Electron), add the `email` parameter.
+- search-as-you-type is not allowed on the public server, and it doesn't work well anyway, because Nominatim can't search partial words. Turn off `autoComplete` on the control, or run your own Nominatim, or use another provider for autocomplete.
+- keep the number of requests low. The control can help with `minQueryLength`, `autoCompleteDelay` and `cacheSize`.
+
+The `email` parameter is not a login and doesn't give you more requests. It lets the Nominatim admins tell your (small) traffic apart from scrapers they need to block.
+
+```js
+const provider = new OpenStreetMapProvider({
+  params: {
+    email: 'john@example.com', // identifies your app to the Nominatim admins
+  },
+});
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+    autoComplete: false, // search-as-you-type is not allowed on nominatim.openstreetmap.org
+  }),
+);
+```
+
+## Optional parameters
+
+OpenStreetMap Nominatim supports a number of [optional parameters][2]. As the api requires those parameters to be added to the url, they can be added to the `params` key of the provider.
+
+All options defined next to the `params` key, would have been added to the request body.
+
+```js
+const provider = new OpenStreetMapProvider({
+  params: {
+    'accept-language': 'nl', // render results in Dutch
+    countrycodes: 'nl', // limit search results to the Netherlands
+    addressdetails: 1, // include additional address detail parts
+    format: 'jsonv2', // the default is json
+  },
+});
+```
+
+[1]: http://wiki.openstreetmap.org/wiki/Nominatim
+[2]: https://nominatim.org/release-docs/develop/api/Search/#parameters
+[3]: https://operations.osmfoundation.org/policies/nominatim

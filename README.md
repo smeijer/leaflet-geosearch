@@ -8,7 +8,7 @@
 
 **Demo and Docs: [leaflet-geosearch](https://leaflet-geosearch.meijer.works)**
 
-![animation of geosearch](./docs/assets/img/geosearch.gif)
+![animation of geosearch](./website/docs/public/img/geosearch.gif)
 
 ## Installation
 
@@ -173,7 +173,7 @@ this with on of the other included providers as well as your own custom made
 providers. Remember to setup the provider with a `key` when required (Google and
 Bing for example).
 
-![search control](./docs/assets/img/searchbar.png)
+![search control](./website/docs/public/img/searchbar.png)
 
 ```js
 import L from 'leaflet';
@@ -245,7 +245,7 @@ const MyMap = () => {
 There are some configurable options like setting the position of the search input
 and whether or not a marker should be displayed at the position of the search result.
 
-![search button](./docs/assets/img/searchbutton.png)
+![search button](./website/docs/public/img/searchbutton.png)
 There are two visual styles of this control. One is the more 'leaflet-way' by
 putting the search control under a button (see image above). And one where the
 search control is permanently shown as a search bar (see image under
