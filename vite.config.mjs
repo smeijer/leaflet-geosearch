@@ -66,6 +66,11 @@ export default defineConfig(({ mode }) => {
       },
       globals: true,
       include: ['src/**/*.spec.js'],
+      coverage: {
+        // the library code only, not the test fixtures and helpers
+        include: ['src/**/*.ts'],
+        exclude: ['src/**/__tests__/**'],
+      },
       setupFiles: ['./vitest.setup.js'],
       // expose all .env variables (not only VITE_*) to tests through process.env
       env: loadEnv(mode, process.cwd(), ''),

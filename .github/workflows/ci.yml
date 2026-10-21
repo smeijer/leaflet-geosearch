@@ -116,8 +116,9 @@ jobs:
       - name: install specific leaflet version
         run: npm install leaflet@${{ matrix.leaflet }}
 
+      # the run with the latest Leaflet also measures coverage
       - name: unit tests
-        run: npm run ci:test
+        run: npm run ci:test -- ${{ matrix.leaflet == '1.9.4' && '--coverage --coverage.reporter=json-summary --coverage.reporter=text-summary' || '' }}
         env:
           GATSBY_BING_API_KEY: ${{ secrets.BING_API_KEY }}
           GATSBY_GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
@@ -125,6 +126,10 @@ jobs:
           GATSBY_OPENCAGE_API_KEY: ${{ secrets.OPENCAGE_API_KEY }}
           GATSBY_HERE_API_KEY: ${{ secrets.HERE_API_KEY }}
           GATSBY_AMAP_API_KEY: ${{ secrets.AMAP_API_KEY }}
+
+      - name: coverage summary
+        if: matrix.leaflet == '1.9.4'
+        run: node scripts/coverage-summary.mjs
 
   package:
     name: Package
