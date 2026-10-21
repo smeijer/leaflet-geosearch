@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>leaflet-geosearch e2e (UMD)</title>
+    <link rel="stylesheet" href="/node_modules/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/dist/geosearch.css" />
+    <style>
+      #map,
+      #map2 {
+        width: 600px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="map2"></div>
+
+    <script src="/node_modules/leaflet/dist/leaflet.js"></script>
+    <script src="/dist/geosearch.umd.js"></script>
+    <script>
+      // the tests add the control; map events end up in window.events
+      window.events = [];
+      window.map = new L.Map('map').setView([52, 5], 8);
+      [
+        'geosearch/showlocation',
+        'geosearch/error',
+        'geosearch/marker/dragend',
+      ].forEach((type) =>
+        window.map.on(type, (e) =>
+          window.events.push({
+            type,
+            label: e.location?.label,
+            source: e.source,
+          }),
+        ),
+      );
+    </script>
+  </body>
+</html>

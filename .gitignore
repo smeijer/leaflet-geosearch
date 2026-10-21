@@ -8,3 +8,5 @@ coverage
 .tmp
 .rts2_cache*
 pnpm-lock.yaml
+/test-results/
+/playwright-report/
