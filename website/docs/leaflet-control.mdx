@@ -304,6 +304,32 @@ const searchControl = new SearchControl({
 
 The control follows the combobox pattern of the ARIA authoring practices. The input is a combobox that controls the result list, the suggestions are options, and the arrow keys move the selection screen readers announce. The search and reset buttons are named by `searchLabel` and `clearSearchLabel`, which `setLabels` can change later.
 
+## Security
+
+The labels come from the provider, and for OpenStreetMap they are edited by anyone. The default `resultFormat` and `popupFormat` escape them, and provider names, `searchLabel`, `clearSearchLabel` and `setQuery` are always set as text.
+
+Some options are put into the page as html, on purpose:
+
+| Option                                       | Put in as                                        |
+| -------------------------------------------- | ------------------------------------------------ |
+| `resultFormat`, `popupFormat`                | html: escape the parts that come from the result |
+| `notFoundMessage` (also through `setLabels`) | html                                             |
+| `searchIcon`                                 | html                                             |
+
+Only pass markup you wrote yourself to these, never text from users or from a provider without escaping it:
+
+```js
+const escape = (text) =>
+  String(text).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+
+new SearchControl({
+  provider,
+  resultFormat: ({ result }) => `<b>${escape(result.raw.name)}</b>`,
+});
+```
+
+API keys used in the browser can always be seen. Restrict them to your domain in the console of the service. With a Content Security Policy, allow the hosts of your provider in `connect-src`, and for the Bing provider, which answers through JSONP, `dev.virtualearth.net` in `script-src`. The Google provider loads the Maps JavaScript API from `maps.googleapis.com`.
+
 ## Methods
 
 | Method                                                                                                  | What it does                                                                                       |
