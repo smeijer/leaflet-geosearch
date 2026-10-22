@@ -12,6 +12,8 @@ export interface MapProps {
   /** several providers, shown in the provider select */
   providers?: ProviderName[];
   controlOptions?: Record<string, unknown>;
+  /** extra params for the provider, e.g. { countrycodes: 'us,ca' } */
+  providerParams?: Record<string, string | number | boolean>;
 }
 
 // a plain Leaflet map with the search control. Leaflet needs a browser, so
@@ -20,9 +22,11 @@ export default function Map({
   provider = 'OpenStreetMap',
   providers,
   controlOptions = {},
+  providerParams,
 }: MapProps) {
   const ref = useRef<HTMLDivElement>(null);
   const options = JSON.stringify(controlOptions);
+  const params = JSON.stringify(providerParams || {});
   const names = providers?.join(',');
 
   useEffect(() => {
@@ -60,6 +64,14 @@ export default function Map({
           }
         : { provider: createProvider(provider) };
 
+      // added to the params the provider already has, like its key
+      const extra = JSON.parse(params);
+      [...(choice.providers || []).map((c) => c.provider), choice.provider]
+        .filter(Boolean)
+        .forEach((p) => {
+          p!.options.params = { ...p!.options.params, ...extra };
+        });
+
       leafletMap.addControl(
         new GeoSearchControl({
           style: 'bar',
@@ -73,7 +85,7 @@ export default function Map({
       cancelled = true;
       map?.remove();
     };
-  }, [provider, names, options]);
+  }, [provider, names, options, params]);
 
   return <div ref={ref} className={styles.map} />;
 }

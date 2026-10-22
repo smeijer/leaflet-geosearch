@@ -64,6 +64,27 @@ const provider = new OpenStreetMapProvider({
 });
 ```
 
+## Limiting the results to an area
+
+Nominatim can leave out results outside an area. With `countrycodes` it only searches the given countries ([ISO 3166-1 alpha-2][4] codes). With `viewbox` and `bounded: 1` it only searches inside a box, given as `west,north,east,south` (longitude, latitude):
+
+<Map provider="OpenStreetMap" providerParams={{ countrycodes: 'us,ca' }} />
+
+```js
+// the United States and Canada
+const countries = new OpenStreetMapProvider({
+  params: { countrycodes: 'us,ca' },
+});
+
+// a box around the contiguous United States
+const box = new OpenStreetMapProvider({
+  params: { viewbox: '-125,49,-66,24', bounded: 1 },
+});
+```
+
+Without `bounded`, the `viewbox` only puts the results inside the box first. Other providers have their own parameters for this, like `bbox` for [Photon](/providers/photon) or `boundary.rect` for [Pelias](/providers/pelias), see the page of each provider.
+
 [1]: http://wiki.openstreetmap.org/wiki/Nominatim
 [2]: https://nominatim.org/release-docs/develop/api/Search/#parameters
 [3]: https://operations.osmfoundation.org/policies/nominatim
+[4]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
