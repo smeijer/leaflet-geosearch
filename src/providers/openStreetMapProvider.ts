@@ -5,6 +5,7 @@ import AbstractProvider, {
   ProviderOptions,
   RequestType,
   SearchResult,
+  LatLng,
 } from './provider';
 
 export type RequestResult = RawResult[];
@@ -63,6 +64,10 @@ export default class OpenStreetMapProvider extends AbstractProvider<
       default:
         return this.getUrl(this.searchUrl, params);
     }
+  }
+
+  reverseParams({ lat, lng }: LatLng): ProviderParams {
+    return { lat, lon: lng };
   }
 
   parse(response: ParseArgument<RequestResult>): SearchResult<RawResult>[] {

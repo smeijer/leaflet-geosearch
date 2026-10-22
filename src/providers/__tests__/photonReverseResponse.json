@@ -1,0 +1,22 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_type": "R",
+        "osm_id": 271110,
+        "osm_key": "place",
+        "osm_value": "city",
+        "type": "city",
+        "name": "Amsterdam",
+        "state": "Noord-Holland",
+        "country": "Nederland",
+        "countrycode": "NL",
+        "extra": { "admin_level": "10" },
+        "extent": [4.7287776, 52.4310638, 5.0791622, 52.2781742]
+      },
+      "geometry": { "type": "Point", "coordinates": [4.8924534, 52.3730796] }
+    }
+  ]
+}

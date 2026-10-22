@@ -6,6 +6,7 @@ import AbstractProvider, {
   ProviderParams,
   RequestType,
   SearchResult,
+  LatLng,
 } from './provider';
 
 export interface RequestResult {
@@ -69,6 +70,10 @@ export default class PhotonProvider extends AbstractProvider<
       default:
         return this.getUrl(this.searchUrl, params);
     }
+  }
+
+  reverseParams({ lat, lng }: LatLng): ProviderParams {
+    return { lat, lon: lng };
   }
 
   parse(response: ParseArgument<RequestResult>): SearchResult<RawResult>[] {

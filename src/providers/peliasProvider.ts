@@ -4,6 +4,8 @@ import AbstractProvider, {
   ProviderOptions,
   RequestType,
   SearchResult,
+  LatLng,
+  ProviderParams,
 } from './provider';
 
 export interface RequestResult {
@@ -137,6 +139,10 @@ export default class PeliasProvider extends AbstractProvider<
           typeof query === 'string' ? { text: query } : query;
         return this.getUrl(`${this.host}/v1/autocomplete`, autocompleteParams);
     }
+  }
+
+  reverseParams({ lat, lng }: LatLng): ProviderParams {
+    return { 'point.lat': lat, 'point.lon': lng };
   }
 
   parse(response: ParseArgument<RequestResult>): SearchResult<RawResult>[] {

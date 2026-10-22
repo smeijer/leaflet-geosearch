@@ -38,6 +38,11 @@ export interface SearchArgument {
   signal?: AbortSignal;
 }
 
+export interface ReverseArgument extends LatLng {
+  /** aborts the request */
+  signal?: AbortSignal;
+}
+
 export interface ParseArgument<TData> {
   data: TData;
 }
@@ -49,6 +54,7 @@ export interface Provider<TRequestResult, TRawResult> {
   getParamString(params: ProviderParams): string;
   parse(response: ParseArgument<TRequestResult>): SearchResult<TRawResult>[];
   search(options: SearchArgument): Promise<SearchResult<TRawResult>[]>;
+  reverse?(options: ReverseArgument): Promise<SearchResult<TRawResult>[]>;
 }
 
 export default abstract class AbstractProvider<
@@ -86,6 +92,31 @@ export default abstract class AbstractProvider<
     });
 
     const request = await fetch(url, { signal: options.signal });
+    const json: TRequestResult = await readJson(request);
+    return this.parse({ data: json });
+  }
+
+  /**
+   * the query of a reverse request for a position. The names differ per
+   * service. Providers that can't reverse geocode return null
+   */
+  reverseParams(_position: LatLng): ProviderParams | null {
+    return null;
+  }
+
+  /** the places at a position, closest first */
+  async reverse({
+    lat,
+    lng,
+    signal,
+  }: ReverseArgument): Promise<SearchResult<TRawResult>[]> {
+    const query = this.reverseParams({ lat, lng });
+    if (!query) {
+      throw new Error('This provider does not support reverse geocoding');
+    }
+
+    const url = this.endpoint({ query, type: RequestType.REVERSE });
+    const request = await fetch(url, { signal });
     const json: TRequestResult = await readJson(request);
     return this.parse({ data: json });
   }

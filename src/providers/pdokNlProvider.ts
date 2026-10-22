@@ -6,6 +6,8 @@ import AbstractProvider, {
   RequestType,
   SearchArgument,
   readJson,
+  LatLng,
+  ProviderParams,
 } from './provider';
 
 interface Doc {
@@ -89,6 +91,10 @@ export default class PdokNlProvider extends AbstractProvider<
     }
   }
 
+  reverseParams({ lat, lng }: LatLng): ProviderParams {
+    return { lat, lon: lng };
+  }
+
   parse({ data }: ParseArgument<RequestResult>) {
     return data.response.docs.map((doc) => {
       const position = doc.centroide_ll
@@ -98,8 +104,10 @@ export default class PdokNlProvider extends AbstractProvider<
         .map(Number);
 
       let highlight = doc.weergavenaam;
-      if (data.highlighting[doc.id].suggest) {
-        highlight = data.highlighting[doc.id].suggest[0];
+      // reverse answers have no highlighting
+      const suggest = data.highlighting?.[doc.id]?.suggest;
+      if (suggest) {
+        highlight = suggest[0];
       }
 
       return {
