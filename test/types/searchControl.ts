@@ -5,6 +5,7 @@ import {
   SearchControl,
   OpenStreetMapProvider,
   type ProviderChoice,
+  type ProviderInfo,
   type SelectedProvider,
 } from '../../src';
 
@@ -31,5 +32,6 @@ const several = new GeoSearchControl({
 });
 several.selectProvider(1);
 several.setProviderSelectVisible(false);
+const listed: ProviderInfo[] = several.getProviders();
 const selected: SelectedProvider = several.getSelectedProvider();
 const choices: ProviderChoice[] = [{ label: 'x', provider }];

@@ -181,6 +181,28 @@ describe('several providers', () => {
       label: 'Esri',
       provider: esri,
     });
+    expect(events.providerchange[0].providers).toEqual(control.getProviders());
+  });
+
+  test('getProviders lists the providers with their index', () => {
+    const { control, osm, esri } = twoProviders();
+    const providers = control.getProviders();
+
+    expect(providers).toEqual([
+      { index: 0, label: 'OpenStreetMap', provider: osm },
+      { index: 1, label: 'Esri', provider: esri },
+    ]);
+
+    // a copy, changing it doesn't change the control
+    providers[0].label = 'changed';
+    expect(control.getProviders()[0].label).toEqual('OpenStreetMap');
+  });
+
+  test('getProviders lists a single provider too', () => {
+    const provider = fakeProvider([]);
+    const { control } = setup({ provider });
+
+    expect(control.getProviders()).toEqual([{ index: 0, label: '', provider }]);
   });
 
   test('selectProvider updates the select', () => {

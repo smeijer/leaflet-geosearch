@@ -350,6 +350,8 @@ interface SearchControl {
   /** select a provider by its index in `providers`, or 'all' */
   selectProvider(index: number | 'all'): void;
   getSelectedProvider(): SelectedProvider;
+  /** the providers of the control, in the order of `providers` */
+  getProviders(): ProviderInfo[];
   setProviderSelectVisible(visible: boolean): void;
   formatResult(args: { result: SearchResult }): string;
   selectResult(event: KeyboardEvent): void;
@@ -921,6 +923,7 @@ const Control: SearchControl = {
 
     this.map?.fire('geosearch/providerchange', {
       provider: this.getSelectedProvider(),
+      providers: this.getProviders(),
     });
 
     // search the typed text again with the new provider
@@ -941,6 +944,10 @@ const Control: SearchControl = {
     return this.selection === 'all'
       ? { index: 'all', label: this.options.allProvidersLabel as string }
       : { ...this.choices[this.selection] };
+  },
+
+  getProviders() {
+    return this.choices.map((choice) => ({ ...choice }));
   },
 
   setProviderSelectVisible(visible) {
