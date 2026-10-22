@@ -354,6 +354,31 @@ only panned.
 
 `showResultListOnSubmit` shows the results to pick from when enter is pressed, instead of jumping to the first one. A single result is shown right away. Together with `autoComplete: false`, the provider is only searched on enter.
 
+**Several providers**
+
+`providers` replaces `provider` with a list of providers and a name for each. With more than one, a select left of the input lets the user pick one of them, or search all at once. Each suggestion then shows the name of its provider.
+
+```js
+const searchControl = new GeoSearchControl({
+  providers: [
+    { label: 'OpenStreetMap', provider: new OpenStreetMapProvider() },
+    { label: 'Esri', provider: new EsriProvider() },
+  ],
+  showProviderSelect: true, // optional: true|false  - default true
+  allProvidersLabel: 'All', // optional: string|false - default 'All', false leaves the option out
+  providerSelectLabel: 'Search with', // optional: string - accessible name of the select
+  fallback: false, // optional: false|'error'|'empty' - default false
+});
+
+searchControl.selectProvider(1); // the index in providers, or 'all'
+searchControl.getSelectedProvider(); // { index: 1, label: 'Esri', provider }
+searchControl.setProviderSelectVisible(false);
+```
+
+`fallback: 'error'` searches the next provider when the selected one fails, `'empty'` also when it finds nothing. With `showProviderSelect: false` and `allProvidersLabel: false` that's a plain fallback: one search box that keeps working when the first provider is down.
+
+`resultFormat`, `popupFormat` and the events also get the provider that found the result: `({ result, provider }) => ...`.
+
 **Events**
 
 `geosearch/showlocation` is fired when location is chosen from the result list.
@@ -368,11 +393,19 @@ map.on('geosearch/showlocation', yourEventHandler);
 map.on('geosearch/marker/dragend', yourEventHandler);
 ```
 
-`geosearch/error` is fired when a search fails, for example when the provider can't be reached. The event has the `error`, the `query` and the `source` (`'autocomplete'` or `'submit'`). The control also shows its error state until the user types again.
+`geosearch/error` is fired when a search fails, for example when the provider can't be reached. The event has the `error`, the `query`, the `source` (`'autocomplete'` or `'submit'`) and the `provider`. The control also shows its error state until the user types again. With several providers the error state only shows when none of them found anything.
 
 ```js
 map.on('geosearch/error', ({ error, query, source }) => {
   console.warn(`search for "${query}" failed`, error);
+});
+```
+
+`geosearch/providerchange` is fired when another provider is picked, by the user or with `selectProvider`.
+
+```js
+map.on('geosearch/providerchange', ({ provider }) => {
+  console.log(provider.index, provider.label);
 });
 ```
 

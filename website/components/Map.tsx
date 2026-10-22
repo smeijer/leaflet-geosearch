@@ -9,6 +9,8 @@ import styles from './Map.module.css';
 
 export interface MapProps {
   provider?: ProviderName;
+  /** several providers, shown in the provider select */
+  providers?: ProviderName[];
   controlOptions?: Record<string, unknown>;
 }
 
@@ -16,10 +18,12 @@ export interface MapProps {
 // it is only loaded once the component is mounted
 export default function Map({
   provider = 'OpenStreetMap',
+  providers,
   controlOptions = {},
 }: MapProps) {
   const ref = useRef<HTMLDivElement>(null);
   const options = JSON.stringify(controlOptions);
+  const names = providers?.join(',');
 
   useEffect(() => {
     let map: { remove(): void } | undefined;
@@ -47,10 +51,19 @@ export default function Map({
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(leafletMap);
 
+      const choice = names
+        ? {
+            providers: (names.split(',') as ProviderName[]).map((name) => ({
+              label: name,
+              provider: createProvider(name),
+            })),
+          }
+        : { provider: createProvider(provider) };
+
       leafletMap.addControl(
         new GeoSearchControl({
           style: 'bar',
-          provider: createProvider(provider),
+          ...choice,
           ...JSON.parse(options),
         }),
       );
@@ -60,7 +73,7 @@ export default function Map({
       cancelled = true;
       map?.remove();
     };
-  }, [provider, options]);
+  }, [provider, names, options]);
 
   return <div ref={ref} className={styles.map} />;
 }
