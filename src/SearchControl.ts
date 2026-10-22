@@ -1139,13 +1139,21 @@ const Control: SearchControl = {
   },
 
   closeResults() {
-    const { container } = this.searchElement;
+    const { container, input } = this.searchElement;
 
     if (container.classList.contains('active')) {
       removeClassName(container, 'active');
     }
 
-    this.clearResults();
+    // autoClose closes the box after showing a result. its marker stays,
+    // without keepResult only the text goes
+    if (!this.options.keepResult) {
+      input.value = '';
+    }
+
+    this.cancelSearch();
+    this.lastQuery = '';
+    this.resultList?.clear();
   },
 
   addMarker(result, query) {
