@@ -43,34 +43,16 @@ describe('option merging', () => {
     const { control } = setup({ marker: { draggable: true } });
 
     expect(control.options.marker.draggable).toBe(true);
-    expect(control.options.marker.icon).toBeInstanceOf(L.Icon.Default);
+    expect(control.options.marker.icon).toBeUndefined();
   });
 
-  test('the default icon is created by the first control, not on import', async () => {
-    const Default = L.Icon.Default;
-    let created = 0;
-    L.Icon.Default = class extends Default {
-      constructor(...args) {
-        super(...args);
-        created += 1;
-      }
-    };
+  test("markers get Leaflet's default icon", async () => {
+    const { control } = setup();
 
-    try {
-      vi.resetModules();
-      const { default: FreshControl } = await import('../SearchControl');
-      expect(created).toBe(0);
+    await control.onSubmit({ query: 'den' });
 
-      const provider = { search: async () => [] };
-      const first = new FreshControl({ provider });
-      const second = new FreshControl({ provider });
-
-      expect(created).toBe(1);
-      expect(first.options.marker.icon).toBeInstanceOf(Default);
-      expect(second.options.marker.icon).toBe(first.options.marker.icon);
-    } finally {
-      L.Icon.Default = Default;
-    }
+    const [marker] = control.markers.getLayers();
+    expect(marker.options.icon).toBe(new L.Marker([0, 0]).options.icon);
   });
 
   test('a custom marker icon replaces the default one', () => {

@@ -311,8 +311,7 @@ new GeoSearchControl({
   showMarker: true, // optional: true|false  - default true
   showPopup: false, // optional: true|false  - default false
   marker: {
-    // optional: L.Marker    - default L.Icon.Default
-    icon: new L.Icon.Default(),
+    // optional: L.MarkerOptions - without icon, Leaflet's default icon is used
     draggable: false,
   },
   popupFormat: ({ query, result }) => result.label, // optional: function    - default returns result label,

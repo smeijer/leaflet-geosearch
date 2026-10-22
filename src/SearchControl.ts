@@ -5,7 +5,6 @@ import {
   DragEndEvent,
   FeatureGroup,
   FitBoundsOptions,
-  Icon,
   Marker,
   MarkerOptions,
   PopupOptions,
@@ -64,7 +63,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider' | 'providers'> = {
   // they are escaped before being used as html
   popupFormat: ({ result }) => escapeHtml(result.label),
   resultFormat: ({ result }) => escapeHtml(result.label),
-  // the default icon is added by initialize (see defaultIcon)
+  // no icon, so Marker uses Leaflet's default icon
   marker: {
     draggable: false,
   },
@@ -135,18 +134,6 @@ function centerOf([[south, west], [north, east]]: BoundsTuple): PointTuple {
 
 function hasPosition(result?: SearchResult): result is SearchResult {
   return !!result && Number.isFinite(result.x) && Number.isFinite(result.y);
-}
-
-let sharedIcon: Icon.Default | undefined;
-
-// created on first use instead of when the module loads, so importing the
-// package has no side effects and bundlers can drop what isn't used
-function defaultIcon(): Icon.Default {
-  if (!sharedIcon) {
-    sharedIcon = new Icon.Default();
-  }
-
-  return sharedIcon;
 }
 
 const UNINITIALIZED_ERR =
@@ -473,7 +460,6 @@ const Control: SearchControl = {
       provider: choices[0].provider,
       marker: {
         ...defaultOptions.marker,
-        icon: defaultIcon(),
         ...withoutUndefined(given.marker),
       },
     };
