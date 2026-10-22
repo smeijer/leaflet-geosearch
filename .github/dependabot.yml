@@ -1,0 +1,13 @@
+version: 2
+updates:
+  # the actions are pinned to a commit. Dependabot bumps the commit and the
+  # version comment next to it, all in one pull request a month
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ['*']
+    commit-message:
+      prefix: ci
