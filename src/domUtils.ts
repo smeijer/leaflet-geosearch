@@ -45,12 +45,22 @@ export function createScriptElement<T = object>(
   const script = createElement('script', null, document.body);
   script.setAttribute('type', 'text/javascript');
 
-  return new Promise((resolve) => {
-    (window as any)[cb] = (json: T): void => {
+  return new Promise((resolve, reject) => {
+    const cleanUp = () => {
       script.remove();
       delete (window as any)[cb];
+    };
+
+    (window as any)[cb] = (json: T): void => {
+      cleanUp();
       resolve(json);
     };
+
+    // a script that can't load never calls back
+    script.addEventListener('error', () => {
+      cleanUp();
+      reject(new Error(`Request failed: ${url.split('?')[0]}`));
+    });
 
     script.setAttribute('src', url);
   });
