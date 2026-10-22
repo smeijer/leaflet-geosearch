@@ -320,6 +320,7 @@ jobs:
         run: npm run build
 
       - name: Release
+        id: release
         uses: cycjimmy/semantic-release-action@d9bf53a078bd2f86aaffaec796dbb3d28f1b6f34 # v8.1.3
         with:
           semantic_version: 25
@@ -335,3 +336,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
+
+      # jsDelivr caches version ranges like @5 and @latest for up to a week.
+      # Purging the files the docs link to makes the new version show up
+      # right away. Skipped for prereleases, and a failed purge doesn't fail
+      # the release
+      - name: Purge the jsDelivr cache
+        if: steps.release.outputs.new_release_published == 'true' && steps.release.outputs.new_release_channel == ''
+        continue-on-error: true
+        env:
+          MAJOR: ${{ steps.release.outputs.new_release_major_version }}
+        run: |
+          for version in "@$MAJOR" "@latest" ""; do
+            for file in "" /dist/bundle.min.js /dist/geosearch.umd.js /dist/geosearch.module.js /dist/geosearch.css; do
+              curl -fsS --retry 2 -o /dev/null "https://purge.jsdelivr.net/npm/leaflet-geosearch$version$file"
+            done
+          done
