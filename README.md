@@ -389,6 +389,16 @@ searchControl.setProviderSelectVisible(false);
 
 `resultFormat`, `popupFormat` and the events also get the provider that found the result: `({ result, provider }) => ...`.
 
+**Methods**
+
+`reset()` clears the input, the suggestions and the markers. `setQuery(text)` puts text into the input without searching. `setLabels({ searchLabel, clearSearchLabel, notFoundMessage, providerSelectLabel })` changes the texts, for example when the language changes.
+
+```js
+searchControl.reset();
+searchControl.setQuery('Amsterdam');
+searchControl.setLabels({ searchLabel: 'Adres girin' });
+```
+
 **Events**
 
 `geosearch/showlocation` is fired when location is chosen from the result list.

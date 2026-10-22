@@ -193,6 +193,32 @@ map.on('geosearch/marker/reverse', ({ location }) => {
 });
 ```
 
+## Methods
+
+| Method                                                                                                  | What it does                                                                                       |
+| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `open()`, `close()`                                                                                     | Opens or closes the search box (`button` style). `close` also clears it unless `keepResult` is on. |
+| `reset()`                                                                                               | Clears the input, the suggestions and the markers, and drops a running search.                     |
+| `setQuery(text)`                                                                                        | Puts text into the input without searching.                                                        |
+| `setLabels(labels)`                                                                                     | Changes the texts: `searchLabel`, `clearSearchLabel`, `notFoundMessage` and `providerSelectLabel`. |
+| `selectProvider(index)`, `getSelectedProvider()`, `getProviders()`, `setProviderSelectVisible(visible)` | See [Multiple providers](#multiple-providers).                                                     |
+
+For example, a map in a dialog that should start empty each time, with texts from your translations:
+
+```js
+dialog.addEventListener('open', () => {
+  searchControl.reset();
+});
+
+i18n.on('languageChanged', () => {
+  searchControl.setLabels({
+    searchLabel: i18n.t('search.placeholder'),
+    clearSearchLabel: i18n.t('search.clear'),
+    notFoundMessage: i18n.t('search.notFound'),
+  });
+});
+```
+
 ## Options
 
 | Option                                 | Type                                      | Default                                            | Description                                                                                                                       |
