@@ -602,6 +602,8 @@ const Control: SearchControl = {
           notfound: this.classNames.notfound,
         },
         notFoundMessage: this.options.notFoundMessage,
+        input: this.searchElement.input,
+        label: this.options.searchLabel,
       });
 
       this.searchElement.form.appendChild(this.resultList.container);
@@ -1064,6 +1066,7 @@ const Control: SearchControl = {
       this.searchElement.input.placeholder = given.searchLabel;
       this.button.title = given.searchLabel;
       this.button.setAttribute('aria-label', given.searchLabel);
+      this.resultList?.container.setAttribute('aria-label', given.searchLabel);
     }
     if (given.clearSearchLabel !== undefined) {
       this.resetButton.setAttribute('aria-label', given.clearSearchLabel);
