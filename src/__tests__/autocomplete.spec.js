@@ -191,6 +191,29 @@ describe('autocomplete requests', () => {
     expect(labels(control)).toEqual(['Amsterdam']);
   });
 
+  // browsers set the target of an event from a shadow root to null once it
+  // has been dispatched, so the delayed search can't read the text from it
+  test.each(['keyup', 'input'])(
+    'a %s event without a target after dispatch still searches (#214)',
+    async (type) => {
+      const provider = { search: vi.fn(async () => []) };
+      const { input } = setup(provider);
+
+      input.value = 'den haag';
+      const event =
+        type === 'keyup'
+          ? new KeyboardEvent('keyup', { keyCode: 65 })
+          : new Event('input');
+      input.dispatchEvent(event);
+      Object.defineProperty(event, 'target', { value: null });
+      await vi.advanceTimersByTimeAsync(250);
+
+      expect(provider.search).toHaveBeenCalledWith(
+        expect.objectContaining({ query: 'den haag' }),
+      );
+    },
+  );
+
   test('keyup and input for the same keystroke search once', async () => {
     const provider = { search: vi.fn(async () => [place('Amsterdam')]) };
     const { input } = setup(provider);

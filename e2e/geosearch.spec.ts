@@ -75,6 +75,47 @@ test('a failed search fires geosearch/error and shows the error style', async ({
   ]);
 });
 
+test('the control works inside a shadow root (#214)', async ({ page }) => {
+  await answerNominatim(page);
+  await page.goto('/e2e/fixtures/umd.html');
+  await page.evaluate(() => {
+    const host = document.createElement('div');
+    document.body.appendChild(host);
+    const shadow = host.attachShadow({ mode: 'open' });
+    shadow.innerHTML =
+      '<link rel="stylesheet" href="/node_modules/leaflet/dist/leaflet.css">' +
+      '<link rel="stylesheet" href="/dist/geosearch.css">' +
+      '<div style="width: 600px; height: 400px"></div>';
+    const map = new window.L.Map(shadow.querySelector('div')!).setView(
+      [52, 5],
+      8,
+    );
+    map.on('geosearch/showlocation', () =>
+      window.events.push({ type: 'shadow/showlocation' }),
+    );
+    map.addControl(
+      new window.GeoSearch.GeoSearchControl({
+        provider: new window.GeoSearch.OpenStreetMapProvider(),
+        style: 'bar',
+      }),
+    );
+  });
+  // locators look into open shadow roots
+  const input = page.locator('.leaflet-geosearch-bar input');
+
+  await input.pressSequentially('Den Haag');
+  await expect(page.locator('.leaflet-geosearch-bar .results > *')).toHaveCount(
+    3,
+  );
+  await input.press('ArrowDown');
+  await input.press('Enter');
+
+  await expect(page.locator('.leaflet-marker-icon')).toHaveCount(1);
+  expect(await page.evaluate(() => window.events)).toEqual([
+    { type: 'shadow/showlocation' },
+  ]);
+});
+
 test('labels with html are shown as text', async ({ page }) => {
   await page.goto('/e2e/fixtures/umd.html');
   await page.evaluate(() => {
