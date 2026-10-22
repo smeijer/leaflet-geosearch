@@ -255,12 +255,15 @@ Only with `marker: { draggable: true }`. `location` is the new position of the m
 
 ```js
 map.on('geosearch/marker/dragend', ({ location, event }) => {
-  console.log(JSON.stringify(location));
+  console.log(JSON.stringify(location, null, 2));
 });
 ```
 
 ```json
-{ "lat": 52.0993, "lng": 4.3001 }
+{
+  "lat": 52.0993,
+  "lng": 4.3001
+}
 ```
 
 ### geosearch/error
@@ -270,12 +273,16 @@ map.on('geosearch/marker/dragend', ({ location, event }) => {
 ```js
 map.on('geosearch/error', ({ error, query, source, provider }) => {
   console.log(
-    JSON.stringify({
-      message: error.message,
-      query,
-      source,
-      provider: provider.label,
-    }),
+    JSON.stringify(
+      {
+        message: error.message,
+        query,
+        source,
+        provider: provider.label,
+      },
+      null,
+      2,
+    ),
   );
 });
 ```
@@ -295,12 +302,16 @@ Fired when another provider is picked in the select, or with `selectProvider`. `
 
 ```js
 map.on('geosearch/providerchange', ({ provider }) => {
-  console.log(JSON.stringify({ index: provider.index, label: provider.label }));
+  const { index, label } = provider;
+  console.log(JSON.stringify({ index, label }, null, 2));
 });
 ```
 
 ```json
-{ "index": 1, "label": "Photon" }
+{
+  "index": 1,
+  "label": "Photon"
+}
 ```
 
 For the "All" option it's `{ "index": "all", "label": "All" }`.
