@@ -18,6 +18,29 @@ const provider = new OpenStreetMapProvider();
 const results = await provider.search({ query: input.value });
 ```
 
+### Reverse geocoding
+
+`reverse` returns the places at a position, closest first, in the same format as `search`:
+
+```js
+const provider = new OpenStreetMapProvider();
+const [place] = await provider.reverse({ lat: 52.3731, lng: 4.8926 });
+
+console.log(
+  JSON.stringify({ label: place.label, x: place.x, y: place.y }, null, 2),
+);
+```
+
+```json
+{
+  "label": "Dam, Centrum, Amsterdam, Noord-Holland, Nederland, 1012 NP, Nederland",
+  "x": 4.8926932,
+  "y": 52.3733144
+}
+```
+
+OpenStreetMap, LocationIQ, CivilDefenseMap, Photon, Pelias, Geocode Earth, Geoapify, GeoApiFr and PdokNl support it. The other providers reject with "This provider does not support reverse geocoding".
+
 `leaflet-geosearch` imports Leaflet, which only runs in a browser. For server-side rendering (Next.js, Nuxt, ...), import the providers from `leaflet-geosearch/providers`. It has the same providers and doesn't import Leaflet:
 
 ```js

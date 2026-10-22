@@ -309,6 +309,7 @@ new GeoSearchControl({
   retainZoomLevel: false, // optional: true|false  - default false
   zoomToBounds: true, // optional: true|false  - default true
   fitBoundsOptions: {}, // optional: Leaflet FitBoundsOptions - default {}
+  reverseOnDragEnd: false, // optional: true|false  - default false
   animateZoom: true, // optional: true|false  - default true
   autoClose: false, // optional: true|false  - default false
   searchLabel: 'Enter address', // optional: string      - default 'Enter address'
@@ -343,6 +344,8 @@ only panned.
 `zoomToBounds` fits the map to the bounds of a result, when the provider returns them. Most OpenStreetMap results have bounds, so `zoomLevel` only applies to the others. With `zoomToBounds: false` every result is shown at `zoomLevel`, e.g. `{ zoomToBounds: false, zoomLevel: 20 }`.
 
 `fitBoundsOptions` is passed to Leaflet's `fitBounds`. `maxZoom` keeps a single building from zooming in too far, `padding` keeps the result out from under the search bar.
+
+`reverseOnDragEnd` looks up the address when a draggable marker (`marker: { draggable: true }`) is dropped, with the provider that found the result. The popup shows the new address, the input too with `keepResult`, and `geosearch/marker/reverse` is fired. Providers have a `reverse({ lat, lng })` method for this, see the [docs](https://leaflet-geosearch.meijer.works/usage#reverse-geocoding).
 
 `animateZoom` controls whether or not the pan/zoom moment is being animated.
 
@@ -398,6 +401,14 @@ map.on('geosearch/showlocation', yourEventHandler);
 
 ```js
 map.on('geosearch/marker/dragend', yourEventHandler);
+```
+
+`geosearch/marker/reverse` is fired with `reverseOnDragEnd` when the address of the dropped marker is found.
+
+```js
+map.on('geosearch/marker/reverse', ({ location, marker, provider }) => {
+  console.log(location.label);
+});
 ```
 
 `geosearch/error` is fired when a search fails, for example when the provider can't be reached. The event has the `error`, the `query`, the `source` (`'autocomplete'` or `'submit'`) and the `provider`. The control also shows its error state until the user types again. With several providers the error state only shows when none of them found anything.

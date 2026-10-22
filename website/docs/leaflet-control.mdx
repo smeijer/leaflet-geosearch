@@ -166,6 +166,33 @@ const searchControl = new SearchControl({
 });
 ```
 
+## Address of a dragged marker
+
+With a draggable marker and `reverseOnDragEnd: true`, dropping the marker looks up the address at its new position. The provider that found the result is asked, so it has to support [reverse geocoding](/usage#reverse-geocoding). The popup shows the new address, and with `keepResult` the input does too. Drag the marker after a search:
+
+<Map
+  provider="OpenStreetMap"
+  controlOptions={{
+    marker: { draggable: true },
+    reverseOnDragEnd: true,
+    keepResult: true,
+    showPopup: true,
+  }}
+/>
+
+```js
+const searchControl = new SearchControl({
+  provider: new OpenStreetMapProvider(),
+  marker: { draggable: true },
+  reverseOnDragEnd: true,
+  keepResult: true,
+});
+
+map.on('geosearch/marker/reverse', ({ location }) => {
+  console.log(location.label);
+});
+```
+
 ## Options
 
 | Option                                 | Type                                      | Default                                            | Description                                                                                                                       |
@@ -193,6 +220,7 @@ const searchControl = new SearchControl({
 | `retainZoomLevel`                      | `boolean`                                 | `false`                                            | Only pan to the result, keep the zoom level.                                                                                      |
 | `zoomLevel`                            | `number`                                  | `18`                                               | Zoom level for results without bounds, or for every result with `zoomToBounds: false`.                                            |
 | `zoomToBounds`                         | `boolean`                                 | `true`                                             | Fit the map to the bounds of a result. `false` shows every result at `zoomLevel`.                                                 |
+| `reverseOnDragEnd`                     | `boolean`                                 | `false`                                            | Look up the address when a draggable marker is dropped, see above.                                                                |
 | `fitBoundsOptions`                     | `FitBoundsOptions`                        | `{}`                                               | Passed to Leaflet's `fitBounds`, e.g. `{ maxZoom: 16, padding: [50, 50] }`.                                                       |
 | `animateZoom`                          | `boolean`                                 | `true`                                             | Animate moving to the result.                                                                                                     |
 | `updateMap`                            | `boolean`                                 | `true`                                             | Move the map to the result.                                                                                                       |
@@ -209,12 +237,13 @@ const searchControl = new SearchControl({
 
 ## Events
 
-| Event                      | Payload                              | When                                                          |
-| -------------------------- | ------------------------------------ | ------------------------------------------------------------- |
-| `geosearch/showlocation`   | `{ location, marker, provider }`     | A result is shown on the map.                                 |
-| `geosearch/marker/dragend` | `{ location, event }`                | A draggable result marker was moved.                          |
-| `geosearch/error`          | `{ error, query, source, provider }` | A search failed. `source` is `'autocomplete'` or `'submit'`.  |
-| `geosearch/providerchange` | `{ provider, providers }`            | Another provider was picked, by the user or `selectProvider`. |
+| Event                      | Payload                              | When                                                            |
+| -------------------------- | ------------------------------------ | --------------------------------------------------------------- |
+| `geosearch/showlocation`   | `{ location, marker, provider }`     | A result is shown on the map.                                   |
+| `geosearch/marker/dragend` | `{ location, event }`                | A draggable result marker was moved.                            |
+| `geosearch/marker/reverse` | `{ location, marker, provider }`     | The address of a dropped marker was found (`reverseOnDragEnd`). |
+| `geosearch/error`          | `{ error, query, source, provider }` | A search failed. `source` is `'autocomplete'` or `'submit'`.    |
+| `geosearch/providerchange` | `{ provider, providers }`            | Another provider was picked, by the user or `selectProvider`.   |
 
 ### geosearch/showlocation
 
@@ -267,9 +296,31 @@ map.on('geosearch/marker/dragend', ({ location, event }) => {
 }
 ```
 
+### geosearch/marker/reverse
+
+Only with `reverseOnDragEnd: true`. `location` is the place at the new position, `marker` the dropped marker and `provider` the provider that was asked.
+
+```js
+map.on('geosearch/marker/reverse', ({ location, provider }) => {
+  const { label, x, y } = location;
+  console.log(
+    JSON.stringify({ label, x, y, provider: provider.label }, null, 2),
+  );
+});
+```
+
+```json
+{
+  "label": "Dam, Centrum, Amsterdam, Noord-Holland, Nederland, 1012 NP, Nederland",
+  "x": 4.8926932,
+  "y": 52.3733144,
+  "provider": "OpenStreetMap"
+}
+```
+
 ### geosearch/error
 
-`error` is what the provider threw, `query` the searched text, `source` either `'autocomplete'` or `'submit'`, and `provider` the provider that failed.
+`error` is what the provider threw, `query` the searched text, `source` `'autocomplete'`, `'submit'` or `'reverse'`, and `provider` the provider that failed. For `'reverse'`, `query` is the position as `"lat,lng"`.
 
 ```js
 map.on('geosearch/error', ({ error, query, source, provider }) => {
