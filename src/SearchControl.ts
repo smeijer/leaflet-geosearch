@@ -373,7 +373,7 @@ interface SearchControl {
   cache?: Map<string, SearchResult[]>;
 
   // [key: string]: any;
-  initialize(options: SearchControlProps): void;
+  setup(options: SearchControlOptions): void;
   onSubmit(result: Selection): void;
   open(): void;
   close(): void;
@@ -428,13 +428,12 @@ interface SearchControl {
 
 // @ts-ignore
 const Control: SearchControl = {
-  // no copies needed: Control.extend copies the options and initialize
-  // replaces both objects. spreads or property reads here would keep
-  // bundlers from dropping an unused control
+  // no copies needed: setup replaces both objects. spreads or property
+  // reads here would keep bundlers from dropping an unused control
   options: defaultOptions,
   classNames: defaultClassNames,
 
-  initialize(options: SearchControlOptions) {
+  setup(options: SearchControlOptions) {
     if (!LeafletControl) {
       throw new Error(UNINITIALIZED_ERR);
     }
@@ -1308,9 +1307,31 @@ interface SearchControlConstructor {
   (...options: any[]): SearchControl & LeafletControl;
 }
 
-// extend creates a new class on every call, so it's only done once
-let LControl:
-  (new (...options: any[]) => SearchControl & LeafletControl) | undefined;
+type ControlClass = new (...options: any[]) => SearchControl & LeafletControl;
+
+// created on first use, so Leaflet can load after this module and an unused
+// control stays out of bundles
+let LControl: ControlClass | undefined;
+
+function createControlClass(): ControlClass {
+  // a constructor instead of initialize: Leaflet 2 throws on initialize and
+  // has no Control.extend. Leaflet 1 runs this the same way
+  class GeoSearchControl extends LeafletControl {
+    constructor(options: SearchControlOptions) {
+      super();
+      (this as unknown as SearchControl).setup(options);
+      // Leaflet 2 runs the init hooks here, after setup (see initHooks below).
+      // Leaflet 1 ran them in super() and skips this call
+      (this as any).callInitHooks();
+    }
+  }
+
+  Object.assign(GeoSearchControl.prototype, Control);
+  // tells Leaflet 2 that this constructor ends with callInitHooks
+  (GeoSearchControl as any).initHooks = true;
+
+  return GeoSearchControl as unknown as ControlClass;
+}
 
 const SearchControl = function SearchControl(...options: any[]) {
   if (!LeafletControl) {
@@ -1318,7 +1339,7 @@ const SearchControl = function SearchControl(...options: any[]) {
   }
 
   if (!LControl) {
-    LControl = LeafletControl.extend(Control);
+    LControl = createControlClass();
   }
 
   return new LControl(...options);

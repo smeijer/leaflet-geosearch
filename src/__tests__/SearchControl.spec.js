@@ -17,8 +17,31 @@ test('Can init leaflet', () => {
   expect(div._leaflet_id).toBeDefined();
   expect(map._leaflet_id).toBeDefined();
   expect(div._leaflet_id).not.toEqual(map._leaflet_id);
-  expect(map._initHooksCalled).toEqual(true);
+  // Leaflet 1 and 2.0.0-alpha.1 mark the hooks as run, later versions count
+  // them down
+  expect(map._initHooksCalled ?? map._initHooksLeft === 0).toEqual(true);
 });
+
+// 2.0.0-alpha.1 runs inherited hooks once for every class of the chain, for
+// any subclass of Control. Later versions mark the fix with Class.initHooks
+const runsHooksTwice = L.version.startsWith('2.') && !('initHooks' in L.Class);
+
+test.skipIf(runsHooksTwice)(
+  'the init hooks of Control run once for each control',
+  () => {
+    const seen = [];
+    L.Control.addInitHook(function () {
+      seen.push({ control: this, ready: !!this.searchElement });
+    });
+
+    const control = new SearchControl({ provider: { search: vi.fn() } });
+
+    const own = seen.filter((hook) => hook.control === control);
+    expect(own).toHaveLength(1);
+    // Leaflet 1 runs them inside super(), Leaflet 2 after the constructor
+    expect(own[0].ready).toBe(!L.version.startsWith('1.'));
+  },
+);
 
 test('Can add geosearch control to leaflet', () => {
   const { div, map } = createMapInstance();

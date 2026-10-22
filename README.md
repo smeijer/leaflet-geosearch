@@ -202,9 +202,13 @@ map.addControl(searchControl);
 
 ## Leaflet 2
 
-The control works with Leaflet 1.6 and up, and with the Leaflet 2 alpha (the
-tests run against 2.0.0-alpha.1). Leaflet 2 has no factory functions like
-`L.map()`, so create the map with `new Map()`; the control is used the same way.
+The control works with Leaflet 1.6 and up, and with the Leaflet 2 alpha. The
+tests also run against Leaflet's main branch, which drops `Class.extend`,
+`initialize` and `L.Icon.Default`. The control is an ES class with a
+constructor and uses the default icon of `Marker`, so it works with both.
+
+Leaflet 2 has no factory functions like `L.map()`, so create the map with
+`new Map()`. The control is used the same way.
 
 Leaflet 2 is only published as ES modules. The CommonJS build of
 `leaflet-geosearch` loads it with `require('leaflet')`, which works in Node
