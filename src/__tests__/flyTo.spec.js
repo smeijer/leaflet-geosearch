@@ -97,9 +97,11 @@ describe('flyTo (#308)', () => {
     });
   });
 
+  // without the animation, so the map is there right away. Leaflet 1 skips it
+  // in happy-dom on its own, Leaflet 2 animates unless told not to
   test('ends at the result on a real map', () => {
     const { control, map } = setup(
-      { flyTo: true, zoomLevel: 12 },
+      { flyTo: true, zoomLevel: 12, animateZoom: false },
       {
         mock: false,
       },
