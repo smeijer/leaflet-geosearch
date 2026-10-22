@@ -215,6 +215,92 @@ const searchControl = new SearchControl({
 | `geosearch/error`          | `{ error, query, source, provider }` | A search failed. `source` is `'autocomplete'` or `'submit'`.  |
 | `geosearch/providerchange` | `{ provider }`                       | Another provider was picked, by the user or `selectProvider`. |
 
+### geosearch/showlocation
+
+`location` is the result as the provider returned it, `marker` the Leaflet marker on the map, and `provider` the provider that found the result. With a single `provider`, its label is `''`.
+
 ```js
-map.on('geosearch/showlocation', ({ location }) => console.log(location.label));
+map.on('geosearch/showlocation', ({ location, marker, provider }) => {
+  console.log(JSON.stringify({ location, provider: provider.label }, null, 2));
+});
 ```
+
+```json
+{
+  "location": {
+    "x": 4.2990429,
+    "y": 52.0990969,
+    "label": "Madurodam, 1, George Maduroplein, Archipelbuurt, The Hague, South Holland, Netherlands, 2584RZ, The Netherlands",
+    "bounds": [
+      [52.0990469, 4.2989929],
+      [52.0991469, 4.2990929]
+    ],
+    "raw": {
+      "place_id": 275030941,
+      "osm_type": "node",
+      "osm_id": 2590910713,
+      "class": "tourism",
+      "type": "theme_park"
+    }
+  },
+  "provider": "OpenStreetMap"
+}
+```
+
+`x` is the longitude and `y` the latitude. `raw` is the full answer of the provider, shortened here.
+
+### geosearch/marker/dragend
+
+Only with `marker: { draggable: true }`. `location` is the new position of the marker, `event` the Leaflet dragend event.
+
+```js
+map.on('geosearch/marker/dragend', ({ location, event }) => {
+  console.log(JSON.stringify(location));
+});
+```
+
+```json
+{ "lat": 52.0993, "lng": 4.3001 }
+```
+
+### geosearch/error
+
+`error` is what the provider threw, `query` the searched text, `source` either `'autocomplete'` or `'submit'`, and `provider` the provider that failed.
+
+```js
+map.on('geosearch/error', ({ error, query, source, provider }) => {
+  console.log(
+    JSON.stringify({
+      message: error.message,
+      query,
+      source,
+      provider: provider.label,
+    }),
+  );
+});
+```
+
+```json
+{
+  "message": "Request failed with status 418",
+  "query": "den haag",
+  "source": "autocomplete",
+  "provider": "OpenStreetMap"
+}
+```
+
+### geosearch/providerchange
+
+Fired when another provider is picked in the select, or with `selectProvider`. `provider` is the same as `getSelectedProvider()` returns.
+
+```js
+map.on('geosearch/providerchange', ({ provider }) => {
+  console.log(JSON.stringify({ index: provider.index, label: provider.label }));
+});
+```
+
+```json
+{ "index": 1, "label": "Photon" }
+```
+
+For the "All" option it's `{ "index": "all", "label": "All" }`.
