@@ -110,6 +110,6 @@
   },
   "optionalDependencies": {
     "@googlemaps/js-api-loader": "^2.1.3",
-    "leaflet": "^1.6.0"
+    "leaflet": "^1.6.0 || ^2.0.0-alpha.1"
   }
 }
