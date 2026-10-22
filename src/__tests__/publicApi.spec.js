@@ -57,6 +57,7 @@ test('SearchControl default options', () => {
     showPopup: false,
     markerPopup: true,
     popupOptions: {},
+    resultListPosition: 'below',
     maxMarkers: 1,
     maxSuggestions: 5,
     retainZoomLevel: false,

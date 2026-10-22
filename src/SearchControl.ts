@@ -52,6 +52,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider' | 'providers'> = {
   showMarker: true,
   showPopup: false,
   markerPopup: true,
+  resultListPosition: 'below',
   popupOptions: {},
   // labels come from the provider (e.g. user edited OpenStreetMap data), so
   // they are escaped before being used as html
@@ -206,6 +207,12 @@ interface SearchControlProps {
    * @default true
    */
   markerPopup: boolean;
+  /**
+   * where the result list opens. 'auto' opens it above the input when the
+   * control sits in a bottom corner of the map
+   * @default 'below'
+   */
+  resultListPosition: 'below' | 'above' | 'auto';
   /**
    * passed to Leaflet's bindPopup, e.g. `{ maxWidth: 200, className: 'my-popup' }`
    * @default {}
@@ -459,6 +466,15 @@ const Control: SearchControl = {
     this.markers = new L.FeatureGroup();
     this.classNames.container += ` leaflet-geosearch-${this.options.style}`;
 
+    const { resultListPosition, position } = this.options;
+    if (
+      resultListPosition === 'above' ||
+      (resultListPosition === 'auto' &&
+        String(position).indexOf('bottom') === 0)
+    ) {
+      this.classNames.container += ' leaflet-geosearch-results-above';
+    }
+
     this.searchElement = new SearchElement({
       searchLabel: this.options.searchLabel,
       classNames: {
@@ -621,7 +637,15 @@ const Control: SearchControl = {
 
       this.container = createElement<HTMLDivElement>(
         'div',
-        'leaflet-control-geosearch leaflet-geosearch-bar',
+        cx(
+          'leaflet-control-geosearch leaflet-geosearch-bar',
+          // the form moves here, so the list position has to come along
+          this.searchElement.container.classList.contains(
+            'leaflet-geosearch-results-above',
+          )
+            ? 'leaflet-geosearch-results-above'
+            : '',
+        ),
       );
 
       this.container.appendChild(this.searchElement.form);

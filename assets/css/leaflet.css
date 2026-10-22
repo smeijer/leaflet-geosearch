@@ -220,6 +220,25 @@
   border-left: 2px solid rgba(0, 0, 0, .2);
 }
 
+/* result list above the input (resultListPosition) */
+.leaflet-geosearch-results-above .results {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  border-radius: 4px 4px 0 0;
+}
+
+.leaflet-geosearch-results-above .results.active {
+  border-top: none;
+  border-bottom: 1px solid #c6c6c6;
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.leaflet-geosearch-results-above .results.active:after {
+  display: none;
+}
+
 /* animations */
 @keyframes spin {
   0% { transform: rotate(0deg); }
