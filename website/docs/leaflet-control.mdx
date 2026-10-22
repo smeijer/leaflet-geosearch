@@ -89,6 +89,11 @@ The labels are only shown to the user, so they can be in any language. When one 
 
 For the same number from each provider, set `maxSuggestions` to a multiple of the number of providers:
 
+<Map
+  providers={['OpenStreetMap', 'Photon', 'Esri']}
+  controlOptions={{ maxSuggestions: 9 }}
+/>
+
 ```js
 const searchControl = new SearchControl({
   providers: [
@@ -105,6 +110,15 @@ A provider with fewer results leaves its turns to the others. With a single prov
 ### Falling back to another provider
 
 `fallback` searches the next provider in the list when the selected one fails (`'error'`), or also when it finds nothing (`'empty'`). With the select hidden, the user sees a single search box that keeps working when the first provider is down:
+
+<Map
+  providers={['OpenStreetMap', 'Photon']}
+  controlOptions={{
+    showProviderSelect: false,
+    allProvidersLabel: false,
+    fallback: 'error',
+  }}
+/>
 
 ```js
 const searchControl = new SearchControl({
@@ -131,6 +145,25 @@ map.on('geosearch/providerchange', ({ provider }) => {
 ```
 
 `resultFormat`, `popupFormat` and the events also get the provider that found a result, e.g. `resultFormat: ({ result, provider }) => ...`.
+
+## Zoom on a result
+
+Results with bounds (most OpenStreetMap results) are fitted into the map, results without bounds are shown at `zoomLevel`. `zoomToBounds: false` shows every result at `zoomLevel`, `fitBoundsOptions` goes to Leaflet's `fitBounds`.
+
+<Map
+  provider="OpenStreetMap"
+  controlOptions={{ zoomToBounds: false, zoomLevel: 16 }}
+/>
+
+```js
+const searchControl = new SearchControl({
+  provider: new OpenStreetMapProvider(),
+  zoomToBounds: false,
+  zoomLevel: 16,
+  // or keep fitting the bounds, but not too close and away from the edges
+  // fitBoundsOptions: { maxZoom: 16, padding: [50, 50] },
+});
+```
 
 ## Options
 
