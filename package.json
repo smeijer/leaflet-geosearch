@@ -78,6 +78,9 @@
     "url": "git+https://github.com/smeijer/leaflet-geosearch.git"
   },
   "author": "Stephan Meijer <stephan@meijer.ws>",
+  "contributors": [
+    "Ramazan Sancar (https://www.ramazansancar.com.tr)"
+  ],
   "bugs": {
     "url": "https://github.com/smeijer/leaflet-geosearch/issues"
   },
