@@ -99,12 +99,10 @@ export default class ResultList {
       return;
     }
 
-    const target = event.target as HTMLDivElement;
-    if (
-      !target ||
-      !this.container.contains(target) ||
-      !target.hasAttribute('data-key')
-    ) {
+    // the click can land on html inside the item, like the provider name or
+    // markup from a custom resultFormat
+    const target = (event.target as Element | null)?.closest('[data-key]');
+    if (!target || !this.container.contains(target)) {
       return;
     }
 

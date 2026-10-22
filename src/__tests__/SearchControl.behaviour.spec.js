@@ -388,6 +388,19 @@ describe('SearchControl', () => {
   });
 
   describe('selecting a suggestion with the mouse', () => {
+    test('a click on html from resultFormat picks the suggestion', async () => {
+      const { control, input } = setup({
+        resultFormat: ({ result }) => `<b>${result.label}</b>`,
+      });
+      await type(input, 'den');
+
+      control.resultList.container.children[1].querySelector('b').click();
+      await vi.advanceTimersByTimeAsync(0);
+
+      expect(input.value).toEqual(results[1].label);
+      expect(control.markers.getLayers()).toHaveLength(1);
+    });
+
     test('copies the label and shows the result without searching again (#288)', async () => {
       const { control, provider, input } = setup();
       await type(input, 'ams');
