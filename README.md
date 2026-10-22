@@ -1,9 +1,7 @@
 # Leaflet.GeoSearch
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-63-orange.svg?style=flat-square)](#contributors-)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-64-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [leaflet-geosearch](https://leaflet-geosearch.meijer.works)**
@@ -603,6 +601,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/simon04"><img src="https://avatars.githubusercontent.com/u/782446?v=4?s=100" width="100px;" alt="Simon Legner"/><br /><sub><b>Simon Legner</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=simon04" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/JaZo"><img src="https://avatars.githubusercontent.com/u/3475007?v=4?s=100" width="100px;" alt="Jasper Zonneveld"/><br /><sub><b>Jasper Zonneveld</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=JaZo" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://datengraben.com"><img src="https://avatars.githubusercontent.com/u/105302830?v=4?s=100" width="100px;" alt="Chris"/><br /><sub><b>Chris</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=datengraben" title="Documentation">📖</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="http://jeremy.ng"><img src="https://avatars.githubusercontent.com/u/43259194?v=4?s=100" width="100px;" alt="Jeremy Nguyen"/><br /><sub><b>Jeremy Nguyen</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=jeremy-code" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
