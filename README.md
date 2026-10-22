@@ -363,7 +363,7 @@ only panned.
 
 `showResultListOnSubmit` shows the results to pick from when enter is pressed, instead of jumping to the first one. A single result is shown right away. Together with `autoComplete: false`, the provider is only searched on enter.
 
-**Several providers**
+**Multiple providers**
 
 `providers` replaces `provider` with a list of providers and a name for each. With more than one, a select left of the input lets the user pick one of them, or search all at once. Each suggestion then shows the name of its provider.
 

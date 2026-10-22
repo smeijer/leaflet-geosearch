@@ -54,7 +54,7 @@ const searchControl = new SearchControl({
 map.addControl(searchControl);
 ```
 
-## Several providers
+## Multiple providers
 
 With `providers` instead of `provider`, a select left of the input lets the user pick the provider to search with, or search all of them at once. In that case every suggestion shows the name of its provider. Picking another provider searches the typed text again.
 
@@ -197,7 +197,7 @@ map.on('geosearch/marker/reverse', ({ location }) => {
 
 | Option                                 | Type                                      | Default                                            | Description                                                                                                                       |
 | -------------------------------------- | ----------------------------------------- | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `provider` or `providers` <Required /> | `Provider` or `{ label, provider }[]`     |                                                    | One of the two: the provider to search with, or several to choose from ([see above](#several-providers)).                         |
+| `provider` or `providers` <Required /> | `Provider` or `{ label, provider }[]`     |                                                    | One of the two: the provider to search with, or several to choose from ([see above](#multiple-providers)).                        |
 | `showProviderSelect`                   | `boolean`                                 | `true`                                             | Show the provider select (with more than one provider).                                                                           |
 | `allProvidersLabel`                    | `string \| false`                         | `'All'`                                            | The select option that searches all providers. `false` leaves it out.                                                             |
 | `providerSelectLabel`                  | `string`                                  | `'Search with'`                                    | Accessible name of the provider select.                                                                                           |
