@@ -218,9 +218,12 @@ jobs:
           # the demos need the keys only on the published site
           AMAP_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.AMAP_API_KEY || '' }}
           BING_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.BING_API_KEY || '' }}
+          GEOAPIFY_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.GEOAPIFY_API_KEY || '' }}
+          GEOCODEEARTH_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.GEOCODEEARTH_API_KEY || '' }}
           GOOGLE_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.GOOGLE_API_KEY || '' }}
           HERE_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.HERE_API_KEY || '' }}
           LOCATIONIQ_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.LOCATIONIQ_API_KEY || '' }}
+          MAPBOX_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.MAPBOX_API_KEY || '' }}
           OPENCAGE_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.OPENCAGE_API_KEY || '' }}
 
       # needs the declarations in dist from the build
