@@ -4,6 +4,7 @@ import {
   FeatureGroup,
   FitBoundsOptions,
   MarkerOptions,
+  PopupOptions,
   Map as LeafletMap,
 } from 'leaflet';
 import SearchElement from './SearchElement';
@@ -50,6 +51,8 @@ const defaultOptions: Omit<SearchControlProps, 'provider' | 'providers'> = {
   style: 'button',
   showMarker: true,
   showPopup: false,
+  markerPopup: true,
+  popupOptions: {},
   // labels come from the provider (e.g. user edited OpenStreetMap data), so
   // they are escaped before being used as html
   popupFormat: ({ result }) => escapeHtml(result.label),
@@ -197,6 +200,17 @@ interface SearchControlProps {
   maxMarkers: number;
   showMarker: boolean;
   showPopup: boolean;
+  /**
+   * give the marker a popup with the result. Off, the marker has no popup
+   * and showPopup is ignored
+   * @default true
+   */
+  markerPopup: boolean;
+  /**
+   * passed to Leaflet's bindPopup, e.g. `{ maxWidth: 200, className: 'my-popup' }`
+   * @default {}
+   */
+  popupOptions: PopupOptions;
   popupFormat<T = any>(args: {
     query: Selection;
     result: SearchResult<T>;
@@ -1051,23 +1065,31 @@ const Control: SearchControl = {
   },
 
   addMarker(result, query) {
-    const { marker: options, showPopup, popupFormat } = this.options;
+    const {
+      marker: options,
+      showPopup,
+      popupFormat,
+      markerPopup,
+      popupOptions,
+    } = this.options;
     const marker = new L.Marker([result.y, result.x], options);
-    let popupLabel = result.label;
 
-    if (typeof popupFormat === 'function') {
-      popupLabel = popupFormat({
-        query,
-        result,
-        provider: this.sources.get(result),
-      });
+    if (markerPopup) {
+      let popupLabel = result.label;
+      if (typeof popupFormat === 'function') {
+        popupLabel = popupFormat({
+          query,
+          result,
+          provider: this.sources.get(result),
+        });
+      }
+
+      marker.bindPopup(popupLabel, popupOptions);
     }
-
-    marker.bindPopup(popupLabel);
 
     this.markers.addLayer(marker);
 
-    if (showPopup) {
+    if (markerPopup && showPopup) {
       marker.openPopup();
     }
 
@@ -1122,14 +1144,16 @@ const Control: SearchControl = {
     }
 
     this.sources.set(place, choice);
-    const { popupFormat, keepResult } = this.options;
-    marker.setPopupContent(
-      popupFormat({
-        query: { query: place.label },
-        result: place,
-        provider: choice,
-      }),
-    );
+    const { popupFormat, keepResult, markerPopup } = this.options;
+    if (markerPopup) {
+      marker.setPopupContent(
+        popupFormat({
+          query: { query: place.label },
+          result: place,
+          provider: choice,
+        }),
+      );
+    }
 
     if (keepResult) {
       this.searchElement.input.value = place.label;
