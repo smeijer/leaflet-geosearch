@@ -53,6 +53,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider' | 'providers'> = {
   showPopup: false,
   markerPopup: true,
   resultListPosition: 'below',
+  theme: 'light',
   popupOptions: {},
   // labels come from the provider (e.g. user edited OpenStreetMap data), so
   // they are escaped before being used as html
@@ -214,6 +215,12 @@ interface SearchControlProps {
    */
   resultListPosition: 'below' | 'above' | 'auto';
   /**
+   * the colors of the control. 'auto' follows the dark or light color scheme
+   * of the system. The colors are css variables, see the docs to set your own
+   * @default 'light'
+   */
+  theme: 'light' | 'dark' | 'auto';
+  /**
    * passed to Leaflet's bindPopup, e.g. `{ maxWidth: 200, className: 'my-popup' }`
    * @default {}
    */
@@ -337,6 +344,8 @@ interface SearchControl {
   providerSelect?: HTMLSelectElement;
   /** which provider found a result, for the formatters and events */
   sources: WeakMap<SearchResult, ProviderInfo>;
+  /** theme and list position classes, also used by the bar container */
+  modifierClasses: string[];
   /** the latest reverse lookup of each marker, older answers are dropped */
   reverseIds?: WeakMap<L.Marker, number>;
   markers: FeatureGroup;
@@ -466,14 +475,24 @@ const Control: SearchControl = {
     this.markers = new L.FeatureGroup();
     this.classNames.container += ` leaflet-geosearch-${this.options.style}`;
 
-    const { resultListPosition, position } = this.options;
+    // classes for the theme and the list position. The bar style moves the
+    // form into its own container, which gets them too (see onAdd)
+    const { resultListPosition, position, theme } = this.options;
+    this.modifierClasses = [];
     if (
       resultListPosition === 'above' ||
       (resultListPosition === 'auto' &&
         String(position).indexOf('bottom') === 0)
     ) {
-      this.classNames.container += ' leaflet-geosearch-results-above';
+      this.modifierClasses.push('leaflet-geosearch-results-above');
     }
+    if (theme === 'dark' || theme === 'auto') {
+      this.modifierClasses.push(`leaflet-geosearch-theme-${theme}`);
+    }
+    this.classNames.container = cx(
+      this.classNames.container,
+      ...this.modifierClasses,
+    );
 
     this.searchElement = new SearchElement({
       searchLabel: this.options.searchLabel,
@@ -639,12 +658,7 @@ const Control: SearchControl = {
         'div',
         cx(
           'leaflet-control-geosearch leaflet-geosearch-bar',
-          // the form moves here, so the list position has to come along
-          this.searchElement.container.classList.contains(
-            'leaflet-geosearch-results-above',
-          )
-            ? 'leaflet-geosearch-results-above'
-            : '',
+          ...this.modifierClasses,
         ),
       );
 

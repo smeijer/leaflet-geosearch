@@ -49,3 +49,25 @@ describe('resultListPosition (#191, #307)', () => {
     expect(classes.contains('leaflet-geosearch-results-above')).toBe(above);
   });
 });
+
+describe('theme (#324)', () => {
+  test('light by default, without a theme class', () => {
+    const classes = containerOf({});
+
+    expect([...classes].some((c) => c.includes('theme'))).toBe(false);
+  });
+
+  test.each(['dark', 'auto'])("'%s' adds its class", (theme) => {
+    expect(containerOf({ theme })).toContain(
+      `leaflet-geosearch-theme-${theme}`,
+    );
+  });
+
+  test('the bar container gets the theme too', () => {
+    containerOf({ theme: 'dark', style: 'bar' });
+
+    expect(
+      document.querySelector('.leaflet-geosearch-bar').classList,
+    ).toContain('leaflet-geosearch-theme-dark');
+  });
+});

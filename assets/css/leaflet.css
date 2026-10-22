@@ -23,7 +23,7 @@
   top: 17px;
   left: 15px;
   width: 6px;
-  border-top: 2px solid #555;
+  border-top: 2px solid var(--geosearch-icon);
   transform: rotateZ(45deg);
 }
 
@@ -33,7 +33,7 @@
   height: 8px;
   width: 8px;
   border-radius: 50%;
-  border: 2px solid #555;
+  border: 2px solid var(--geosearch-icon);
 }
 
 /* resets for pending and error icons */
@@ -55,7 +55,7 @@
 /* pending icon */
 .leaflet-control-geosearch.pending a.leaflet-bar-part:after {
   content: '';
-  border: 2px solid #555;
+  border: 2px solid var(--geosearch-icon);
   border-top: 2px solid #f3f3f3;
   animation: spin 1s linear infinite;
 }
@@ -76,7 +76,7 @@
   top: 0;
   left: 30px;
   border-radius: 0 4px 4px 0;
-  background-color: #fff;
+  background-color: var(--geosearch-background);
   background-clip: padding-box;
   z-index: -1;
   height: auto;
@@ -137,10 +137,10 @@
   margin: 0;
   padding: 0 4px;
   border: none;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid var(--geosearch-divider);
   border-radius: 0;
-  background-color: #fff;
-  color: #333;
+  background-color: var(--geosearch-background);
+  color: var(--geosearch-text);
   font-size: 12px;
   cursor: pointer;
 }
@@ -153,7 +153,7 @@
 .leaflet-control-geosearch .results .provider {
   float: right;
   margin-left: 8px;
-  color: #888;
+  color: var(--geosearch-muted);
   font-size: 11px;
 }
 
@@ -167,20 +167,71 @@
 }
 
 /**
- * Match color of .leaflet-control-attribution, .leaflet-control-scale-line
- * since CSS is not dark mode compatible
+ * Colors. The default (light) theme matches .leaflet-control-attribution and
+ * .leaflet-control-scale-line. Override the variables for your own colors.
+ * color-scheme keeps browsers from darkening the inputs on their own
  */
 .leaflet-control-geosearch {
-  color: #333;
+  --geosearch-background: #fff;
+  --geosearch-text: #333;
+  --geosearch-strong: black;
+  --geosearch-muted: #888;
+  --geosearch-border: #c6c6c6;
+  --geosearch-divider: #ddd;
+  --geosearch-hover: #f8f8f8;
+  --geosearch-button-hover: #f5f5f5;
+  --geosearch-icon: #555;
+  color-scheme: light;
+  color: var(--geosearch-text);
+}
+
+/* theme: 'dark', or 'auto' when the system uses a dark color scheme */
+.leaflet-control-geosearch.leaflet-geosearch-theme-dark {
+  --geosearch-background: #2b2b2b;
+  --geosearch-text: #e8e8e8;
+  --geosearch-strong: #fff;
+  --geosearch-muted: #a8a8a8;
+  --geosearch-border: #555;
+  --geosearch-divider: #444;
+  --geosearch-hover: #3a3a3a;
+  --geosearch-button-hover: #3a3a3a;
+  --geosearch-icon: #ddd;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  .leaflet-control-geosearch.leaflet-geosearch-theme-auto {
+    --geosearch-background: #2b2b2b;
+    --geosearch-text: #e8e8e8;
+    --geosearch-strong: #fff;
+    --geosearch-muted: #a8a8a8;
+    --geosearch-border: #555;
+    --geosearch-divider: #444;
+    --geosearch-hover: #3a3a3a;
+    --geosearch-button-hover: #3a3a3a;
+    --geosearch-icon: #ddd;
+    color-scheme: dark;
+  }
+}
+
+/* the search button is styled by Leaflet, themes other than light color it too */
+.leaflet-geosearch-theme-dark a.leaflet-bar-part,
+.leaflet-geosearch-theme-auto a.leaflet-bar-part {
+  background-color: var(--geosearch-background);
+}
+
+.leaflet-geosearch-theme-dark a.leaflet-bar-part:hover,
+.leaflet-geosearch-theme-auto a.leaflet-bar-part:hover {
+  background-color: var(--geosearch-hover);
 }
 
 .leaflet-control-geosearch form input {
-  color: #333;
-  background-color: #fff;
+  color: var(--geosearch-text);
+  background-color: var(--geosearch-background);
 }
 
 .leaflet-control-geosearch .results {
-  background: #fff;
+  background: var(--geosearch-background);
 }
 
 .leaflet-control-geosearch .results > * {
@@ -195,13 +246,13 @@
 
 .leaflet-control-geosearch .results.active {
   padding: 8px 0;
-  border-top: 1px solid #c6c6c6;
+  border-top: 1px solid var(--geosearch-border);
 }
 
 .leaflet-control-geosearch .results > .active,
 .leaflet-control-geosearch .results > :hover {
-  background-color: #f8f8f8;
-  border-color: #c6c6c6;
+  background-color: var(--geosearch-hover);
+  border-color: var(--geosearch-border);
   cursor: pointer;
 }
 
@@ -231,7 +282,7 @@
 
 .leaflet-geosearch-results-above .results.active {
   border-top: none;
-  border-bottom: 1px solid #c6c6c6;
+  border-bottom: 1px solid var(--geosearch-border);
   box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.3);
 }
 
@@ -291,7 +342,7 @@
 }
 
 .leaflet-control-geosearch button.reset {
-  color: black;
+  color: var(--geosearch-strong);
   font-weight: bold;
   position: absolute;
   line-height: 26px;
@@ -303,7 +354,7 @@
   cursor: pointer;
   border: none;
   text-decoration: none;
-  background-color: #fff;
+  background-color: var(--geosearch-background);
   border-radius: 0 4px 4px 0;
 }
 
@@ -312,5 +363,5 @@
 }
 
 .leaflet-control-geosearch button.reset:hover {
-  background: #f5f5f5;
+  background: var(--geosearch-button-hover);
 }
