@@ -1069,23 +1069,38 @@ const Control: SearchControl = {
 
   showResult(result, query) {
     const { autoClose, updateMap } = this.options;
+    const provider = this.sources.get(result);
 
-    const markers = this.markers.getLayers();
-    if (markers.length >= this.options.maxMarkers) {
-      this.markers.removeLayer(markers[0]);
-    }
-
-    const marker = this.addMarker(result, query);
-
-    if (updateMap) {
-      this.centerMap(result);
-    }
-
-    this.map.fireEvent('geosearch/showlocation', {
+    // listeners can take over, e.g. to move the map their own way. Leaflet
+    // calls them right away, so the flag is set when fire returns
+    let prevented = false;
+    this.map.fire('geosearch/beforeshowlocation', {
       location: result,
-      marker,
-      provider: this.sources.get(result),
+      query,
+      provider,
+      preventDefault: () => {
+        prevented = true;
+      },
     });
+
+    if (!prevented) {
+      const markers = this.markers.getLayers();
+      if (markers.length >= this.options.maxMarkers) {
+        this.markers.removeLayer(markers[0]);
+      }
+
+      const marker = this.addMarker(result, query);
+
+      if (updateMap) {
+        this.centerMap(result);
+      }
+
+      this.map.fireEvent('geosearch/showlocation', {
+        location: result,
+        marker,
+        provider,
+      });
+    }
 
     if (autoClose) {
       this.closeResults();

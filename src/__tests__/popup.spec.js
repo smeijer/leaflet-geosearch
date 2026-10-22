@@ -69,3 +69,39 @@ describe('marker popup', () => {
     expect(marker.getPopup()).toBeUndefined();
   });
 });
+
+describe('geosearch/beforeshowlocation (#157)', () => {
+  test('fires before the marker is added and the map moves', async () => {
+    const { control, map } = setup();
+    const seen = [];
+    map.on('geosearch/beforeshowlocation', (e) => {
+      seen.push({
+        label: e.location.label,
+        markers: control.markers.getLayers().length,
+        moved: map.setView.mock.calls.length,
+      });
+    });
+    map.on('geosearch/showlocation', () => seen.push('showlocation'));
+
+    await control.onSubmit({ query: 'den' });
+
+    expect(seen).toEqual([
+      { label: 'Den Haag', markers: 0, moved: 0 },
+      'showlocation',
+    ]);
+  });
+
+  test('preventDefault skips the marker, the map move and showlocation', async () => {
+    const { control, map } = setup({ autoClose: true, keepResult: true });
+    const shown = vi.fn();
+    map.on('geosearch/beforeshowlocation', (e) => e.preventDefault());
+    map.on('geosearch/showlocation', shown);
+    control.searchElement.input.value = 'den';
+
+    await control.onSubmit({ query: 'den' });
+
+    expect(control.markers.getLayers()).toHaveLength(0);
+    expect(map.setView).not.toHaveBeenCalled();
+    expect(shown).not.toHaveBeenCalled();
+  });
+});
