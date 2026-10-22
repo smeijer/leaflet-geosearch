@@ -274,6 +274,13 @@ jobs:
     if: github.event_name == 'push' && github.repository == 'smeijer/leaflet-geosearch'
     runs-on: ubuntu-latest
     environment: npm
+    # the workflow token instead of a personal one, so nothing expires. The
+    # github plugin comments on the released issues and pull requests
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write # npm trusted publishing
     steps:
       - uses: actions/checkout@v6
 
@@ -304,5 +311,5 @@ jobs:
               { name: 'beta', prerelease: true }
             ]
         env:
-          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
