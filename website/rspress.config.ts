@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig, type RspressPlugin } from '@rspress/core';
+import { transformerNotationDiff } from '@shikijs/transformers';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repo = path.resolve(here, '..');
@@ -89,6 +90,13 @@ export default defineConfig({
     editLink: {
       docRepoBaseUrl:
         'https://github.com/smeijer/leaflet-geosearch/tree/main/website/docs',
+    },
+  },
+  markdown: {
+    shiki: {
+      // `// [!code --]` and `// [!code ++]` mark removed and added lines,
+      // so a before/after example keeps its js highlighting
+      transformers: [transformerNotationDiff()],
     },
   },
   builderConfig: {
