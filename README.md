@@ -316,6 +316,7 @@ new GeoSearchControl({
   markerPopup: true, // optional: true|false  - default true
   popupOptions: {}, // optional: Leaflet PopupOptions - default {}
   animateZoom: true, // optional: true|false  - default true
+  flyTo: false, // optional: true|false|Leaflet ZoomPanOptions - default false
   autoClose: false, // optional: true|false  - default false
   searchLabel: 'Enter address', // optional: string      - default 'Enter address'
   keepResult: false, // optional: true|false  - default false
@@ -361,6 +362,8 @@ only panned.
 `markerPopup: false` gives the marker no popup, `popupOptions` is passed to Leaflet's `bindPopup`.
 
 `animateZoom` controls whether or not the pan/zoom moment is being animated.
+
+`flyTo` flies to the result with Leaflet's `flyTo` and `flyToBounds` instead of jumping there. An object like `{ duration: 1.5 }` is passed to them. `animateZoom: false` turns the animation off for both.
 
 `autoClose` closes the result list if a result is selected by click/enter.
 
