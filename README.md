@@ -1,10 +1,21 @@
 # Leaflet.GeoSearch
 
+[![CI](https://github.com/smeijer/leaflet-geosearch/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/smeijer/leaflet-geosearch/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/leaflet-geosearch?style=flat-square)](https://www.npmjs.com/package/leaflet-geosearch)
+[![npm downloads](https://img.shields.io/npm/dm/leaflet-geosearch?style=flat-square)](https://npm-stat.com/charts.html?package=leaflet-geosearch)
+[![jsDelivr](https://img.shields.io/jsdelivr/npm/hm/leaflet-geosearch?style=flat-square)](https://www.jsdelivr.com/package/npm/leaflet-geosearch)
+[![Types](https://img.shields.io/npm/types/leaflet-geosearch?style=flat-square)](https://www.npmjs.com/package/leaflet-geosearch)
+[![Leaflet 1.6+ and 2](https://img.shields.io/badge/Leaflet-1.6%2B%20%7C%202-199900?style=flat-square)](https://leaflet-geosearch.meijer.works/usage#leaflet-2)
+[![License](https://img.shields.io/npm/l/leaflet-geosearch?style=flat-square)](./LICENSE)
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-64-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [leaflet-geosearch](https://leaflet-geosearch.meijer.works)**
+
+**News and plans: [#455](https://github.com/smeijer/leaflet-geosearch/issues/455)**, new releases, bigger changes and what's coming next.
 
 ![animation of geosearch](./website/docs/public/img/geosearch.gif)
 
@@ -12,17 +23,16 @@
 
 **more docs @** [leaflet-geosearch / installation](https://leaflet-geosearch.meijer.works/#installation)
 
-with npm:
-
 ```bash
-npm install --save leaflet-geosearch
-```
-
-or yarn:
-
-```bash
+npm install leaflet-geosearch
+# or
 yarn add leaflet-geosearch
+pnpm add leaflet-geosearch
+bun add leaflet-geosearch
+deno add npm:leaflet-geosearch
 ```
+
+Or load it from a CDN like [unpkg](https://unpkg.com/leaflet-geosearch/) or [jsDelivr](https://www.jsdelivr.com/package/npm/leaflet-geosearch), see [Using a CDN](https://leaflet-geosearch.meijer.works/#using-a-cdn).
 
 ## Browser support / Polyfills
 
