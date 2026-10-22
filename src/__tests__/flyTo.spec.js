@@ -212,7 +212,7 @@ describe('flyTo with the other zoom options', () => {
     control.showResult(withBounds, { query: 'den' });
 
     const [marker] = control.markers.getLayers();
-    expect(marker.getLatLng()).toEqual(L.latLng(52.08, 4.3));
+    expect(marker.getLatLng()).toEqual(new L.LatLng(52.08, 4.3));
     expect(marker.isPopupOpen()).toBe(true);
   });
 });
