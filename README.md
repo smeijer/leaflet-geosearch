@@ -378,6 +378,7 @@ const searchControl = new GeoSearchControl({
 
 searchControl.selectProvider(1); // the index in providers, or 'all'
 searchControl.getSelectedProvider(); // { index: 1, label: 'Esri', provider }
+searchControl.getProviders(); // [{ index: 0, label: 'OpenStreetMap', provider }, ...]
 searchControl.setProviderSelectVisible(false);
 ```
 
@@ -407,11 +408,11 @@ map.on('geosearch/error', ({ error, query, source }) => {
 });
 ```
 
-`geosearch/providerchange` is fired when another provider is picked, by the user or with `selectProvider`.
+`geosearch/providerchange` is fired when another provider is picked, by the user or with `selectProvider`. It has the selected `provider` and the list of all `providers`.
 
 ```js
-map.on('geosearch/providerchange', ({ provider }) => {
-  console.log(provider.index, provider.label);
+map.on('geosearch/providerchange', ({ provider, providers }) => {
+  console.log(provider.index, provider.label, providers.length);
 });
 ```
 

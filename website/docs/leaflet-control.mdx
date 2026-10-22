@@ -137,6 +137,7 @@ const searchControl = new SearchControl({
 ```js
 searchControl.selectProvider(1); // the index in providers, or 'all'
 searchControl.getSelectedProvider(); // { index: 1, label: 'Photon', provider }
+searchControl.getProviders(); // [{ index: 0, label: 'OpenStreetMap', provider }, ...]
 searchControl.setProviderSelectVisible(false);
 
 map.on('geosearch/providerchange', ({ provider }) => {
@@ -213,7 +214,7 @@ const searchControl = new SearchControl({
 | `geosearch/showlocation`   | `{ location, marker, provider }`     | A result is shown on the map.                                 |
 | `geosearch/marker/dragend` | `{ location, event }`                | A draggable result marker was moved.                          |
 | `geosearch/error`          | `{ error, query, source, provider }` | A search failed. `source` is `'autocomplete'` or `'submit'`.  |
-| `geosearch/providerchange` | `{ provider }`                       | Another provider was picked, by the user or `selectProvider`. |
+| `geosearch/providerchange` | `{ provider, providers }`            | Another provider was picked, by the user or `selectProvider`. |
 
 ### geosearch/showlocation
 
@@ -298,20 +299,42 @@ map.on('geosearch/error', ({ error, query, source, provider }) => {
 
 ### geosearch/providerchange
 
-Fired when another provider is picked in the select, or with `selectProvider`. `provider` is the same as `getSelectedProvider()` returns.
+Fired when another provider is picked in the select, or with `selectProvider`. `provider` is the same as `getSelectedProvider()` returns, `providers` the same as `getProviders()`: every provider of the control with its index and label.
 
 ```js
-map.on('geosearch/providerchange', ({ provider }) => {
-  const { index, label } = provider;
-  console.log(JSON.stringify({ index, label }, null, 2));
+map.on('geosearch/providerchange', ({ provider, providers }) => {
+  const short = ({ index, label }) => ({ index, label });
+  console.log(
+    JSON.stringify(
+      { provider: short(provider), providers: providers.map(short) },
+      null,
+      2,
+    ),
+  );
 });
 ```
 
 ```json
 {
-  "index": 1,
-  "label": "Photon"
+  "provider": {
+    "index": 1,
+    "label": "Photon"
+  },
+  "providers": [
+    {
+      "index": 0,
+      "label": "OpenStreetMap"
+    },
+    {
+      "index": 1,
+      "label": "Photon"
+    },
+    {
+      "index": 2,
+      "label": "Esri"
+    }
+  ]
 }
 ```
 
-For the "All" option it's `{ "index": "all", "label": "All" }`.
+For the "All" option `provider` is `{ "index": "all", "label": "All" }`. Each entry of `providers` also has the `provider` instance itself, left out above.
