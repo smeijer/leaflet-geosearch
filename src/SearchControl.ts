@@ -5,6 +5,7 @@ import {
   FitBoundsOptions,
   MarkerOptions,
   PopupOptions,
+  ZoomPanOptions,
   Map as LeafletMap,
 } from 'leaflet';
 import SearchElement from './SearchElement';
@@ -67,6 +68,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider' | 'providers'> = {
   maxSuggestions: 5,
   retainZoomLevel: false,
   animateZoom: true,
+  flyTo: false,
   searchLabel: 'Enter address',
   clearSearchLabel: 'Clear search',
   notFoundMessage: '',
@@ -245,6 +247,12 @@ interface SearchControlProps {
   messageHideDelay: number;
 
   animateZoom: boolean;
+  /**
+   * fly to a result with Leaflet's flyTo and flyToBounds instead of jumping
+   * there. An object is passed to them, e.g. `{ duration: 1.5 }`
+   * @default false
+   */
+  flyTo: boolean | ZoomPanOptions;
   zoomLevel: number;
   retainZoomLevel: boolean;
   /**
@@ -1241,16 +1249,30 @@ const Control: SearchControl = {
   },
 
   centerMap(result) {
-    const { retainZoomLevel, animateZoom, zoomToBounds, fitBoundsOptions } =
-      this.options;
-    const options = { animate: animateZoom };
+    const {
+      retainZoomLevel,
+      animateZoom,
+      zoomToBounds,
+      fitBoundsOptions,
+      flyTo,
+    } = this.options;
+    // animateZoom comes last, so false turns off the flight too
+    const options = {
+      ...(typeof flyTo === 'object' ? flyTo : {}),
+      animate: animateZoom,
+    };
 
     // plain arrays instead of Leaflet objects: a map created with another copy
     // of Leaflet doesn't recognize our instances ("Bounds are not valid")
     const bounds = toBoundsTuple(result.bounds);
 
     if (!retainZoomLevel && zoomToBounds && bounds) {
-      this.map.fitBounds(bounds, { ...fitBoundsOptions, ...options });
+      const fit = { ...fitBoundsOptions, ...options };
+      if (flyTo) {
+        this.map.flyToBounds(bounds, fit);
+      } else {
+        this.map.fitBounds(bounds, fit);
+      }
       return;
     }
 
@@ -1267,7 +1289,11 @@ const Control: SearchControl = {
       return;
     }
 
-    this.map.setView(center, this.getZoom(), options);
+    if (flyTo) {
+      this.map.flyTo(center, this.getZoom(), options);
+    } else {
+      this.map.setView(center, this.getZoom(), options);
+    }
   },
 
   getZoom(): number {

@@ -42,3 +42,7 @@ constructed.reset();
 constructed.setQuery('Amsterdam');
 const labels: Partial<SearchControlLabels> = { searchLabel: 'Adres' };
 constructed.setLabels(labels);
+
+// flyTo takes a boolean or Leaflet's pan options (#308)
+new GeoSearchControl({ provider, flyTo: true });
+new GeoSearchControl({ provider, flyTo: { duration: 1.5 } });

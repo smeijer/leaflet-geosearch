@@ -63,6 +63,7 @@ test('SearchControl default options', () => {
     maxSuggestions: 5,
     retainZoomLevel: false,
     animateZoom: true,
+    flyTo: false,
     searchLabel: 'Enter address',
     clearSearchLabel: 'Clear search',
     notFoundMessage: '',
