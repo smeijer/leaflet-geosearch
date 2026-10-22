@@ -93,6 +93,9 @@ export default defineConfig({
     },
   },
   markdown: {
+    // long lines wrap instead of scrolling sideways, the wrap button still
+    // turns it off per block
+    defaultWrapCode: true,
     shiki: {
       // `// [!code --]` and `// [!code ++]` mark removed and added lines,
       // so a before/after example keeps its js highlighting
