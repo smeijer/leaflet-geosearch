@@ -425,6 +425,10 @@ Bing does not support `CORS`, and requires `jsonp` to be used instead.
 In case you decide to write your own provider, please consider submitting a PR
 to share your work with us.
 
+The [contributing guide](CONTRIBUTING.md) has the details: tests, the docs site,
+what a new provider needs, and how commit messages and PR titles turn into
+releases.
+
 To work on the package:
 
 ```bash
