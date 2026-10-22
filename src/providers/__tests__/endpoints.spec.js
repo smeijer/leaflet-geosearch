@@ -80,7 +80,7 @@ describe('provider endpoints', () => {
     [
       'MapBox',
       new MapBoxProvider(),
-      'https://a.tiles.mapbox.com/v4/geocode/mapbox.places/Den Haag.json?',
+      'https://a.tiles.mapbox.com/v4/geocode/mapbox.places/Den%20Haag.json?',
     ],
     [
       'OpenCage',

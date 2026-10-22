@@ -35,7 +35,10 @@ export default class MapBoxProvider extends AbstractProvider<
   }
 
   endpoint({ query }: EndpointArgument): string {
-    return this.getUrl(`${this.searchUrl}${query}.json`);
+    // the text is part of the path, encoded so it can't add parameters or
+    // change the path
+    const text = encodeURIComponent(String(query));
+    return this.getUrl(`${this.searchUrl}${text}.json`);
   }
 
   parse(response: ParseArgument<RequestResult>): SearchResult<RawResult>[] {
