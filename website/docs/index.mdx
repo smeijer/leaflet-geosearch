@@ -113,7 +113,11 @@ const provider = new GeoSearch.OpenStreetMapProvider();
 </script>
 ```
 
-Services that rewrite the imports for you, like jsDelivr's `/+esm` or esm.sh, load their own copy of Leaflet (`leaflet@latest`, which is 1.9). If your map uses a different Leaflet, the page ends up with two copies of Leaflet and the control may not work with your map. The import map avoids that.
+Services that rewrite the imports for you, like jsDelivr's `/+esm` or esm.sh, load their own copy of Leaflet (`leaflet@latest`, which is 1.9). If your map uses a different Leaflet, the page ends up with two copies of Leaflet, and the control may not work with your map. The import map avoids that. With esm.sh, you can add `?external=leaflet` so it uses the Leaflet from your import map:
+
+```json
+"leaflet-geosearch": "https://esm.sh/leaflet-geosearch@5?external=leaflet"
+```
 
 ## Example
 
