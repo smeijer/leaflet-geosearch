@@ -695,7 +695,7 @@ describe('SearchControl', () => {
     });
 
     test('autoClose closes the control and clears the input after a result', async () => {
-      const { control, input } = setup({ autoClose: true });
+      const { control, input, map } = setup({ autoClose: true });
       control.open();
       input.value = 'den';
 
@@ -705,7 +705,29 @@ describe('SearchControl', () => {
         false,
       );
       expect(input.value).toEqual('');
-      // keepResult is false, so the marker is removed as well
+      // the result it just showed stays on the map (#127)
+      const markers = control.markers.getLayers();
+      expect(markers).toHaveLength(1);
+      expect(map.hasLayer(markers[0])).toBe(true);
+    });
+
+    test('autoClose keeps the popup of the result open', async () => {
+      const { control } = setup({ autoClose: true, showPopup: true });
+      control.open();
+
+      await control.onSubmit({ query: 'den' });
+
+      expect(control.markers.getLayers()[0].isPopupOpen()).toBe(true);
+    });
+
+    test('closing by hand still clears the marker without keepResult', async () => {
+      const { control } = setup({ autoClose: true });
+      control.open();
+      await control.onSubmit({ query: 'den' });
+
+      control.open();
+      control.close();
+
       expect(control.markers.getLayers()).toHaveLength(0);
     });
 

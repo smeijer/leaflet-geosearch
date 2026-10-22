@@ -87,10 +87,9 @@ const key = (input, keyCode) =>
 // what the options ask for after picking the first suggestion
 function expected(c, found) {
   const fits = c.zoomToBounds && !c.retainZoomLevel && !!found.bounds;
-  // autoClose clears the input and the markers, unless keepResult is on.
-  // the README says so: keepResult "prevents markers to disappear while
-  // using the autoClose feature"
-  const marker = c.showMarker && !(c.autoClose && !c.keepResult);
+  // autoClose closes the box and, without keepResult, clears the text. the
+  // marker of the result stays
+  const marker = c.showMarker;
   return {
     marker,
     popupBound: marker && c.markerPopup,
