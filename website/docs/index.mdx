@@ -1,3 +1,4 @@
+import { PackageManagerTabs, Tab, Tabs } from '@theme';
 import Map from '../components/Map';
 
 # Introduction
@@ -12,9 +13,7 @@ Although this project is named `leaflet-geosearch`, the providers also work with
 
 ## Installation
 
-```bash
-npm install leaflet-geosearch
-```
+<PackageManagerTabs command="install leaflet-geosearch" />
 
 Include the CSS file somewhere. Where you do this depends a bit on your build pipeline.
 
@@ -24,23 +23,48 @@ import 'node_modules/leaflet-geosearch/dist/geosearch.css';
 
 ## Using a CDN
 
-To load `leaflet-geosearch` from a CDN instead of using a bundler take the following preparation steps:
+To load `leaflet-geosearch` from a CDN instead of using a bundler, use [jsDelivr](https://www.jsdelivr.com/package/npm/leaflet-geosearch) or [unpkg](https://unpkg.com/leaflet-geosearch/). Both serve the files from the npm package:
 
-Include the CSS file in the `head` section of your page:
+| File                       | Use                                                                                             |
+| -------------------------- | ----------------------------------------------------------------------------------------------- |
+| `dist/geosearch.css`       | The styles of the control.                                                                      |
+| `dist/bundle.min.js`       | For a `<script>` tag. Sets `window.GeoSearch`. `dist/geosearch.umd.js` is the same file.        |
+| `dist/geosearch.module.js` | An ES module for `<script type="module">`. It imports `leaflet`, see [ES modules](#es-modules). |
+
+Pin the major version, like `@5` below, instead of `@latest`. A new major version can have breaking changes, and with `@latest` your page would get it without notice.
+
+Include the CSS file in the `head` section of your page, and the JavaScript file before the closing `body` tag. When you use it with Leaflet, include it **after** Leaflet's JavaScript file:
+
+<Tabs groupId="cdn">
+  <Tab label="jsDelivr">
 
 ```html
 <link
   rel="stylesheet"
-  href="https://unpkg.com/leaflet-geosearch@latest/dist/geosearch.css"
+  href="https://cdn.jsdelivr.net/npm/leaflet-geosearch@5/dist/geosearch.css"
 />
+
+<!-- Make sure you put this AFTER leaflet.js, when using with leaflet -->
+<script src="https://cdn.jsdelivr.net/npm/leaflet-geosearch@5/dist/bundle.min.js"></script>
 ```
 
-Include the JavaScript file before the closing `body` tag, if you're using it with the leaflet, make sure to include it **after** leaflet's javascript file
+  </Tab>
+  <Tab label="unpkg">
 
 ```html
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet-geosearch@5/dist/geosearch.css"
+/>
+
 <!-- Make sure you put this AFTER leaflet.js, when using with leaflet -->
-<script src="https://unpkg.com/leaflet-geosearch@latest/dist/bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet-geosearch@5/dist/bundle.min.js"></script>
 ```
+
+  </Tab>
+</Tabs>
+
+For Leaflet 2, load its `leaflet-global.js` first, see [Leaflet 2](./usage#leaflet-2).
 
 Now you're ready to use the control or providers. Just remember that your "import" syntax will be a bit different from what the docs are using.
 
@@ -51,6 +75,48 @@ const provider = new OpenStreetMapProvider();
 
 // you want to get it of the window global
 const provider = new GeoSearch.OpenStreetMapProvider();
+```
+
+### ES modules
+
+`dist/geosearch.module.js` imports `leaflet` by name, which a browser can't resolve on its own. Add an [import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap) that points `leaflet` to the same Leaflet your map uses. This works well with Leaflet 2, which is published as ES modules:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/leaflet@2.0.0-alpha.1/dist/leaflet.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/leaflet-geosearch@5/dist/geosearch.css"
+/>
+
+<script type="importmap">
+  {
+    "imports": {
+      "leaflet": "https://cdn.jsdelivr.net/npm/leaflet@2.0.0-alpha.1/dist/leaflet.js",
+      "leaflet-geosearch": "https://cdn.jsdelivr.net/npm/leaflet-geosearch@5/dist/geosearch.module.js"
+    }
+  }
+</script>
+
+<script type="module">
+  import { Map, TileLayer } from 'leaflet';
+  import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+
+  const map = new Map('map').setView([52.09, 5.12], 8);
+  new TileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+  map.addControl(
+    new GeoSearchControl({ provider: new OpenStreetMapProvider() }),
+  );
+</script>
+```
+
+Services that rewrite the imports for you, like jsDelivr's `/+esm` or esm.sh, load their own copy of Leaflet (`leaflet@latest`, which is 1.9). If your map uses a different Leaflet, the page ends up with two copies of Leaflet, and the control may not work with your map. The import map avoids that. With esm.sh, you can add `?external=leaflet` so it uses the Leaflet from your import map:
+
+```json
+"leaflet-geosearch": "https://esm.sh/leaflet-geosearch@5?external=leaflet"
 ```
 
 ## Example
