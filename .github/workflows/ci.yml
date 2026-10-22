@@ -184,8 +184,24 @@ jobs:
       - name: Build
         run: npm run build
 
+      # the browser is cached per Playwright version. The runner image already
+      # has the libraries Chromium needs, so no apt packages: --with-deps only
+      # added fonts and upgrades, and its downloads could hang the job
+      - name: Playwright version
+        id: playwright
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Chromium
+        id: playwright-cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.playwright.outputs.version }}-chromium
+
       - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        timeout-minutes: 5
+        run: npx playwright install chromium
 
       # the built bundles in a real browser, provider requests are mocked
       - name: End-to-end tests
