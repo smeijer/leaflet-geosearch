@@ -98,6 +98,23 @@ To always search again, like before:
 new GeoSearchControl({ provider, requeryOnSelect: true });
 ```
 
+## autoClose keeps the marker
+
+With `autoClose` and without `keepResult`, the marker of a picked result was removed right after it was added, so the map moved to a place without a marker. The marker and its popup stay now. The text in the box is still cleared without `keepResult`, and closing the box by hand or pressing escape still removes the marker.
+
+{/* prettier-ignore */}
+```js title="4.x → 5.0"
+new GeoSearchControl({ provider, autoClose: true });
+// pick "Amsterdam" → the map moves there, without a marker // [!code --]
+// pick "Amsterdam" → the map moves there and the marker stays // [!code ++]
+```
+
+For no marker, like before:
+
+```js
+new GeoSearchControl({ provider, autoClose: true, showMarker: false });
+```
+
 ## Failed searches fire an event
 
 A failed search (offline, a server error, a blocked request) fires `geosearch/error` on the map, and the control shows its error style until the user types again.

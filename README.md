@@ -368,9 +368,9 @@ only panned.
 
 `flyTo` flies to the result with Leaflet's `flyTo` and `flyToBounds` instead of jumping there. An object like `{ duration: 1.5 }` is passed to them. `animateZoom: false` turns the animation off for both.
 
-`autoClose` closes the result list if a result is selected by click/enter.
+`autoClose` closes the search box and the result list after a result is picked by click or enter. The marker of the result stays.
 
-`keepResult` is used to keep the selected result in the search field. This prevents markers to disappear while using the `autoClose` feature.
+`keepResult` keeps the picked result in the search field. Without it, `autoClose` clears the text, and closing the box also removes the marker. Escape always clears both.
 
 `updateMap` controls whether or not the map re-centers on the selection.
 
