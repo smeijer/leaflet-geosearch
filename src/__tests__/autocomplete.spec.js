@@ -107,6 +107,25 @@ describe('autocomplete requests', () => {
     expect(control.markers.getLayers()).toHaveLength(1);
   });
 
+  test('a search still waiting for the delay is dropped after a pick', async () => {
+    const { provider, pending } = controlledProvider();
+    const { control, input } = setup(provider);
+
+    await type(input, 'ams');
+    pending[0].resolve([place('Amsterdam')]);
+    await vi.advanceTimersByTimeAsync(0);
+
+    // a keystroke queues a search, the pick comes before the delay is over
+    input.value = 'amst';
+    input.dispatchEvent(new KeyboardEvent('keyup', { keyCode: 65 }));
+    control.resultList.container.children[0].click();
+    await vi.advanceTimersByTimeAsync(250);
+
+    expect(provider.search).toHaveBeenCalledTimes(1);
+    expect(labels(control)).toEqual([]);
+    expect(control.markers.getLayers()).toHaveLength(1);
+  });
+
   test('escape drops a pending search', async () => {
     const { provider, pending } = controlledProvider();
     const { control, input } = setup(provider);

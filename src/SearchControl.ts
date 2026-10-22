@@ -360,10 +360,18 @@ const Control: SearchControl = {
       this.searchElement.form.appendChild(this.resultList.container);
 
       if (this.options.autoComplete) {
-        const autoSearch = debounce(
-          (e: KeyboardEvent) => this.autoSearch(e),
-          this.options.autoCompleteDelay,
-        );
+        // a pick, submit or clear during the delay makes the waiting search
+        // outdated, like it does for running ones
+        let queuedId: number | undefined;
+        const debounced = debounce((e: KeyboardEvent) => {
+          if (queuedId === this.searchId) {
+            this.autoSearch(e);
+          }
+        }, this.options.autoCompleteDelay);
+        const autoSearch = (e: Event) => {
+          queuedId = this.searchId;
+          debounced(e);
+        };
 
         this.searchElement.input.addEventListener('keyup', autoSearch, true);
         // also covers paste, drag and drop, and mobile keyboards that don't
