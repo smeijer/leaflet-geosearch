@@ -10,7 +10,7 @@ function setup(provider, options = {}) {
   div.id = randomId();
   document.body.appendChild(div);
 
-  const map = L.map(div, { center: [0, 0], zoom: 2 });
+  const map = new L.Map(div, { center: [0, 0], zoom: 2 });
   vi.spyOn(map, 'setView').mockReturnThis();
   const control = new SearchControl({ provider, ...options }).addTo(map);
   const errors = [];

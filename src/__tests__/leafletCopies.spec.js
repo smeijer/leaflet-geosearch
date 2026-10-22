@@ -42,37 +42,41 @@ async function setup(options = {}) {
   div.style.height = '300px';
   document.body.appendChild(div);
 
-  const map = OtherL.map(div, { center: [0, 0], zoom: 2 });
+  const map = new OtherL.Map(div, { center: [0, 0], zoom: 2 });
   const provider = { search: vi.fn(async () => [result]) };
   const control = new SearchControl({ provider, ...options }).addTo(map);
 
   return { map, control };
 }
 
-describe('a map from another copy of Leaflet', () => {
-  afterEach(() => {
-    document.body.innerHTML = '';
-  });
+// Leaflet 2 has no UMD bundle in its exports to evaluate a second time
+describe.skipIf(!L.version.startsWith('1.'))(
+  'a map from another copy of Leaflet',
+  () => {
+    afterEach(() => {
+      document.body.innerHTML = '';
+    });
 
-  test('results with bounds move the map without throwing (#253)', async () => {
-    const { map, control } = await setup({ animateZoom: false });
+    test('results with bounds move the map without throwing (#253)', async () => {
+      const { map, control } = await setup({ animateZoom: false });
 
-    await expect(control.onSubmit({ query: 'den' })).resolves.toBeUndefined();
+      await expect(control.onSubmit({ query: 'den' })).resolves.toBeUndefined();
 
-    const center = map.getCenter();
-    expect(center.lat).toBeCloseTo(52.05, 1);
-    expect(center.lng).toBeCloseTo(4.3, 1);
-  });
+      const center = map.getCenter();
+      expect(center.lat).toBeCloseTo(52.05, 1);
+      expect(center.lng).toBeCloseTo(4.3, 1);
+    });
 
-  test('results without bounds move the map', async () => {
-    const { map, control } = await setup({ animateZoom: false });
-    control.options.provider.search.mockResolvedValueOnce([
-      { ...result, bounds: null },
-    ]);
+    test('results without bounds move the map', async () => {
+      const { map, control } = await setup({ animateZoom: false });
+      control.options.provider.search.mockResolvedValueOnce([
+        { ...result, bounds: null },
+      ]);
 
-    await control.onSubmit({ query: 'den' });
+      await control.onSubmit({ query: 'den' });
 
-    expect(map.getCenter().lat).toBeCloseTo(52.08, 5);
-    expect(map.getZoom()).toEqual(18);
-  });
-});
+      expect(map.getCenter().lat).toBeCloseTo(52.08, 5);
+      expect(map.getZoom()).toEqual(18);
+    });
+  },
+);

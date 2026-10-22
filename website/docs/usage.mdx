@@ -66,6 +66,37 @@ const searchControl = new GeoSearchControl({
 map.addControl(searchControl);
 ```
 
+## Leaflet 2
+
+The control works with Leaflet 1.6 and up, and with Leaflet 2. Leaflet 2 has no factory functions like `L.map()` and no global `L` in its ES modules, so create the map with `new Map()` and import what you need by name. The control is used the same way:
+
+```js
+import { Map, TileLayer } from 'leaflet';
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+
+const map = new Map('map').setView([52.09, 5.12], 8);
+new TileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+map.addControl(new GeoSearchControl({ provider: new OpenStreetMapProvider() }));
+```
+
+Without a bundler, load Leaflet 2's `leaflet-global.js`, which sets `window.L`, before the UMD build of `leaflet-geosearch`:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet-geosearch/dist/geosearch.css"
+/>
+<script src="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet-global.js"></script>
+<script src="https://unpkg.com/leaflet-geosearch/dist/geosearch.umd.js"></script>
+```
+
+Leaflet 2 is only published as ES modules. The CommonJS build of `leaflet-geosearch` loads it with `require('leaflet')`, which works in Node 20.19+ and 22.12+.
+
 ## Results
 
 The search event of all providers return an array of `result` objects. The base structure is uniform between the providers. It contains objects matching the following interface:

@@ -1,8 +1,11 @@
-import * as L from 'leaflet';
 import {
+  Control as LeafletControl,
   ControlPosition,
+  DomEvent,
+  DragEndEvent,
   FeatureGroup,
   FitBoundsOptions,
+  Marker,
   MarkerOptions,
   PopupOptions,
   ZoomPanOptions,
@@ -60,7 +63,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider' | 'providers'> = {
   // they are escaped before being used as html
   popupFormat: ({ result }) => escapeHtml(result.label),
   resultFormat: ({ result }) => escapeHtml(result.label),
-  // the default icon is added by initialize (see defaultIcon)
+  // no icon, so Marker uses Leaflet's default icon
   marker: {
     draggable: false,
   },
@@ -131,18 +134,6 @@ function centerOf([[south, west], [north, east]]: BoundsTuple): PointTuple {
 
 function hasPosition(result?: SearchResult): result is SearchResult {
   return !!result && Number.isFinite(result.x) && Number.isFinite(result.y);
-}
-
-let sharedIcon: L.Icon.Default | undefined;
-
-// created on first use instead of when the module loads, so importing the
-// package has no side effects and bundlers can drop what isn't used
-function defaultIcon(): L.Icon.Default {
-  if (!sharedIcon) {
-    sharedIcon = new L.Icon.Default();
-  }
-
-  return sharedIcon;
 }
 
 const UNINITIALIZED_ERR =
@@ -363,7 +354,7 @@ interface SearchControl {
   /** theme and list position classes, also used by the bar container */
   modifierClasses: string[];
   /** the latest reverse lookup of each marker, older answers are dropped */
-  reverseIds?: WeakMap<L.Marker, number>;
+  reverseIds?: WeakMap<Marker, number>;
   markers: FeatureGroup;
   searchElement: SearchElement;
   resultList: ResultList;
@@ -382,7 +373,7 @@ interface SearchControl {
   cache?: Map<string, SearchResult[]>;
 
   // [key: string]: any;
-  initialize(options: SearchControlProps): void;
+  setup(options: SearchControlOptions): void;
   onSubmit(result: Selection): void;
   open(): void;
   close(): void;
@@ -427,7 +418,7 @@ interface SearchControl {
   selectResult(event: KeyboardEvent): void;
   showResult(result: SearchResult, query: Selection): void;
   addMarker(result: SearchResult, selection: Selection): void;
-  reverseMarker(marker: L.Marker, result: SearchResult): Promise<void>;
+  reverseMarker(marker: Marker, result: SearchResult): Promise<void>;
   centerMap(result: SearchResult): void;
   closeResults(): void;
   getZoom(): number;
@@ -437,14 +428,13 @@ interface SearchControl {
 
 // @ts-ignore
 const Control: SearchControl = {
-  // no copies needed: Control.extend copies the options and initialize
-  // replaces both objects. spreads or property reads here would keep
-  // bundlers from dropping an unused control
+  // no copies needed: setup replaces both objects. spreads or property
+  // reads here would keep bundlers from dropping an unused control
   options: defaultOptions,
   classNames: defaultClassNames,
 
-  initialize(options: SearchControlOptions) {
-    if (!L) {
+  setup(options: SearchControlOptions) {
+    if (!LeafletControl) {
       throw new Error(UNINITIALIZED_ERR);
     }
 
@@ -469,7 +459,6 @@ const Control: SearchControl = {
       provider: choices[0].provider,
       marker: {
         ...defaultOptions.marker,
-        icon: defaultIcon(),
         ...withoutUndefined(given.marker),
       },
     };
@@ -488,7 +477,7 @@ const Control: SearchControl = {
       ...withoutUndefined(given.classNames),
     };
 
-    this.markers = new L.FeatureGroup();
+    this.markers = new FeatureGroup();
     this.classNames.container += ` leaflet-geosearch-${this.options.style}`;
 
     // classes for the theme and the list position. The bar style moves the
@@ -542,7 +531,7 @@ const Control: SearchControl = {
       });
     }
 
-    L.DomEvent.disableClickPropagation(this.button);
+    DomEvent.disableClickPropagation(this.button);
 
     this.resetButton = createElement<HTMLAnchorElement>(
       'button',
@@ -561,7 +550,7 @@ const Control: SearchControl = {
       },
     );
 
-    L.DomEvent.disableClickPropagation(this.resetButton);
+    DomEvent.disableClickPropagation(this.resetButton);
 
     // the select and the input share a row, only when there is a choice, so
     // the markup of single provider controls stays as it was
@@ -694,7 +683,7 @@ const Control: SearchControl = {
       root!.appendChild(this.container);
     }
 
-    L.DomEvent.disableClickPropagation(this.searchElement.form);
+    DomEvent.disableClickPropagation(this.searchElement.form);
     return this.searchElement.container;
   },
 
@@ -1126,7 +1115,7 @@ const Control: SearchControl = {
         this.centerMap(result);
       }
 
-      this.map.fireEvent('geosearch/showlocation', {
+      this.map.fire('geosearch/showlocation', {
         location: result,
         marker,
         provider,
@@ -1164,7 +1153,7 @@ const Control: SearchControl = {
       markerPopup,
       popupOptions,
     } = this.options;
-    const marker = new L.Marker([result.y, result.x], options);
+    const marker = new Marker([result.y, result.x], options);
 
     if (markerPopup) {
       let popupLabel = result.label;
@@ -1186,8 +1175,8 @@ const Control: SearchControl = {
     }
 
     if (options.draggable) {
-      marker.on('dragend', (args: L.DragEndEvent) => {
-        this.map.fireEvent('geosearch/marker/dragend', {
+      marker.on('dragend', (args: DragEndEvent) => {
+        this.map.fire('geosearch/marker/dragend', {
           location: marker.getLatLng(),
           event: args,
         });
@@ -1314,21 +1303,43 @@ const Control: SearchControl = {
 
 // SearchControl works with and without new, the type allows both (#334)
 interface SearchControlConstructor {
-  new (...options: any[]): SearchControl & L.Control;
-  (...options: any[]): SearchControl & L.Control;
+  new (...options: any[]): SearchControl & LeafletControl;
+  (...options: any[]): SearchControl & LeafletControl;
 }
 
-// extend creates a new class on every call, so it's only done once
-let LControl:
-  (new (...options: any[]) => SearchControl & L.Control) | undefined;
+type ControlClass = new (...options: any[]) => SearchControl & LeafletControl;
+
+// created on first use, so Leaflet can load after this module and an unused
+// control stays out of bundles
+let LControl: ControlClass | undefined;
+
+function createControlClass(): ControlClass {
+  // a constructor instead of initialize: Leaflet 2 throws on initialize and
+  // has no Control.extend. Leaflet 1 runs this the same way
+  class GeoSearchControl extends LeafletControl {
+    constructor(options: SearchControlOptions) {
+      super();
+      (this as unknown as SearchControl).setup(options);
+      // Leaflet 2 runs the init hooks here, after setup (see initHooks below).
+      // Leaflet 1 ran them in super() and skips this call
+      (this as any).callInitHooks();
+    }
+  }
+
+  Object.assign(GeoSearchControl.prototype, Control);
+  // tells Leaflet 2 that this constructor ends with callInitHooks
+  (GeoSearchControl as any).initHooks = true;
+
+  return GeoSearchControl as unknown as ControlClass;
+}
 
 const SearchControl = function SearchControl(...options: any[]) {
-  if (!L) {
+  if (!LeafletControl) {
     throw new Error(UNINITIALIZED_ERR);
   }
 
   if (!LControl) {
-    LControl = L.Control.extend(Control);
+    LControl = createControlClass();
   }
 
   return new LControl(...options);
