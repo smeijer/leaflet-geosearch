@@ -283,6 +283,14 @@ interface SearchControlProps {
   showResultListOnSubmit: boolean;
 }
 
+/** the texts of the control that setLabels can change */
+export interface SearchControlLabels {
+  searchLabel: string;
+  clearSearchLabel: string;
+  notFoundMessage: string;
+  providerSelectLabel: string;
+}
+
 export type SearchControlOptions = Partial<SearchControlProps> &
   ({ provider: Provider } | { providers: ProviderChoice[] });
 
@@ -363,6 +371,12 @@ interface SearchControl {
   /** the providers of the control, in the order of `providers` */
   getProviders(): ProviderInfo[];
   setProviderSelectVisible(visible: boolean): void;
+  /** clears the input, the results and the markers, and drops running searches */
+  reset(): void;
+  /** puts text into the input without searching */
+  setQuery(query: string): void;
+  /** changes the texts of the control, e.g. when the language changes */
+  setLabels(labels: Partial<SearchControlLabels>): void;
   formatResult(args: { result: SearchResult }): string;
   selectResult(event: KeyboardEvent): void;
   showResult(result: SearchResult, query: Selection): void;
@@ -959,6 +973,39 @@ const Control: SearchControl = {
 
   getProviders() {
     return this.choices.map((choice) => ({ ...choice }));
+  },
+
+  reset() {
+    this.clearResults(null, true);
+    this.searchElement.input.value = '';
+    removeClassName(this.searchElement.container, 'error');
+    this.searchElement.hasError = false;
+  },
+
+  setQuery(query) {
+    this.searchElement.input.value = query;
+    // a selected suggestion no longer matches the text
+    this.resultList?.select(-1);
+  },
+
+  setLabels(labels) {
+    const given = withoutUndefined(labels);
+    Object.assign(this.options, given);
+
+    if (given.searchLabel !== undefined) {
+      this.searchElement.input.placeholder = given.searchLabel;
+      this.button.title = given.searchLabel;
+      this.button.setAttribute('aria-label', given.searchLabel);
+    }
+    if (given.clearSearchLabel !== undefined) {
+      this.resetButton.setAttribute('aria-label', given.clearSearchLabel);
+    }
+    if (given.notFoundMessage !== undefined) {
+      this.resultList?.setNotFoundMessage(given.notFoundMessage);
+    }
+    if (given.providerSelectLabel !== undefined && this.providerSelect) {
+      this.providerSelect.setAttribute('aria-label', given.providerSelectLabel);
+    }
   },
 
   setProviderSelectVisible(visible) {

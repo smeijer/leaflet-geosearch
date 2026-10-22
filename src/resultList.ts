@@ -19,6 +19,7 @@ export default class ResultList {
   container: HTMLDivElement;
   resultItem: HTMLDivElement;
   notFoundMessage?: HTMLDivElement;
+  notFoundClassName?: string;
 
   constructor({
     handleClick,
@@ -26,14 +27,8 @@ export default class ResultList {
     notFoundMessage,
   }: ResultListProps) {
     this.handleClick = handleClick;
-    this.notFoundMessage = !!notFoundMessage
-      ? createElement<HTMLDivElement>(
-          'div',
-          cx(classNames.notfound),
-          undefined,
-          { html: notFoundMessage! },
-        )
-      : undefined;
+    this.notFoundClassName = classNames.notfound;
+    this.setNotFoundMessage(notFoundMessage);
 
     this.container = createElement<HTMLDivElement>(
       'div',
@@ -66,6 +61,23 @@ export default class ResultList {
     }
 
     this.results = results;
+  }
+
+  /** the html shown when a search finds nothing, empty shows nothing */
+  setNotFoundMessage(html?: string): void {
+    if (!html) {
+      this.notFoundMessage?.remove();
+      this.notFoundMessage = undefined;
+      return;
+    }
+
+    if (!this.notFoundMessage) {
+      this.notFoundMessage = createElement<HTMLDivElement>(
+        'div',
+        cx(this.notFoundClassName),
+      );
+    }
+    this.notFoundMessage.innerHTML = html;
   }
 
   select(index: number): SearchResult {

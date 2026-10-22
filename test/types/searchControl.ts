@@ -6,6 +6,7 @@ import {
   OpenStreetMapProvider,
   type ProviderChoice,
   type ProviderInfo,
+  type SearchControlLabels,
   type SelectedProvider,
 } from '../../src';
 
@@ -35,3 +36,9 @@ several.setProviderSelectVisible(false);
 const listed: ProviderInfo[] = several.getProviders();
 const selected: SelectedProvider = several.getSelectedProvider();
 const choices: ProviderChoice[] = [{ label: 'x', provider }];
+
+// methods for code outside the control
+constructed.reset();
+constructed.setQuery('Amsterdam');
+const labels: Partial<SearchControlLabels> = { searchLabel: 'Adres' };
+constructed.setLabels(labels);

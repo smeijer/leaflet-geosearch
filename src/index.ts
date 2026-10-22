@@ -26,5 +26,6 @@ export type {
   SearchControlOptions,
   ProviderChoice,
   ProviderInfo,
+  SearchControlLabels,
   SelectedProvider,
 } from './SearchControl';
