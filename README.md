@@ -310,6 +310,11 @@ new GeoSearchControl({
   zoomToBounds: true, // optional: true|false  - default true
   fitBoundsOptions: {}, // optional: Leaflet FitBoundsOptions - default {}
   reverseOnDragEnd: false, // optional: true|false  - default false
+  resultListPosition: 'below', // optional: 'below'|'above'|'auto' - default 'below'
+  theme: 'light', // optional: 'light'|'dark'|'auto' - default 'light'
+  searchIcon: '', // optional: html of the search button - default the magnifying glass
+  markerPopup: true, // optional: true|false  - default true
+  popupOptions: {}, // optional: Leaflet PopupOptions - default {}
   animateZoom: true, // optional: true|false  - default true
   autoClose: false, // optional: true|false  - default false
   searchLabel: 'Enter address', // optional: string      - default 'Enter address'
@@ -346,6 +351,14 @@ only panned.
 `fitBoundsOptions` is passed to Leaflet's `fitBounds`. `maxZoom` keeps a single building from zooming in too far, `padding` keeps the result out from under the search bar.
 
 `reverseOnDragEnd` looks up the address when a draggable marker (`marker: { draggable: true }`) is dropped, with the provider that found the result. The popup shows the new address, the input too with `keepResult`, and `geosearch/marker/reverse` is fired. Providers have a `reverse({ lat, lng })` method for this, see the [docs](https://leaflet-geosearch.meijer.works/usage#reverse-geocoding).
+
+`resultListPosition` opens the result list above the input (`'above'`), or above when the control sits in a bottom corner (`'auto'`).
+
+`theme` sets the colors: `'light'`, `'dark'` or `'auto'` (follows the system). The colors are css variables like `--geosearch-background` and `--geosearch-text`, see the [docs](https://leaflet-geosearch.meijer.works/leaflet-control#theme).
+
+`searchIcon` replaces the magnifying glass with your own html, e.g. an svg that uses `currentColor`. Only pass markup you wrote yourself.
+
+`markerPopup: false` gives the marker no popup, `popupOptions` is passed to Leaflet's `bindPopup`.
 
 `animateZoom` controls whether or not the pan/zoom moment is being animated.
 
@@ -400,6 +413,8 @@ searchControl.setLabels({ searchLabel: 'Adres girin' });
 ```
 
 **Events**
+
+`geosearch/beforeshowlocation` is fired before a result is shown. Calling `event.preventDefault()` skips the marker, the map move and `geosearch/showlocation`.
 
 `geosearch/showlocation` is fired when location is chosen from the result list.
 
