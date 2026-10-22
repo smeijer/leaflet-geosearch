@@ -204,6 +204,77 @@ describe('autocomplete requests', () => {
   });
 });
 
+describe('submit requests', () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => {
+    vi.useRealTimers();
+    document.body.innerHTML = '';
+  });
+
+  test('a submit that answers after a clear is dropped', async () => {
+    const { provider, pending } = controlledProvider();
+    const { control } = setup(provider, {
+      autoComplete: false,
+      showResultListOnSubmit: true,
+    });
+
+    const submit = control.onSubmit({ query: 'ams' });
+    control.clearResults(null, true);
+    pending[0].resolve([place('Amsterdam'), place('Amstelveen')]);
+    await submit;
+
+    expect(labels(control)).toEqual([]);
+    expect(control.markers.getLayers()).toHaveLength(0);
+  });
+
+  test('a slow older submit does not replace a newer one', async () => {
+    const { provider, pending } = controlledProvider();
+    const { control, map } = setup(provider);
+    const shown = [];
+    map.on('geosearch/showlocation', (e) => shown.push(e.location.label));
+
+    const first = control.onSubmit({ query: 'ams' });
+    const second = control.onSubmit({ query: 'rot' });
+    pending[1].resolve([place('Rotterdam')]);
+    await second;
+    pending[0].resolve([place('Amsterdam')]);
+    await first;
+
+    expect(shown).toEqual(['Rotterdam']);
+    expect(control.markers.getLayers()).toHaveLength(1);
+  });
+
+  test('errors of an outdated submit are not reported', async () => {
+    const { provider, pending } = controlledProvider();
+    const { control, errors } = setup(provider);
+
+    const first = control.onSubmit({ query: 'ams' });
+    const second = control.onSubmit({ query: 'rot' });
+    pending[1].resolve([place('Rotterdam')]);
+    await second;
+    pending[0].reject(new Error('timeout'));
+    await first;
+
+    expect(errors).toEqual([]);
+  });
+
+  test('enter right after typing shows the result', async () => {
+    const { provider, pending } = controlledProvider();
+    const { control, input } = setup(provider);
+
+    // enter before the autocomplete delay is over
+    input.value = 'ams';
+    input.dispatchEvent(new KeyboardEvent('keyup', { keyCode: 65 }));
+    input.dispatchEvent(new KeyboardEvent('keydown', { keyCode: 13 }));
+    await vi.advanceTimersByTimeAsync(250);
+    pending[0].resolve([place('Amsterdam')]);
+    await vi.advanceTimersByTimeAsync(0);
+
+    expect(provider.search).toHaveBeenCalledTimes(1);
+    expect(control.markers.getLayers()).toHaveLength(1);
+  });
+});
+
 describe('providers and abort signals', () => {
   test('the default provider passes the signal to fetch', async () => {
     // happy-dom ignores aborts of intercepted requests, so check the hand-off

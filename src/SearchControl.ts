@@ -597,6 +597,7 @@ const Control: SearchControl = {
 
   async onSubmit(query) {
     this.cancelSearch();
+    const id = this.searchId;
     // there is no result list when autoComplete and showResultListOnSubmit
     // are off
     this.resultList?.clear();
@@ -614,7 +615,14 @@ const Control: SearchControl = {
         ? await provider!.search(query)
         : await this.searchProvider(query);
     } catch (error) {
-      this.handleError(error, query.query, 'submit');
+      if (id === this.searchId) {
+        this.handleError(error, query.query, 'submit');
+      }
+      return;
+    }
+
+    // a newer search or a clear happened while this one was running
+    if (id !== this.searchId) {
       return;
     }
 
