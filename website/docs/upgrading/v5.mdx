@@ -2,6 +2,53 @@
 
 5.0 fixes a lot of long-standing issues, and some of those fixes change what you see. The API is the same: nothing was removed or renamed, and the browser support didn't change. Each section shows what 4.x did, what 5.0 does, and how to get the old behaviour back if you relied on it.
 
+## Dependencies and requirements
+
+| Package or requirement      | 4.x                  | 5.0                           | What to do                                                        |
+| --------------------------- | -------------------- | ----------------------------- | ----------------------------------------------------------------- |
+| `leaflet`                   | `^1.6.0` (optional)  | `^1.6.0` (optional)           | nothing                                                           |
+| `@googlemaps/js-api-loader` | `^1.16.6` (optional) | `^2.1.3` (optional)           | only if you use `GoogleProvider` and added it yourself, see below |
+| `@types/google.maps`        | not included         | `^3.53.1`                     | nothing, you can drop it if you only added it for us              |
+| TypeScript                  |                      | 4.7 or newer                  | nothing for most projects                                         |
+| Browsers                    | ES2016 (no IE11)     | ES2016 (no IE11)              | nothing                                                           |
+| Server-side rendering       | not supported        | `leaflet-geosearch/providers` | see [Package](#package)                                           |
+
+### Updating the package
+
+```diff title="package.json"
+ "dependencies": {
+-  "leaflet-geosearch": "^4.4.0"
++  "leaflet-geosearch": "^5.0.0"
+ }
+```
+
+### @googlemaps/js-api-loader 2
+
+`GoogleProvider` loads the Maps JavaScript API with `@googlemaps/js-api-loader`. It's an optional dependency, so npm installs it with leaflet-geosearch. If your own `package.json` lists the 1.x loader too, update it, otherwise npm keeps a second copy for you:
+
+```diff title="package.json"
+ "dependencies": {
+-  "@googlemaps/js-api-loader": "^1.16.6"
++  "@googlemaps/js-api-loader": "^2.1.3"
+ }
+```
+
+The provider options don't change, see [Google](#google) for the few that are gone.
+
+### @types/google.maps
+
+The type declarations of `GoogleProvider` refer to the `google.maps` namespace. In 4.x, TypeScript projects without `@types/google.maps` failed to compile (#349). 5.0 installs it with the package. If you only added it for leaflet-geosearch, you can remove it:
+
+```diff title="package.json"
+ "devDependencies": {
+-  "@types/google.maps": "^3.53.1"
+ }
+```
+
+### TypeScript
+
+The types are checked with TypeScript 4.7 to 5.9, with `moduleResolution` set to `node`, `bundler` and `node16`. `new GeoSearchControl(...)` type-checks now, in 4.x only `GeoSearchControl(...)` did (#334).
+
 ## Labels are escaped
 
 The default `resultFormat` and `popupFormat` escape the label, since it comes from the provider (OpenStreetMap names are user edited).
@@ -164,7 +211,9 @@ new OpenStreetMapProvider({ params: { format: 'jsonv2' } });
 - the npm package no longer ships the tests, fixtures and the old docs theme.
 - `package.json` has `"sideEffects": ["*.css"]`, so bundlers drop what you don't use. Importing the css still works.
 - `@types/google.maps` is installed with the package, TypeScript projects don't need to add it.
-- new entry `leaflet-geosearch/providers` with the providers only, without Leaflet:
+- `exports` lists the `types` condition first. With `moduleResolution: "bundler"` or `"node16"`, TypeScript found the types only through a fallback before.
+- the bundles keep their names and paths: `dist/geosearch.js`, `geosearch.module.js`, `geosearch.umd.js`, `bundle.min.js` and `geosearch.css`. Direct links like `unpkg.com/leaflet-geosearch/dist/geosearch.umd.js` keep working.
+- new entry `leaflet-geosearch/providers` with the providers only, without Leaflet. On the server it needs a global `fetch`, which Node.js has since version 18:
 
 ```js title="4.x"
 // Next.js, Nuxt, ...: importing the package loads Leaflet,
