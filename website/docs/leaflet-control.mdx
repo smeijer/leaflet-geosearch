@@ -33,6 +33,8 @@ const searchControl = new SearchControl({
 map.addControl(searchControl);
 ```
 
+`style: 'bar'` shows the search box as a bar at the top of the map, in the middle. `position` only places the button style, the bar stays at the top.
+
 ## Message if address not found
 
 <Map
@@ -206,7 +208,7 @@ map.on('geosearch/marker/reverse', ({ location }) => {
 
 ## Result list position
 
-With the control in a bottom corner of the map, the result list would open below the input, outside the map. `resultListPosition: 'above'` opens it above the input, `'auto'` does so when `position` is `bottomleft` or `bottomright`. The default is `'below'`.
+With the control in a bottom corner of the map, the result list would open below the input, outside the map. `resultListPosition: 'above'` opens it above the input, `'auto'` does so when `position` is `bottomleft` or `bottomright`, for the button style. The bar is always at the top, so it keeps the list below. The default is `'below'`.
 
 <Map
   provider="OpenStreetMap"

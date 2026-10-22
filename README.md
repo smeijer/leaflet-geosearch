@@ -275,6 +275,9 @@ new GeoSearchControl({
 }).addTo(map);
 ```
 
+The bar always sits at the top of the map, in the middle. `position` only places
+the button style.
+
 **AutoComplete**
 
 Auto complete can be configured by the parameters `autoComplete` and
