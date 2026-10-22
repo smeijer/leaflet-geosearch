@@ -336,6 +336,24 @@ describe('SearchControl', () => {
       });
     });
 
+    test('editing the text drops the selected suggestion', async () => {
+      const { provider, input } = setup();
+      await type(input, 'den');
+      key(input, 'keydown', KEY.down);
+
+      // enter comes before the next autocomplete search
+      input.value = 'rotterdam';
+      input.dispatchEvent(new Event('input'));
+      key(input, 'keydown', KEY.enter);
+      await vi.advanceTimersByTimeAsync(0);
+
+      expect(provider.search).toHaveBeenCalledTimes(2);
+      expect(provider.search).toHaveBeenLastCalledWith({
+        query: 'rotterdam',
+        data: undefined,
+      });
+    });
+
     test('requeryOnSelect searches again with the selected suggestion', async () => {
       const { control, provider, input } = setup({ requeryOnSelect: true });
       await type(input, 'den');
@@ -744,6 +762,25 @@ describe('SearchControl', () => {
       expect(provider.search).toHaveBeenCalledTimes(1);
       expect(control.markers.getLayers()).toHaveLength(1);
       expect(control.resultList.container.children).toHaveLength(0);
+    });
+
+    test('editing the text drops the selected result', async () => {
+      const { provider, input } = setup(options);
+      input.value = 'den';
+      key(input, 'keydown', KEY.enter);
+      await vi.advanceTimersByTimeAsync(0);
+      key(input, 'keydown', KEY.down);
+
+      input.value = 'rotterdam';
+      input.dispatchEvent(new Event('input'));
+      key(input, 'keydown', KEY.enter);
+      await vi.advanceTimersByTimeAsync(0);
+
+      expect(provider.search).toHaveBeenCalledTimes(2);
+      expect(provider.search).toHaveBeenLastCalledWith({
+        query: 'rotterdam',
+        data: undefined,
+      });
     });
 
     test('clicking a result shows it', async () => {

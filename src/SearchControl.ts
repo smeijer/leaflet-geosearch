@@ -371,6 +371,15 @@ const Control: SearchControl = {
         this.searchElement.input.addEventListener('input', autoSearch, true);
       }
 
+      // a selected item no longer matches the text once it's edited, enter
+      // has to search for the new text. arrows set the value without an
+      // input event, so they keep their selection
+      this.searchElement.input.addEventListener(
+        'input',
+        () => this.resultList.select(-1),
+        true,
+      );
+
       this.searchElement.input.addEventListener(
         'keydown',
         (e: KeyboardEvent) => this.selectResult(e),
