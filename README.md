@@ -307,6 +307,8 @@ new GeoSearchControl({
   resultFormat: ({ result }) => result.label, // optional: function    - default returns result label
   maxMarkers: 1, // optional: number      - default 1
   retainZoomLevel: false, // optional: true|false  - default false
+  zoomToBounds: true, // optional: true|false  - default true
+  fitBoundsOptions: {}, // optional: Leaflet FitBoundsOptions - default {}
   animateZoom: true, // optional: true|false  - default true
   autoClose: false, // optional: true|false  - default false
   searchLabel: 'Enter address', // optional: string      - default 'Enter address'
@@ -337,6 +339,10 @@ well.
 `retainZoomLevel` is a setting that fixes the zoomlevel. Default behaviour is to
 zoom and pan to the search result. With `retainZoomLevel` on `true`, the map is
 only panned.
+
+`zoomToBounds` fits the map to the bounds of a result, when the provider returns them. Most OpenStreetMap results have bounds, so `zoomLevel` only applies to the others. With `zoomToBounds: false` every result is shown at `zoomLevel`, e.g. `{ zoomToBounds: false, zoomLevel: 20 }`.
+
+`fitBoundsOptions` is passed to Leaflet's `fitBounds`. `maxZoom` keeps a single building from zooming in too far, `padding` keeps the result out from under the search bar.
 
 `animateZoom` controls whether or not the pan/zoom moment is being animated.
 
