@@ -1,6 +1,7 @@
 import Provider from '../photonProvider';
 import fixtures from './photonResponse.json';
-import { mockResponse } from '../../../test';
+import reverseFixture from './photonReverseResponse.json';
+import { answerRequests, mockResponse } from '../../../test';
 
 describe('PhotonProvider', () => {
   beforeAll(() => {
@@ -42,5 +43,36 @@ describe('PhotonProvider', () => {
       [south, west],
       [north, east],
     ]);
+  });
+});
+
+describe('PhotonProvider reverse', () => {
+  test('asks /reverse with lat and lon', async () => {
+    const urls = answerRequests(reverseFixture);
+
+    await new Provider({ host: 'https://photon.example.com' }).reverse({
+      lat: 52.3731,
+      lng: 4.8926,
+    });
+
+    expect(`${urls[0].origin}${urls[0].pathname}`).toEqual(
+      'https://photon.example.com/reverse',
+    );
+    expect(Object.fromEntries(urls[0].searchParams)).toEqual({
+      lat: '52.3731',
+      lon: '4.8926',
+    });
+  });
+
+  test('reads a reverse answer like a search answer', async () => {
+    answerRequests(reverseFixture);
+
+    const [place] = await new Provider().reverse({ lat: 52.3731, lng: 4.8926 });
+
+    expect(place.label).toEqual('Amsterdam, Noord-Holland, Nederland');
+    expect([place.x, place.y]).toEqual(
+      reverseFixture.features[0].geometry.coordinates,
+    );
+    expect(place.bounds).toBeValidBounds();
   });
 });
