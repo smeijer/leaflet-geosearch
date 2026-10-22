@@ -234,6 +234,8 @@
   font-weight: bold;
   position: absolute;
   line-height: 26px;
+  /* at least 24px wide, so it's easy to hit on touch screens */
+  min-width: 26px;
   padding: 0 8px;
   right: 0;
   top: 0;
