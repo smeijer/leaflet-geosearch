@@ -71,3 +71,31 @@ describe('theme (#324)', () => {
     ).toContain('leaflet-geosearch-theme-dark');
   });
 });
+
+describe('searchIcon (#156)', () => {
+  const svg =
+    '<svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"></circle></svg>';
+
+  test('the magnifying glass by default', () => {
+    containerOf({});
+    const button = document.querySelector('a.leaflet-bar-part');
+
+    expect(button.classList).not.toContain('leaflet-geosearch-custom-icon');
+    expect(button.children).toHaveLength(0);
+  });
+
+  test('puts the given html into the button', () => {
+    containerOf({ searchIcon: svg });
+    const button = document.querySelector('a.leaflet-bar-part');
+
+    expect(button.classList).toContain('leaflet-geosearch-custom-icon');
+    expect(button.querySelector('.leaflet-geosearch-icon svg')).not.toBeNull();
+    expect(
+      button
+        .querySelector('.leaflet-geosearch-icon')
+        .getAttribute('aria-hidden'),
+    ).toEqual('true');
+    // the name of the button stays
+    expect(button.getAttribute('aria-label')).toEqual('Enter address');
+  });
+});

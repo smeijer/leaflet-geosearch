@@ -89,6 +89,7 @@ test('SearchControl default options', () => {
     keepResult: false,
     updateMap: true,
     resetButton: '×',
+    searchIcon: '',
     requeryOnSelect: false,
     minQueryLength: 1,
     cacheSize: 0,

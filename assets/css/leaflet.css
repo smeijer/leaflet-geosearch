@@ -36,6 +36,36 @@
   border: 2px solid var(--geosearch-icon);
 }
 
+/* a custom icon (searchIcon) instead of the magnifying glass */
+.leaflet-control-geosearch a.leaflet-geosearch-custom-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--geosearch-icon);
+}
+
+.leaflet-control-geosearch a.leaflet-geosearch-custom-icon:before,
+.leaflet-control-geosearch:not(.pending):not(.error)
+  a.leaflet-geosearch-custom-icon:after {
+  display: none;
+}
+
+.leaflet-control-geosearch .leaflet-geosearch-icon {
+  display: flex;
+}
+
+.leaflet-control-geosearch .leaflet-geosearch-icon > svg,
+.leaflet-control-geosearch .leaflet-geosearch-icon > img {
+  width: 16px;
+  height: 16px;
+}
+
+/* the pending and error icons show instead of it */
+.leaflet-control-geosearch.pending .leaflet-geosearch-icon,
+.leaflet-control-geosearch.error .leaflet-geosearch-icon {
+  display: none;
+}
+
 /* resets for pending and error icons */
 .leaflet-control-geosearch.error a.leaflet-bar-part:before,
 .leaflet-control-geosearch.pending a.leaflet-bar-part:before {

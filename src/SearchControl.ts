@@ -82,6 +82,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider' | 'providers'> = {
   keepResult: false,
   updateMap: true,
   resetButton: '×',
+  searchIcon: '',
   requeryOnSelect: false,
   minQueryLength: 1,
   cacheSize: 0,
@@ -285,6 +286,13 @@ interface SearchControlProps {
   keepResult: boolean;
   updateMap: boolean;
   resetButton: string;
+  /**
+   * html of the search button instead of the magnifying glass, e.g. an svg.
+   * Use currentColor, so it follows the theme. It is put into the page as
+   * html, so don't pass text from users
+   * @default ''
+   */
+  searchIcon: string;
   /**
    * search the provider again when a suggestion is picked, even if the
    * suggestion already has coordinates (the previous behaviour)
@@ -515,6 +523,14 @@ const Control: SearchControl = {
         onClick: (e) => this.onClick(e),
       },
     );
+
+    if (this.options.searchIcon) {
+      addClassName(this.button, 'leaflet-geosearch-custom-icon');
+      createElement('span', 'leaflet-geosearch-icon', this.button, {
+        html: this.options.searchIcon,
+        'aria-hidden': 'true',
+      });
+    }
 
     L.DomEvent.disableClickPropagation(this.button);
 
