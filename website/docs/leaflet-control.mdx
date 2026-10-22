@@ -83,6 +83,25 @@ map.addControl(searchControl);
 
 The labels are only shown to the user, so they can be in any language. When one provider fails while searching all of them, the others still show their results.
 
+### How many suggestions
+
+`maxSuggestions` (default `5`) is the size of the whole list, not the number per provider. When all providers are searched, they take turns: the first result of each provider, then the second of each, and so on, until the list is full. With the three providers above and the default of 5, that's 2 from OpenStreetMap, 2 from Photon and 1 from Esri.
+
+For the same number from each provider, set `maxSuggestions` to a multiple of the number of providers:
+
+```js
+const searchControl = new SearchControl({
+  providers: [
+    { label: 'OpenStreetMap', provider: new OpenStreetMapProvider() },
+    { label: 'Photon', provider: new PhotonProvider() },
+    { label: 'Esri', provider: new EsriProvider() },
+  ],
+  maxSuggestions: 9, // up to 3 from each provider
+});
+```
+
+A provider with fewer results leaves its turns to the others. With a single provider selected, the list shows up to `maxSuggestions` of its results.
+
 ### Falling back to another provider
 
 `fallback` searches the next provider in the list when the selected one fails (`'error'`), or also when it finds nothing (`'empty'`). With the select hidden, the user sees a single search box that keeps working when the first provider is down:
