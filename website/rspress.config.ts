@@ -72,6 +72,8 @@ export default defineConfig({
   logoText: 'Leaflet GeoSearch',
   description:
     'Address lookup (geocoding) for Leaflet and for apps without a map.',
+  // the map tiles are the largest images on the demo pages
+  head: ['<link rel="preconnect" href="https://tile.openstreetmap.org">'],
   route: {
     cleanUrls: true,
   },
