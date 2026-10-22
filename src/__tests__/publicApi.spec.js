@@ -66,6 +66,7 @@ test('SearchControl default options', () => {
     zoomLevel: 18,
     zoomToBounds: true,
     fitBoundsOptions: {},
+    reverseOnDragEnd: false,
     classNames: {
       container: 'leaflet-bar leaflet-control leaflet-control-geosearch',
       button: 'leaflet-bar-part leaflet-bar-part-single',

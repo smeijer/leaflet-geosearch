@@ -69,6 +69,7 @@ const defaultOptions: Omit<SearchControlProps, 'provider' | 'providers'> = {
   zoomLevel: 18,
   zoomToBounds: true,
   fitBoundsOptions: {},
+  reverseOnDragEnd: false,
   classNames: defaultClassNames,
   autoComplete: true,
   autoCompleteDelay: 250,
@@ -228,6 +229,13 @@ interface SearchControlProps {
    * @default {}
    */
   fitBoundsOptions: FitBoundsOptions;
+  /**
+   * when a draggable marker is dropped, look up the address at its new
+   * position with the provider that found the result, and update the popup
+   * (and the input with keepResult). Fires geosearch/marker/reverse
+   * @default false
+   */
+  reverseOnDragEnd: boolean;
 
   classNames: {
     container: string;
@@ -300,6 +308,8 @@ interface SearchControl {
   providerSelect?: HTMLSelectElement;
   /** which provider found a result, for the formatters and events */
   sources: WeakMap<SearchResult, ProviderInfo>;
+  /** the latest reverse lookup of each marker, older answers are dropped */
+  reverseIds?: WeakMap<L.Marker, number>;
   markers: FeatureGroup;
   searchElement: SearchElement;
   resultList: ResultList;
@@ -357,6 +367,7 @@ interface SearchControl {
   selectResult(event: KeyboardEvent): void;
   showResult(result: SearchResult, query: Selection): void;
   addMarker(result: SearchResult, selection: Selection): void;
+  reverseMarker(marker: L.Marker, result: SearchResult): Promise<void>;
   centerMap(result: SearchResult): void;
   closeResults(): void;
   getZoom(): number;
@@ -1019,10 +1030,69 @@ const Control: SearchControl = {
           location: marker.getLatLng(),
           event: args,
         });
+
+        if (this.options.reverseOnDragEnd) {
+          this.reverseMarker(marker, result);
+        }
       });
     }
 
     return marker;
+  },
+
+  async reverseMarker(marker, result) {
+    const { lat, lng } = marker.getLatLng();
+    const choice =
+      this.sources.get(result) ||
+      this.choices[this.selection === 'all' ? 0 : this.selection];
+
+    // a newer drag of the same marker makes this lookup outdated
+    const ids = (this.reverseIds = this.reverseIds || new WeakMap());
+    const id = (ids.get(marker) || 0) + 1;
+    ids.set(marker, id);
+
+    let places: SearchResult[];
+    try {
+      if (typeof choice.provider.reverse !== 'function') {
+        throw new Error('This provider does not support reverse geocoding');
+      }
+      places = await choice.provider.reverse({ lat, lng });
+    } catch (error) {
+      if (ids.get(marker) === id) {
+        this.map?.fire('geosearch/error', {
+          error,
+          query: `${lat},${lng}`,
+          source: 'reverse',
+          provider: choice,
+        });
+      }
+      return;
+    }
+
+    const [place] = places;
+    if (ids.get(marker) !== id || !place) {
+      return;
+    }
+
+    this.sources.set(place, choice);
+    const { popupFormat, keepResult } = this.options;
+    marker.setPopupContent(
+      popupFormat({
+        query: { query: place.label },
+        result: place,
+        provider: choice,
+      }),
+    );
+
+    if (keepResult) {
+      this.searchElement.input.value = place.label;
+    }
+
+    this.map?.fire('geosearch/marker/reverse', {
+      location: place,
+      marker,
+      provider: choice,
+    });
   },
 
   centerMap(result) {
