@@ -48,6 +48,19 @@ describe('resultListPosition (#191, #307)', () => {
 
     expect(classes.contains('leaflet-geosearch-results-above')).toBe(above);
   });
+
+  // the bar sits at the top of the map whatever the position is (#218), so
+  // a list above it would be outside the map
+  test.each(['bottomleft', 'bottomright'])(
+    "'auto' with the bar style opens below, even with position %s",
+    (position) => {
+      containerOf({ resultListPosition: 'auto', style: 'bar', position });
+
+      expect(
+        document.querySelector('.leaflet-geosearch-bar').classList,
+      ).not.toContain('leaflet-geosearch-results-above');
+    },
+  );
 });
 
 describe('theme (#324)', () => {

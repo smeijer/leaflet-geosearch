@@ -116,6 +116,44 @@ test('the control works inside a shadow root (#214)', async ({ page }) => {
   ]);
 });
 
+test('the bar stays at the top of the map, whatever the position is (#218)', async ({
+  page,
+}) => {
+  await answerNominatim(page);
+  await page.goto('/e2e/fixtures/umd.html');
+  const map = (await page.locator('#map').boundingBox())!;
+
+  for (const position of ['topleft', 'topright', 'bottomleft', 'bottomright']) {
+    await page.evaluate((position) => {
+      window.control?.remove();
+      window.control = new window.GeoSearch.GeoSearchControl({
+        provider: new window.GeoSearch.OpenStreetMapProvider(),
+        style: 'bar',
+        position,
+        resultListPosition: 'auto',
+      });
+      window.map.addControl(window.control);
+    }, position);
+    const input = page.locator('.leaflet-geosearch-bar input');
+    await input.fill('Den Haag');
+    const list = page.locator('.leaflet-geosearch-bar .results');
+    await expect(list.locator('> *')).toHaveCount(3);
+
+    const form = (await page
+      .locator('.leaflet-geosearch-bar form')
+      .boundingBox())!;
+    const items = (await list.boundingBox())!;
+    // at the top, in the middle, with the results below it inside the map
+    expect(form.y - map.y, position).toBeLessThan(20);
+    expect(form.x + form.width / 2 - map.x, position).toBeCloseTo(
+      map.width / 2,
+      0,
+    );
+    expect(items.y, position).toBeGreaterThan(form.y);
+    expect(items.y + items.height, position).toBeLessThan(map.y + map.height);
+  }
+});
+
 test('labels with html are shown as text', async ({ page }) => {
   await page.goto('/e2e/fixtures/umd.html');
   await page.evaluate(() => {
@@ -229,6 +267,7 @@ declare global {
     GeoSearch: any;
     L: any;
     map: any;
+    control?: any;
     events: { type: string; label?: string; source?: string }[];
     ready?: boolean;
     xss?: boolean;
