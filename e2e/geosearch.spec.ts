@@ -193,3 +193,41 @@ declare global {
     xss?: boolean;
   }
 }
+
+test('several providers: the select picks which one is searched', async ({
+  page,
+}) => {
+  await answerNominatim(page);
+  await page.goto('/e2e/fixtures/umd.html');
+  await page.evaluate(() => {
+    const { GeoSearchControl, OpenStreetMapProvider } = window.GeoSearch;
+    window.map.addControl(
+      new GeoSearchControl({
+        style: 'bar',
+        providers: [
+          { label: 'Nominatim', provider: new OpenStreetMapProvider() },
+          { label: 'Backup', provider: new OpenStreetMapProvider() },
+        ],
+      }),
+    );
+  });
+  const select = page.locator('.leaflet-geosearch-bar select');
+  const input = page.locator('.leaflet-geosearch-bar input');
+  const results = page.locator('.leaflet-geosearch-bar .results > *');
+
+  await expect(select).toBeVisible();
+  await expect(select).toHaveValue('all');
+
+  // all providers: each result names its provider
+  await input.fill('Den Haag');
+  await expect(results).toHaveCount(5);
+  await expect(results.first().locator('.provider')).toHaveText('Nominatim');
+
+  // one provider: its results only, without names
+  await select.selectOption({ label: 'Backup' });
+  await expect(results).toHaveCount(3);
+  await expect(results.locator('.provider')).toHaveCount(0);
+
+  await results.nth(1).click();
+  await expect(page.locator('.leaflet-marker-icon')).toHaveCount(1);
+});

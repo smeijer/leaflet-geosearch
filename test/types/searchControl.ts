@@ -4,6 +4,8 @@ import {
   GeoSearchControl,
   SearchControl,
   OpenStreetMapProvider,
+  type ProviderChoice,
+  type SelectedProvider,
 } from '../../src';
 
 declare const map: Map;
@@ -17,3 +19,17 @@ map.addControl(constructed);
 map.addControl(called);
 constructed.getContainer();
 called.setPosition(called.options.position);
+
+// several providers instead of one
+const several = new GeoSearchControl({
+  providers: [
+    { label: 'OpenStreetMap', provider },
+    { label: 'Other', provider: new OpenStreetMapProvider() },
+  ],
+  allProvidersLabel: false,
+  fallback: 'error',
+});
+several.selectProvider(1);
+several.setProviderSelectVisible(false);
+const selected: SelectedProvider = several.getSelectedProvider();
+const choices: ProviderChoice[] = [{ label: 'x', provider }];

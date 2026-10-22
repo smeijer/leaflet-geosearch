@@ -449,13 +449,14 @@ describe('SearchControl', () => {
       const popupFormat = vi.fn(
         ({ query, result }) => `${query.query}: ${result.label}`,
       );
-      const { control } = setup({ popupFormat });
+      const { control, provider } = setup({ popupFormat });
 
       await control.onSubmit({ query: 'den' });
 
       expect(popupFormat).toHaveBeenCalledWith({
         query: { query: 'den' },
         result: results[0],
+        provider: { index: 0, label: '', provider },
       });
       expect(control.markers.getLayers()[0].getPopup().getContent()).toEqual(
         'den: Den Haag',

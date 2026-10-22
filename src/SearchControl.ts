@@ -14,6 +14,7 @@ import {
   addClassName,
   removeClassName,
   escapeHtml,
+  cx,
 } from './domUtils';
 import {
   ENTER_KEY,
@@ -40,9 +41,10 @@ const defaultClassNames: SearchControlProps['classNames'] = {
   resultlist: '',
   item: '',
   notfound: 'leaflet-bar-notfound',
+  providerSelect: '',
 };
 
-const defaultOptions: Omit<SearchControlProps, 'provider'> = {
+const defaultOptions: Omit<SearchControlProps, 'provider' | 'providers'> = {
   position: 'topleft',
   style: 'button',
   showMarker: true,
@@ -75,6 +77,10 @@ const defaultOptions: Omit<SearchControlProps, 'provider'> = {
   minQueryLength: 1,
   cacheSize: 0,
   showResultListOnSubmit: false,
+  showProviderSelect: true,
+  allProvidersLabel: 'All',
+  providerSelectLabel: 'Search with',
+  fallback: false,
 };
 
 function withoutUndefined<T extends object>(value?: T): Partial<T> {
@@ -130,9 +136,51 @@ function defaultIcon(): L.Icon.Default {
 const UNINITIALIZED_ERR =
   'Leaflet must be loaded before instantiating the GeoSearch control';
 
+/** a provider and the name the provider select shows for it */
+export interface ProviderChoice {
+  label: string;
+  provider: Provider;
+}
+
+/** a provider of the control and its place in `providers` */
+export interface ProviderInfo extends ProviderChoice {
+  index: number;
+}
+
+/** what the provider select is set to, one provider or all of them */
+export type SelectedProvider = ProviderInfo | { index: 'all'; label: string };
+
 interface SearchControlProps {
   /** the provider to use for searching */
   provider: Provider;
+  /**
+   * several providers instead of one. With more than one, a select next to
+   * the input lets the user pick one of them, or all of them
+   */
+  providers: ProviderChoice[];
+  /**
+   * show the provider select. Hidden, the control still uses the providers,
+   * e.g. for `fallback`
+   * @default true
+   */
+  showProviderSelect: boolean;
+  /**
+   * the name of the select option that searches all providers at once.
+   * `false` leaves the option out, the first provider is selected then
+   * @default 'All'
+   */
+  allProvidersLabel: string | false;
+  /**
+   * the accessible name of the provider select
+   * @default 'Search with'
+   */
+  providerSelectLabel: string;
+  /**
+   * when the selected provider fails ('error'), or also when it finds
+   * nothing ('empty'), search the next provider in `providers`
+   * @default false
+   */
+  fallback: false | 'error' | 'empty';
   /** the leaflet position to render the element in */
   position: ControlPosition;
   /**
@@ -148,9 +196,15 @@ interface SearchControlProps {
   popupFormat<T = any>(args: {
     query: Selection;
     result: SearchResult<T>;
+    /** the provider that found the result */
+    provider?: ProviderInfo;
   }): string;
 
-  resultFormat<T = any>(args: { result: SearchResult<T> }): string;
+  resultFormat<T = any>(args: {
+    result: SearchResult<T>;
+    /** the provider that found the result */
+    provider?: ProviderInfo;
+  }): string;
 
   searchLabel: string;
   clearSearchLabel: string;
@@ -171,6 +225,7 @@ interface SearchControlProps {
     resultlist: string;
     item: string;
     notfound: string;
+    providerSelect: string;
   };
 
   autoComplete: boolean;
@@ -206,19 +261,31 @@ interface SearchControlProps {
   showResultListOnSubmit: boolean;
 }
 
-export type SearchControlOptions = Partial<SearchControlProps> & {
-  provider: Provider;
-};
+export type SearchControlOptions = Partial<SearchControlProps> &
+  ({ provider: Provider } | { providers: ProviderChoice[] });
 
 interface Selection {
   query: string;
   data?: SearchResult;
 }
 
+interface SearchOutcome {
+  results: SearchResult[];
+  errors: { error: unknown; provider: ProviderInfo }[];
+}
+
 interface SearchControl {
-  options: Omit<SearchControlProps, 'provider'> & {
+  options: Omit<SearchControlProps, 'provider' | 'providers'> & {
     provider?: SearchControlProps['provider'];
+    providers?: SearchControlProps['providers'];
   };
+  /** the providers in the order of `providers`, or the single `provider` */
+  choices: ProviderInfo[];
+  /** index of the selected provider, or 'all' */
+  selection: number | 'all';
+  providerSelect?: HTMLSelectElement;
+  /** which provider found a result, for the formatters and events */
+  sources: WeakMap<SearchResult, ProviderInfo>;
   markers: FeatureGroup;
   searchElement: SearchElement;
   resultList: ResultList;
@@ -244,15 +311,33 @@ interface SearchControl {
   onClick(event: Event): void;
   clearResults(event?: KeyboardEvent | null, force?: boolean): void;
   autoSearch(event: KeyboardEvent): void;
+  suggest(query: string): Promise<void>;
   cancelSearch(): void;
   searchProvider(
+    choice: ProviderInfo,
     args: SearchArgument & { data?: SearchResult },
+    useCache?: boolean,
   ): Promise<SearchResult[]>;
+  runSearch(
+    args: SearchArgument & { data?: SearchResult },
+    only?: ProviderInfo,
+  ): Promise<SearchOutcome>;
+  reportErrors(
+    outcome: SearchOutcome,
+    query: string,
+    source: 'autocomplete' | 'submit',
+  ): void;
   handleError(
     error: unknown,
     query: string,
     source: 'autocomplete' | 'submit',
+    provider?: ProviderInfo,
   ): void;
+  /** select a provider by its index in `providers`, or 'all' */
+  selectProvider(index: number | 'all'): void;
+  getSelectedProvider(): SelectedProvider;
+  setProviderSelectVisible(visible: boolean): void;
+  formatResult(args: { result: SearchResult }): string;
   selectResult(event: KeyboardEvent): void;
   showResult(result: SearchResult, query: Selection): void;
   addMarker(result: SearchResult, selection: Selection): void;
@@ -276,22 +361,41 @@ const Control: SearchControl = {
       throw new Error(UNINITIALIZED_ERR);
     }
 
-    if (!options.provider) {
+    // merge given options with control defaults. undefined values, like unset
+    // props of a wrapper component, keep the default
+    const given = withoutUndefined(options as Partial<SearchControlProps>);
+    const choices: ProviderChoice[] =
+      given.providers && given.providers.length
+        ? given.providers
+        : given.provider
+          ? [{ label: '', provider: given.provider }]
+          : [];
+
+    if (!choices.length) {
       throw new Error('Provider is missing from options');
     }
 
-    // merge given options with control defaults. undefined values, like unset
-    // props of a wrapper component, keep the default
-    const given = withoutUndefined(options);
     this.options = {
       ...defaultOptions,
       ...given,
+      // code that reads options.provider keeps working with providers
+      provider: choices[0].provider,
       marker: {
         ...defaultOptions.marker,
         icon: defaultIcon(),
         ...withoutUndefined(given.marker),
       },
     };
+    this.choices = choices.map(({ label, provider }, index) => ({
+      index,
+      label,
+      provider,
+    }));
+    this.sources = new WeakMap();
+    this.selection =
+      this.choices.length > 1 && this.options.allProvidersLabel !== false
+        ? 'all'
+        : 0;
     this.classNames = {
       ...this.classNames,
       ...withoutUndefined(given.classNames),
@@ -342,6 +446,43 @@ const Control: SearchControl = {
     );
 
     L.DomEvent.disableClickPropagation(this.resetButton);
+
+    // the select and the input share a row, only when there is a choice, so
+    // the markup of single provider controls stays as it was
+    if (this.choices.length > 1) {
+      const { form, input } = this.searchElement;
+      const row = createElement<HTMLDivElement>('div', 'geosearch-input');
+      form.insertBefore(row, input);
+
+      this.providerSelect = createElement<HTMLSelectElement>(
+        'select',
+        cx('provider-select', this.classNames.providerSelect),
+        row,
+        {
+          'aria-label': this.options.providerSelectLabel,
+          onChange: () => {
+            const { value } = this.providerSelect!;
+            this.selectProvider(value === 'all' ? 'all' : Number(value));
+          },
+        },
+      );
+
+      const { allProvidersLabel } = this.options;
+      const options =
+        allProvidersLabel === false
+          ? this.choices
+          : [{ index: 'all', label: allProvidersLabel }, ...this.choices];
+      options.forEach(({ index, label }) => {
+        createElement<HTMLOptionElement>('option', null, this.providerSelect, {
+          value: String(index),
+          text: label,
+        });
+      });
+
+      this.providerSelect.value = String(this.selection);
+      this.providerSelect.hidden = !this.options.showProviderSelect;
+      row.appendChild(input);
+    }
 
     if (this.options.autoComplete || this.options.showResultListOnSubmit) {
       this.resultList = new ResultList({
@@ -518,7 +659,10 @@ const Control: SearchControl = {
       return;
     }
 
-    const query = (event.target as HTMLInputElement).value;
+    await this.suggest((event.target as HTMLInputElement).value);
+  },
+
+  async suggest(query) {
     if (!query.length || query.length < this.options.minQueryLength) {
       this.cancelSearch();
       this.lastQuery = '';
@@ -540,53 +684,134 @@ const Control: SearchControl = {
         : new AbortController();
     this.abortController = controller;
 
-    let results;
-    try {
-      results = await this.searchProvider({
-        query,
-        signal: controller?.signal,
-      });
-    } catch (error) {
-      // errors of cancelled searches (including the abort itself) don't matter
-      if (id === this.searchId) {
-        this.lastQuery = '';
-        this.handleError(error, query, 'autocomplete');
-      }
-      return;
-    }
+    const outcome = await this.runSearch({
+      query,
+      signal: controller?.signal,
+    });
 
-    // a newer search, a submit or a clear happened while this one was running
+    // a newer search, a submit or a clear happened while this one was running.
+    // its errors (including the abort itself) don't matter
     if (id !== this.searchId) {
       return;
     }
 
     this.abortController = undefined;
-    results = results.slice(0, this.options.maxSuggestions);
-    this.resultList.render(results, this.options.resultFormat);
+    this.reportErrors(outcome, query, 'autocomplete');
+
+    // nothing to show, and the same text can be tried again
+    if (!outcome.results.length && outcome.errors.length) {
+      this.lastQuery = '';
+      return;
+    }
+
+    this.resultList.render(
+      outcome.results.slice(0, this.options.maxSuggestions),
+      (args) => this.formatResult(args),
+    );
   },
 
-  async searchProvider(args) {
-    const { provider, cacheSize } = this.options;
-    const cache = cacheSize > 0 ? (this.cache = this.cache || new Map()) : null;
-    const cached = cache?.get(args.query);
+  async searchProvider(choice, args, useCache = true) {
+    const { cacheSize } = this.options;
+    const cache =
+      useCache && cacheSize > 0 ? (this.cache = this.cache || new Map()) : null;
+    const key = `${choice.index}:${args.query}`;
+    const cached = cache?.get(key);
 
     if (cache && cached) {
       // move to the end, it is the most recently used now
-      cache.delete(args.query);
-      cache.set(args.query, cached);
+      cache.delete(key);
+      cache.set(key, cached);
       return cached;
     }
 
-    const results = await provider!.search(args);
+    const results = await choice.provider.search(args);
+    results.forEach((result) => this.sources.set(result, choice));
 
     if (cache) {
-      cache.set(args.query, results);
+      cache.set(key, results);
       while (cache.size > cacheSize) {
         cache.delete(cache.keys().next().value as string);
       }
     }
 
     return results;
+  },
+
+  // searches the selected provider (or all of them) and never throws. the
+  // caller decides what to do with the errors
+  async runSearch(args, only) {
+    const outcome: SearchOutcome = { results: [], errors: [] };
+
+    if (!only && this.selection === 'all') {
+      const answers = await Promise.all(
+        this.choices.map((choice) =>
+          this.searchProvider(choice, args).then(
+            (results) => ({ choice, results, error: undefined as unknown }),
+            (error: unknown) => ({
+              choice,
+              results: [] as SearchResult[],
+              error,
+            }),
+          ),
+        ),
+      );
+
+      answers.forEach(({ choice, error }) => {
+        if (error !== undefined) {
+          outcome.errors.push({ error, provider: choice });
+        }
+      });
+
+      // take turns, so the first provider doesn't fill every suggestion
+      const longest = Math.max(...answers.map((a) => a.results.length));
+      for (let i = 0; i < longest; i += 1) {
+        answers.forEach(({ results }) => {
+          if (i < results.length) {
+            outcome.results.push(results[i]);
+          }
+        });
+      }
+
+      return outcome;
+    }
+
+    const selected = only || this.choices[this.selection as number];
+    const { fallback } = this.options;
+    const order =
+      !only && fallback
+        ? [selected, ...this.choices.filter((choice) => choice !== selected)]
+        : [selected];
+
+    for (const choice of order) {
+      try {
+        // a picked suggestion is searched again without the cache
+        outcome.results = await this.searchProvider(choice, args, !args.data);
+      } catch (error) {
+        outcome.errors.push({ error, provider: choice });
+        // an aborted search has a newer one, don't try the next provider
+        if (args.signal?.aborted) {
+          return outcome;
+        }
+        continue;
+      }
+
+      if (outcome.results.length || fallback !== 'empty') {
+        return outcome;
+      }
+    }
+
+    return outcome;
+  },
+
+  reportErrors({ results, errors }, query, source) {
+    errors.forEach(({ error, provider }, idx) => {
+      // the error style only shows when no provider found anything
+      if (idx === 0 && !results.length) {
+        this.handleError(error, query, source, provider);
+      } else {
+        this.map?.fire('geosearch/error', { error, query, source, provider });
+      }
+    });
   },
 
   cancelSearch() {
@@ -601,7 +826,7 @@ const Control: SearchControl = {
     // there is no result list when autoComplete and showResultListOnSubmit
     // are off
     this.resultList?.clear();
-    const { provider, requeryOnSelect } = this.options;
+    const { requeryOnSelect } = this.options;
 
     // a picked suggestion with coordinates has all we need to show it
     if (!requeryOnSelect && hasPosition(query.data)) {
@@ -609,43 +834,106 @@ const Control: SearchControl = {
       return;
     }
 
-    let results;
-    try {
-      results = query.data
-        ? await provider!.search(query)
-        : await this.searchProvider(query);
-    } catch (error) {
-      if (id === this.searchId) {
-        this.handleError(error, query.query, 'submit');
-      }
-      return;
-    }
+    // a picked suggestion is searched again with the provider that found it
+    const outcome = await this.runSearch(
+      query,
+      query.data && this.sources.get(query.data),
+    );
 
     // a newer search or a clear happened while this one was running
     if (id !== this.searchId) {
       return;
     }
 
-    // typed text shows its results to pick from (or the not found message),
-    // a single result needs no picking
-    const { showResultListOnSubmit, maxSuggestions, resultFormat } =
-      this.options;
-    if (showResultListOnSubmit && !query.data && results.length !== 1) {
-      this.resultList.render(results.slice(0, maxSuggestions), resultFormat);
+    this.reportErrors(outcome, query.query, 'submit');
+    const { results } = outcome;
+    if (!results.length && outcome.errors.length) {
       return;
     }
 
-    if (results && results.length > 0) {
+    // typed text shows its results to pick from (or the not found message),
+    // a single result needs no picking
+    const { showResultListOnSubmit, maxSuggestions } = this.options;
+    if (showResultListOnSubmit && !query.data && results.length !== 1) {
+      this.resultList.render(results.slice(0, maxSuggestions), (args) =>
+        this.formatResult(args),
+      );
+      return;
+    }
+
+    if (results.length > 0) {
       this.showResult(results[0], query);
     }
   },
 
-  handleError(error, query, source) {
+  // a result list item: resultFormat, plus the provider name when the
+  // results come from all providers. the name comes first and floats right,
+  // so a long label is cut off before it instead of hiding it
+  formatResult({ result }) {
+    const provider = this.sources.get(result);
+    const html = this.options.resultFormat({ result, provider });
+
+    return this.selection === 'all' && provider
+      ? `<span class="provider">${escapeHtml(provider.label)}</span>${html}`
+      : html;
+  },
+
+  handleError(error, query, source, provider) {
     const { searchElement } = this;
     addClassName(searchElement.container, 'error');
     searchElement.hasError = true;
 
-    this.map?.fire('geosearch/error', { error, query, source });
+    this.map?.fire('geosearch/error', { error, query, source, provider });
+  },
+
+  selectProvider(index) {
+    const valid =
+      index === 'all'
+        ? this.choices.length > 1 && this.options.allProvidersLabel !== false
+        : !!this.choices[index];
+
+    if (!valid) {
+      throw new Error(`There is no provider ${index} to select`);
+    }
+
+    if (index === this.selection) {
+      return;
+    }
+
+    this.selection = index;
+    if (this.providerSelect) {
+      this.providerSelect.value = String(index);
+    }
+
+    this.map?.fire('geosearch/providerchange', {
+      provider: this.getSelectedProvider(),
+    });
+
+    // search the typed text again with the new provider
+    if (!this.resultList) {
+      return;
+    }
+
+    const query = this.searchElement.input.value;
+    if (this.options.autoComplete) {
+      this.lastQuery = '';
+      this.suggest(query);
+    } else if (query && this.resultList.count() > 0) {
+      this.onSubmit({ query });
+    }
+  },
+
+  getSelectedProvider() {
+    return this.selection === 'all'
+      ? { index: 'all', label: this.options.allProvidersLabel as string }
+      : { ...this.choices[this.selection] };
+  },
+
+  setProviderSelectVisible(visible) {
+    this.options.showProviderSelect = visible;
+    if (this.providerSelect) {
+      this.providerSelect.hidden = !visible;
+    }
   },
 
   showResult(result, query) {
@@ -665,6 +953,7 @@ const Control: SearchControl = {
     this.map.fireEvent('geosearch/showlocation', {
       location: result,
       marker,
+      provider: this.sources.get(result),
     });
 
     if (autoClose) {
@@ -688,7 +977,11 @@ const Control: SearchControl = {
     let popupLabel = result.label;
 
     if (typeof popupFormat === 'function') {
-      popupLabel = popupFormat({ query, result });
+      popupLabel = popupFormat({
+        query,
+        result,
+        provider: this.sources.get(result),
+      });
     }
 
     marker.bindPopup(popupLabel);

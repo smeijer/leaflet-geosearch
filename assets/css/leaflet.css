@@ -115,6 +115,48 @@
   text-indent: 8px;
 }
 
+/* provider select, left of the input (only with several providers) */
+.leaflet-control-geosearch .geosearch-input {
+  display: flex;
+  align-items: center;
+}
+
+.leaflet-control-geosearch .geosearch-input input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.leaflet-geosearch-button .geosearch-input input {
+  min-width: 200px;
+}
+
+.leaflet-control-geosearch .provider-select {
+  flex: none;
+  max-width: 40%;
+  height: 22px;
+  margin: 0;
+  padding: 0 4px;
+  border: none;
+  border-right: 1px solid #ddd;
+  border-radius: 0;
+  background-color: #fff;
+  color: #333;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.leaflet-control-geosearch .provider-select[hidden] {
+  display: none;
+}
+
+/* the provider of each result when searching all providers */
+.leaflet-control-geosearch .results .provider {
+  float: right;
+  margin-left: 8px;
+  color: #888;
+  font-size: 11px;
+}
+
 .leaflet-touch .leaflet-geosearch-bar form {
   border: 2px solid rgba(0,0,0,0.2);
   box-shadow: none;

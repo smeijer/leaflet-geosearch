@@ -74,6 +74,7 @@ test('SearchControl default options', () => {
       resultlist: '',
       item: '',
       notfound: 'leaflet-bar-notfound',
+      providerSelect: '',
     },
     autoComplete: true,
     autoCompleteDelay: 250,
@@ -85,6 +86,10 @@ test('SearchControl default options', () => {
     minQueryLength: 1,
     cacheSize: 0,
     showResultListOnSubmit: false,
+    showProviderSelect: true,
+    allProvidersLabel: 'All',
+    providerSelectLabel: 'Search with',
+    fallback: false,
   });
 
   expect(marker.draggable).toBe(false);

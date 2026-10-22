@@ -21,3 +21,10 @@ export { default as PdokNlProvider } from './providers/pdokNlProvider';
 export { default as PhotonProvider } from './providers/photonProvider';
 
 export { default as JsonProvider } from './providers/provider';
+
+export type {
+  SearchControlOptions,
+  ProviderChoice,
+  ProviderInfo,
+  SelectedProvider,
+} from './SearchControl';
