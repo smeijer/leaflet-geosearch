@@ -493,11 +493,13 @@ const Control: SearchControl = {
 
     // classes for the theme and the list position. The bar style moves the
     // form into its own container, which gets them too (see onAdd)
-    const { resultListPosition, position, theme } = this.options;
+    const { resultListPosition, position, style, theme } = this.options;
     this.modifierClasses = [];
     if (
       resultListPosition === 'above' ||
+      // the bar sits at the top of the map whatever the position is
       (resultListPosition === 'auto' &&
+        style !== 'bar' &&
         String(position).indexOf('bottom') === 0)
     ) {
       this.modifierClasses.push('leaflet-geosearch-results-above');
