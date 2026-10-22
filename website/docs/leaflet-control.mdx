@@ -278,14 +278,15 @@ The colors are css variables, so you can set your own:
 
 The variables are `--geosearch-background`, `--geosearch-text`, `--geosearch-strong` (the reset button), `--geosearch-muted` (the provider names), `--geosearch-border`, `--geosearch-divider`, `--geosearch-hover`, `--geosearch-button-hover` and `--geosearch-icon`.
 
-## Search icon
+## Icons
 
-`searchIcon` replaces the magnifying glass of the search button with your own html, like an svg. With `currentColor` it follows the theme. It is put into the page as html, so only pass markup you wrote yourself.
+`searchIcon` replaces the magnifying glass of the search button with your own html, like an svg. With `currentColor` it follows the theme. It is put into the page as html, so only pass markup you wrote yourself. `resetButton` is the text of the button that clears the search (`×` by default), and is always set as text.
 
 <Map
   provider="OpenStreetMap"
   controlOptions={{
     style: 'button',
+    resetButton: '✕',
     searchIcon:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>',
   }}
@@ -297,6 +298,7 @@ const searchControl = new SearchControl({
   style: 'button',
   searchIcon:
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">…</svg>',
+  resetButton: '✕', // text of the button that clears the search
 });
 ```
 
