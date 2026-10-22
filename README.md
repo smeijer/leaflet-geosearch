@@ -37,7 +37,7 @@ This library is written with the latest technologies in mind. Thereby it is requ
 
 ## Upgrading to 5.0
 
-5.0 changes some behaviour, not the API. The full list with examples is in the [upgrade notes](https://leaflet-geosearch.meijer.works/upgrading). In short:
+5.0 changes some behaviour, not the API. The full list with examples is in the [upgrade notes](https://leaflet-geosearch.meijer.works/upgrading/v5). In short:
 
 - the default `resultFormat` and `popupFormat` escape the label. Pass your own formatters if your provider returns html on purpose.
 - a picked suggestion is shown right away instead of being searched again. `requeryOnSelect: true` brings the old behaviour back.

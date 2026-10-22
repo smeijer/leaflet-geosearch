@@ -15,9 +15,9 @@
     "label": "Leaflet Control"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "upgrading",
-    "label": "Upgrading to 5.0"
+    "label": "Upgrading"
   },
   {
     "type": "dir",
