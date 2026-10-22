@@ -570,7 +570,10 @@
       "contributions": [
         "code",
         "maintenance",
-        "review"
+        "review",
+        "doc",
+        "test",
+        "infra"
       ]
     },
     {
