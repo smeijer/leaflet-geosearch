@@ -64,6 +64,8 @@ test('SearchControl default options', () => {
     notFoundMessage: '',
     messageHideDelay: 3000,
     zoomLevel: 18,
+    zoomToBounds: true,
+    fitBoundsOptions: {},
     classNames: {
       container: 'leaflet-bar leaflet-control leaflet-control-geosearch',
       button: 'leaflet-bar-part leaflet-bar-part-single',

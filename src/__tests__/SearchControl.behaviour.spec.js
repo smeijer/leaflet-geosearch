@@ -567,6 +567,42 @@ describe('SearchControl', () => {
       });
     });
 
+    test('zoomToBounds false zooms to zoomLevel at the result, even with bounds (#304)', () => {
+      const { control, map } = setup({ zoomToBounds: false, zoomLevel: 20 });
+
+      control.showResult(results[0], { query: 'den' });
+
+      expect(map.fitBounds).not.toHaveBeenCalled();
+      expect(map.setView).toHaveBeenCalledWith([52.08, 4.3], 20, {
+        animate: true,
+      });
+    });
+
+    test('zoomToBounds false uses the center of the bounds without a position', () => {
+      const { control, map } = setup({ zoomToBounds: false, zoomLevel: 20 });
+
+      control.centerMap({ ...results[0], x: undefined, y: undefined });
+
+      const [center, zoom] = map.setView.mock.calls[0];
+      expect(center[0]).toBeCloseTo(52.05, 5);
+      expect(center[1]).toBeCloseTo(4.3, 5);
+      expect(zoom).toEqual(20);
+    });
+
+    test('fitBoundsOptions are passed to fitBounds', () => {
+      const { control, map } = setup({
+        fitBoundsOptions: { maxZoom: 16, padding: [50, 50] },
+      });
+
+      control.showResult(results[0], { query: 'den' });
+
+      expect(map.fitBounds).toHaveBeenCalledWith(results[0].bounds, {
+        maxZoom: 16,
+        padding: [50, 50],
+        animate: true,
+      });
+    });
+
     test('retainZoomLevel centers on the bounds of a result', () => {
       const { control, map } = setup({ retainZoomLevel: true });
       vi.spyOn(map, 'getZoom').mockReturnValue(7);

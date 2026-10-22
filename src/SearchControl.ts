@@ -2,6 +2,7 @@ import * as L from 'leaflet';
 import {
   ControlPosition,
   FeatureGroup,
+  FitBoundsOptions,
   MarkerOptions,
   Map as LeafletMap,
 } from 'leaflet';
@@ -66,6 +67,8 @@ const defaultOptions: Omit<SearchControlProps, 'provider' | 'providers'> = {
   notFoundMessage: '',
   messageHideDelay: 3000,
   zoomLevel: 18,
+  zoomToBounds: true,
+  fitBoundsOptions: {},
   classNames: defaultClassNames,
   autoComplete: true,
   autoCompleteDelay: 250,
@@ -214,6 +217,17 @@ interface SearchControlProps {
   animateZoom: boolean;
   zoomLevel: number;
   retainZoomLevel: boolean;
+  /**
+   * fit the map to the bounds of a result that has them. Off, every result
+   * is shown at `zoomLevel`
+   * @default true
+   */
+  zoomToBounds: boolean;
+  /**
+   * passed to Leaflet's fitBounds, e.g. `{ maxZoom: 16, padding: [50, 50] }`
+   * @default {}
+   */
+  fitBoundsOptions: FitBoundsOptions;
 
   classNames: {
     container: string;
@@ -1005,23 +1019,26 @@ const Control: SearchControl = {
   },
 
   centerMap(result) {
-    const { retainZoomLevel, animateZoom } = this.options;
+    const { retainZoomLevel, animateZoom, zoomToBounds, fitBoundsOptions } =
+      this.options;
     const options = { animate: animateZoom };
 
     // plain arrays instead of Leaflet objects: a map created with another copy
     // of Leaflet doesn't recognize our instances ("Bounds are not valid")
     const bounds = toBoundsTuple(result.bounds);
 
-    if (!retainZoomLevel && bounds) {
-      this.map.fitBounds(bounds, options);
+    if (!retainZoomLevel && zoomToBounds && bounds) {
+      this.map.fitBounds(bounds, { ...fitBoundsOptions, ...options });
       return;
     }
 
-    const center = bounds
-      ? centerOf(bounds)
-      : hasPosition(result)
-        ? ([result.y, result.x] as PointTuple)
-        : null;
+    // without fitting the bounds, the result itself is the better center
+    const center =
+      bounds && (zoomToBounds || !hasPosition(result))
+        ? centerOf(bounds)
+        : hasPosition(result)
+          ? ([result.y, result.x] as PointTuple)
+          : null;
 
     // nothing usable to move the map to
     if (!center) {
