@@ -1,9 +1,10 @@
 import Provider from '../amapProvider';
 import fixtures from './amapResponse.json';
+import { mockResponse } from '../../../test';
 
 describe('AMapProvider', () => {
   beforeAll(() => {
-    fetch.mockResponse(async () => ({ body: JSON.stringify(fixtures) }));
+    mockResponse(JSON.stringify(fixtures));
   });
 
   test('Can fetch results', async () => {

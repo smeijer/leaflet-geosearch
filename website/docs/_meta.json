@@ -1,0 +1,27 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "Introduction"
+  },
+  {
+    "type": "file",
+    "name": "usage",
+    "label": "Usage"
+  },
+  {
+    "type": "file",
+    "name": "leaflet-control",
+    "label": "Leaflet Control"
+  },
+  {
+    "type": "dir",
+    "name": "upgrading",
+    "label": "Upgrading"
+  },
+  {
+    "type": "dir",
+    "name": "providers",
+    "label": "Providers"
+  }
+]

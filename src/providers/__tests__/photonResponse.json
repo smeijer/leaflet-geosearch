@@ -1,0 +1,50 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_type": "R",
+        "osm_id": 162081,
+        "osm_key": "place",
+        "osm_value": "city",
+        "type": "city",
+        "name": "Leeuwarden",
+        "state": "Fryslân",
+        "country": "Nederland",
+        "countrycode": "NL",
+        "extra": {
+          "admin_level": "10"
+        },
+        "extent": [5.7297688, 53.2410981, 5.9070999, 53.1583048]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.7918548, 53.2005936]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_type": "N",
+        "osm_id": 13243702701,
+        "osm_key": "shop",
+        "osm_value": "supermarket",
+        "type": "house",
+        "name": "Supermarket Big Banana",
+        "street": "Korte Kolksteeg",
+        "locality": "Burgwallen-Nieuwe Zijde",
+        "district": "Centrum",
+        "city": "Amsterdam",
+        "state": "Noord-Holland",
+        "country": "Nederland",
+        "postcode": "1012 SK",
+        "countrycode": "NL"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.893831, 52.3766397]
+      }
+    }
+  ]
+}

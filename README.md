@@ -6,7 +6,7 @@
 
 **Demo and Docs: [leaflet-geosearch](https://leaflet-geosearch.meijer.works)**
 
-![animation of geosearch](./docs/assets/img/geosearch.gif)
+![animation of geosearch](./website/docs/public/img/geosearch.gif)
 
 ## Installation
 
@@ -33,6 +33,16 @@ This library is written with the latest technologies in mind. Thereby it is requ
 - [babel-polyfill], for `array.includes` support.
 - [unfetch], for `fetch` requests.
 
+## Upgrading to 5.0
+
+5.0 changes some behaviour, not the API. The full list with examples is in the [upgrade notes](https://leaflet-geosearch.meijer.works/upgrading/v5). In short:
+
+- the default `resultFormat` and `popupFormat` escape the label. Pass your own formatters if your provider returns html on purpose.
+- a picked suggestion is shown right away instead of being searched again. `requeryOnSelect: true` brings the old behaviour back.
+- failed searches fire `geosearch/error` on the map instead of an unhandled promise rejection.
+- the Google provider uses `@googlemaps/js-api-loader` 2. `url`, `nonce`, `retries` and `id` are ignored.
+- the Esri provider asks for up to 5 locations instead of 1.
+
 # About
 
 This library adds support for geocoding _(address lookup, a.k.a. geosearching)_
@@ -47,23 +57,26 @@ your own geocoding service(s).
 
 The control comes with a number of default providers:
 
-- [Algolia]
 - [AMap]
 - [Bing]
 - [Esri]
 - [Geocode Earth]
 - [Google]
+- [Here]
 - [LocationIQ]
 - [OpenCage]
 - [OpenStreetMap]
 - [PdokNl]
 - [Pelias]
+- [Photon]
 - [Mapbox](https://docs.mapbox.com/help/tutorials/local-search-geocoding-api/)
 - [GeoApiFR](https://geo.api.gouv.fr/adresse)
 - [Geoapify](https://apidocs.geoapify.com/docs/geocoding/forward-geocoding/#about)
 
-Although this project is still named `leaflet-geosearch`, this library is also
-usable without LeafletJS, and does not have any dependencies whatsoever.
+Although this project is still named `leaflet-geosearch`, the providers also
+work without Leaflet, for example to look up addresses in a form. Import them
+from `leaflet-geosearch/providers` when Leaflet isn't available, like during
+server-side rendering.
 
 # Usage
 
@@ -110,6 +123,19 @@ provider.search({ query: '...' }).then(function (result) {
 });
 ```
 
+## Server-side rendering
+
+`leaflet-geosearch` imports Leaflet, and Leaflet only runs in a browser. On a
+server (Next.js, Nuxt, ...) that ends in `window is not defined`. If you only
+need the providers, import them from `leaflet-geosearch/providers` instead. It
+has the same providers and doesn't import Leaflet:
+
+```js
+import { OpenStreetMapProvider } from 'leaflet-geosearch/providers';
+```
+
+The search control needs Leaflet, so only create it in the browser.
+
 ## Results
 
 The `search` event of all providers return an array of `result objects`. The
@@ -137,7 +163,7 @@ use your debugger)
 # Providers
 
 When `OpenStreetMap` does not match your needs; you can also choose to use the
-`Algolia`, `Bing`, `Esri`, `Geocode Earth`, `Google`, `LocationIQ`, `OpenCage`, or `Pelias` providers. Most of those providers do however require API
+`Bing`, `Esri`, `Geocode Earth`, `Google`, `Here`, `LocationIQ`, `OpenCage`, `Pelias` or `Photon` providers. Most of those providers do however require API
 keys. See the documentation pages on the relevant organisations on how to obtain
 these keys.
 
@@ -158,7 +184,7 @@ this with on of the other included providers as well as your own custom made
 providers. Remember to setup the provider with a `key` when required (Google and
 Bing for example).
 
-![search control](./docs/assets/img/searchbar.png)
+![search control](./website/docs/public/img/searchbar.png)
 
 ```js
 import L from 'leaflet';
@@ -230,7 +256,7 @@ const MyMap = () => {
 There are some configurable options like setting the position of the search input
 and whether or not a marker should be displayed at the position of the search result.
 
-![search button](./docs/assets/img/searchbutton.png)
+![search button](./website/docs/public/img/searchbutton.png)
 There are two visual styles of this control. One is the more 'leaflet-way' by
 putting the search control under a button (see image above). And one where the
 search control is permanently shown as a search bar (see image under
@@ -246,6 +272,9 @@ new GeoSearchControl({
   style: 'bar', // optional: bar|button  - default button
 }).addTo(map);
 ```
+
+The bar always sits at the top of the map, in the middle. `position` only places
+the button style.
 
 **AutoComplete**
 
@@ -279,11 +308,24 @@ new GeoSearchControl({
   resultFormat: ({ result }) => result.label, // optional: function    - default returns result label
   maxMarkers: 1, // optional: number      - default 1
   retainZoomLevel: false, // optional: true|false  - default false
+  zoomToBounds: true, // optional: true|false  - default true
+  fitBoundsOptions: {}, // optional: Leaflet FitBoundsOptions - default {}
+  reverseOnDragEnd: false, // optional: true|false  - default false
+  resultListPosition: 'below', // optional: 'below'|'above'|'auto' - default 'below'
+  theme: 'light', // optional: 'light'|'dark'|'auto' - default 'light'
+  searchIcon: '', // optional: html of the search button - default the magnifying glass
+  markerPopup: true, // optional: true|false  - default true
+  popupOptions: {}, // optional: Leaflet PopupOptions - default {}
   animateZoom: true, // optional: true|false  - default true
+  flyTo: false, // optional: true|false|Leaflet ZoomPanOptions - default false
   autoClose: false, // optional: true|false  - default false
   searchLabel: 'Enter address', // optional: string      - default 'Enter address'
   keepResult: false, // optional: true|false  - default false
   updateMap: true, // optional: true|false  - default true
+  requeryOnSelect: false, // optional: true|false  - default false
+  minQueryLength: 1, // optional: number      - default 1
+  cacheSize: 0, // optional: number      - default 0
+  showResultListOnSubmit: false, // optional: true|false  - default false
 });
 ```
 
@@ -296,6 +338,8 @@ open a popup with the location text.
 
 `resultFormat` is callback function for modifying the search result texts (e. g. in order to hide address components or change its ordering).
 
+Both return html. The default ones escape the label, since it comes from the provider. If you build your own html, escape the parts that come from the result, e.g. with the `escapeHtml` helper of your framework. `notFoundMessage` and `searchIcon` are html too: only pass markup you wrote yourself, never text from users. See [Security](https://leaflet-geosearch.meijer.works/leaflet-control#security) in the docs.
+
 `maxMarker` determines how many last results are kept in memory. Default 1, but
 perhaps you want to show the last `x` results when searching for new queries as
 well.
@@ -304,15 +348,77 @@ well.
 zoom and pan to the search result. With `retainZoomLevel` on `true`, the map is
 only panned.
 
+`zoomToBounds` fits the map to the bounds of a result, when the provider returns them. Most OpenStreetMap results have bounds, so `zoomLevel` only applies to the others. With `zoomToBounds: false` every result is shown at `zoomLevel`, e.g. `{ zoomToBounds: false, zoomLevel: 20 }`.
+
+`fitBoundsOptions` is passed to Leaflet's `fitBounds`. `maxZoom` keeps a single building from zooming in too far, `padding` keeps the result out from under the search bar.
+
+`reverseOnDragEnd` looks up the address when a draggable marker (`marker: { draggable: true }`) is dropped, with the provider that found the result. The popup shows the new address, the input too with `keepResult`, and `geosearch/marker/reverse` is fired. Providers have a `reverse({ lat, lng })` method for this, see the [docs](https://leaflet-geosearch.meijer.works/usage#reverse-geocoding).
+
+`resultListPosition` opens the result list above the input (`'above'`), or above when the control sits in a bottom corner (`'auto'`).
+
+`theme` sets the colors: `'light'`, `'dark'` or `'auto'` (follows the system). The colors are css variables like `--geosearch-background` and `--geosearch-text`, see the [docs](https://leaflet-geosearch.meijer.works/leaflet-control#theme).
+
+`searchIcon` replaces the magnifying glass with your own html, e.g. an svg that uses `currentColor`. Only pass markup you wrote yourself.
+
+`markerPopup: false` gives the marker no popup, `popupOptions` is passed to Leaflet's `bindPopup`.
+
 `animateZoom` controls whether or not the pan/zoom moment is being animated.
 
-`autoClose` closes the result list if a result is selected by click/enter.
+`flyTo` flies to the result with Leaflet's `flyTo` and `flyToBounds` instead of jumping there. An object like `{ duration: 1.5 }` is passed to them. `animateZoom: false` turns the animation off for both.
 
-`keepResult` is used to keep the selected result in the search field. This prevents markers to disappear while using the `autoClose` feature.
+`autoClose` closes the search box and the result list after a result is picked by click or enter. The marker of the result stays.
+
+`keepResult` keeps the picked result in the search field. Without it, `autoClose` clears the text, and closing the box also removes the marker. Escape always clears both.
 
 `updateMap` controls whether or not the map re-centers on the selection.
 
+`requeryOnSelect` searches the provider again when a suggestion is picked. By default the picked suggestion is shown directly when it has coordinates, which saves a request. Turn it on if your provider returns more details on a full search than in its suggestions.
+
+`minQueryLength` is the number of characters to type before the autocomplete searches. Pressing enter always searches.
+
+`cacheSize` keeps the results of the last searches in memory, so typing the same text again (or pressing enter after the suggestions showed up) doesn't send another request. `0` turns the cache off.
+
+`showResultListOnSubmit` shows the results to pick from when enter is pressed, instead of jumping to the first one. A single result is shown right away. Together with `autoComplete: false`, the provider is only searched on enter.
+
+**Multiple providers**
+
+`providers` replaces `provider` with a list of providers and a name for each. With more than one, a select left of the input lets the user pick one of them, or search all at once. Each suggestion then shows the name of its provider.
+
+```js
+const searchControl = new GeoSearchControl({
+  providers: [
+    { label: 'OpenStreetMap', provider: new OpenStreetMapProvider() },
+    { label: 'Esri', provider: new EsriProvider() },
+  ],
+  showProviderSelect: true, // optional: true|false  - default true
+  allProvidersLabel: 'All', // optional: string|false - default 'All', false leaves the option out
+  providerSelectLabel: 'Search with', // optional: string - accessible name of the select
+  fallback: false, // optional: false|'error'|'empty' - default false
+});
+
+searchControl.selectProvider(1); // the index in providers, or 'all'
+searchControl.getSelectedProvider(); // { index: 1, label: 'Esri', provider }
+searchControl.getProviders(); // [{ index: 0, label: 'OpenStreetMap', provider }, ...]
+searchControl.setProviderSelectVisible(false);
+```
+
+`fallback: 'error'` searches the next provider when the selected one fails, `'empty'` also when it finds nothing. With `showProviderSelect: false` and `allProvidersLabel: false` that's a plain fallback: one search box that keeps working when the first provider is down.
+
+`resultFormat`, `popupFormat` and the events also get the provider that found the result: `({ result, provider }) => ...`.
+
+**Methods**
+
+`reset()` clears the input, the suggestions and the markers. `setQuery(text)` puts text into the input without searching. `setLabels({ searchLabel, clearSearchLabel, notFoundMessage, providerSelectLabel })` changes the texts, for example when the language changes.
+
+```js
+searchControl.reset();
+searchControl.setQuery('Amsterdam');
+searchControl.setLabels({ searchLabel: 'Adres girin' });
+```
+
 **Events**
+
+`geosearch/beforeshowlocation` is fired before a result is shown. Calling `event.preventDefault()` skips the marker, the map move and `geosearch/showlocation`.
 
 `geosearch/showlocation` is fired when location is chosen from the result list.
 
@@ -326,6 +432,30 @@ map.on('geosearch/showlocation', yourEventHandler);
 map.on('geosearch/marker/dragend', yourEventHandler);
 ```
 
+`geosearch/marker/reverse` is fired with `reverseOnDragEnd` when the address of the dropped marker is found.
+
+```js
+map.on('geosearch/marker/reverse', ({ location, marker, provider }) => {
+  console.log(location.label);
+});
+```
+
+`geosearch/error` is fired when a search fails, for example when the provider can't be reached. The event has the `error`, the `query`, the `source` (`'autocomplete'` or `'submit'`) and the `provider`. The control also shows its error state until the user types again. With several providers the error state only shows when none of them found anything.
+
+```js
+map.on('geosearch/error', ({ error, query, source }) => {
+  console.warn(`search for "${query}" failed`, error);
+});
+```
+
+`geosearch/providerchange` is fired when another provider is picked, by the user or with `selectProvider`. It has the selected `provider` and the list of all `providers`.
+
+```js
+map.on('geosearch/providerchange', ({ provider, providers }) => {
+  console.log(provider.index, provider.label, providers.length);
+});
+```
+
 # Development
 
 Checkout the providers to see how easy it is to write your own. For research it
@@ -335,24 +465,52 @@ Bing does not support `CORS`, and requires `jsonp` to be used instead.
 In case you decide to write your own provider, please consider submitting a PR
 to share your work with us.
 
-You can use the docs as "development environment". Please run `npm run start` to get up and running. The docs will
-refresh when you change source files.
+The [contributing guide](CONTRIBUTING.md) has the details: tests, the docs site,
+what a new provider needs, and how commit messages and PR titles turn into
+releases.
+
+To work on the package:
+
+```bash
+npm install
+npm test            # unit tests with Vitest, npm run test:watch keeps them running
+npm run lint        # types, ESLint and Prettier
+npm run build       # the bundles in dist and the types
+```
+
+The docs site in `website/` doubles as a development environment. It uses the
+package built in `dist`, so run `npm run build` again after changing the source
+and reload the page.
+
+```bash
+npm install --prefix website
+npm run docs:dev    # builds the package and starts the docs site
+```
+
+The end-to-end tests run the built bundles in a browser with Playwright:
+
+```bash
+npx playwright install chromium   # once
+npm run build
+npm run test:e2e
+```
 
 [leaflet]: http://leafletjs.com
 [docs]: https://leaflet-geosearch.meijer.works
 [babel-polyfill]: https://npmjs.com/babel-polyfill
 [unfetch]: https://npmjs.com/unfetch
-[algolia]: https://leaflet-geosearch.meijer.works/providers/algolia
 [amap]: https://leaflet-geosearch.meijer.works/providers/amap
 [bing]: https://leaflet-geosearch.meijer.works/providers/bing
 [esri]: https://leaflet-geosearch.meijer.works/providers/esri
 [geocode earth]: https://leaflet-geosearch.meijer.works/providers/geocode-earth
 [google]: https://leaflet-geosearch.meijer.works/providers/google
+[here]: https://leaflet-geosearch.meijer.works/providers/here
 [locationiq]: https://leaflet-geosearch.meijer.works/providers/locationiq
 [opencage]: https://leaflet-geosearch.meijer.works/providers/opencage
 [openstreetmap]: https://leaflet-geosearch.meijer.works/providers/openstreetmap
 [pdoknl]: https://leaflet-geosearch.meijer.works/providers/pdoknl
 [pelias]: https://leaflet-geosearch.meijer.works/providers/pelias
+[photon]: https://leaflet-geosearch.meijer.works/providers/photon
 
 ## Contributors ✨
 

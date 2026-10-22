@@ -34,6 +34,13 @@ export interface EndpointArgument {
 
 export interface SearchArgument {
   query: string;
+  /** aborts the request, e.g. when a newer search starts */
+  signal?: AbortSignal;
+}
+
+export interface ReverseArgument extends LatLng {
+  /** aborts the request */
+  signal?: AbortSignal;
 }
 
 export interface ParseArgument<TData> {
@@ -47,13 +54,13 @@ export interface Provider<TRequestResult, TRawResult> {
   getParamString(params: ProviderParams): string;
   parse(response: ParseArgument<TRequestResult>): SearchResult<TRawResult>[];
   search(options: SearchArgument): Promise<SearchResult<TRawResult>[]>;
+  reverse?(options: ReverseArgument): Promise<SearchResult<TRawResult>[]>;
 }
 
 export default abstract class AbstractProvider<
   TRequestResult = any,
   TRawResult = any,
-> implements Provider<TRequestResult, TRawResult>
-{
+> implements Provider<TRequestResult, TRawResult> {
   options: ProviderOptions;
 
   constructor(options: ProviderOptions = {}) {
@@ -84,8 +91,52 @@ export default abstract class AbstractProvider<
       type: RequestType.SEARCH,
     });
 
-    const request = await fetch(url);
-    const json: TRequestResult = await request.json();
+    const request = await fetch(url, { signal: options.signal });
+    const json: TRequestResult = await readJson(request);
     return this.parse({ data: json });
+  }
+
+  /**
+   * the query of a reverse request for a position. The names differ per
+   * service. Providers that can't reverse geocode return null
+   */
+  reverseParams(_position: LatLng): ProviderParams | null {
+    return null;
+  }
+
+  /** the places at a position, closest first */
+  async reverse({
+    lat,
+    lng,
+    signal,
+  }: ReverseArgument): Promise<SearchResult<TRawResult>[]> {
+    const query = this.reverseParams({ lat, lng });
+    if (!query) {
+      throw new Error('This provider does not support reverse geocoding');
+    }
+
+    const url = this.endpoint({ query, type: RequestType.REVERSE });
+    const request = await fetch(url, { signal });
+    const json: TRequestResult = await readJson(request);
+    return this.parse({ data: json });
+  }
+}
+
+/**
+ * Reads a JSON body. Error responses with a JSON body are still returned, as
+ * some providers answer "no results" that way. Error responses that aren't
+ * JSON (e.g. an html block page) throw an error that mentions the status.
+ */
+export async function readJson<T>(response: Response): Promise<T> {
+  try {
+    return await response.json();
+  } catch (error) {
+    if (!response.ok) {
+      throw new Error(
+        `Request failed with status ${response.status} ${response.statusText}`.trim(),
+      );
+    }
+
+    throw error;
   }
 }

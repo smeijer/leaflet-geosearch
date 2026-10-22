@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "main": "../dist/providers.js",
+  "module": "../dist/providers.module.js",
+  "types": "../dist/providers/index.d.ts"
+}

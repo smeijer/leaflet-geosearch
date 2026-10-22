@@ -1,4 +1,5 @@
 import AbstractProvider, {
+  ProviderParams,
   EndpointArgument,
   ParseArgument,
   SearchResult,
@@ -23,18 +24,38 @@ export interface RawResult {
   };
 }
 
+const anonymousUrl =
+  'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find';
+// ArcGIS wants requests with a token (an API key) on this host
+const authenticatedUrl =
+  'https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer/find';
+
 export default class EsriProvider extends AbstractProvider<
   RequestResult,
   RawResult
 > {
-  searchUrl =
-    'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find';
+  searchUrl = anonymousUrl;
 
   endpoint({ query }: EndpointArgument): string {
-    const params = typeof query === 'string' ? { text: query } : query;
+    const params: ProviderParams =
+      typeof query === 'string' ? { text: query } : { ...query };
     params.f = 'json';
 
-    return this.getUrl(this.searchUrl, params);
+    // find returns a single location unless it is asked for more
+    if (
+      params.maxLocations === undefined &&
+      this.options.params?.maxLocations === undefined
+    ) {
+      params.maxLocations = 5;
+    }
+
+    const token = params.token ?? this.options.params?.token;
+    const url =
+      token && this.searchUrl === anonymousUrl
+        ? authenticatedUrl
+        : this.searchUrl;
+
+    return this.getUrl(url, params);
   }
 
   parse(result: ParseArgument<RequestResult>): SearchResult<RawResult>[] {

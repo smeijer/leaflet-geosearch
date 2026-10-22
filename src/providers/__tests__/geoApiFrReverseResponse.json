@@ -1,0 +1,29 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [2.294809, 48.858627] },
+      "properties": {
+        "type": "street",
+        "name": "Avenue Anatole France",
+        "postcode": "75007",
+        "citycode": "75107",
+        "city": "Paris",
+        "oldcitycode": null,
+        "oldcity": null,
+        "district": "Paris 7e Arrondissement",
+        "context": "75, Paris, Île-de-France",
+        "importance": 0.57362,
+        "id": "75107_0306",
+        "banId": "748774b8-4f83-4174-88c2-b88573c18b69",
+        "x": 648260.2,
+        "y": 6862296.72,
+        "label": "Avenue Anatole France 75007 Paris,Paris 7e Arrondissement",
+        "distance": 34,
+        "score": 0.9966,
+        "_type": "address"
+      }
+    }
+  ]
+}

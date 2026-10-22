@@ -1,4 +1,5 @@
 import AbstractProvider, {
+  ProviderParams,
   BoundsTuple,
   EndpointArgument,
   LatLng,
@@ -88,7 +89,8 @@ export default class OpenCageProvider extends AbstractProvider<
   searchUrl = 'https://api.opencagedata.com/geocode/v1/json';
 
   endpoint({ query }: EndpointArgument) {
-    const params = typeof query === 'string' ? { q: query } : query;
+    const params: ProviderParams =
+      typeof query === 'string' ? { q: query } : { ...query };
     params.format = 'json';
 
     return this.getUrl(this.searchUrl, params);

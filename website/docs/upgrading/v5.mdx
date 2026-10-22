@@ -1,0 +1,237 @@
+# Upgrading from 4.x to 5.0
+
+5.0 fixes a lot of long-standing issues, and some of those fixes change what you see. The API is the same: nothing was removed or renamed, and the browser support didn't change. Each section shows what changed from 4.x (red) to 5.0 (green), and how to get the old behaviour back if you relied on it.
+
+## Dependencies and requirements
+
+| Package or requirement      | 4.x                  | 5.0                           | What to do                                                        |
+| --------------------------- | -------------------- | ----------------------------- | ----------------------------------------------------------------- |
+| `leaflet`                   | `^1.6.0` (optional)  | `^1.6.0` (optional)           | nothing                                                           |
+| `@googlemaps/js-api-loader` | `^1.16.6` (optional) | `^2.1.3` (optional)           | only if you use `GoogleProvider` and added it yourself, see below |
+| `@types/google.maps`        | not included         | `^3.53.1`                     | nothing, you can drop it if you only added it for us              |
+| TypeScript                  |                      | 4.7 or newer                  | nothing for most projects                                         |
+| Browsers                    | ES2016 (no IE11)     | ES2016 (no IE11)              | nothing                                                           |
+| Server-side rendering       | not supported        | `leaflet-geosearch/providers` | see [Package](#package)                                           |
+
+### Updating the package
+
+{/* prettier-ignore */}
+```jsonc title="package.json"
+{
+  "dependencies": {
+    "leaflet-geosearch": "^4.4.0" // [!code --]
+    "leaflet-geosearch": "^5.0.0" // [!code ++]
+  }
+}
+```
+
+### @googlemaps/js-api-loader 2
+
+`GoogleProvider` loads the Maps JavaScript API with `@googlemaps/js-api-loader`. It's an optional dependency, so npm installs it with leaflet-geosearch. If your own `package.json` lists the 1.x loader too, update it, otherwise npm keeps a second copy for you:
+
+{/* prettier-ignore */}
+```jsonc title="package.json"
+{
+  "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.6" // [!code --]
+    "@googlemaps/js-api-loader": "^2.1.3" // [!code ++]
+  }
+}
+```
+
+The provider options don't change, see [Google](#google) for the few that are gone.
+
+### @types/google.maps
+
+The type declarations of `GoogleProvider` refer to the `google.maps` namespace. In 4.x, TypeScript projects without `@types/google.maps` failed to compile (#349). 5.0 installs it with the package. If you only added it for leaflet-geosearch, you can remove it:
+
+{/* prettier-ignore */}
+```jsonc title="package.json"
+{
+  "devDependencies": {
+    "@types/google.maps": "^3.53.1" // [!code --]
+  }
+}
+```
+
+### TypeScript
+
+The types are checked with TypeScript 4.7 to 5.9, with `moduleResolution` set to `node`, `bundler` and `node16`. `new GeoSearchControl(...)` type-checks now, in 4.x only `GeoSearchControl(...)` did (#334).
+
+## Labels are escaped
+
+The default `resultFormat` and `popupFormat` escape the label, since it comes from the provider (OpenStreetMap names are user edited).
+
+{/* prettier-ignore */}
+```js title="4.x → 5.0"
+new GeoSearchControl({ provider });
+// a label like "<b>Amsterdam</b>" is put into the page as html // [!code --]
+// a label like "<b>Amsterdam</b>" shows up as text // [!code ++]
+```
+
+If your provider returns html in its labels on purpose, render it with your own formatters:
+
+```js
+new GeoSearchControl({
+  provider,
+  resultFormat: ({ result }) => result.label,
+  popupFormat: ({ result }) => result.label,
+});
+```
+
+## A picked suggestion isn't searched again
+
+Picking a suggestion (click, or arrows and enter) shows it right away. Suggestions without coordinates are still searched.
+
+{/* prettier-ignore */}
+```js title="4.x → 5.0"
+new GeoSearchControl({ provider });
+// type "ams"        → provider.search({ query: 'ams' })
+// pick "Amsterdam"  → provider.search({ query: 'Amsterdam' }) again, // [!code --]
+//                     and the first result of that search is shown // [!code --]
+// pick "Amsterdam"  → shown right away, no second request // [!code ++]
+```
+
+To always search again, like before:
+
+```js
+new GeoSearchControl({ provider, requeryOnSelect: true });
+```
+
+## autoClose keeps the marker
+
+With `autoClose` and without `keepResult`, the marker of a picked result was removed right after it was added, so the map moved to a place without a marker. The marker and its popup stay now. The text in the box is still cleared without `keepResult`, and closing the box by hand or pressing escape still removes the marker.
+
+{/* prettier-ignore */}
+```js title="4.x → 5.0"
+new GeoSearchControl({ provider, autoClose: true });
+// pick "Amsterdam" → the map moves there, without a marker // [!code --]
+// pick "Amsterdam" → the map moves there and the marker stays // [!code ++]
+```
+
+For no marker, like before:
+
+```js
+new GeoSearchControl({ provider, autoClose: true, showMarker: false });
+```
+
+## Failed searches fire an event
+
+A failed search (offline, a server error, a blocked request) fires `geosearch/error` on the map, and the control shows its error style until the user types again.
+
+{/* prettier-ignore */}
+```js title="4.x → 5.0"
+// a failed request ended in an unhandled promise rejection // [!code --]
+window.addEventListener('unhandledrejection', (event) => { // [!code --]
+  console.warn('search failed', event.reason); // [!code --]
+}); // [!code --]
+map.on('geosearch/error', ({ error, query, source, provider }) => { // [!code ++]
+  console.warn(`search for "${query}" failed`, error); // [!code ++]
+}); // [!code ++]
+
+await control.onSubmit({ query: 'amsterdam' }); // rejected // [!code --]
+await control.onSubmit({ query: 'amsterdam' }); // resolves, the event has the error // [!code ++]
+```
+
+## Fewer autocomplete requests
+
+Autocomplete no longer searches again for the same text (keys like shift or tab), drops answers that come back after a newer search started, and also searches after a paste or on mobile keyboards. Nothing to change in your code. Custom providers get an optional `signal` to cancel outdated requests, ignoring it is fine:
+
+{/* prettier-ignore */}
+```js title="4.x → 5.0"
+class MyProvider {
+  async search({ query }) { // [!code --]
+    const response = await fetch(`https://example.com/search?q=${query}`); // [!code --]
+  async search({ query, signal }) { // [!code ++]
+    const response = await fetch(`https://example.com/search?q=${query}`, { signal }); // [!code ++]
+    return this.parse(await response.json());
+  }
+}
+```
+
+## Options
+
+Options passed as `undefined` keep their default, and `marker` options are merged with the defaults. Wrapper components often pass every prop, set or not.
+
+{/* prettier-ignore */}
+```js title="4.x → 5.0"
+new GeoSearchControl({ provider, marker: undefined });
+// every search throws "Cannot read properties of undefined (reading 'draggable')" // [!code --]
+// the default marker // [!code ++]
+
+new GeoSearchControl({ provider, maxSuggestions: undefined });
+// every suggestion is shown // [!code --]
+// 5 suggestions, the default // [!code ++]
+
+new GeoSearchControl({ provider, marker: { draggable: true } });
+// a draggable marker that keeps the default icon
+```
+
+## Providers
+
+### Google
+
+`GoogleProvider` uses `@googlemaps/js-api-loader` 2. The option names stay the same (`apiKey`, `version`, `language`, ...). If the page already loaded the Maps JavaScript API, the provider uses it instead of loading it again. `url`, `nonce`, `retries` and `id` don't exist in the new loader, they are ignored with a warning in the console:
+
+{/* prettier-ignore */}
+```js title="4.x → 5.0"
+new GoogleProvider({
+  apiKey: 'KEY',
+  url: 'https://maps.googleapis.com/maps/api/js', // [!code --]
+  nonce: 'abc', // [!code --]
+  retries: 3, // [!code --]
+});
+```
+
+### Esri
+
+{/* prettier-ignore */}
+```js title="4.x → 5.0"
+new EsriProvider(); // one suggestion // [!code --]
+new EsriProvider(); // up to 5 suggestions // [!code ++]
+```
+
+One, like before:
+
+```js
+new EsriProvider({ params: { maxLocations: 1 } });
+```
+
+### OpenStreetMap, LocationIQ and CivilDefenseMap
+
+{/* prettier-ignore */}
+```js title="4.x → 5.0"
+new OpenStreetMapProvider({ params: { format: 'jsonv2' } });
+// still sends format=json // [!code --]
+// sends format=jsonv2, json stays the default // [!code ++]
+```
+
+## Package
+
+- the npm package no longer ships the tests, fixtures and the old docs theme.
+- `package.json` has `"sideEffects": ["*.css"]`, so bundlers drop what you don't use. Importing the css still works.
+- `@types/google.maps` is installed with the package, TypeScript projects don't need to add it.
+- `exports` lists the `types` condition first. With `moduleResolution: "bundler"` or `"node16"`, TypeScript found the types only through a fallback before.
+- the bundles keep their names and paths: `dist/geosearch.js`, `geosearch.module.js`, `geosearch.umd.js`, `bundle.min.js` and `geosearch.css`. Direct links like `unpkg.com/leaflet-geosearch/dist/geosearch.umd.js` keep working.
+- new entry `leaflet-geosearch/providers` with the providers only, without Leaflet. Importing the main entry loads Leaflet, which fails on the server ("window is not defined"). On the server the providers need a global `fetch`, which Node.js has since version 18:
+
+{/* prettier-ignore */}
+```js title="4.x → 5.0"
+// Next.js, Nuxt, ...
+import { OpenStreetMapProvider } from 'leaflet-geosearch'; // [!code --]
+import { OpenStreetMapProvider } from 'leaflet-geosearch/providers'; // [!code ++]
+```
+
+## New in 5.0
+
+These are new options, nothing changes unless you use them:
+
+- multiple providers in one control, with a provider select and a fallback: [Multiple providers](/leaflet-control#multiple-providers)
+- `zoomToBounds`, `fitBoundsOptions` and `flyTo`: [Zoom on a result](/leaflet-control#zoom-on-a-result)
+- `showResultListOnSubmit`, `minQueryLength` and `cacheSize`: [Options](/leaflet-control#options)
+- reverse geocoding with `provider.reverse()`, and `reverseOnDragEnd` for a dragged marker: [Reverse geocoding](/usage#reverse-geocoding), [Address of a dragged marker](/leaflet-control#address-of-a-dragged-marker)
+- `reset()`, `setQuery()` and `setLabels()`: [Methods](/leaflet-control#methods)
+- `resultListPosition`, `theme`, `searchIcon`, `markerPopup` and `popupOptions`: [Leaflet control](/leaflet-control#result-list-position)
+- the `geosearch/beforeshowlocation` event: [Events](/leaflet-control#geosearchbeforeshowlocation)
+- the result list follows the ARIA combobox pattern for screen readers: [Accessibility](/leaflet-control#accessibility)
+- the Photon provider: [Photon](/providers/photon)

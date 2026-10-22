@@ -1,10 +1,12 @@
 import AbstractProvider, {
+  ProviderParams,
   BoundsTuple,
   EndpointArgument,
   ParseArgument,
   ProviderOptions,
   RequestType,
   SearchResult,
+  LatLng,
 } from './provider';
 
 export type RequestResult = {
@@ -66,7 +68,8 @@ export default class GeoapifyProvider extends AbstractProvider<
   }
 
   endpoint({ query, type }: EndpointArgument): string {
-    const params = typeof query === 'string' ? { text: query } : query;
+    const params: ProviderParams =
+      typeof query === 'string' ? { text: query } : { ...query };
     params.format = 'json';
 
     switch (type) {
@@ -76,6 +79,10 @@ export default class GeoapifyProvider extends AbstractProvider<
       default:
         return this.getUrl(this.searchUrl, params);
     }
+  }
+
+  reverseParams({ lat, lng }: LatLng): ProviderParams {
+    return { lat, lon: lng };
   }
 
   parse(response: ParseArgument<RequestResult>): SearchResult<RawResult>[] {

@@ -1,0 +1,19 @@
+[
+  { "type": "file", "name": "amap", "label": "AMap" },
+  { "type": "file", "name": "bing", "label": "Bing" },
+  { "type": "file", "name": "esri", "label": "Esri" },
+  { "type": "file", "name": "geoapifr", "label": "GeoApiFr" },
+  { "type": "file", "name": "geoapify", "label": "Geoapify" },
+  { "type": "file", "name": "geocode-earth", "label": "Geocode Earth" },
+  { "type": "file", "name": "google", "label": "Google" },
+  { "type": "file", "name": "here", "label": "HERE Technologies" },
+  { "type": "file", "name": "legacy-google", "label": "Legacy Google" },
+  { "type": "file", "name": "locationiq", "label": "LocationIQ" },
+  { "type": "file", "name": "mapbox", "label": "MapBox" },
+  { "type": "file", "name": "opencage", "label": "OpenCage" },
+  { "type": "file", "name": "openstreetmap", "label": "OpenStreetMap" },
+  { "type": "file", "name": "pdoknl", "label": "PdokNl" },
+  { "type": "file", "name": "pelias", "label": "Pelias" },
+  { "type": "file", "name": "photon", "label": "Photon" },
+  { "type": "file", "name": "custom-providers", "label": "Custom Providers" }
+]

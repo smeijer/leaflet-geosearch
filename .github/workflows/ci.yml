@@ -17,6 +17,12 @@ on:
 env:
   NODE_VERSION: "24.x"
 
+# a new push to a pull request replaces its running checks. Runs on main and
+# the release branches always finish
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   id-token: write # Required for OIDC
   contents: write
@@ -51,16 +57,10 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
 
       - uses: actions/setup-node@v6
         with:
           node-version: "${{ env.NODE_VERSION }}"
-
-      - name: Fetch all branches
-        run: |
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
 
       - name: Cache node modules
         uses: actions/cache@v5
@@ -69,7 +69,7 @@ jobs:
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: ESLint
-        run: npm run ci:lint -- $(git diff --diff-filter d --name-only origin/${{ github.base_ref }}...HEAD -- '*.js' '*.ts' '*.tsx')
+        run: npm run ci:lint
 
   typescript:
     name: Typescript
@@ -99,7 +99,7 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        leaflet: ["1.6.0", "1.7.1", "1.8.0", "1.9.0"]
+        leaflet: ["1.6.0", "1.7.1", "1.8.0", "1.9.0", "1.9.4"]
     steps:
       - uses: actions/checkout@v6
 
@@ -116,8 +116,9 @@ jobs:
       - name: install specific leaflet version
         run: npm install leaflet@${{ matrix.leaflet }}
 
+      # the run with the latest Leaflet also measures coverage
       - name: unit tests
-        run: npm run ci:test
+        run: npm run ci:test -- ${{ matrix.leaflet == '1.9.4' && '--coverage --coverage.reporter=json-summary --coverage.reporter=text-summary' || '' }}
         env:
           GATSBY_BING_API_KEY: ${{ secrets.BING_API_KEY }}
           GATSBY_GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
@@ -126,15 +127,17 @@ jobs:
           GATSBY_HERE_API_KEY: ${{ secrets.HERE_API_KEY }}
           GATSBY_AMAP_API_KEY: ${{ secrets.AMAP_API_KEY }}
 
-  update-docs:
-    name: Update docs
-    if: github.ref == 'refs/heads/main'
+      - name: coverage summary
+        if: matrix.leaflet == '1.9.4'
+        run: node scripts/coverage-summary.mjs
+
+  package:
+    name: Package
     runs-on: ubuntu-latest
-    needs: [tests, typescript]
+    needs: [setup]
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
 
       - uses: actions/setup-node@v6
         with:
@@ -146,23 +149,132 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
 
-      - name: setup git config
+      - name: Build
+        run: npm run build
+
+      - name: Bundle size
+        run: node scripts/size-report.mjs
+
+      # publint and arethetypeswrong on the packed package
+      - name: Check the package
+        run: npm run ci:package
+
+      # installs the packed package in an empty TypeScript project
+      - name: Type check the package
+        run: npm run ci:package-types
+
+  e2e:
+    name: E2E
+    runs-on: ubuntu-latest
+    needs: [setup]
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "${{ env.NODE_VERSION }}"
+
+      - name: Cache node modules
+        uses: actions/cache@v5
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      # the built bundles in a real browser, provider requests are mocked
+      - name: End-to-end tests
+        run: npm run test:e2e
+
+  docs:
+    name: Docs
+    runs-on: ubuntu-latest
+    needs: [setup]
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "${{ env.NODE_VERSION }}"
+
+      - name: Cache node modules
+        uses: actions/cache@v5
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install website dependencies
+        run: npm ci --prefix website
+
+      - name: Build the package and the docs
+        run: npm run docs:build
+        env:
+          # the demos need the keys only on the published site
+          AMAP_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.AMAP_API_KEY || '' }}
+          BING_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.BING_API_KEY || '' }}
+          GEOAPIFY_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.GEOAPIFY_API_KEY || '' }}
+          GEOCODEEARTH_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.GEOCODEEARTH_API_KEY || '' }}
+          GOOGLE_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.GOOGLE_API_KEY || '' }}
+          HERE_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.HERE_API_KEY || '' }}
+          LOCATIONIQ_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.LOCATIONIQ_API_KEY || '' }}
+          MAPBOX_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.MAPBOX_API_KEY || '' }}
+          OPENCAGE_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.OPENCAGE_API_KEY || '' }}
+
+      # needs the declarations in dist from the build
+      - name: Type check the docs components
+        run: npm run docs:typecheck
+
+      - uses: actions/upload-artifact@v7
+        if: github.ref == 'refs/heads/main'
+        with:
+          name: docs
+          path: website/doc_build
+          include-hidden-files: true
+          retention-days: 1
+
+  deploy-docs:
+    name: Deploy docs
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'smeijer/leaflet-geosearch'
+    runs-on: ubuntu-latest
+    needs: [docs, tests, typescript]
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: docs
+          path: ${{ runner.temp }}/docs
+
+      # GitHub Pages serves the gh-pages branch. Its content is replaced
+      # with the new build in one commit
+      - name: Push to gh-pages
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-
-      - name: update docs
-        run: npm run docs:update
+          git fetch --depth=1 origin gh-pages
+          git worktree add --detach "$RUNNER_TEMP/gh-pages" origin/gh-pages
+          cd "$RUNNER_TEMP/gh-pages"
+          git rm -rq --ignore-unmatch .
+          cp -r "$RUNNER_TEMP/docs/." .
+          touch .nojekyll
+          git add -A
+          git diff --staged --quiet || git commit -m "update docs"
+          git push origin HEAD:gh-pages
 
   release:
-    needs: [tests, typescript]
+    # publish only when every check passed
+    needs: [eslint, typescript, tests, package, e2e, docs]
     if: github.event_name == 'push' && github.repository == 'smeijer/leaflet-geosearch'
     runs-on: ubuntu-latest
     environment: npm
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.12.0
-
       - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
@@ -179,7 +291,7 @@ jobs:
         run: npm run build
 
       - name: Release
-        uses: cycjimmy/semantic-release-action@v6
+        uses: cycjimmy/semantic-release-action@v8
         with:
           semantic_version: 25
           branches: |

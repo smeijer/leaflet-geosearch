@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function debounce(
   cb: (...args: any[]) => void,
   wait = 250,

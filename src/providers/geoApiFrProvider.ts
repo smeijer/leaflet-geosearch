@@ -4,6 +4,8 @@ import AbstractProvider, {
   ProviderOptions,
   SearchResult,
   RequestType,
+  LatLng,
+  ProviderParams,
 } from './provider';
 
 export interface RequestResult {
@@ -70,6 +72,10 @@ export default class GeoApiFrProvider extends AbstractProvider<
       default:
         return this.getUrl(this.searchUrl, params);
     }
+  }
+
+  reverseParams({ lat, lng }: LatLng): ProviderParams {
+    return { lat, lon: lng };
   }
 
   parse(result: ParseArgument<RequestResult>): SearchResult<RawResult>[] {

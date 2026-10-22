@@ -1,0 +1,17 @@
+{
+  "name": "leaflet-geosearch-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@rspress/core": "~2.0.23",
+    "@shikijs/transformers": "~4.5.0",
+    "leaflet": "^1.9.4",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  }
+}

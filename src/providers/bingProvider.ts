@@ -1,4 +1,5 @@
 import AbstractProvider, {
+  ProviderParams,
   EndpointArgument,
   ParseArgument,
   SearchArgument,
@@ -44,6 +45,8 @@ export interface RawResult {
   matchCodes: string[];
 }
 
+let jsonpCalls = 0;
+
 export default class BingProvider extends AbstractProvider<
   RequestResult,
   RawResult
@@ -51,7 +54,8 @@ export default class BingProvider extends AbstractProvider<
   searchUrl = 'https://dev.virtualearth.net/REST/v1/Locations';
 
   endpoint({ query, jsonp }: EndpointArgument & { jsonp: string }): string {
-    const params = typeof query === 'string' ? { q: query } : query;
+    const params: ProviderParams =
+      typeof query === 'string' ? { q: query } : { ...query };
     params.jsonp = jsonp;
 
     return this.getUrl(this.searchUrl, params);
@@ -75,7 +79,9 @@ export default class BingProvider extends AbstractProvider<
   }
 
   async search({ query }: SearchArgument): Promise<SearchResult<RawResult>[]> {
-    const jsonp = `BING_JSONP_CB_${Date.now()}`;
+    // unique, so searches at the same moment don't share a callback
+    jsonpCalls += 1;
+    const jsonp = `BING_JSONP_CB_${Date.now()}_${jsonpCalls}`;
     const json = await createScriptElement<RequestResult>(
       this.endpoint({ query, jsonp }),
       jsonp,

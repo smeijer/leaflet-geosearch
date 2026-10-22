@@ -1,0 +1,587 @@
+import Map from '../components/Map';
+import Required from '../components/Required';
+
+# Leaflet Control
+
+To show the search control on your leaflet map, add the `SearchControl` to the leaflet map
+
+<Map provider="OpenStreetMap" />
+
+```js
+import { SearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+
+const searchControl = new SearchControl({
+  provider: new OpenStreetMapProvider(),
+  style: 'bar',
+});
+
+map.addControl(searchControl);
+```
+
+## Style
+
+<Map provider="OpenStreetMap" controlOptions={{ style: 'button' }} />
+
+```js
+import { SearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+
+const searchControl = new SearchControl({
+  style: 'button',
+  provider: new OpenStreetMapProvider(),
+});
+
+map.addControl(searchControl);
+```
+
+`style: 'bar'` shows the search box as a bar at the top of the map, in the middle. `position` only places the button style, the bar stays at the top.
+
+## Message if address not found
+
+<Map
+  provider="OpenStreetMap"
+  controlOptions={{
+    notFoundMessage: 'Sorry, that address could not be found.',
+  }}
+/>
+
+```js
+import { SearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+
+const searchControl = new SearchControl({
+  notFoundMessage: 'Sorry, that address could not be found.',
+  provider: new OpenStreetMapProvider(),
+  style: 'bar',
+});
+
+map.addControl(searchControl);
+```
+
+## Multiple providers
+
+With `providers` instead of `provider`, a select left of the input lets the user pick the provider to search with, or search all of them at once. In that case every suggestion shows the name of its provider. Picking another provider searches the typed text again.
+
+<Map providers={['OpenStreetMap', 'Photon', 'Esri']} />
+
+```js
+import {
+  SearchControl,
+  OpenStreetMapProvider,
+  PhotonProvider,
+  EsriProvider,
+} from 'leaflet-geosearch';
+
+const searchControl = new SearchControl({
+  providers: [
+    { label: 'OpenStreetMap', provider: new OpenStreetMapProvider() },
+    { label: 'Photon', provider: new PhotonProvider() },
+    { label: 'Esri', provider: new EsriProvider() },
+  ],
+  allProvidersLabel: 'All', // false leaves the "all" option out
+  style: 'bar',
+});
+
+map.addControl(searchControl);
+```
+
+The labels are only shown to the user, so they can be in any language. When one provider fails while searching all of them, the others still show their results.
+
+### How many suggestions
+
+`maxSuggestions` (default `5`) is the size of the whole list, not the number per provider. When all providers are searched, they take turns: the first result of each provider, then the second of each, and so on, until the list is full. With the three providers above and the default of 5, that's 2 from OpenStreetMap, 2 from Photon and 1 from Esri.
+
+For the same number from each provider, set `maxSuggestions` to a multiple of the number of providers:
+
+<Map
+  providers={['OpenStreetMap', 'Photon', 'Esri']}
+  controlOptions={{ maxSuggestions: 9 }}
+/>
+
+```js
+const searchControl = new SearchControl({
+  providers: [
+    { label: 'OpenStreetMap', provider: new OpenStreetMapProvider() },
+    { label: 'Photon', provider: new PhotonProvider() },
+    { label: 'Esri', provider: new EsriProvider() },
+  ],
+  maxSuggestions: 9, // up to 3 from each provider
+});
+```
+
+A provider with fewer results leaves its turns to the others. With a single provider selected, the list shows up to `maxSuggestions` of its results.
+
+### Falling back to another provider
+
+`fallback` searches the next provider in the list when the selected one fails (`'error'`), or also when it finds nothing (`'empty'`). With the select hidden, the user sees a single search box that keeps working when the first provider is down:
+
+<Map
+  providers={['OpenStreetMap', 'Photon']}
+  controlOptions={{
+    showProviderSelect: false,
+    allProvidersLabel: false,
+    fallback: 'error',
+  }}
+/>
+
+```js
+const searchControl = new SearchControl({
+  providers: [
+    { label: 'OpenStreetMap', provider: new OpenStreetMapProvider() },
+    { label: 'Photon', provider: new PhotonProvider() },
+  ],
+  showProviderSelect: false,
+  allProvidersLabel: false,
+  fallback: 'error',
+});
+```
+
+### From code
+
+```js
+searchControl.selectProvider(1); // the index in providers, or 'all'
+searchControl.getSelectedProvider(); // { index: 1, label: 'Photon', provider }
+searchControl.getProviders(); // [{ index: 0, label: 'OpenStreetMap', provider }, ...]
+searchControl.setProviderSelectVisible(false);
+
+map.on('geosearch/providerchange', ({ provider }) => {
+  console.log(`searching with ${provider.label}`);
+});
+```
+
+`resultFormat`, `popupFormat` and the events also get the provider that found a result, e.g. `resultFormat: ({ result, provider }) => ...`.
+
+## Zoom on a result
+
+Results with bounds (most OpenStreetMap results) are fitted into the map, results without bounds are shown at `zoomLevel`. `zoomToBounds: false` shows every result at `zoomLevel`, `fitBoundsOptions` goes to Leaflet's `fitBounds`.
+
+<Map
+  provider="OpenStreetMap"
+  controlOptions={{ zoomToBounds: false, zoomLevel: 16 }}
+/>
+
+```js
+const searchControl = new SearchControl({
+  provider: new OpenStreetMapProvider(),
+  zoomToBounds: false,
+  zoomLevel: 16,
+  // or keep fitting the bounds, but not too close and away from the edges
+  // fitBoundsOptions: { maxZoom: 16, padding: [50, 50] },
+});
+```
+
+`flyTo: true` flies to the result with Leaflet's `flyTo` and `flyToBounds` instead of jumping there. An object is passed to them, so `{ duration: 1.5 }` sets how long the flight takes. The zoom options above still apply, and `animateZoom: false` turns the animation off for both.
+
+<Map provider="OpenStreetMap" controlOptions={{ flyTo: { duration: 1.5 } }} />
+
+```js
+const searchControl = new SearchControl({
+  provider: new OpenStreetMapProvider(),
+  flyTo: { duration: 1.5 },
+});
+```
+
+## Address of a dragged marker
+
+With a draggable marker and `reverseOnDragEnd: true`, dropping the marker looks up the address at its new position. The provider that found the result is asked, so it has to support [reverse geocoding](/usage#reverse-geocoding). The popup shows the new address, and with `keepResult` the input does too. Drag the marker after a search:
+
+<Map
+  provider="OpenStreetMap"
+  controlOptions={{
+    marker: { draggable: true },
+    reverseOnDragEnd: true,
+    keepResult: true,
+    showPopup: true,
+  }}
+/>
+
+```js
+const searchControl = new SearchControl({
+  provider: new OpenStreetMapProvider(),
+  marker: { draggable: true },
+  reverseOnDragEnd: true,
+  keepResult: true,
+});
+
+map.on('geosearch/marker/reverse', ({ location }) => {
+  console.log(location.label);
+});
+```
+
+## Result list position
+
+With the control in a bottom corner of the map, the result list would open below the input, outside the map. `resultListPosition: 'above'` opens it above the input, `'auto'` does so when `position` is `bottomleft` or `bottomright`, for the button style. The bar is always at the top, so it keeps the list below. The default is `'below'`.
+
+<Map
+  provider="OpenStreetMap"
+  controlOptions={{
+    style: 'button',
+    position: 'bottomleft',
+    resultListPosition: 'auto',
+  }}
+/>
+
+```js
+const searchControl = new SearchControl({
+  provider: new OpenStreetMapProvider(),
+  style: 'button',
+  position: 'bottomleft',
+  resultListPosition: 'auto',
+});
+```
+
+## Popup
+
+The marker of a result gets a popup with its label. `popupOptions` goes to Leaflet's `bindPopup`, `popupFormat` sets the content and `showPopup` opens it right away:
+
+<Map
+  provider="OpenStreetMap"
+  controlOptions={{
+    showPopup: true,
+    popupOptions: { maxWidth: 180, className: 'my-popup' },
+  }}
+/>
+
+```js
+const searchControl = new SearchControl({
+  provider: new OpenStreetMapProvider(),
+  showPopup: true,
+  popupOptions: { maxWidth: 180, className: 'my-popup' },
+  popupFormat: ({ result }) => result.label,
+});
+```
+
+`markerPopup: false` leaves the popup out, for example for a draggable marker that you handle yourself:
+
+<Map
+  provider="OpenStreetMap"
+  controlOptions={{ markerPopup: false, marker: { draggable: true } }}
+/>
+
+```js
+const searchControl = new SearchControl({
+  provider: new OpenStreetMapProvider(),
+  markerPopup: false,
+  marker: { draggable: true },
+});
+```
+
+## Theme
+
+`theme: 'dark'` gives the control dark colors, `'auto'` follows the color scheme of the system. The default `'light'` and `'dark'` stay the same whatever the system uses.
+
+<Map provider="OpenStreetMap" controlOptions={{ theme: 'dark' }} />
+
+```js
+const searchControl = new SearchControl({
+  provider: new OpenStreetMapProvider(),
+  theme: 'dark', // 'light' (default), 'dark' or 'auto'
+});
+```
+
+The colors are css variables, so you can set your own:
+
+```css
+.leaflet-control-geosearch {
+  --geosearch-background: #fffaf0;
+  --geosearch-text: #3b2f2f;
+  --geosearch-hover: #f3e9d8;
+  --geosearch-border: #d6c7ad;
+  --geosearch-icon: #8a5a2b;
+}
+```
+
+The variables are `--geosearch-background`, `--geosearch-text`, `--geosearch-strong` (the reset button), `--geosearch-muted` (the provider names), `--geosearch-border`, `--geosearch-divider`, `--geosearch-hover`, `--geosearch-button-hover` and `--geosearch-icon`.
+
+## Icons
+
+`searchIcon` replaces the magnifying glass of the search button with your own html, like an svg. With `currentColor` it follows the theme. It is put into the page as html, so only pass markup you wrote yourself. `resetButton` is the text of the button that clears the search (`×` by default), and is always set as text.
+
+<Map
+  provider="OpenStreetMap"
+  controlOptions={{
+    style: 'button',
+    resetButton: '✕',
+    searchIcon:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+  }}
+/>
+
+```js
+const searchControl = new SearchControl({
+  provider: new OpenStreetMapProvider(),
+  style: 'button',
+  searchIcon:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">…</svg>',
+  resetButton: '✕', // text of the button that clears the search
+});
+```
+
+## Accessibility
+
+The control follows the combobox pattern of the ARIA authoring practices. The input is a combobox that controls the result list, the suggestions are options, and the arrow keys move the selection screen readers announce. The search and reset buttons are named by `searchLabel` and `clearSearchLabel`, which `setLabels` can change later.
+
+## Security
+
+The labels come from the provider, and for OpenStreetMap they are edited by anyone. The default `resultFormat` and `popupFormat` escape them, and provider names, `searchLabel`, `clearSearchLabel` and `setQuery` are always set as text.
+
+Some options are put into the page as html, on purpose:
+
+| Option                                       | Put in as                                        |
+| -------------------------------------------- | ------------------------------------------------ |
+| `resultFormat`, `popupFormat`                | html: escape the parts that come from the result |
+| `notFoundMessage` (also through `setLabels`) | html                                             |
+| `searchIcon`                                 | html                                             |
+
+Only pass markup you wrote yourself to these, never text from users or from a provider without escaping it:
+
+```js
+const escape = (text) =>
+  String(text).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+
+new SearchControl({
+  provider,
+  resultFormat: ({ result }) => `<b>${escape(result.raw.name)}</b>`,
+});
+```
+
+API keys used in the browser can always be seen. Restrict them to your domain in the console of the service. With a Content Security Policy, allow the hosts of your provider in `connect-src`, and for the Bing provider, which answers through JSONP, `dev.virtualearth.net` in `script-src`. The Google provider loads the Maps JavaScript API from `maps.googleapis.com`.
+
+## Methods
+
+| Method                                                                                                  | What it does                                                                                       |
+| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `open()`, `close()`                                                                                     | Opens or closes the search box (`button` style). `close` also clears it unless `keepResult` is on. |
+| `reset()`                                                                                               | Clears the input, the suggestions and the markers, and drops a running search.                     |
+| `setQuery(text)`                                                                                        | Puts text into the input without searching.                                                        |
+| `setLabels(labels)`                                                                                     | Changes the texts: `searchLabel`, `clearSearchLabel`, `notFoundMessage` and `providerSelectLabel`. |
+| `selectProvider(index)`, `getSelectedProvider()`, `getProviders()`, `setProviderSelectVisible(visible)` | See [Multiple providers](#multiple-providers).                                                     |
+
+For example, a map in a dialog that should start empty each time, with texts from your translations:
+
+```js
+dialog.addEventListener('open', () => {
+  searchControl.reset();
+});
+
+i18n.on('languageChanged', () => {
+  searchControl.setLabels({
+    searchLabel: i18n.t('search.placeholder'),
+    clearSearchLabel: i18n.t('search.clear'),
+    notFoundMessage: i18n.t('search.notFound'),
+  });
+});
+```
+
+## Options
+
+| Option                                 | Type                                      | Default                                            | Description                                                                                                                       |
+| -------------------------------------- | ----------------------------------------- | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `provider` or `providers` <Required /> | `Provider` or `{ label, provider }[]`     |                                                    | One of the two: the provider to search with, or several to choose from ([see above](#multiple-providers)).                        |
+| `showProviderSelect`                   | `boolean`                                 | `true`                                             | Show the provider select (with more than one provider).                                                                           |
+| `allProvidersLabel`                    | `string \| false`                         | `'All'`                                            | The select option that searches all providers. `false` leaves it out.                                                             |
+| `providerSelectLabel`                  | `string`                                  | `'Search with'`                                    | Accessible name of the provider select.                                                                                           |
+| `fallback`                             | `false \| 'error' \| 'empty'`             | `false`                                            | Search the next provider when the selected one fails, or also when it finds nothing.                                              |
+| `style`                                | `'button' \| 'bar'`                       | `'button'`                                         | A button that opens the search box, or a bar that is always visible.                                                              |
+| `position`                             | `ControlPosition`                         | `'topleft'`                                        | Where Leaflet puts the control (`button` style).                                                                                  |
+| `autoComplete`                         | `boolean`                                 | `true`                                             | Search while typing and show suggestions.                                                                                         |
+| `autoCompleteDelay`                    | `number`                                  | `250`                                              | Milliseconds to wait after the last keystroke before searching.                                                                   |
+| `minQueryLength`                       | `number`                                  | `1`                                                | Characters to type before autocomplete searches. Pressing enter always searches.                                                  |
+| `maxSuggestions`                       | `number`                                  | `5`                                                | How many suggestions to show.                                                                                                     |
+| `cacheSize`                            | `number`                                  | `0`                                                | How many search results to keep in memory, so the same text isn't requested twice. `0` turns the cache off.                       |
+| `showResultListOnSubmit`               | `boolean`                                 | `false`                                            | Enter shows the results to pick from instead of the first one. With `autoComplete: false` the provider is only searched on enter. |
+| `requeryOnSelect`                      | `boolean`                                 | `false`                                            | Search the provider again when a suggestion is picked, even if it has coordinates.                                                |
+| `showMarker`                           | `boolean`                                 | `true`                                             | Show a marker at the result.                                                                                                      |
+| `showPopup`                            | `boolean`                                 | `false`                                            | Open a popup on the marker.                                                                                                       |
+| `marker`                               | `MarkerOptions`                           | `{ icon: new L.Icon.Default(), draggable: false }` | Options for the marker. Missing keys keep their default.                                                                          |
+| `maxMarkers`                           | `number`                                  | `1`                                                | How many result markers stay on the map.                                                                                          |
+| `popupFormat`                          | `({ query, result, provider }) => string` | the escaped label                                  | The popup content (html).                                                                                                         |
+| `resultFormat`                         | `({ result, provider }) => string`        | the escaped label                                  | The text of a suggestion (html).                                                                                                  |
+| `retainZoomLevel`                      | `boolean`                                 | `false`                                            | Only pan to the result, keep the zoom level.                                                                                      |
+| `zoomLevel`                            | `number`                                  | `18`                                               | Zoom level for results without bounds, or for every result with `zoomToBounds: false`.                                            |
+| `zoomToBounds`                         | `boolean`                                 | `true`                                             | Fit the map to the bounds of a result. `false` shows every result at `zoomLevel`.                                                 |
+| `resultListPosition`                   | `'below' \| 'above' \| 'auto'`            | `'below'`                                          | Where the result list opens, see above.                                                                                           |
+| `theme`                                | `'light' \| 'dark' \| 'auto'`             | `'light'`                                          | The colors of the control.                                                                                                        |
+| `searchIcon`                           | `string`                                  | `''`                                               | Html of the search button instead of the magnifying glass.                                                                        |
+| `markerPopup`                          | `boolean`                                 | `true`                                             | Give the marker a popup.                                                                                                          |
+| `popupOptions`                         | `PopupOptions`                            | `{}`                                               | Passed to Leaflet's `bindPopup`.                                                                                                  |
+| `reverseOnDragEnd`                     | `boolean`                                 | `false`                                            | Look up the address when a draggable marker is dropped, see above.                                                                |
+| `fitBoundsOptions`                     | `FitBoundsOptions`                        | `{}`                                               | Passed to Leaflet's `fitBounds`, e.g. `{ maxZoom: 16, padding: [50, 50] }`.                                                       |
+| `animateZoom`                          | `boolean`                                 | `true`                                             | Animate moving to the result.                                                                                                     |
+| `flyTo`                                | `boolean \| ZoomPanOptions`               | `false`                                            | Fly to the result instead of jumping there, see above.                                                                            |
+| `updateMap`                            | `boolean`                                 | `true`                                             | Move the map to the result.                                                                                                       |
+| `autoClose`                            | `boolean`                                 | `false`                                            | Close the control after a result is picked. The marker stays.                                                                     |
+| `keepResult`                           | `boolean`                                 | `false`                                            | Keep the picked result in the search box. Without it, closing the control also removes the marker.                                |
+| `searchLabel`                          | `string`                                  | `'Enter address'`                                  | Placeholder of the search box.                                                                                                    |
+| `clearSearchLabel`                     | `string`                                  | `'Clear search'`                                   | Label of the reset button.                                                                                                        |
+| `notFoundMessage`                      | `string`                                  | `''`                                               | Shown when a search finds nothing.                                                                                                |
+| `messageHideDelay`                     | `number`                                  | `3000`                                             | Milliseconds before the message hides.                                                                                            |
+| `resetButton`                          | `string`                                  | `'×'`                                              | Text of the reset button.                                                                                                         |
+| `classNames`                           | `object`                                  | see source                                         | Extra class names per element. Missing keys keep their default.                                                                   |
+
+<Required /> required
+
+## Events
+
+| Event                          | Payload                                         | When                                                            |
+| ------------------------------ | ----------------------------------------------- | --------------------------------------------------------------- |
+| `geosearch/beforeshowlocation` | `{ location, query, provider, preventDefault }` | A result is about to be shown.                                  |
+| `geosearch/showlocation`       | `{ location, marker, provider }`                | A result is shown on the map.                                   |
+| `geosearch/marker/dragend`     | `{ location, event }`                           | A draggable result marker was moved.                            |
+| `geosearch/marker/reverse`     | `{ location, marker, provider }`                | The address of a dropped marker was found (`reverseOnDragEnd`). |
+| `geosearch/error`              | `{ error, query, source, provider }`            | A search failed. `source` is `'autocomplete'` or `'submit'`.    |
+| `geosearch/providerchange`     | `{ provider, providers }`                       | Another provider was picked, by the user or `selectProvider`.   |
+
+### geosearch/beforeshowlocation
+
+Fires before the marker is added and the map moves. `event.preventDefault()` skips both and `geosearch/showlocation`, so you can show the result your own way:
+
+```js
+map.on('geosearch/beforeshowlocation', (event) => {
+  event.preventDefault();
+  map.flyTo([event.location.y, event.location.x], 14);
+});
+```
+
+### geosearch/showlocation
+
+`location` is the result as the provider returned it, `marker` the Leaflet marker on the map, and `provider` the provider that found the result. With a single `provider`, its label is `''`.
+
+```js
+map.on('geosearch/showlocation', ({ location, marker, provider }) => {
+  console.log(JSON.stringify({ location, provider: provider.label }, null, 2));
+});
+```
+
+```json
+{
+  "location": {
+    "x": 4.2990429,
+    "y": 52.0990969,
+    "label": "Madurodam, 1, George Maduroplein, Archipelbuurt, The Hague, South Holland, Netherlands, 2584RZ, The Netherlands",
+    "bounds": [
+      [52.0990469, 4.2989929],
+      [52.0991469, 4.2990929]
+    ],
+    "raw": {
+      "place_id": 275030941,
+      "osm_type": "node",
+      "osm_id": 2590910713,
+      "class": "tourism",
+      "type": "theme_park"
+    }
+  },
+  "provider": "OpenStreetMap"
+}
+```
+
+`x` is the longitude and `y` the latitude. `raw` is the full answer of the provider, shortened here.
+
+### geosearch/marker/dragend
+
+Only with `marker: { draggable: true }`. `location` is the new position of the marker, `event` the Leaflet dragend event.
+
+```js
+map.on('geosearch/marker/dragend', ({ location, event }) => {
+  console.log(JSON.stringify(location, null, 2));
+});
+```
+
+```json
+{
+  "lat": 52.0993,
+  "lng": 4.3001
+}
+```
+
+### geosearch/marker/reverse
+
+Only with `reverseOnDragEnd: true`. `location` is the place at the new position, `marker` the dropped marker and `provider` the provider that was asked.
+
+```js
+map.on('geosearch/marker/reverse', ({ location, provider }) => {
+  const { label, x, y } = location;
+  console.log(
+    JSON.stringify({ label, x, y, provider: provider.label }, null, 2),
+  );
+});
+```
+
+```json
+{
+  "label": "Dam, Centrum, Amsterdam, Noord-Holland, Nederland, 1012 NP, Nederland",
+  "x": 4.8926932,
+  "y": 52.3733144,
+  "provider": "OpenStreetMap"
+}
+```
+
+### geosearch/error
+
+`error` is what the provider threw, `query` the searched text, `source` `'autocomplete'`, `'submit'` or `'reverse'`, and `provider` the provider that failed. For `'reverse'`, `query` is the position as `"lat,lng"`.
+
+```js
+map.on('geosearch/error', ({ error, query, source, provider }) => {
+  console.log(
+    JSON.stringify(
+      {
+        message: error.message,
+        query,
+        source,
+        provider: provider.label,
+      },
+      null,
+      2,
+    ),
+  );
+});
+```
+
+```json
+{
+  "message": "Request failed with status 418",
+  "query": "den haag",
+  "source": "autocomplete",
+  "provider": "OpenStreetMap"
+}
+```
+
+### geosearch/providerchange
+
+Fired when another provider is picked in the select, or with `selectProvider`. `provider` is the same as `getSelectedProvider()` returns, `providers` the same as `getProviders()`: every provider of the control with its index and label.
+
+```js
+map.on('geosearch/providerchange', ({ provider, providers }) => {
+  const short = ({ index, label }) => ({ index, label });
+  console.log(
+    JSON.stringify(
+      { provider: short(provider), providers: providers.map(short) },
+      null,
+      2,
+    ),
+  );
+});
+```
+
+```json
+{
+  "provider": {
+    "index": 1,
+    "label": "Photon"
+  },
+  "providers": [
+    {
+      "index": 0,
+      "label": "OpenStreetMap"
+    },
+    {
+      "index": 1,
+      "label": "Photon"
+    },
+    {
+      "index": 2,
+      "label": "Esri"
+    }
+  ]
+}
+```
+
+For the "All" option `provider` is `{ "index": "all", "label": "All" }`. Each entry of `providers` also has the `provider` instance itself, left out above.

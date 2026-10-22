@@ -1,9 +1,10 @@
 import Provider from '../legacyGoogleProvider';
 import fixtures from './googleResponse.json';
+import { mockResponse } from '../../../test';
 
 describe('LegacyGoogleProvider', () => {
   beforeAll(() => {
-    fetch.mockResponse(async () => ({ body: JSON.stringify(fixtures) }));
+    mockResponse(JSON.stringify(fixtures));
   });
 
   test('Can fetch results', async () => {

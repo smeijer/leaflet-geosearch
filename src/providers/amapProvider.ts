@@ -1,4 +1,5 @@
 import AbstractProvider, {
+  ProviderParams,
   EndpointArgument,
   ParseArgument,
   SearchResult,
@@ -31,7 +32,8 @@ export default class AMapProvider extends AbstractProvider<
   searchUrl = 'https://restapi.amap.com/v3/geocode/geo';
 
   endpoint({ query }: EndpointArgument): string {
-    const params = typeof query === 'string' ? { address: query } : query;
+    const params: ProviderParams =
+      typeof query === 'string' ? { address: query } : { ...query };
     params.output = 'JSON';
 
     return this.getUrl(this.searchUrl, params);

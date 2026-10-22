@@ -3,19 +3,20 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "ES2022",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "jsx": "react",
     "allowJs": true,
     "pretty": true,
     "strict": true,
-    "rootDirs": ["src", "docs"],
+    "rootDirs": ["src"],
     "sourceMap": true,
     "removeComments": false,
     "noEmitHelpers": false,
     "outDir": "lib",
-    "declaration": true
+    "declaration": true,
+    "types": ["google.maps"]
   },
   "include": ["src", "typings"],
-  "exclude": ["node_modules", "**/*.spec.ts", "**/*.spec.js"]
+  "exclude": ["node_modules", "src/**/__tests__/**"]
 }

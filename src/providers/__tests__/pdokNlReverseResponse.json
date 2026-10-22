@@ -1,0 +1,20 @@
+{
+  "response": {
+    "numFound": 2,
+    "start": 0,
+    "maxScore": 7.2951164,
+    "numFoundExact": true,
+    "docs": [
+      {
+        "weergavenaam": "Dam 2, 1012NP Amsterdam",
+        "id": "adr-d9cc6c8c2d7a6b6034b73bc3154fd128",
+        "centroide_ll": "POINT(4.89302655 52.37336161)"
+      },
+      {
+        "weergavenaam": "Dam 4, 1012NP Amsterdam",
+        "id": "adr-8f35b58838b8b25ba68923eae1fa9c4b",
+        "centroide_ll": "POINT(4.89274646 52.37345931)"
+      }
+    ]
+  }
+}

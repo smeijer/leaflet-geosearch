@@ -1,0 +1,27 @@
+{
+  "place_id": 156768372,
+  "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+  "osm_type": "node",
+  "osm_id": 5413184785,
+  "lat": "52.3733144",
+  "lon": "4.8926932",
+  "class": "amenity",
+  "type": "bench",
+  "place_rank": 30,
+  "importance": 8.268177309829888e-5,
+  "addresstype": "amenity",
+  "name": "",
+  "display_name": "Dam, Centrum, Amsterdam, Noord-Holland, Nederland, 1012 NP, Nederland",
+  "address": {
+    "road": "Dam",
+    "suburb": "Centrum",
+    "city": "Amsterdam",
+    "municipality": "Amsterdam",
+    "state": "Noord-Holland",
+    "ISO3166-2-lvl4": "NL-NH",
+    "country": "Nederland",
+    "postcode": "1012 NP",
+    "country_code": "nl"
+  },
+  "boundingbox": ["52.3732644", "52.3733644", "4.8926432", "4.8927432"]
+}

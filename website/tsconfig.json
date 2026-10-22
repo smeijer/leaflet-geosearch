@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "paths": {
+      "leaflet-geosearch": ["../dist/index.d.ts"],
+      "leaflet-geosearch/providers": ["../dist/providers/index.d.ts"]
+    }
+  },
+  "include": ["components", "docs", "env.d.ts", "rspress.config.ts"]
+}

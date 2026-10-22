@@ -1,9 +1,11 @@
 import Provider from '../locationIQProvider';
 import fixtures from './locationiqResponse.json';
+import reverseFixture from './openstreetmapReverseResponse.json';
+import { answerRequests, mockResponse } from '../../../test';
 
 describe('LocationIQProvider', () => {
   beforeAll(() => {
-    fetch.mockResponse(async () => ({ body: JSON.stringify(fixtures) }));
+    mockResponse(JSON.stringify(fixtures));
   });
 
   test('Can fetch results', async () => {
@@ -32,5 +34,35 @@ describe('LocationIQProvider', () => {
 
     const results = await provider.search({ query: 'Madurodam' });
     t.is(results[0].label, 'Madurodam');
+  });
+});
+
+describe('LocationIQProvider reverse', () => {
+  test('asks /v1/reverse.php with lat, lon and the key', async () => {
+    const urls = answerRequests(reverseFixture);
+
+    await new Provider({ params: { key: 'key' } }).reverse({
+      lat: 52.3731,
+      lng: 4.8926,
+    });
+
+    expect(`${urls[0].host}${urls[0].pathname}`).toEqual(
+      'locationiq.org/v1/reverse.php',
+    );
+    expect(Object.fromEntries(urls[0].searchParams)).toEqual({
+      lat: '52.3731',
+      lon: '4.8926',
+      format: 'json',
+      key: 'key',
+    });
+  });
+
+  // LocationIQ answers in the format of Nominatim
+  test('reads a reverse answer', async () => {
+    answerRequests(reverseFixture);
+
+    const [place] = await new Provider().reverse({ lat: 52.3731, lng: 4.8926 });
+
+    expect(place.label).toEqual(reverseFixture.display_name);
   });
 });

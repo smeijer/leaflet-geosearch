@@ -6,6 +6,7 @@ coverage
 .idea
 .env
 .tmp
-.docz
 .rts2_cache*
 pnpm-lock.yaml
+/test-results/
+/playwright-report/

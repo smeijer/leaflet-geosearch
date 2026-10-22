@@ -13,13 +13,13 @@ test('Can localize texts', () => {
 test('It will search when enter key is pressed', () => {
   const query = { query: 'Nederland' };
 
-  const handleSubmit = jest.fn(async () => query);
+  const handleSubmit = vi.fn(async () => query);
 
   const control = new SearchElement({
     handleSubmit: handleSubmit(),
   });
 
-  control.onSubmit = jest.fn();
+  control.onSubmit = vi.fn();
 
   control.input.dispatchEvent(
     new KeyboardEvent('keypress', {

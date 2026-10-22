@@ -1,9 +1,11 @@
 import AbstractProvider, {
+  ProviderParams,
   EndpointArgument,
   ParseArgument,
   ProviderOptions,
   RequestType,
   SearchResult,
+  LatLng,
 } from './provider';
 
 export type RequestResult = RawResult[];
@@ -44,8 +46,16 @@ export default class CivilDefenseMapProvider extends AbstractProvider<
   }
 
   endpoint({ query, type }: EndpointArgument): string {
-    const params = typeof query === 'string' ? { q: query } : query;
-    params.format = 'json';
+    const params: ProviderParams =
+      typeof query === 'string' ? { q: query } : { ...query };
+
+    // json, unless another format (e.g. jsonv2) was asked for
+    if (
+      params.format === undefined &&
+      this.options.params?.format === undefined
+    ) {
+      params.format = 'json';
+    }
 
     switch (type) {
       case RequestType.REVERSE:
@@ -54,6 +64,10 @@ export default class CivilDefenseMapProvider extends AbstractProvider<
       default:
         return this.getUrl(this.searchUrl, params);
     }
+  }
+
+  reverseParams({ lat, lng }: LatLng): ProviderParams {
+    return { lat, lon: lng };
   }
 
   parse(response: ParseArgument<RequestResult>): SearchResult<RawResult>[] {
