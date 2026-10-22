@@ -385,8 +385,31 @@ Bing does not support `CORS`, and requires `jsonp` to be used instead.
 In case you decide to write your own provider, please consider submitting a PR
 to share your work with us.
 
-You can use the docs as "development environment". Please run `npm run start` to get up and running. The docs will
-refresh when you change source files.
+To work on the package:
+
+```bash
+npm install
+npm test            # unit tests with Vitest, npm run test:watch keeps them running
+npm run lint        # types, ESLint and Prettier
+npm run build       # the bundles in dist and the types
+```
+
+The docs site in `website/` doubles as a development environment. It uses the
+package built in `dist`, so run `npm run build` again after changing the source
+and reload the page.
+
+```bash
+npm install --prefix website
+npm run docs:dev    # builds the package and starts the docs site
+```
+
+The end-to-end tests run the built bundles in a browser with Playwright:
+
+```bash
+npx playwright install chromium   # once
+npm run build
+npm run test:e2e
+```
 
 [leaflet]: http://leafletjs.com
 [docs]: https://leaflet-geosearch.meijer.works
