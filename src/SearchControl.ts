@@ -770,7 +770,9 @@ const Control: SearchControl = {
       return;
     }
 
-    await this.suggest((event.target as HTMLInputElement).value);
+    // not event.target: this runs after the delay, and browsers set the target
+    // of an event from a shadow root to null once it has been dispatched
+    await this.suggest(this.searchElement.input.value);
   },
 
   async suggest(query) {
