@@ -9,7 +9,7 @@ function setup(provider, options = {}) {
   div.id = randomId();
   document.body.appendChild(div);
 
-  const map = L.map(div, { center: [0, 0], zoom: 2 });
+  const map = new L.Map(div, { center: [0, 0], zoom: 2 });
   const control = new SearchControl({ provider, ...options }).addTo(map);
   const errors = [];
   map.on('geosearch/error', (e) => errors.push(e));

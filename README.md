@@ -200,6 +200,21 @@ const map = new L.Map('map');
 map.addControl(searchControl);
 ```
 
+## Leaflet 2
+
+The control works with Leaflet 1.6 and up, and with the Leaflet 2 alpha. The
+tests also run against Leaflet's main branch, which drops `Class.extend`,
+`initialize` and `L.Icon.Default`. The control is an ES class with a
+constructor and uses the default icon of `Marker`, so it works with both.
+
+Leaflet 2 has no factory functions like `L.map()`, so create the map with
+`new Map()`. The control is used the same way.
+
+Leaflet 2 is only published as ES modules. The CommonJS build of
+`leaflet-geosearch` loads it with `require('leaflet')`, which works in Node
+20.19+ and 22.12+. In the browser, the UMD build works with Leaflet 2's
+`leaflet-global.js`.
+
 # Using with react-leaflet
 
 Usage with `react-leaflet` is similar to the usage with plain Leaflet. This example
@@ -300,8 +315,7 @@ new GeoSearchControl({
   showMarker: true, // optional: true|false  - default true
   showPopup: false, // optional: true|false  - default false
   marker: {
-    // optional: L.Marker    - default L.Icon.Default
-    icon: new L.Icon.Default(),
+    // optional: L.MarkerOptions - without icon, Leaflet's default icon is used
     draggable: false,
   },
   popupFormat: ({ query, result }) => result.label, // optional: function    - default returns result label,

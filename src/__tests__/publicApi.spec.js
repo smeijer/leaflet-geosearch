@@ -102,7 +102,8 @@ test('SearchControl default options', () => {
   });
 
   expect(marker.draggable).toBe(false);
-  expect(marker.icon).toBeInstanceOf(L.Icon.Default);
+  // Marker uses its own default icon
+  expect(marker.icon).toBeUndefined();
 
   const result = { label: 'Den Haag' };
   expect(popupFormat({ result })).toEqual('Den Haag');

@@ -26,7 +26,7 @@ function setup(options = {}, providerResults = results) {
   div.id = randomId();
   document.body.appendChild(div);
 
-  const map = L.map(div, { center: [0, 0], zoom: 2 });
+  const map = new L.Map(div, { center: [0, 0], zoom: 2 });
   vi.spyOn(map, 'setView').mockReturnThis();
   vi.spyOn(map, 'fitBounds').mockReturnThis();
 
@@ -318,7 +318,7 @@ describe('SearchControl', () => {
       expect(provider.search).toHaveBeenCalledTimes(1);
       expect(listener.mock.calls[0][0].location).toBe(results[1]);
       expect(control.markers.getLayers()[0].getLatLng()).toEqual(
-        L.latLng(52.37, 4.9),
+        new L.LatLng(52.37, 4.9),
       );
     });
 
@@ -370,7 +370,7 @@ describe('SearchControl', () => {
       });
       // the first result of the new search is shown
       expect(control.markers.getLayers()[0].getLatLng()).toEqual(
-        L.latLng(52.08, 4.3),
+        new L.LatLng(52.08, 4.3),
       );
     });
 
@@ -411,7 +411,7 @@ describe('SearchControl', () => {
       expect(input.value).toEqual('Amsterdam');
       expect(provider.search).toHaveBeenCalledTimes(1);
       expect(control.markers.getLayers()[0].getLatLng()).toEqual(
-        L.latLng(52.37, 4.9),
+        new L.LatLng(52.37, 4.9),
       );
       expect(control.resultList.container.children.length).toEqual(0);
     });
@@ -440,7 +440,7 @@ describe('SearchControl', () => {
       await control.onSubmit({ query: 'den' });
 
       const [marker] = control.markers.getLayers();
-      expect(marker.getLatLng()).toEqual(L.latLng(52.08, 4.3));
+      expect(marker.getLatLng()).toEqual(new L.LatLng(52.08, 4.3));
       expect(marker.getPopup().getContent()).toEqual('Den Haag');
       expect(marker.isPopupOpen()).toBe(false);
     });
@@ -520,7 +520,7 @@ describe('SearchControl', () => {
     });
 
     test('a custom marker icon is used', async () => {
-      const icon = L.divIcon({ className: 'my-icon' });
+      const icon = new L.DivIcon({ className: 'my-icon' });
       const { control } = setup({ marker: { icon } });
 
       await control.onSubmit({ query: 'den' });
@@ -539,7 +539,20 @@ describe('SearchControl', () => {
       marker.fire('dragend');
 
       expect(listener).toHaveBeenCalledTimes(1);
-      expect(listener.mock.calls[0][0].location).toEqual(L.latLng(1, 2));
+      expect(listener.mock.calls[0][0].location).toEqual(new L.LatLng(1, 2));
+    });
+
+    test('events work without the fireEvent alias (removed in Leaflet 2)', async () => {
+      const { control, map } = setup({ marker: { draggable: true } });
+      map.fireEvent = undefined;
+      const listener = vi.fn();
+      map.on('geosearch/showlocation', listener);
+      map.on('geosearch/marker/dragend', listener);
+
+      await control.onSubmit({ query: 'den' });
+      control.markers.getLayers()[0].fire('dragend');
+
+      expect(listener).toHaveBeenCalledTimes(2);
     });
   });
 
