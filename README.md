@@ -12,8 +12,7 @@
 [![semantic-release](https://img.shields.io/badge/semantic--release-e10079?style=flat-square&logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-64-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-65-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [leaflet-geosearch](https://leaflet-geosearch.meijer.works)**
@@ -633,6 +632,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="http://jeremy.ng"><img src="https://avatars.githubusercontent.com/u/43259194?v=4?s=100" width="100px;" alt="Jeremy Nguyen"/><br /><sub><b>Jeremy Nguyen</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=jeremy-code" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/CarolineVantim"><img src="https://avatars.githubusercontent.com/u/82098788?v=4?s=100" width="100px;" alt="Caroline Batista Vantim"/><br /><sub><b>Caroline Batista Vantim</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=CarolineVantim" title="Code">💻</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=CarolineVantim" title="Documentation">📖</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=CarolineVantim" title="Tests">⚠️</a></td>
     </tr>
   </tbody>
 </table>
