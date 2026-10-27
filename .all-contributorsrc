@@ -611,6 +611,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "frees0l0",
+      "name": "frees0l0",
+      "avatar_url": "https://avatars.githubusercontent.com/u/69469354?v=4",
+      "profile": "https://github.com/frees0l0",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
