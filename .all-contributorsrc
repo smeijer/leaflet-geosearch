@@ -611,6 +611,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "CarolineVantim",
+      "name": "Caroline Batista Vantim",
+      "avatar_url": "https://avatars.githubusercontent.com/u/82098788?v=4",
+      "profile": "https://github.com/CarolineVantim",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
