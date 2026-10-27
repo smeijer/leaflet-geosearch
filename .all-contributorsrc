@@ -445,7 +445,8 @@
       "profile": "https://geocode.earth",
       "contributions": [
         "code",
-        "test"
+        "test",
+        "doc"
       ]
     },
     {
