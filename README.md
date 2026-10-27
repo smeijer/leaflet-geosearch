@@ -12,8 +12,7 @@
 [![semantic-release](https://img.shields.io/badge/semantic--release-e10079?style=flat-square&logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-64-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-65-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [leaflet-geosearch](https://leaflet-geosearch.meijer.works)**
@@ -633,6 +632,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="http://jeremy.ng"><img src="https://avatars.githubusercontent.com/u/43259194?v=4?s=100" width="100px;" alt="Jeremy Nguyen"/><br /><sub><b>Jeremy Nguyen</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=jeremy-code" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Mokto"><img src="https://avatars.githubusercontent.com/u/5103928?v=4?s=100" width="100px;" alt="Théo Mathieu"/><br /><sub><b>Théo Mathieu</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=Mokto" title="Code">💻</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=Mokto" title="Documentation">📖</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=Mokto" title="Tests">⚠️</a></td>
     </tr>
   </tbody>
 </table>
