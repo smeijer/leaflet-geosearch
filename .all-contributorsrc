@@ -611,6 +611,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Mokto",
+      "name": "Théo Mathieu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5103928?v=4",
+      "profile": "https://github.com/Mokto",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
