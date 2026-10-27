@@ -245,6 +245,7 @@ jobs:
           LOCATIONIQ_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.LOCATIONIQ_API_KEY || '' }}
           MAPBOX_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.MAPBOX_API_KEY || '' }}
           OPENCAGE_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.OPENCAGE_API_KEY || '' }}
+          OPENGEOCODING_API_KEY: ${{ github.ref == 'refs/heads/main' && secrets.OPENGEOCODING_API_KEY || '' }}
 
       # needs the declarations in dist from the build
       - name: Type check the docs components
