@@ -104,6 +104,26 @@ describe('OpenGeocodingProvider', () => {
     expect([place.x, place.y]).toEqual([0, 0]);
   });
 
+  test('sends every request to a custom host', async () => {
+    const requests = answer(autocomplete);
+    const proxy = new Provider({
+      apiKey: '',
+      host: 'https://example.com/geocode',
+    });
+
+    const [picked] = await proxy.search({ query: 'Amsterd' });
+    await proxy.search({ query: picked.label, data: picked });
+    await proxy.reverse({ lat: 52.3731, lng: 4.8926 });
+
+    expect(
+      requests.map(({ url }) => new URL(url).origin + new URL(url).pathname),
+    ).toEqual([
+      'https://example.com/geocode/v1/autocomplete',
+      'https://example.com/geocode/v1/retrieve',
+      'https://example.com/geocode/v1/reverse',
+    ]);
+  });
+
   test('a result without coordinates has no position', async () => {
     answer({ results: [{ address: { displayName: 'Somewhere' } }] });
 

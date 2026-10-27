@@ -12,8 +12,6 @@ import AbstractProvider, {
   readJson,
 } from './provider';
 
-const HOST = 'https://api.opengeocoding.com';
-
 interface GeoCoordinates {
   // omitted when 0
   lat?: number;
@@ -54,6 +52,8 @@ export type RequestResult =
 
 export type OpenGeocodingProviderOptions = {
   apiKey: string;
+  // a proxy with the routes of the hosted api, e.g. one that adds the key
+  host?: string;
 } & ProviderOptions;
 
 export default class OpenGeocodingProvider extends AbstractProvider<
@@ -61,19 +61,23 @@ export default class OpenGeocodingProvider extends AbstractProvider<
   RawResult
 > {
   apiKey: string;
+  host: string;
 
   constructor(options: OpenGeocodingProviderOptions = { apiKey: '' }) {
     super(options);
     this.apiKey = options.apiKey;
+    this.host = options.host || 'https://api.opengeocoding.com';
   }
 
   // params only go to autocomplete: the other endpoints reject unknown ones
   endpoint({ query, type }: EndpointArgument): string {
     if (type === RequestType.REVERSE) {
-      return `${HOST}/v1/reverse?${encode(query as ProviderParams)}`;
+      return `${this.host}/v1/reverse?${encode(query as ProviderParams)}`;
     }
 
-    return this.getUrl(`${HOST}/v1/autocomplete`, { text: query as string });
+    return this.getUrl(`${this.host}/v1/autocomplete`, {
+      text: query as string,
+    });
   }
 
   reverseParams({ lat, lng }: LatLng): ProviderParams {
@@ -93,7 +97,7 @@ export default class OpenGeocodingProvider extends AbstractProvider<
   > {
     const id = data && !Number.isFinite(data.x) && (data.raw as Suggestion).id;
     const url = id
-      ? `${HOST}/v1/retrieve?${encode({ id })}`
+      ? `${this.host}/v1/retrieve?${encode({ id })}`
       : this.endpoint({ query, type: RequestType.SEARCH });
 
     return this.parse({ data: await this.request(url, signal) });
