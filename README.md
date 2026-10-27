@@ -13,7 +13,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-64-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-67-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **Demo and Docs: [leaflet-geosearch](https://leaflet-geosearch.meijer.works)**
@@ -633,6 +633,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="http://jeremy.ng"><img src="https://avatars.githubusercontent.com/u/43259194?v=4?s=100" width="100px;" alt="Jeremy Nguyen"/><br /><sub><b>Jeremy Nguyen</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=jeremy-code" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Mokto"><img src="https://avatars.githubusercontent.com/u/5103928?v=4?s=100" width="100px;" alt="Théo Mathieu"/><br /><sub><b>Théo Mathieu</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=Mokto" title="Code">💻</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=Mokto" title="Documentation">📖</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=Mokto" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/frees0l0"><img src="https://avatars.githubusercontent.com/u/69469354?v=4?s=100" width="100px;" alt="frees0l0"/><br /><sub><b>frees0l0</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=frees0l0" title="Code">💻</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=frees0l0" title="Documentation">📖</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=frees0l0" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/CarolineVantim"><img src="https://avatars.githubusercontent.com/u/82098788?v=4?s=100" width="100px;" alt="Caroline Batista Vantim"/><br /><sub><b>Caroline Batista Vantim</b></sub></a><br /><a href="https://github.com/smeijer/leaflet-geosearch/commits?author=CarolineVantim" title="Code">💻</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=CarolineVantim" title="Documentation">📖</a> <a href="https://github.com/smeijer/leaflet-geosearch/commits?author=CarolineVantim" title="Tests">⚠️</a></td>
     </tr>
   </tbody>
 </table>
