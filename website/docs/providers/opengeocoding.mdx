@@ -40,5 +40,24 @@ const provider = new OpenGeocodingProvider({
 });
 ```
 
+## Your own proxy
+
+A browser key is visible to anyone who opens the page. To keep the key on your server, run a proxy that adds the `x-api-key` header and forwards `/v1/autocomplete`, `/v1/retrieve` and `/v1/reverse` to `https://api.opengeocoding.com`. Then point the provider to it with `host`:
+
+```js
+const provider = new OpenGeocodingProvider({
+  apiKey: '',
+  host: 'https://example.com/geocode',
+});
+```
+
+## Self-hosting
+
+The OpenGeocoding engine is [source-available][3] and can be run on your own servers under the terms of its license, [PolyForm Shield 1.0.0][4]. Read the license first: it doesn't allow offering a product that competes with OpenGeocoding. The data in the index has its own licenses too, such as ODbL for OpenStreetMap.
+
+A self-hosted engine has a different API than the hosted one (Connect RPC instead of `/v1/...` routes) and no authentication, so `host` can't point to it directly. Put a proxy in front of it that offers the routes above, or write a [custom provider](/providers/custom-providers) for its API.
+
 [1]: https://opengeocoding.com/dashboard
 [2]: https://opengeocoding.com/docs
+[3]: https://github.com/Mokto/opengeocoding#self-host
+[4]: https://github.com/Mokto/opengeocoding/blob/main/LICENSE
