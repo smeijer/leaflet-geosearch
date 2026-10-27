@@ -42,6 +42,25 @@ describe('failed searches', () => {
     expect(control.markers.getLayers()).toHaveLength(0);
   });
 
+  test('a failed second search of a first result without coordinates fires geosearch/error', async () => {
+    const error = new Error('retrieve failed');
+    const partial = { label: 'Amsterdam', x: NaN, y: NaN, bounds: null };
+    const provider = { search: vi.fn(async () => [partial]) };
+    provider.search.mockResolvedValueOnce([partial]);
+    provider.search.mockRejectedValueOnce(error);
+    const { control, errors } = setup(provider);
+
+    await control.onSubmit({ query: 'ams' });
+
+    expect(provider.search).toHaveBeenCalledTimes(2);
+    expect(errors).toHaveLength(1);
+    expect(errors[0]).toMatchObject({ error, source: 'submit' });
+    expect(control.searchElement.container.classList.contains('error')).toBe(
+      true,
+    );
+    expect(control.markers.getLayers()).toHaveLength(0);
+  });
+
   test('a failed autocomplete fires geosearch/error and keeps the old list', async () => {
     vi.useFakeTimers();
     const error = new Error('offline');

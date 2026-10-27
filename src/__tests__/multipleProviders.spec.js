@@ -287,6 +287,33 @@ describe('several providers', () => {
     expect(osm.search).toHaveBeenCalledTimes(1);
   });
 
+  test('enter on all searches a first result without coordinates again with its provider', async () => {
+    const partial = { ...place('Amsterdam'), x: NaN, y: NaN };
+    const og = fakeProvider([partial]);
+    og.search.mockResolvedValueOnce([partial]);
+    og.search.mockResolvedValueOnce([place('Amsterdam, NL', 4.9, 52.37)]);
+    const osm = fakeProvider([place('Amstelveen')]);
+    const { control, events } = setup({
+      providers: [
+        { label: 'OpenGeocoding', provider: og },
+        { label: 'OpenStreetMap', provider: osm },
+      ],
+    });
+
+    await control.onSubmit({ query: 'ams' });
+
+    expect(og.search).toHaveBeenCalledTimes(2);
+    expect(og.search).toHaveBeenLastCalledWith(
+      expect.objectContaining({ query: 'Amsterdam', data: partial }),
+    );
+    expect(osm.search).toHaveBeenCalledTimes(1);
+    expect(events.showlocation).toHaveLength(1);
+    expect(events.showlocation[0].provider.label).toEqual('OpenGeocoding');
+    expect(control.markers.getLayers()[0].getLatLng()).toEqual(
+      new L.LatLng(52.37, 4.9),
+    );
+  });
+
   test('the cache keeps the results of each provider apart', async () => {
     const { control, input, osm, esri } = twoProviders({
       allProvidersLabel: false,
