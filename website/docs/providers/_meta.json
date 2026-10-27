@@ -11,6 +11,7 @@
   { "type": "file", "name": "locationiq", "label": "LocationIQ" },
   { "type": "file", "name": "mapbox", "label": "MapBox" },
   { "type": "file", "name": "opencage", "label": "OpenCage" },
+  { "type": "file", "name": "opengeocoding", "label": "OpenGeocoding" },
   { "type": "file", "name": "openstreetmap", "label": "OpenStreetMap" },
   { "type": "file", "name": "pdoknl", "label": "PdokNl" },
   { "type": "file", "name": "pelias", "label": "Pelias" },

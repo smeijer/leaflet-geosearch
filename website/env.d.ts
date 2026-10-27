@@ -12,5 +12,6 @@ declare namespace NodeJS {
     LOCATIONIQ_API_KEY: string;
     MAPBOX_API_KEY: string;
     OPENCAGE_API_KEY: string;
+    OPENGEOCODING_API_KEY: string;
   }
 }

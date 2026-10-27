@@ -78,6 +78,7 @@ The control comes with a number of default providers:
 - [Here]
 - [LocationIQ]
 - [OpenCage]
+- [OpenGeocoding]
 - [OpenStreetMap]
 - [PdokNl]
 - [Pelias]
@@ -176,7 +177,7 @@ use your debugger)
 # Providers
 
 When `OpenStreetMap` does not match your needs; you can also choose to use the
-`Bing`, `Esri`, `Geocode Earth`, `Google`, `Here`, `LocationIQ`, `OpenCage`, `Pelias` or `Photon` providers. Most of those providers do however require API
+`Bing`, `Esri`, `Geocode Earth`, `Google`, `Here`, `LocationIQ`, `OpenCage`, `OpenGeocoding`, `Pelias` or `Photon` providers. Most of those providers do however require API
 keys. See the documentation pages on the relevant organisations on how to obtain
 these keys.
 
@@ -534,6 +535,7 @@ npm run test:e2e
 [here]: https://leaflet-geosearch.meijer.works/providers/here
 [locationiq]: https://leaflet-geosearch.meijer.works/providers/locationiq
 [opencage]: https://leaflet-geosearch.meijer.works/providers/opencage
+[opengeocoding]: https://leaflet-geosearch.meijer.works/providers/opengeocoding
 [openstreetmap]: https://leaflet-geosearch.meijer.works/providers/openstreetmap
 [pdoknl]: https://leaflet-geosearch.meijer.works/providers/pdoknl
 [pelias]: https://leaflet-geosearch.meijer.works/providers/pelias

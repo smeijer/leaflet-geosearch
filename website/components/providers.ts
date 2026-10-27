@@ -14,6 +14,7 @@ import {
   LocationIQProvider,
   MapBoxProvider,
   OpenCageProvider,
+  OpenGeocodingProvider,
   OpenStreetMapProvider,
   PdokNlProvider,
   PeliasProvider,
@@ -46,6 +47,8 @@ const providers = {
     }),
   OpenCage: () =>
     new OpenCageProvider({ params: { key: process.env.OPENCAGE_API_KEY } }),
+  OpenGeocoding: () =>
+    new OpenGeocodingProvider({ apiKey: process.env.OPENGEOCODING_API_KEY }),
   OpenStreetMap: () => new OpenStreetMapProvider(),
   PdokNl: () => new PdokNlProvider(),
   Pelias: () => new PeliasProvider(),

@@ -1,0 +1,63 @@
+import Map from '../../components/Map';
+
+# OpenGeocoding Provider
+
+**note**: OpenGeocoding requires an API key. [Create one][1] in the dashboard. For use in a web page, create a browser key and restrict it to your site's origins. The key is sent in a header, never in the url.
+
+Suggestions while typing come from the autocomplete endpoint and don't count as requests. They have no coordinates, so picking one looks it up by its id, and that counts as one request. Reverse geocoding counts as one request too. See the [API docs][2].
+
+<Map provider="OpenGeocoding" />
+
+```js
+import { OpenGeocodingProvider } from 'leaflet-geosearch';
+
+const provider = new OpenGeocodingProvider({
+  apiKey: '__YOUR_OPENGEOCODING_KEY__',
+});
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+    style: 'bar',
+  }),
+);
+```
+
+## Optional parameters
+
+`params` go to the autocomplete endpoint: `countryCode` limits suggestions to one country, `limit` sets their number (up to 15), `includeLandmarks` adds notable landmarks, and `focus.lat`/`focus.lon` rank places near a position higher.
+
+```js
+const provider = new OpenGeocodingProvider({
+  apiKey: '__YOUR_OPENGEOCODING_KEY__',
+  params: {
+    countryCode: 'nl',
+    limit: 5,
+  },
+});
+```
+
+## Your own proxy
+
+A browser key is visible to anyone who opens the page. To keep the key on your server, run a proxy that adds the `x-api-key` header and forwards `/v1/autocomplete`, `/v1/retrieve` and `/v1/reverse` to `https://api.opengeocoding.com`. Then point the provider to it with `host`:
+
+```js
+const provider = new OpenGeocodingProvider({
+  apiKey: '',
+  host: 'https://example.com/geocode',
+});
+```
+
+## Self-hosting
+
+The OpenGeocoding engine is [source-available][3] and can be run on your own servers under the terms of its license, [PolyForm Shield 1.0.0][4]. Read the license first: it doesn't allow offering a product that competes with OpenGeocoding. The data in the index has its own licenses too, such as ODbL for OpenStreetMap.
+
+A self-hosted engine has a different API than the hosted one (Connect RPC instead of `/v1/...` routes) and no authentication, so `host` can't point to it directly. Put a proxy in front of it that offers the routes above, or write a [custom provider](/providers/custom-providers) for its API.
+
+[1]: https://opengeocoding.com/dashboard
+[2]: https://opengeocoding.com/docs
+[3]: https://github.com/Mokto/opengeocoding#self-host
+[4]: https://github.com/Mokto/opengeocoding/blob/main/LICENSE

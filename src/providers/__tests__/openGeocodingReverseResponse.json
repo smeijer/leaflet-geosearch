@@ -1,0 +1,48 @@
+{
+  "results": [
+    {
+      "address": {
+        "displayName": "2, Dam, Amsterdam, North Holland, Netherlands",
+        "geoCoordinates": {
+          "lat": 52.373363,
+          "lon": 4.8930144,
+          "boundingBox": {
+            "minLat": 52.372364,
+            "maxLat": 52.374363,
+            "minLon": 4.8920145,
+            "maxLon": 4.8940144
+          }
+        },
+        "addressDetails": {
+          "country": "Netherlands",
+          "countryCode": "nl",
+          "state": "North Holland",
+          "county": "Amsterdam",
+          "regionCodes": [
+            {
+              "adminLevel": 4,
+              "code": "NL-NH"
+            }
+          ],
+          "city": "Amsterdam",
+          "road": "Dam",
+          "houseNumber": "2",
+          "postcode": "1012NP",
+          "regions": [
+            {
+              "countryCode": "nl",
+              "countryName": "Netherlands",
+              "adminCode": "NH",
+              "adminLevel": 4,
+              "localName": "Noord-Holland",
+              "enName": "North Holland"
+            }
+          ]
+        },
+        "goodMatch": true
+      },
+      "distanceM": 40.447266,
+      "layer": "address"
+    }
+  ]
+}

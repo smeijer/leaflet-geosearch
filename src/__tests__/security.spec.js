@@ -153,6 +153,7 @@ describe('search text in request urls (injection)', () => {
     ['LegacyGoogleProvider', 'address'],
     ['LocationIQProvider', 'q'],
     ['OpenCageProvider', 'q'],
+    ['OpenGeocodingProvider', 'text'],
     ['OpenStreetMapProvider', 'q'],
     ['PdokNlProvider', 'q'],
     ['PeliasProvider', 'text'],
@@ -206,6 +207,18 @@ describe('search text in request urls (injection)', () => {
     await new providers.OpenStreetMapProvider()
       .reverse({ lat: '1&lon=2', lng: 3 })
       .catch(() => {});
+
+    expect(urls[0].searchParams.get('lat')).toEqual('1&lon=2');
+    expect(urls[0].searchParams.getAll('lon')).toEqual(['3']);
+  });
+
+  test('OpenGeocoding encodes reverse positions with its own encoder', async () => {
+    const urls = answerRequests({});
+
+    await new providers.OpenGeocodingProvider({ apiKey: 'key' }).reverse({
+      lat: '1&lon=2',
+      lng: 3,
+    });
 
     expect(urls[0].searchParams.get('lat')).toEqual('1&lon=2');
     expect(urls[0].searchParams.getAll('lon')).toEqual(['3']);

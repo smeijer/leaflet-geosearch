@@ -22,6 +22,7 @@ test('exports', () => {
     'LocationIQProvider',
     'MapBoxProvider',
     'OpenCageProvider',
+    'OpenGeocodingProvider',
     'OpenStreetMapProvider',
     'PdokNlProvider',
     'PeliasProvider',
