@@ -229,6 +229,11 @@ describe('provider endpoints', () => {
       'https://civildefense.fit.vutbr.cz/reverse',
     ],
     ['Pelias', new PeliasProvider(), 'http://localhost:4000/v1/reverse'],
+    [
+      'OpenGeocoding',
+      new OpenGeocodingProvider({ apiKey: 'key' }),
+      'https://api.opengeocoding.com/v1/reverse',
+    ],
   ])('%s builds the reverse url', (_, provider, expected) => {
     const url = provider.endpoint({
       query: { lat: 52.08, lon: 4.31 },

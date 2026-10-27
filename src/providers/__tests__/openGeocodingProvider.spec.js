@@ -104,6 +104,100 @@ describe('OpenGeocodingProvider', () => {
     expect([place.x, place.y]).toEqual([0, 0]);
   });
 
+  test('a result without coordinates has no position', async () => {
+    answer({ results: [{ address: { displayName: 'Somewhere' } }] });
+
+    const [place] = await provider().reverse({ lat: 52.3731, lng: 4.8926 });
+
+    expect(place.label).toEqual('Somewhere');
+    expect(Number.isFinite(place.x)).toBe(false);
+    expect(Number.isFinite(place.y)).toBe(false);
+    expect(place.bounds).toBeNull();
+  });
+
+  // the api leaves out empty lists
+  test.each([
+    ['empty suggestions', 'search', { suggestions: [] }],
+    ['no suggestions', 'search', {}],
+    ['empty results', 'reverse', { results: [] }],
+    ['no results', 'reverse', {}],
+  ])('%s give no results', async (_, method, body) => {
+    answer(body);
+
+    const results = await provider()[method]({
+      query: 'nowhere',
+      lat: 0,
+      lng: 0,
+    });
+
+    expect(results).toEqual([]);
+  });
+
+  test('picked data without an id is searched by its text', async () => {
+    const requests = answer(autocomplete);
+
+    await provider().search({
+      query: 'Amsterdam',
+      data: { x: NaN, y: NaN, label: 'Amsterdam', bounds: null, raw: {} },
+    });
+
+    const url = new URL(requests[0].url);
+    expect(url.pathname).toEqual('/v1/autocomplete');
+    expect(url.searchParams.get('text')).toEqual('Amsterdam');
+  });
+
+  test('the id of a picked suggestion is sent as one parameter', async () => {
+    const tricky = 'a&lang=xx#x/../../v1/admin?id=other';
+    const requests = answer(retrieve);
+
+    await provider().search({
+      query: 'x',
+      data: { x: NaN, y: NaN, label: 'x', bounds: null, raw: { id: tricky } },
+    });
+
+    const url = new URL(requests[0].url);
+    expect(url.pathname).toEqual('/v1/retrieve');
+    expect(url.hash).toEqual('');
+    expect(url.searchParams.getAll('id')).toEqual([tricky]);
+    expect([...url.searchParams.keys()]).toEqual(['id']);
+  });
+
+  test('passes the abort signal on', async () => {
+    answer(autocomplete);
+    const controller = new AbortController();
+    controller.abort();
+
+    await expect(
+      provider().search({ query: 'Amsterd', signal: controller.signal }),
+    ).rejects.toThrow(/abort/i);
+  });
+
+  test('without an api key the header is empty', async () => {
+    const requests = answer(autocomplete);
+
+    await new Provider().search({ query: 'Amsterd' });
+
+    expect(requests[0].headers.get('x-api-key')).toEqual('');
+  });
+
+  test('an error answer without a message throws the status', async () => {
+    answer({ code: 'internal' }, 500);
+
+    await expect(provider().search({ query: 'Amsterd' })).rejects.toThrow(
+      'Request failed with status 500',
+    );
+  });
+
+  test('an error answer that is not json throws the status', async () => {
+    globalThis.server.use(
+      http.all('*', () => new HttpResponse('Bad Gateway', { status: 502 })),
+    );
+
+    await expect(provider().search({ query: 'Amsterd' })).rejects.toThrow(
+      'Request failed with status 502',
+    );
+  });
+
   test('throws the message of an error answer', async () => {
     answer(
       {
