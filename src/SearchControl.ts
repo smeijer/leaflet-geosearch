@@ -974,7 +974,18 @@ const Control: SearchControl = {
     }
 
     if (results.length > 0) {
-      this.showResult(results[0], query);
+      const [first] = results;
+      const picked = { query: first.label, data: first };
+
+      // a suggestion without coordinates is searched again, like a picked one
+      if (!hasPosition(first)) {
+        if (!query.data) {
+          await this.onSubmit(picked);
+        }
+        return;
+      }
+
+      this.showResult(first, query);
     }
   },
 

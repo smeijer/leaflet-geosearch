@@ -431,6 +431,33 @@ describe('SearchControl', () => {
         data: partial[0],
       });
     });
+
+    test('enter on typed text searches a first result without coordinates again', async () => {
+      const partial = [{ label: 'Amsterdam', bounds: null, raw: {} }];
+      const { control, provider } = setup({}, partial);
+      provider.search.mockResolvedValueOnce(partial);
+      provider.search.mockResolvedValueOnce([results[1]]);
+
+      await control.onSubmit({ query: 'ams' });
+
+      expect(provider.search).toHaveBeenLastCalledWith({
+        query: 'Amsterdam',
+        data: partial[0],
+      });
+      expect(control.markers.getLayers()[0].getLatLng()).toEqual(
+        new L.LatLng(52.37, 4.9),
+      );
+    });
+
+    test('a picked suggestion that still has no coordinates shows nothing', async () => {
+      const partial = [{ label: 'Amsterdam', bounds: null, raw: {} }];
+      const { control, provider } = setup({}, partial);
+
+      await control.onSubmit({ query: 'Amsterdam', data: partial[0] });
+
+      expect(provider.search).toHaveBeenCalledTimes(1);
+      expect(control.markers.getLayers()).toHaveLength(0);
+    });
   });
 
   describe('showing a result', () => {
