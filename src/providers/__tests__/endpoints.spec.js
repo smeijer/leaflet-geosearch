@@ -11,6 +11,7 @@ import {
   LocationIQProvider,
   MapBoxProvider,
   OpenCageProvider,
+  OpenGeocodingProvider,
   OpenStreetMapProvider,
   PdokNlProvider,
   PeliasProvider,
@@ -86,6 +87,11 @@ describe('provider endpoints', () => {
       'OpenCage',
       new OpenCageProvider(),
       'https://api.opencagedata.com/geocode/v1/json?q=Den%20Haag&format=json',
+    ],
+    [
+      'OpenGeocoding',
+      new OpenGeocodingProvider({ apiKey: 'key' }),
+      'https://api.opengeocoding.com/v1/autocomplete?text=Den%20Haag',
     ],
     [
       'OpenStreetMap',

@@ -1,0 +1,22 @@
+{
+  "suggestions": [
+    {
+      "id": "f974c0ebbc7c8ba4fdd089f553cadc005b11ac1be8f977a1f7e1303fec2ac968/p764179",
+      "displayName": "Amsterdam, Amsterdam, North Holland, Netherlands",
+      "type": "city",
+      "countryCode": "nl"
+    },
+    {
+      "id": "f974c0ebbc7c8ba4fdd089f553cadc005b11ac1be8f977a1f7e1303fec2ac968/p4707244",
+      "displayName": "Amsterdam Nieuw-West, Amsterdam, Amsterdam, North Holland, Netherlands",
+      "type": "neighbourhood",
+      "countryCode": "nl"
+    },
+    {
+      "id": "f974c0ebbc7c8ba4fdd089f553cadc005b11ac1be8f977a1f7e1303fec2ac968/p4707247",
+      "displayName": "Amsterdam-Zuid, Amsterdam, Amsterdam, North Holland, Netherlands",
+      "type": "neighbourhood",
+      "countryCode": "nl"
+    }
+  ]
+}

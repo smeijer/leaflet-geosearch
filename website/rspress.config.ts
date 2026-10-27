@@ -25,6 +25,7 @@ const keyNames = [
   'LOCATIONIQ',
   'MAPBOX',
   'OPENCAGE',
+  'OPENGEOCODING',
 ];
 
 const define = Object.fromEntries(

@@ -153,6 +153,7 @@ describe('search text in request urls (injection)', () => {
     ['LegacyGoogleProvider', 'address'],
     ['LocationIQProvider', 'q'],
     ['OpenCageProvider', 'q'],
+    ['OpenGeocodingProvider', 'text'],
     ['OpenStreetMapProvider', 'q'],
     ['PdokNlProvider', 'q'],
     ['PeliasProvider', 'text'],
