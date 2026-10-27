@@ -611,9 +611,42 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Mokto",
+      "name": "Théo Mathieu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5103928?v=4",
+      "profile": "https://github.com/Mokto",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
+    },
+    {
+      "login": "frees0l0",
+      "name": "frees0l0",
+      "avatar_url": "https://avatars.githubusercontent.com/u/69469354?v=4",
+      "profile": "https://github.com/frees0l0",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
+    },
+    {
+      "login": "CarolineVantim",
+      "name": "Caroline Batista Vantim",
+      "avatar_url": "https://avatars.githubusercontent.com/u/82098788?v=4",
+      "profile": "https://github.com/CarolineVantim",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": true,
+  "skipCi": false,
   "commitType": "docs"
 }
