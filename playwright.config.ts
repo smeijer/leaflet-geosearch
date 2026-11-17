@@ -26,6 +26,10 @@ const config: PlaywrightTestConfig<E2EOptions> = {
   testDir: 'e2e',
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
+  // every worker starts its own browsers, and with three browsers and several
+  // Leaflet versions half the cores (the default) keeps a laptop at 100% CPU.
+  // A quarter locally, more with --workers. CI keeps the default
+  workers: process.env.CI ? undefined : '25%',
   reporter: process.env.CI ? [['github'], ['list']] : 'list',
   use: {
     baseURL: `http://127.0.0.1:${port}`,

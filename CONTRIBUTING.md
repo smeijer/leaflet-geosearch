@@ -32,7 +32,7 @@ npm run test:e2e
 npm run test:e2e -- --project=chromium-leaflet   # one browser and version
 ```
 
-A project is a browser and a Leaflet version, like `firefox-leaflet-2` or `webkit-1.6.0`. `LEAFLET_VERSIONS="leaflet 1.6.0"` picks the versions. Locally an installed browser works too: `PLAYWRIGHT_CHANNEL=msedge npm run test:e2e -- --project=chromium-leaflet` (or `chrome`).
+A project is a browser and a Leaflet version, like `firefox-leaflet-2` or `webkit-1.6.0`. `LEAFLET_VERSIONS="leaflet 1.6.0"` picks the versions. Locally the tests use a quarter of the CPU cores, every worker starts its own browsers. `--workers=8` runs more at once, `--project=chromium-*` only one browser. Locally an installed browser works too: `PLAYWRIGHT_CHANNEL=msedge npm run test:e2e -- --project=chromium-leaflet` (or `chrome`).
 
 Before you open a PR, run what CI runs:
 
