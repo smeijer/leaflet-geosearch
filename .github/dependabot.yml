@@ -11,3 +11,22 @@ updates:
         patterns: ['*']
     commit-message:
       prefix: ci
+
+  # npm packages of the library, the docs site and the e2e test runner, one
+  # pull request a month. The runner in e2e/runners/latest has to stay at the
+  # @playwright/test version of the root lockfile (the setup job checks it).
+  # The other runners are pinned on purpose, each to the browsers of a version
+  - package-ecosystem: npm
+    directories: ['/', '/website', '/e2e/runners/latest']
+    schedule:
+      interval: monthly
+    groups:
+      npm:
+        patterns: ['*']
+    ignore:
+      # the leaflet dev dependency is Leaflet 1, Leaflet 2 is leaflet-2
+      - dependency-name: leaflet
+        update-types: ['version-update:semver-major']
+    commit-message:
+      prefix: chore
+      include: scope
