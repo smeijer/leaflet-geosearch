@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>leaflet-geosearch e2e (ESM)</title>
-    <link rel="stylesheet" href="/node_modules/leaflet/dist/leaflet.css" />
+    <script src="/e2e/fixtures/leaflet.js"></script>
     <link rel="stylesheet" href="/dist/geosearch.css" />
     <style>
       #map {
@@ -11,13 +11,14 @@
         height: 400px;
       }
     </style>
-    <!-- the ESM bundle imports "leaflet" -->
-    <script type="importmap">
-      {
-        "imports": {
-          "leaflet": "/node_modules/leaflet/dist/leaflet-src.esm.js"
-        }
-      }
+    <!-- the ESM bundle imports "leaflet", the import map points it at the
+         ESM build of the page's Leaflet version -->
+    <script>
+      document.write(
+        '<script type="importmap">' +
+          JSON.stringify({ imports: { leaflet: window.e2eLeaflet.esm } }) +
+          '<\/script>',
+      );
     </script>
   </head>
   <body>

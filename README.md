@@ -515,13 +515,14 @@ npm install --prefix website
 npm run docs:dev    # builds the package and starts the docs site
 ```
 
-The end-to-end tests run the built bundles in Chromium, Firefox and WebKit with Playwright, with Leaflet 1 and Leaflet 2. CI also runs them with the browsers of older Playwright versions, picked where support ends for an OS or a device: Chrome 102 to 139, the Firefox ESR releases 115, 128 and 140, and Safari 15.4 to 26.0. The list is in the e2e job of `.github/workflows/ci.yml`.
+The end-to-end tests run the built bundles in Chromium, Firefox and WebKit with Playwright, each with every Leaflet version: the dev dependencies `leaflet` and `leaflet-2` (Leaflet 1 and 2), and the versions in `e2e/vendor`, like 1.6.0 or Leaflet's main branch. CI also runs them with the browsers of older Playwright versions, picked where support ends for an OS or a device: Chrome 102 to 139, the Firefox ESR releases 115, 128 and 140, and Safari 15.4 to 26.0. The list is in the e2e job of `.github/workflows/ci.yml`.
 
 ```bash
 npx playwright install chromium firefox webkit   # once
 npm run build
+node scripts/e2e-leaflet.mjs 1.6.0 main   # optional, more Leaflet versions
 npm run test:e2e
-npm run test:e2e -- --project=chromium   # one browser
+npm run test:e2e -- --project=chromium-leaflet   # one browser and version
 ```
 
 [leaflet]: http://leafletjs.com

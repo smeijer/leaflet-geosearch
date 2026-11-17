@@ -9,3 +9,4 @@ coverage
 .rts2_cache*
 website/doc_build
 website/.rspress
+e2e/vendor
