@@ -1,16 +1,19 @@
-// Serves the files the e2e tests need: the fixture pages, dist and
-// node_modules/leaflet/dist. Nothing else in the checkout (like .env) is
-// served, and only localhost can connect. Unknown paths get an html 404,
-// like most servers.
+// Serves the files the e2e tests need: the fixture pages, dist,
+// node_modules/leaflet/dist and node_modules/leaflet-2/dist (Leaflet 2).
+// Nothing else in the checkout (like .env) is served, and only localhost can
+// connect. Unknown paths get an html 404, like most servers.
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
 const port = Number(process.env.PORT || 4325);
-const allowed = ['e2e/fixtures', 'dist', 'node_modules/leaflet/dist'].map(
-  (dir) => path.join(root, dir) + path.sep,
-);
+const allowed = [
+  'e2e/fixtures',
+  'dist',
+  'node_modules/leaflet/dist',
+  'node_modules/leaflet-2/dist',
+].map((dir) => path.join(root, dir) + path.sep);
 const types = {
   '.html': 'text/html',
   '.js': 'text/javascript',
