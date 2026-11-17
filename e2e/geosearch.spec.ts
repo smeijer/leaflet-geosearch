@@ -247,22 +247,93 @@ async function searchOnEsmPage(page: Page, url: string) {
   expect(await page.evaluate(() => window.events.length)).toBe(1);
 }
 
-test('the ESM bundle works with the ESM build of Leaflet', async ({ page }) => {
+async function skipWithoutImportMaps(page: Page) {
   await page.goto('/e2e/fixtures/umd.html');
   const importMaps = await page.evaluate(
     () =>
       typeof HTMLScriptElement.supports === 'function' &&
       HTMLScriptElement.supports('importmap'),
   );
-  // the next test covers these browsers
   test.skip(!importMaps, 'no import maps before Firefox 108 and Safari 16.4');
+}
 
+test('the ESM bundle works with the ESM build of Leaflet', async ({ page }) => {
+  // the next test covers the browsers without import maps
+  await skipWithoutImportMaps(page);
   await searchOnEsmPage(page, '/e2e/fixtures/esm.html');
 });
 
 test('the ESM bundle works without an import map', async ({ page }) => {
   await searchOnEsmPage(page, '/e2e/fixtures/esm-no-importmap.html');
 });
+
+test('the ESM bundle works with Leaflet 2', async ({ page }) => {
+  await skipWithoutImportMaps(page);
+  await searchOnEsmPage(page, '/e2e/fixtures/leaflet2.html');
+});
+
+// The popup used to open before the map moved. Its autoPan jumped the map to
+// a result off screen, so flyTo had nothing left to animate
+for (const [leaflet, url] of [
+  ['Leaflet 1', '/e2e/fixtures/umd.html'],
+  ['Leaflet 2', '/e2e/fixtures/leaflet2.html'],
+]) {
+  test(`with the popup, the map still flies to a result far away (${leaflet})`, async ({
+    page,
+  }) => {
+    if (leaflet === 'Leaflet 2') {
+      await skipWithoutImportMaps(page);
+    }
+    await page.goto(url);
+    await page.waitForFunction(() => window.map && window.GeoSearch);
+
+    const flight = await page.evaluate(async () => {
+      const map = window.map;
+      let minZoom = map.getZoom();
+      map.on('zoom', () => {
+        minZoom = Math.min(minZoom, map.getZoom());
+      });
+      const control = new window.GeoSearch.GeoSearchControl({
+        provider: { search: async () => [] },
+        style: 'bar',
+        flyTo: { duration: 1 },
+        showPopup: true,
+      });
+      map.addControl(control);
+
+      const arrived = new Promise((resolve) => map.once('moveend', resolve));
+      control.showResult(
+        { x: -74, y: 40.7, label: 'New York', bounds: null, raw: {} },
+        { query: 'New York' },
+      );
+      await arrived;
+      // the popup may still pan a little after the flight
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      const box = map.getContainer().getBoundingClientRect();
+      const popup = document
+        .querySelector('.leaflet-popup')!
+        .getBoundingClientRect();
+      const { lat, lng } = map.getCenter();
+      return {
+        minZoom,
+        lat,
+        lng,
+        popupInView:
+          popup.top >= box.top &&
+          popup.bottom <= box.bottom &&
+          popup.left >= box.left &&
+          popup.right <= box.right,
+      };
+    });
+
+    // from zoom 8 on the Netherlands, a flight to New York zooms out to ~3
+    expect(flight.minZoom).toBeLessThan(5);
+    expect(flight.lat).toBeCloseTo(40.7, 1);
+    expect(flight.lng).toBeCloseTo(-74, 1);
+    expect(flight.popupInView).toBe(true);
+  });
+}
 
 test('the providers entry loads without Leaflet', async ({ page }) => {
   await page.goto('/e2e/fixtures/umd.html');
