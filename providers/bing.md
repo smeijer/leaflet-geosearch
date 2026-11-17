@@ -1,0 +1,31 @@
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# Bing Provider
+
+**note**: Bing services require an API key. [Obtain here][1].
+For more options and configurations, see the [Microsoft developer docs][2].
+
+
+```js
+import { BingProvider } from 'leaflet-geosearch';
+
+const provider = new BingProvider({
+  params: {
+    key: '__YOUR_BING_KEY__',
+  },
+});
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+    style: 'bar',
+  }),
+);
+```
+
+[1]: https://docs.microsoft.com/en-us/bingmaps/getting-started/bing-maps-dev-center-help/getting-a-bing-maps-key
+
+[2]: https://docs.microsoft.com/en-us/bingmaps/rest-services/locations/find-a-location-by-address

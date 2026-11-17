@@ -1,0 +1,31 @@
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# Geoapify Provider
+
+**note**: Geoapify services require an API key. [Obtain geoapify][1].
+For more options and configurations, see the [Geoapify developer docs][2].
+
+
+```js
+import { GeoapifyProvider } from 'leaflet-geosearch';
+
+const provider = new GeoapifyProvider({
+  params: {
+    apiKey: '__YOUR_HERE_KEY__',
+  },
+});
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+    style: 'bar',
+  }),
+);
+```
+
+[1]: https://apidocs.geoapify.com/
+
+[2]: https://apidocs.geoapify.com/docs/geocoding/forward-geocoding/#geocode-addresses

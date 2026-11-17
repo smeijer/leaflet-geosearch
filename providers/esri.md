@@ -1,0 +1,40 @@
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# Esri Provider
+
+For more options and configurations, see the [ArcGIS developer docs][1].
+
+
+```js
+import { EsriProvider } from 'leaflet-geosearch';
+
+const provider = new EsriProvider();
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+    style: 'bar',
+  }),
+);
+```
+
+The provider asks for up to 5 locations. Pass `maxLocations` in `params` to change that:
+
+```js
+const provider = new EsriProvider({ params: { maxLocations: 10 } });
+```
+
+## API key
+
+Without a key the provider uses the free `geocode.arcgis.com` service. With an [ArcGIS API key][2], pass it as `token`. ArcGIS asks for authenticated requests to go to `geocode-api.arcgis.com`, so the provider sends them there:
+
+```js
+const provider = new EsriProvider({ params: { token: '__YOUR_ARCGIS_KEY__' } });
+```
+
+[1]: https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm
+
+[2]: https://developers.arcgis.com/documentation/security-and-authentication/api-key-authentication/

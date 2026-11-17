@@ -1,0 +1,28 @@
+# Leaflet GeoSearch
+
+> Address lookup (geocoding) for Leaflet and for apps without a map.
+
+## Others
+
+- [Leaflet Control](/leaflet-control.md): To show the search control on your leaflet map, add the SearchControl to the leaflet map
+- [AMap Provider](/providers/amap.md): note: AMap services require an API key. Obtain here. For more options and configurations, see the AMap developer docs.
+- [Bing Provider](/providers/bing.md): note: Bing services require an API key. Obtain here. For more options and configurations, see the Microsoft developer docs.
+- [Custom Providers](/providers/custom-providers.md): It's possible to create your own providers either by creating one from scratch, or extending an existing one. The most trivial one to extend, is the OpenStreetMap provider. As Nominatim is open source, and can be self hosted, the provider allows for easy extension. When the constructor is the only thing you need to override, it might be sufficient to provide the options during initialization: However, custom providers can be easier to share, and have a single source of truth. As you don't need to manage the URL's on various places throughout your codebase.
+- [Esri Provider](/providers/esri.md): For more options and configurations, see the ArcGIS developer docs. The provider asks for up to 5 locations. Pass maxLocations in params to change that:
+- [GeoApiFr Provider](/providers/geoapifr.md): For more options and configurations, see the Geo Api FR.
+- [Geoapify Provider](/providers/geoapify.md): note: Geoapify services require an API key. Obtain geoapify. For more options and configurations, see the Geoapify developer docs.
+- [Geocode Earth Provider](/providers/geocode-earth.md): Geocode Earth is a hosted version of Pelias run by the core maintainers of the FOSS project. note: Geocode Earth services require an API key, grab a free trial key from their website. For more options and configurations, see the documentation.
+- [Google Provider](/providers/google.md): <u>note</u>: Google services require an API key enabled for both the Geocoding API and the Maps JavaScript API (more on key configuration below). Obtain here. For more options and configurations, see the Google Maps developer docs.
+- [Here Provider](/providers/here.md): note: Here services require an API key. Obtain here. For more options and configurations, see the Here developer docs.
+- [Legacy Google Provider](/providers/legacy-google.md): <u>WARNING</u>: This provider is unsafe to use and should be considered <u>DEPRECATED</u>. It is strongly suggested to use the new Google Provider. If you're currently migrating from a previous version and you still wish to use this provider you should pull in the LegacyGoogleProvider class and rename your references accordingly. note: Google services require an API key. Obtain here. For more options and configurations, see the Google Maps developer docs.
+- [LocationIQ Provider](/providers/locationiq.md): note: LocationIQ services require an API key. Obtain here. For more options and configurations, see the LocationIQ developer docs.
+- [MapBox Provider](/providers/mapbox.md): note: MapBox services require an API key. Obtain here. For more options and configurations, see the MapBox developer docs on the Search API.
+- [OpenCage Provider](/providers/opencage.md): note: OpenCage services require an API key. Obtain here. For more options and configurations, see the OpenCage developer docs.
+- [OpenGeocoding Provider](/providers/opengeocoding.md): note: OpenGeocoding requires an API key. Create one in the dashboard. For use in a web page, create a browser key and restrict it to your site's origins. The key is sent in a header, never in the url. Suggestions while typing come from the autocomplete endpoint and don't count as requests. They have no coordinates, so picking one looks it up by its id, and that counts as one request. Reverse geocoding counts as one request too. See the API docs.
+- [OpenStreetMap Provider](/providers/openstreetmap.md): For more options and configurations, see the OpenStreetMap Nominatim wiki.
+- [PdokNl Provider](/providers/pdoknl.md): For more options and configurations, see the PDOK Locatieserver.
+- [Pelias Provider](/providers/pelias.md): Pelias is an open-source geocoder powered completely by open data, available freely to everyone. In order to use this provider you'll need to have your own Pelias server running. The Docker repository provides the quickest path to running your own server. See the Pelias documentation for more detailed information about the available endpoints and query parameters. Looking for a hosted version of Pelias? check out the Geocode Earth provider.
+- [Photon Provider](/providers/photon.md): Photon is an open-source geocoder for OpenStreetMap data, built for search as you type. It works without an API key. The public server at photon.komoot.io is free for reasonable use, without guarantees. For heavy traffic, run your own server and point the provider to it with host.
+- [Upgrading](/upgrading/index.md): Each major version has its own upgrade notes: what changed, and how to get the old behaviour back where that's possible. 4.x to 5.0
+- [Upgrading from 4.x to 5.0](/upgrading/v5.md): 5.0 fixes a lot of long-standing issues, and some of those fixes change what you see. The API is the same: nothing was removed or renamed, and the browser support didn't change. Each section shows what changed from 4.x (red) to 5.0 (green), and how to get the old behaviour back if you relied on it.
+- [Usage](/usage.md): There are two ways in which leaflet-geosearch can be used. Direct usage, for example for address forms, or embedded in a leaflet map to search for points of interest.

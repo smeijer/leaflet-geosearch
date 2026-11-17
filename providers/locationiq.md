@@ -1,0 +1,31 @@
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# LocationIQ Provider
+
+**note**: LocationIQ services require an API key. [Obtain here][1].
+For more options and configurations, see the [LocationIQ developer docs][2].
+
+
+```js
+import { LocationIQProvider } from 'leaflet-geosearch';
+
+const provider = new LocationIQProvider({
+  params: {
+    key: '__YOUR_LOCATIONIQ_KEY__',
+  },
+});
+
+// add to leaflet
+import { GeoSearchControl } from 'leaflet-geosearch';
+
+map.addControl(
+  new GeoSearchControl({
+    provider,
+    style: 'bar',
+  }),
+);
+```
+
+[1]: https://locationiq.org
+
+[2]: https://locationiq.org/#docs

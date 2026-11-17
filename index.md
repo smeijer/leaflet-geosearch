@@ -1,0 +1,159 @@
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# Introduction
+
+`leaflet-geosearch` adds support for geocoding (address lookup, a.k.a. geosearching) to your (web) application. It comes with controls to be embedded in your Leaflet map.
+
+It comes with providers for [OpenStreetMap](/providers/openstreetmap.md), [Google](/providers/google.md), [Bing](/providers/bing.md), [Esri](/providers/esri.md), [LocationIQ](/providers/locationiq.md), [OpenCage](/providers/opencage.md) and more, see the Providers section. You can also [write your own](/providers/custom-providers.md).
+
+Although this project is named `leaflet-geosearch`, the providers also work without Leaflet, for example to look up addresses in a form. Import them from `leaflet-geosearch/providers` when Leaflet isn't available, like during server-side rendering (see [Usage](/usage.md)).
+
+
+## Installation
+
+
+```sh [npm]
+npm install leaflet-geosearch
+```
+
+```sh [yarn]
+yarn add leaflet-geosearch
+```
+
+```sh [pnpm]
+pnpm add leaflet-geosearch
+```
+
+```sh [bun]
+bun add leaflet-geosearch
+```
+
+```sh [deno]
+deno add npm:leaflet-geosearch
+```
+
+Include the CSS file somewhere. Where you do this depends a bit on your build pipeline.
+
+```js
+import 'node_modules/leaflet-geosearch/dist/geosearch.css';
+```
+
+## Using a CDN
+
+To load `leaflet-geosearch` from a CDN instead of using a bundler, use [jsDelivr](https://www.jsdelivr.com/package/npm/leaflet-geosearch) or [unpkg](https://unpkg.com/leaflet-geosearch/). Both serve the files from the npm package:
+
+| File                       | Use                                                                                             |
+| -------------------------- | ----------------------------------------------------------------------------------------------- |
+| `dist/geosearch.css`       | The styles of the control.                                                                      |
+| `dist/bundle.min.js`       | For a `<script>` tag. Sets `window.GeoSearch`. `dist/geosearch.umd.js` is the same file.        |
+| `dist/geosearch.module.js` | An ES module for `<script type="module">`. It imports `leaflet`, see [ES modules](#es-modules). |
+
+Pin the major version, like `@5` below, instead of `@latest`. A new major version can have breaking changes, and with `@latest` your page would get it without notice.
+
+Include the CSS file in the `head` section of your page, and the JavaScript file before the closing `body` tag. When you use it with Leaflet, include it **after** Leaflet's JavaScript file:
+
+
+```html [jsDelivr]
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-geosearch@5/dist/geosearch.css" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet-geosearch@5/dist/bundle.min.js"></script>
+```
+
+```html [unpkg]
+<link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@5/dist/geosearch.css" />
+<script src="https://unpkg.com/leaflet-geosearch@5/dist/bundle.min.js"></script>
+```
+
+For Leaflet 2, load its `leaflet-global.js` first, see [Leaflet 2](/usage.md#leaflet-2).
+
+Now you're ready to use the control or providers. Just remember that your "import" syntax will be a bit different from what the docs are using.
+
+```js
+// when the docs use an import:
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+const provider = new OpenStreetMapProvider();
+
+// you want to get it of the window global
+const provider = new GeoSearch.OpenStreetMapProvider();
+```
+
+### ES modules
+
+`dist/geosearch.module.js` imports `leaflet` by name, which a browser can't resolve on its own. Add an [import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap) that points `leaflet` to the same Leaflet your map uses. This works well with Leaflet 2, which is published as ES modules:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.4/dist/leaflet.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/leaflet-geosearch@5/dist/geosearch.css"
+/>
+
+<script type="importmap">
+  {
+    "imports": {
+      "leaflet": "https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.4/dist/leaflet.js",
+      "leaflet-geosearch": "https://cdn.jsdelivr.net/npm/leaflet-geosearch@5/dist/geosearch.module.js"
+    }
+  }
+</script>
+
+<script type="module">
+  import { Map, TileLayer } from 'leaflet';
+  import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+
+  const map = new Map('map').setView([52.09, 5.12], 8);
+  new TileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+  map.addControl(
+    new GeoSearchControl({ provider: new OpenStreetMapProvider() }),
+  );
+</script>
+```
+
+Services that rewrite the imports for you, like jsDelivr's `/+esm` or esm.sh, load their own copy of Leaflet (`leaflet@latest`, which is 1.9). If your map uses a different Leaflet, the page ends up with two copies of Leaflet, and the control may not work with your map. The import map avoids that. With esm.sh, you can add `?external=leaflet` so it uses the Leaflet from your import map:
+
+```json
+"leaflet-geosearch": "https://esm.sh/leaflet-geosearch@5?external=leaflet"
+```
+
+## Example
+
+A basic working example would look like:
+
+```js
+// Either get GeoSearch from the window global, or import from `leaflet-geosearch`
+// import * as GeoSearch from 'leaflet-geosearch';
+
+const map = L.map('map').setView([51.505, -0.09], 13);
+
+L.tileLayer('//tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+const search = new GeoSearch.GeoSearchControl({
+  provider: new GeoSearch.OpenStreetMapProvider(),
+});
+
+map.addControl(search);
+```
+
+## Providers
+
+`leaflet-geosearch` uses so-called "providers" to take care of building the correct service URL and parsing the retrieved data into a uniform format. Thanks to this architecture, it is trivial to add your own providers, so you can use your own geocoding service.
+
+When [`OpenStreetMap`](/providers/openstreetmap.md) does not match your needs; you can also choose to use the [`Bing`](/providers/bing.md), [`Esri`](/providers/esri.md), [`Google`](/providers/google.md), [`LocationIQ`](/providers/locationiq.md), or [`OpenCage`](/providers/opencage.md) providers. Most of those providers do however require `API keys`. See the documentation pages on the relevant organisations on how to obtain these keys.
+
+In case you decide to write your own provider, please consider submitting a PR to share your work with us.
+
+Providers are unaware of any options you can give them. They are simple proxies to their endpoints. There is only one special property, and that is the `params` option. The difference being; that `params` will be included in the endpoint url. Being Often used for `API KEYS`, while the other attributes can be used for provider configuration.
+
+## Browser support / Polyfills
+
+This project is written with the latest technologies in mind. Thereby it is required to include some polyfills when you wish to support older browsers. These polyfills are recommended for IE and Safari support:
+
+- [babel-polyfill][1], for `array.includes` support.
+- [unfetch][2], for `fetch` requests.
+
+[1]: https://npm.im/babel-polyfill
+
+[2]: https://npm.im/unfetch
