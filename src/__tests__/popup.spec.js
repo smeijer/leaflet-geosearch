@@ -112,8 +112,8 @@ describe('popup autoPan while the map moves', () => {
   async function shown(options) {
     const { map, control } = setup({ showPopup: true, ...options });
     await control.onSubmit({ query: 'den' });
-    const popup = control.markers.getLayers()[0].getPopup();
-    return { map, popup };
+    const marker = control.markers.getLayers()[0];
+    return { map, marker, popup: marker.getPopup() };
   }
 
   test('waits until the map has arrived, then pans if it has to', async () => {
@@ -135,8 +135,9 @@ describe('popup autoPan while the map moves', () => {
   });
 
   test('a popup closed before the map arrives stays closed', async () => {
-    const { map, popup } = await shown();
-    popup.close();
+    const { map, marker, popup } = await shown();
+    // popup.close() came in Leaflet 1.9
+    marker.closePopup();
     const update = vi.spyOn(popup, 'update');
 
     map.fire('moveend');

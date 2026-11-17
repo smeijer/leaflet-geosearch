@@ -1193,12 +1193,16 @@ const Control: SearchControl = {
       const popup = marker.getPopup();
       if (this.movingMap && popup?.options.autoPan) {
         popup.options.autoPan = false;
-        this.map.once('moveend', () => {
+        // not map.once: before Leaflet 1.9 it removes the listener after
+        // calling it, and the pan below fires moveend again inside it
+        const arrived = () => {
+          this.map.off('moveend', arrived);
           popup.options.autoPan = true;
           if (popup.isOpen()) {
             popup.update();
           }
-        });
+        };
+        this.map.on('moveend', arrived);
       }
 
       marker.openPopup();
