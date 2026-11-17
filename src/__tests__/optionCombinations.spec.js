@@ -55,6 +55,10 @@ function setup(c) {
 
   const map = new L.Map(div, { center: [0, 0], zoom: 2 });
   MOVES.forEach((method) => vi.spyOn(map, method).mockReturnThis());
+  // an open popup pans the map into view with panBy (autoPan). That is
+  // Leaflet's move, not the control's, and on Leaflet's main branch panBy
+  // goes through setView, which would count as one
+  vi.spyOn(map, 'panBy').mockReturnThis();
 
   const found = c.result === 'withBounds' ? withBounds : withoutBounds;
   const first = { search: vi.fn(async () => [found, withoutBounds]) };
