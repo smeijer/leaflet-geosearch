@@ -22,15 +22,16 @@ A pre-commit hook (husky and lint-staged) type-checks, lints and formats the sta
 - unit tests live next to the code in `src/**/__tests__` and run with Vitest and happy-dom.
 - requests to providers are answered with recorded responses through MSW, nothing goes to the network. A request without a handler fails the test.
 - a fix comes with a test that fails without it. A new option comes with tests for the default and for the option.
-- the end-to-end tests in `e2e/` run the built bundles in a real browser with Playwright:
+- the end-to-end tests in `e2e/` run the built bundles in Chromium, Firefox and WebKit with Playwright. CI also runs them with the browsers of older Playwright versions, so a change that breaks an older browser shows up in the PR:
 
 ```bash
-npx playwright install chromium   # once
+npx playwright install chromium firefox webkit   # once
 npm run build
 npm run test:e2e
+npm run test:e2e -- --project=chromium   # one browser
 ```
 
-Locally an installed browser works too: `PLAYWRIGHT_CHANNEL=msedge npm run test:e2e` (or `chrome`).
+Locally an installed browser works too: `PLAYWRIGHT_CHANNEL=msedge npm run test:e2e -- --project=chromium` (or `chrome`).
 
 Before you open a PR, run what CI runs:
 

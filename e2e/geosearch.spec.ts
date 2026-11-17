@@ -103,7 +103,11 @@ test('the control works inside a shadow root (#214)', async ({ page }) => {
   // locators look into open shadow roots
   const input = page.locator('.leaflet-geosearch-bar input');
 
-  await input.pressSequentially('Den Haag');
+  // key by key, like a user. keyboard.type also works in the older
+  // Playwright versions CI runs (pressSequentially came in 1.38). focus, not
+  // click: the hit test of Playwright 1.29 sees the shadow host in WebKit
+  await input.focus();
+  await page.keyboard.type('Den Haag');
   await expect(page.locator('.leaflet-geosearch-bar .results > *')).toHaveCount(
     3,
   );
@@ -229,9 +233,9 @@ test('a map from a second copy of Leaflet can show results (#253)', async ({
   expect(center.lng).toBeCloseTo(4.3, 1);
 });
 
-test('the ESM bundle works with the ESM build of Leaflet', async ({ page }) => {
+async function searchOnEsmPage(page: Page, url: string) {
   await answerNominatim(page);
-  await page.goto('/e2e/fixtures/esm.html');
+  await page.goto(url);
   await page.waitForFunction(() => window.ready);
 
   const input = await addControl(page);
@@ -241,20 +245,44 @@ test('the ESM bundle works with the ESM build of Leaflet', async ({ page }) => {
 
   await expect(page.locator('.leaflet-marker-icon')).toHaveCount(1);
   expect(await page.evaluate(() => window.events.length)).toBe(1);
+}
+
+test('the ESM bundle works with the ESM build of Leaflet', async ({ page }) => {
+  await page.goto('/e2e/fixtures/umd.html');
+  const importMaps = await page.evaluate(
+    () =>
+      typeof HTMLScriptElement.supports === 'function' &&
+      HTMLScriptElement.supports('importmap'),
+  );
+  // the next test covers these browsers
+  test.skip(!importMaps, 'no import maps before Firefox 108 and Safari 16.4');
+
+  await searchOnEsmPage(page, '/e2e/fixtures/esm.html');
+});
+
+test('the ESM bundle works without an import map', async ({ page }) => {
+  await searchOnEsmPage(page, '/e2e/fixtures/esm-no-importmap.html');
 });
 
 test('the providers entry loads without Leaflet', async ({ page }) => {
   await page.goto('/e2e/fixtures/umd.html');
 
-  const result = await page.evaluate(async () => {
-    const providers = await import('/dist/providers.module.js');
-    return {
-      names: Object.keys(providers).length,
-      url: new providers.OpenStreetMapProvider().endpoint({
-        query: 'Den Haag',
-      }),
-    };
+  // a module script, not import() in evaluate: older Playwright versions
+  // compile import() in the test file to require()
+  await page.addScriptTag({
+    type: 'module',
+    content:
+      "import * as providers from '/dist/providers.module.js';" +
+      'window.providers = providers;',
   });
+  await page.waitForFunction(() => window.providers);
+
+  const result = await page.evaluate(() => ({
+    names: Object.keys(window.providers).length,
+    url: new window.providers.OpenStreetMapProvider().endpoint({
+      query: 'Den Haag',
+    }),
+  }));
 
   expect(result.names).toBeGreaterThan(15);
   expect(result.url).toEqual(
@@ -268,6 +296,7 @@ declare global {
     L: any;
     map: any;
     control?: any;
+    providers?: any;
     events: { type: string; label?: string; source?: string }[];
     ready?: boolean;
     xss?: boolean;

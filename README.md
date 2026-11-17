@@ -12,6 +12,7 @@
 [![semantic-release](https://img.shields.io/badge/semantic--release-e10079?style=flat-square&logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-67-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
@@ -514,12 +515,13 @@ npm install --prefix website
 npm run docs:dev    # builds the package and starts the docs site
 ```
 
-The end-to-end tests run the built bundles in a browser with Playwright:
+The end-to-end tests run the built bundles in Chromium, Firefox and WebKit with Playwright. CI also runs them with the browsers of older Playwright versions, picked where support ends for an OS or a device: Chrome 102 to 139, the Firefox ESR releases 115, 128 and 140, and Safari 15.4 to 26.0. The list is in the e2e job of `.github/workflows/ci.yml`.
 
 ```bash
-npx playwright install chromium   # once
+npx playwright install chromium firefox webkit   # once
 npm run build
 npm run test:e2e
+npm run test:e2e -- --project=chromium   # one browser
 ```
 
 [leaflet]: http://leafletjs.com
