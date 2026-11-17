@@ -32,12 +32,19 @@ jobs:
     name: Setup
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    outputs:
+      playwright: ${{ steps.playwright.outputs.version }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "${{ env.NODE_VERSION }}"
+
+      # the e2e job runs in the Playwright image of this version
+      - name: Playwright version
+        id: playwright
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/@playwright/test'].version")" >> "$GITHUB_OUTPUT"
 
       - name: Cache node modules
         id: cache
@@ -167,11 +174,33 @@ jobs:
       - name: Type check the package
         run: npm run ci:package-types
 
+  # the built bundles in Chromium, Firefox and WebKit. Every Playwright version
+  # ships its own browser builds, so the older versions test older browsers
+  # that people still use. The Playwright image has the browsers and their
+  # system libraries: nothing is downloaded or installed with apt
   e2e:
-    name: E2E
+    name: E2E (${{ matrix.name }})
     runs-on: ubuntu-latest
     needs: [setup]
-    timeout-minutes: 10
+    timeout-minutes: 15
+    container:
+      image: mcr.microsoft.com/playwright:v${{ matrix.playwright || needs.setup.outputs.playwright }}-${{ matrix.image || 'noble' }}
+      options: --user 1001
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # the Playwright version from the lockfile
+          - name: latest browsers
+          - name: Chrome 130, Firefox 131, Safari 18.0
+            playwright: 1.48.2
+          - name: Chrome 115, Firefox 115 ESR, Safari 17.0
+            playwright: 1.36.2
+            image: jammy
+          # Chrome 109 is the last one on Windows 7 and 8.1
+          - name: Chrome 109, Firefox 107, Safari 16.4
+            playwright: 1.29.2
+            image: jammy
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -179,35 +208,27 @@ jobs:
         with:
           node-version: "${{ env.NODE_VERSION }}"
 
-      - name: Cache node modules
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      # restore only: this job changes node_modules for the older versions
+      - name: Restore node modules
+        id: cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: node_modules
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
 
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
       - name: Build
         run: npm run build
 
-      # the browser is cached per Playwright version. The runner image already
-      # has the libraries Chromium needs, so no apt packages: --with-deps only
-      # added fonts and upgrades, and its downloads could hang the job
-      - name: Playwright version
-        id: playwright
-        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+      # the test runner has to match the browsers in the image
+      - name: Install Playwright ${{ matrix.playwright }}
+        if: matrix.playwright
+        run: npm install --no-save @playwright/test@${{ matrix.playwright }}
 
-      - name: Cache Chromium
-        id: playwright-cache
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ steps.playwright.outputs.version }}-chromium
-
-      - name: Install Chromium
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        timeout-minutes: 5
-        run: npx playwright install chromium
-
-      # the built bundles in a real browser, provider requests are mocked
+      # provider requests are mocked
       - name: End-to-end tests
         run: npm run test:e2e
 

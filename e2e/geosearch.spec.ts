@@ -103,7 +103,11 @@ test('the control works inside a shadow root (#214)', async ({ page }) => {
   // locators look into open shadow roots
   const input = page.locator('.leaflet-geosearch-bar input');
 
-  await input.pressSequentially('Den Haag');
+  // key by key, like a user. keyboard.type also works in the older
+  // Playwright versions CI runs (pressSequentially came in 1.38). focus, not
+  // click: the hit test of Playwright 1.29 sees the shadow host in WebKit
+  await input.focus();
+  await page.keyboard.type('Den Haag');
   await expect(page.locator('.leaflet-geosearch-bar .results > *')).toHaveCount(
     3,
   );
@@ -232,6 +236,14 @@ test('a map from a second copy of Leaflet can show results (#253)', async ({
 test('the ESM bundle works with the ESM build of Leaflet', async ({ page }) => {
   await answerNominatim(page);
   await page.goto('/e2e/fixtures/esm.html');
+  // the page maps "leaflet" with an import map. Older browsers without
+  // import maps (Firefox before 108) need a bundler for the ESM build anyway
+  const importMaps = await page.evaluate(
+    () =>
+      typeof HTMLScriptElement.supports === 'function' &&
+      HTMLScriptElement.supports('importmap'),
+  );
+  test.skip(!importMaps, 'the browser has no import maps');
   await page.waitForFunction(() => window.ready);
 
   const input = await addControl(page);
@@ -246,15 +258,22 @@ test('the ESM bundle works with the ESM build of Leaflet', async ({ page }) => {
 test('the providers entry loads without Leaflet', async ({ page }) => {
   await page.goto('/e2e/fixtures/umd.html');
 
-  const result = await page.evaluate(async () => {
-    const providers = await import('/dist/providers.module.js');
-    return {
-      names: Object.keys(providers).length,
-      url: new providers.OpenStreetMapProvider().endpoint({
-        query: 'Den Haag',
-      }),
-    };
+  // a module script, not import() in evaluate: older Playwright versions
+  // compile import() in the test file to require()
+  await page.addScriptTag({
+    type: 'module',
+    content:
+      "import * as providers from '/dist/providers.module.js';" +
+      'window.providers = providers;',
   });
+  await page.waitForFunction(() => window.providers);
+
+  const result = await page.evaluate(() => ({
+    names: Object.keys(window.providers).length,
+    url: new window.providers.OpenStreetMapProvider().endpoint({
+      query: 'Den Haag',
+    }),
+  }));
 
   expect(result.names).toBeGreaterThan(15);
   expect(result.url).toEqual(
@@ -268,6 +287,7 @@ declare global {
     L: any;
     map: any;
     control?: any;
+    providers?: any;
     events: { type: string; label?: string; source?: string }[];
     ready?: boolean;
     xss?: boolean;
