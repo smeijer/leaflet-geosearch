@@ -249,6 +249,8 @@ const searchControl = new SearchControl({
 });
 ```
 
+When the control moves the map to the result (`updateMap`), the popup opens right away but waits with Leaflet's autoPan until the map has arrived. Otherwise the popup would pan to a result off screen first and cut a `flyTo` short. `autoPan: false` in `popupOptions` turns the autoPan off completely.
+
 `markerPopup: false` leaves the popup out, for example for a draggable marker that you handle yourself:
 
 <Map

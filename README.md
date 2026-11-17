@@ -515,7 +515,7 @@ npm install --prefix website
 npm run docs:dev    # builds the package and starts the docs site
 ```
 
-The end-to-end tests run the built bundles in Chromium, Firefox and WebKit with Playwright. CI also runs them with the browsers of older Playwright versions, picked where support ends for an OS or a device: Chrome 102 to 139, the Firefox ESR releases 115, 128 and 140, and Safari 15.4 to 26.0. The list is in the e2e job of `.github/workflows/ci.yml`.
+The end-to-end tests run the built bundles in Chromium, Firefox and WebKit with Playwright, with Leaflet 1 and Leaflet 2. CI also runs them with the browsers of older Playwright versions, picked where support ends for an OS or a device: Chrome 102 to 139, the Firefox ESR releases 115, 128 and 140, and Safari 15.4 to 26.0. The list is in the e2e job of `.github/workflows/ci.yml`.
 
 ```bash
 npx playwright install chromium firefox webkit   # once
