@@ -1,4 +1,4 @@
-import { PackageManagerTabs, Tab, Tabs } from '@theme';
+import { CdnTabs, PackageManagerTabs } from '@theme';
 import Map from '../components/Map';
 
 # Introduction
@@ -35,34 +35,10 @@ Pin the major version, like `@5` below, instead of `@latest`. A new major versio
 
 Include the CSS file in the `head` section of your page, and the JavaScript file before the closing `body` tag. When you use it with Leaflet, include it **after** Leaflet's JavaScript file:
 
-<Tabs groupId="cdn">
-  <Tab label="jsDelivr">
-
-```html
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/leaflet-geosearch@5/dist/geosearch.css"
+<CdnTabs
+  package="leaflet-geosearch@5"
+  files={['dist/geosearch.css', 'dist/bundle.min.js']}
 />
-
-<!-- Make sure you put this AFTER leaflet.js, when using with leaflet -->
-<script src="https://cdn.jsdelivr.net/npm/leaflet-geosearch@5/dist/bundle.min.js"></script>
-```
-
-  </Tab>
-  <Tab label="unpkg">
-
-```html
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet-geosearch@5/dist/geosearch.css"
-/>
-
-<!-- Make sure you put this AFTER leaflet.js, when using with leaflet -->
-<script src="https://unpkg.com/leaflet-geosearch@5/dist/bundle.min.js"></script>
-```
-
-  </Tab>
-</Tabs>
 
 For Leaflet 2, load its `leaflet-global.js` first, see [Leaflet 2](./usage#leaflet-2).
 
@@ -84,7 +60,7 @@ const provider = new GeoSearch.OpenStreetMapProvider();
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/leaflet@2.0.0-alpha.1/dist/leaflet.css"
+  href="https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.4/dist/leaflet.css"
 />
 <link
   rel="stylesheet"
@@ -94,7 +70,7 @@ const provider = new GeoSearch.OpenStreetMapProvider();
 <script type="importmap">
   {
     "imports": {
-      "leaflet": "https://cdn.jsdelivr.net/npm/leaflet@2.0.0-alpha.1/dist/leaflet.js",
+      "leaflet": "https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.4/dist/leaflet.js",
       "leaflet-geosearch": "https://cdn.jsdelivr.net/npm/leaflet-geosearch@5/dist/geosearch.module.js"
     }
   }
