@@ -216,8 +216,8 @@ map.addControl(searchControl);
 
 ## Leaflet 2
 
-The control works with Leaflet 1.6 and up, and with the Leaflet 2 alpha. The
-tests also run against Leaflet's main branch, which drops `Class.extend`,
+The control works with Leaflet 1.6 and up, and with the Leaflet 2 alpha and beta.
+The tests also run against Leaflet's main branch, which drops `Class.extend`,
 `initialize` and `L.Icon.Default`. The control is an ES class with a
 constructor and uses the default icon of `Marker`, so it works with both.
 

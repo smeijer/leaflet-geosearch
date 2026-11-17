@@ -45,10 +45,18 @@ jobs:
         with:
           node-version: "${{ env.NODE_VERSION }}"
 
-      # the e2e job runs in the Playwright image of this version
+      # the e2e job runs in the Playwright image of this version, with the test
+      # runner from e2e/runners/latest. Both have to be the same version
       - name: Playwright version
         id: playwright
-        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/@playwright/test'].version")" >> "$GITHUB_OUTPUT"
+        run: |
+          version=$(node -p "require('./package-lock.json').packages['node_modules/@playwright/test'].version")
+          runner=$(node -p "require('./e2e/runners/latest/package-lock.json').packages['node_modules/@playwright/test'].version")
+          if [ "$version" != "$runner" ]; then
+            echo "::error file=e2e/runners/latest/package.json::@playwright/test is $version in package-lock.json and $runner in e2e/runners/latest"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Cache node modules
         id: cache
@@ -108,13 +116,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: [setup]
     timeout-minutes: 5
-    # Leaflet 2 is an alpha and its main branch is unreleased: their runs report
-    # problems without failing the workflow
+    # Leaflet 2 is still in alpha and beta and its main branch is unreleased:
+    # their runs report problems without failing the workflow
     continue-on-error: ${{ startsWith(matrix.leaflet, '2.') || matrix.leaflet == 'main' }}
     strategy:
       fail-fast: false
       matrix:
-        leaflet: ["1.6.0", "1.7.1", "1.8.0", "1.9.0", "1.9.4", "2.0.0-alpha.1", "main"]
+        leaflet: ["1.6.0", "1.7.1", "1.8.0", "1.9.0", "1.9.4", "2.0.0-alpha.1", "2.0.0-beta.4", "main"]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -269,15 +277,15 @@ jobs:
         with:
           name: e2e-files
 
-      # only the test runner, matching the browsers in the image. The tests
-      # need nothing else from node_modules
+      # only the test runner, matching the browsers in the image, from its
+      # lockfile in e2e/runners. The tests need nothing else from node_modules
       - name: Install Playwright ${{ matrix.playwright || needs.setup.outputs.playwright }}
         env:
-          PLAYWRIGHT: ${{ matrix.playwright || needs.setup.outputs.playwright }}
+          RUNNER: e2e/runners/${{ matrix.playwright || 'latest' }}
         run: |
-          npm install --no-save --no-package-lock --no-audit --no-fund --prefix "$RUNNER_TEMP/playwright" "@playwright/test@$PLAYWRIGHT"
+          npm ci --prefix "$RUNNER" --no-audit --no-fund
           mkdir -p node_modules
-          cp -R "$RUNNER_TEMP/playwright/node_modules/." node_modules/
+          cp -R "$RUNNER/node_modules/." node_modules/
 
       # provider requests are mocked
       - name: End-to-end tests
