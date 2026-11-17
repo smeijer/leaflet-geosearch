@@ -233,17 +233,9 @@ test('a map from a second copy of Leaflet can show results (#253)', async ({
   expect(center.lng).toBeCloseTo(4.3, 1);
 });
 
-test('the ESM bundle works with the ESM build of Leaflet', async ({ page }) => {
+async function searchOnEsmPage(page: Page, url: string) {
   await answerNominatim(page);
-  await page.goto('/e2e/fixtures/esm.html');
-  // the page maps "leaflet" with an import map. Older browsers without
-  // import maps (Firefox before 108) need a bundler for the ESM build anyway
-  const importMaps = await page.evaluate(
-    () =>
-      typeof HTMLScriptElement.supports === 'function' &&
-      HTMLScriptElement.supports('importmap'),
-  );
-  test.skip(!importMaps, 'the browser has no import maps');
+  await page.goto(url);
   await page.waitForFunction(() => window.ready);
 
   const input = await addControl(page);
@@ -253,6 +245,23 @@ test('the ESM bundle works with the ESM build of Leaflet', async ({ page }) => {
 
   await expect(page.locator('.leaflet-marker-icon')).toHaveCount(1);
   expect(await page.evaluate(() => window.events.length)).toBe(1);
+}
+
+test('the ESM bundle works with the ESM build of Leaflet', async ({ page }) => {
+  await page.goto('/e2e/fixtures/umd.html');
+  const importMaps = await page.evaluate(
+    () =>
+      typeof HTMLScriptElement.supports === 'function' &&
+      HTMLScriptElement.supports('importmap'),
+  );
+  // the next test covers these browsers
+  test.skip(!importMaps, 'no import maps before Firefox 108');
+
+  await searchOnEsmPage(page, '/e2e/fixtures/esm.html');
+});
+
+test('the ESM bundle works without an import map', async ({ page }) => {
+  await searchOnEsmPage(page, '/e2e/fixtures/esm-no-importmap.html');
 });
 
 test('the providers entry loads without Leaflet', async ({ page }) => {

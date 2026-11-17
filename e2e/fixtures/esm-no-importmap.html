@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>leaflet-geosearch e2e (ESM, no import map)</title>
+    <link rel="stylesheet" href="/node_modules/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/dist/geosearch.css" />
+    <style>
+      #map {
+        width: 600px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <!--
+      No import map, for browsers without them (Firefox before 108). With
+      ?leaflet=esm the server points the bare "leaflet" import of the bundle
+      at Leaflet's ESM build, like a CDN or a bundler would. See e2e/server.mjs
+    -->
+    <script type="module">
+      import * as Leaflet from '/node_modules/leaflet/dist/leaflet-src.esm.js';
+      import * as GeoSearch from '/dist/geosearch.module.js?leaflet=esm';
+
+      window.events = [];
+      window.GeoSearch = GeoSearch;
+      window.map = new Leaflet.Map('map').setView([52, 5], 8);
+      window.map.on('geosearch/showlocation', (e) =>
+        window.events.push({
+          type: 'geosearch/showlocation',
+          label: e.location.label,
+        }),
+      );
+      window.ready = true;
+    </script>
+  </body>
+</html>
