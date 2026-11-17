@@ -42,9 +42,9 @@ function resolveFile(requestUrl) {
   return null;
 }
 
-// Browsers without import maps (Firefox before 108) can't resolve the bare
-// "leaflet" import of the ESM bundle. With ?leaflet=esm the server points it
-// at Leaflet's ESM build, like a CDN or a bundler would
+// Browsers without import maps (Firefox before 108, Safari before 16.4) can't
+// resolve the bare "leaflet" import of the ESM bundle. With ?leaflet=esm the
+// server points it at Leaflet's ESM build, like a CDN or a bundler would
 const leafletEsm = '/node_modules/leaflet/dist/leaflet-src.esm.js';
 
 http

@@ -255,7 +255,7 @@ test('the ESM bundle works with the ESM build of Leaflet', async ({ page }) => {
       HTMLScriptElement.supports('importmap'),
   );
   // the next test covers these browsers
-  test.skip(!importMaps, 'no import maps before Firefox 108');
+  test.skip(!importMaps, 'no import maps before Firefox 108 and Safari 16.4');
 
   await searchOnEsmPage(page, '/e2e/fixtures/esm.html');
 });

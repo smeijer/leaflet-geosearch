@@ -16,9 +16,10 @@
     <div id="map"></div>
 
     <!--
-      No import map, for browsers without them (Firefox before 108). With
-      ?leaflet=esm the server points the bare "leaflet" import of the bundle
-      at Leaflet's ESM build, like a CDN or a bundler would. See e2e/server.mjs
+      No import map, for browsers without them (Firefox before 108, Safari
+      before 16.4). With ?leaflet=esm the server points the bare "leaflet"
+      import of the bundle at Leaflet's ESM build, like a CDN or a bundler
+      would. See e2e/server.mjs
     -->
     <script type="module">
       import * as Leaflet from '/node_modules/leaflet/dist/leaflet-src.esm.js';

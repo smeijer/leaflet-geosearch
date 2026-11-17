@@ -189,18 +189,33 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # versions where support ends for an OS or a device, the ESR releases
+        # and Chrome 130 (GitbookIO/gitbook#4786)
         include:
           # the Playwright version from the lockfile
           - name: latest browsers
+          # Firefox 140 is the current ESR
+          - name: Chrome 139, Firefox 140 ESR, Safari 26.0
+            playwright: 1.54.2
           - name: Chrome 130, Firefox 131, Safari 18.0
             playwright: 1.48.2
-          - name: Chrome 115, Firefox 115 ESR, Safari 17.0
-            playwright: 1.36.2
+          # Chrome 128 is the last one on macOS 10.15
+          - name: Chrome 128, Firefox 128 ESR, Safari 18.0
+            playwright: 1.46.1
+          # Chrome 116 is the last one on macOS 10.13 and 10.14. Firefox 115
+          # ESR is the last one on Windows 7, 8.1 and macOS 10.12 to 10.14
+          - name: Chrome 116, Firefox 115 ESR, Safari 17.0
+            playwright: 1.37.1
             image: jammy
-          # Chrome 109 is the last one on Windows 7 and 8.1
+          # Chrome 109 is the last one on Windows 7 and 8.1, Safari 16 the last
+          # one on the iPhone 8 and X
           - name: Chrome 109, Firefox 107, Safari 16.4
             playwright: 1.29.2
             image: jammy
+          # Safari 15 is the last one on the iPhone 6s and 7
+          - name: Chrome 102, Firefox 99, Safari 15.4
+            playwright: 1.22.2
+            image: focal
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
