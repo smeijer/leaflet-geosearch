@@ -10,3 +10,4 @@ coverage
 pnpm-lock.yaml
 /test-results/
 /playwright-report/
+/e2e/vendor/

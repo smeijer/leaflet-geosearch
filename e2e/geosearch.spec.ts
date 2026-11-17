@@ -1,9 +1,11 @@
-// End-to-end tests of the built bundles in a real browser. Run `npm run
-// build` first. Provider requests are answered with fixtures, nothing goes
-// to the network.
+// End-to-end tests of the built bundles in a real browser, with every Leaflet
+// version of the project (see playwright.config.ts). Run `npm run build` and
+// scripts/e2e-leaflet.mjs first. Provider requests are answered with fixtures,
+// nothing goes to the network.
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-import { expect, Page, test } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
+import { test } from './options';
 
 const nominatim = readFileSync(
   path.join(__dirname, '../src/providers/__tests__/openstreetmapResponse.json'),
@@ -12,8 +14,50 @@ const nominatim = readFileSync(
 
 test.beforeEach(async ({ page }) => {
   // only the local server; anything else fails loudly instead of going out
-  await page.route(/^https?:\/\/(?!localhost)/, (route) => route.abort());
+  await page.route(/^https?:\/\/(?!127\.0\.0\.1[:/])/, (route) =>
+    route.abort(),
+  );
 });
+
+async function skipWithoutImportMaps(page: Page) {
+  const importMaps = await page.evaluate(
+    () =>
+      typeof HTMLScriptElement.supports === 'function' &&
+      HTMLScriptElement.supports('importmap'),
+  );
+  test.skip(!importMaps, 'no import maps before Firefox 108 and Safari 16.4');
+}
+
+// A fixture page with the Leaflet version of the project: umd (Leaflet's
+// global build and the UMD bundle), esm (import map and the ESM bundle) or
+// esm-no-importmap
+async function open(page: Page, leaflet: string, fixture = 'umd') {
+  test.skip(
+    fixture === 'umd' && leaflet === 'main',
+    "Leaflet's main branch has no global build without building it",
+  );
+  if (fixture === 'esm') {
+    await skipWithoutImportMaps(page);
+  }
+  if (leaflet === '2.0.0-alpha.1') {
+    // the alpha uses class static blocks, which came in Safari 16.4. The 2.0
+    // beta doesn't, it loads in all browsers in CI
+    const staticBlocks = await page.evaluate(() => {
+      try {
+        new Function('class A { static {} }');
+        return true;
+      } catch {
+        return false;
+      }
+    });
+    test.skip(
+      !staticBlocks,
+      'Leaflet 2.0.0-alpha.1 needs Safari 16.4 or newer',
+    );
+  }
+  await page.goto(`/e2e/fixtures/${fixture}.html?leaflet=${leaflet}`);
+  await page.waitForFunction(() => window.ready);
+}
 
 async function answerNominatim(page: Page, body = nominatim, status = 200) {
   await page.route('https://nominatim.openstreetmap.org/**', (route) =>
@@ -39,9 +83,10 @@ async function addControl(page: Page, options = '{}') {
 
 test('suggestions show up and the picked one is put on the map', async ({
   page,
+  leaflet,
 }) => {
   await answerNominatim(page);
-  await page.goto('/e2e/fixtures/umd.html');
+  await open(page, leaflet);
   const input = await addControl(page);
 
   await input.fill('Den Haag');
@@ -61,9 +106,10 @@ test('suggestions show up and the picked one is put on the map', async ({
 
 test('a failed search fires geosearch/error and shows the error style', async ({
   page,
+  leaflet,
 }) => {
   await answerNominatim(page, '<html><body>Access denied</body></html>', 418);
-  await page.goto('/e2e/fixtures/umd.html');
+  await open(page, leaflet);
   const input = await addControl(page);
 
   await input.fill('Den Haag');
@@ -75,15 +121,18 @@ test('a failed search fires geosearch/error and shows the error style', async ({
   ]);
 });
 
-test('the control works inside a shadow root (#214)', async ({ page }) => {
+test('the control works inside a shadow root (#214)', async ({
+  page,
+  leaflet,
+}) => {
   await answerNominatim(page);
-  await page.goto('/e2e/fixtures/umd.html');
+  await open(page, leaflet);
   await page.evaluate(() => {
     const host = document.createElement('div');
     document.body.appendChild(host);
     const shadow = host.attachShadow({ mode: 'open' });
     shadow.innerHTML =
-      '<link rel="stylesheet" href="/node_modules/leaflet/dist/leaflet.css">' +
+      `<link rel="stylesheet" href="${window.e2eLeaflet.css}">` +
       '<link rel="stylesheet" href="/dist/geosearch.css">' +
       '<div style="width: 600px; height: 400px"></div>';
     const map = new window.L.Map(shadow.querySelector('div')!).setView(
@@ -122,9 +171,10 @@ test('the control works inside a shadow root (#214)', async ({ page }) => {
 
 test('the bar stays at the top of the map, whatever the position is (#218)', async ({
   page,
+  leaflet,
 }) => {
   await answerNominatim(page);
-  await page.goto('/e2e/fixtures/umd.html');
+  await open(page, leaflet);
   const map = (await page.locator('#map').boundingBox())!;
 
   for (const position of ['topleft', 'topright', 'bottomleft', 'bottomright']) {
@@ -158,8 +208,8 @@ test('the bar stays at the top of the map, whatever the position is (#218)', asy
   }
 });
 
-test('labels with html are shown as text', async ({ page }) => {
-  await page.goto('/e2e/fixtures/umd.html');
+test('labels with html are shown as text', async ({ page, leaflet }) => {
+  await open(page, leaflet);
   await page.evaluate(() => {
     const label = '<img src="x" onerror="window.xss = true">Den Haag';
     const provider = {
@@ -188,22 +238,29 @@ test('labels with html are shown as text', async ({ page }) => {
 
 test('a map from a second copy of Leaflet can show results (#253)', async ({
   page,
+  leaflet,
 }) => {
-  await page.goto('/e2e/fixtures/umd.html');
+  await open(page, leaflet);
 
   const center = await page.evaluate(async () => {
-    const source = await (
-      await fetch('/node_modules/leaflet/dist/leaflet.js')
-    ).text();
+    const source = await (await fetch(window.e2eLeaflet.global!)).text();
+    // Leaflet 1 is a UMD build and fills module.exports, the global build of
+    // Leaflet 2 declares a var L
     const module = { exports: {} as Record<string, any> };
     const pageL = window.L;
-    new Function('exports', 'module', 'define', source)(
-      module.exports,
-      module,
-      undefined,
-    );
+    const declared = new Function(
+      'exports',
+      'module',
+      'define',
+      `${source}\n;return typeof L === 'undefined' ? undefined : L;`,
+    )(module.exports, module, undefined);
     window.L = pageL;
-    const OtherL = module.exports;
+    const OtherL = Object.keys(module.exports).length
+      ? module.exports
+      : declared;
+    if (OtherL === pageL) {
+      throw new Error('not a second copy of Leaflet');
+    }
 
     const map = new OtherL.Map('map2').setView([0, 0], 2);
     const provider = {
@@ -233,10 +290,9 @@ test('a map from a second copy of Leaflet can show results (#253)', async ({
   expect(center.lng).toBeCloseTo(4.3, 1);
 });
 
-async function searchOnEsmPage(page: Page, url: string) {
+async function searchOnPage(page: Page, leaflet: string, fixture: string) {
   await answerNominatim(page);
-  await page.goto(url);
-  await page.waitForFunction(() => window.ready);
+  await open(page, leaflet, fixture);
 
   const input = await addControl(page);
   await input.fill('Den Haag');
@@ -247,45 +303,26 @@ async function searchOnEsmPage(page: Page, url: string) {
   expect(await page.evaluate(() => window.events.length)).toBe(1);
 }
 
-async function skipWithoutImportMaps(page: Page) {
-  await page.goto('/e2e/fixtures/umd.html');
-  const importMaps = await page.evaluate(
-    () =>
-      typeof HTMLScriptElement.supports === 'function' &&
-      HTMLScriptElement.supports('importmap'),
-  );
-  test.skip(!importMaps, 'no import maps before Firefox 108 and Safari 16.4');
-}
-
-test('the ESM bundle works with the ESM build of Leaflet', async ({ page }) => {
+test('the ESM bundle works with an import map', async ({ page, leaflet }) => {
   // the next test covers the browsers without import maps
-  await skipWithoutImportMaps(page);
-  await searchOnEsmPage(page, '/e2e/fixtures/esm.html');
+  await searchOnPage(page, leaflet, 'esm');
 });
 
-test('the ESM bundle works without an import map', async ({ page }) => {
-  await searchOnEsmPage(page, '/e2e/fixtures/esm-no-importmap.html');
-});
-
-test('the ESM bundle works with Leaflet 2', async ({ page }) => {
-  await skipWithoutImportMaps(page);
-  await searchOnEsmPage(page, '/e2e/fixtures/leaflet2.html');
+test('the ESM bundle works without an import map', async ({
+  page,
+  leaflet,
+}) => {
+  await searchOnPage(page, leaflet, 'esm-no-importmap');
 });
 
 // The popup used to open before the map moved. Its autoPan jumped the map to
 // a result off screen, so flyTo had nothing left to animate
-for (const [leaflet, url] of [
-  ['Leaflet 1', '/e2e/fixtures/umd.html'],
-  ['Leaflet 2', '/e2e/fixtures/leaflet2.html'],
-]) {
-  test(`with the popup, the map still flies to a result far away (${leaflet})`, async ({
+for (const fixture of ['umd', 'esm']) {
+  test(`with the popup, the map still flies to a result far away (${fixture})`, async ({
     page,
+    leaflet,
   }) => {
-    if (leaflet === 'Leaflet 2') {
-      await skipWithoutImportMaps(page);
-    }
-    await page.goto(url);
-    await page.waitForFunction(() => window.map && window.GeoSearch);
+    await open(page, leaflet, fixture);
 
     const flight = await page.evaluate(async () => {
       const map = window.map;
@@ -335,8 +372,9 @@ for (const [leaflet, url] of [
   });
 }
 
-test('the providers entry loads without Leaflet', async ({ page }) => {
-  await page.goto('/e2e/fixtures/umd.html');
+test('the providers entry loads without Leaflet', async ({ page, leaflet }) => {
+  // any page, without waiting for a map: Leaflet main has none on it
+  await page.goto(`/e2e/fixtures/umd.html?leaflet=${leaflet}`);
 
   // a module script, not import() in evaluate: older Playwright versions
   // compile import() in the test file to require()
@@ -368,6 +406,14 @@ declare global {
     map: any;
     control?: any;
     providers?: any;
+    // the Leaflet version of the page, see e2e/fixtures/leaflet.js. Not
+    // window.leaflet: the UMD build of Leaflet 1.9 sets that one
+    e2eLeaflet: {
+      version: string;
+      css: string;
+      esm: string;
+      global: string | null;
+    };
     events: { type: string; label?: string; source?: string }[];
     ready?: boolean;
     xss?: boolean;
@@ -376,9 +422,10 @@ declare global {
 
 test('several providers: the select picks which one is searched', async ({
   page,
+  leaflet,
 }) => {
   await answerNominatim(page);
-  await page.goto('/e2e/fixtures/umd.html');
+  await open(page, leaflet);
   await page.evaluate(() => {
     const { GeoSearchControl, OpenStreetMapProvider } = window.GeoSearch;
     window.map.addControl(
