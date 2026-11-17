@@ -21,16 +21,32 @@ const types = {
   '.svg': 'image/svg+xml',
 };
 
+// The file for a request path, or null when it is outside the allowed
+// directories. path.resolve removes any `..` before the check.
+function resolveFile(requestUrl) {
+  let pathname;
+  try {
+    pathname = decodeURIComponent(
+      new URL(requestUrl, 'http://localhost').pathname,
+    );
+  } catch {
+    return null;
+  }
+
+  const file = path.resolve(root, '.' + pathname);
+  for (const dir of allowed) {
+    if (file.startsWith(dir)) {
+      return file;
+    }
+  }
+  return null;
+}
+
 http
   .createServer((req, res) => {
-    const url = decodeURIComponent(req.url.split('?')[0]);
-    const file = path.join(root, url);
+    const file = resolveFile(req.url);
 
-    if (
-      allowed.some((dir) => file.startsWith(dir)) &&
-      fs.existsSync(file) &&
-      fs.statSync(file).isFile()
-    ) {
+    if (file && fs.existsSync(file) && fs.statSync(file).isFile()) {
       res.writeHead(200, {
         'content-type': types[path.extname(file)] || 'application/octet-stream',
       });
