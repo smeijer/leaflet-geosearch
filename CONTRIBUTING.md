@@ -27,7 +27,7 @@ A pre-commit hook (husky and lint-staged) type-checks, lints and formats the sta
 ```bash
 npx playwright install chromium firefox webkit   # once
 npm run build
-node scripts/e2e-leaflet.mjs 1.6.0 main   # optional, more Leaflet versions
+node scripts/e2e-leaflet.mjs 1.6.0 2.0.0-alpha.1 main   # optional, more Leaflet versions
 npm run test:e2e
 npm run test:e2e -- --project=chromium-leaflet   # one browser and version
 ```

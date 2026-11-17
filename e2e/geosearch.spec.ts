@@ -39,6 +39,22 @@ async function open(page: Page, leaflet: string, fixture = 'umd') {
   if (fixture === 'esm') {
     await skipWithoutImportMaps(page);
   }
+  if (leaflet === '2.0.0-alpha.1') {
+    // the alpha uses class static blocks, which came in Safari 16.4. The 2.0
+    // beta doesn't, it loads in all browsers in CI
+    const staticBlocks = await page.evaluate(() => {
+      try {
+        new Function('class A { static {} }');
+        return true;
+      } catch {
+        return false;
+      }
+    });
+    test.skip(
+      !staticBlocks,
+      'Leaflet 2.0.0-alpha.1 needs Safari 16.4 or newer',
+    );
+  }
   await page.goto(`/e2e/fixtures/${fixture}.html?leaflet=${leaflet}`);
   await page.waitForFunction(() => window.ready);
 }

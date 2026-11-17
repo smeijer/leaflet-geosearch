@@ -16,10 +16,10 @@ on:
 
 env:
   NODE_VERSION: "24.x"
-  # the Leaflet versions of the e2e tests: the dev dependencies leaflet and
-  # leaflet-2 (Leaflet 1 and 2) and the oldest one we support. Leaflet's main
-  # branch has its own job
-  E2E_LEAFLET: "leaflet leaflet-2 1.6.0"
+  # the Leaflet versions of the e2e tests, the same as in the unit tests. leaflet
+  # (1.9.4) and leaflet-2 are the dev dependencies, the others come from
+  # scripts/e2e-leaflet.mjs
+  E2E_LEAFLET: "1.6.0 1.7.1 1.8.0 1.9.0 leaflet 2.0.0-alpha.1 leaflet-2 main"
 
 # a new push to a pull request replaces its running checks. Runs on main and
 # the release branches always finish
@@ -202,7 +202,7 @@ jobs:
         run: npm run build
 
       - name: Leaflet versions
-        run: node scripts/e2e-leaflet.mjs ${{ env.E2E_LEAFLET }} main
+        run: node scripts/e2e-leaflet.mjs ${{ env.E2E_LEAFLET }}
 
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -225,8 +225,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [setup, e2e-files]
     timeout-minutes: 15
-    # Leaflet's main branch is unreleased, its run reports without failing
-    continue-on-error: ${{ matrix.leaflet == 'main' }}
     container:
       image: mcr.microsoft.com/playwright:v${{ matrix.playwright || needs.setup.outputs.playwright }}-${{ matrix.image || 'noble' }}
       options: --user 1001
@@ -238,8 +236,6 @@ jobs:
         include:
           # the Playwright version from the lockfile
           - name: latest browsers
-          - name: latest browsers, Leaflet main
-            leaflet: main
           # Firefox 140 is the current ESR
           - name: Chrome 139, Firefox 140 ESR, Safari 26.0
             playwright: 1.54.2
@@ -286,7 +282,7 @@ jobs:
       # provider requests are mocked
       - name: End-to-end tests
         env:
-          LEAFLET_VERSIONS: ${{ matrix.leaflet || env.E2E_LEAFLET }}
+          LEAFLET_VERSIONS: ${{ env.E2E_LEAFLET }}
         run: npx playwright test
 
   docs:
