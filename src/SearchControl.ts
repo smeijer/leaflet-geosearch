@@ -369,6 +369,8 @@ interface SearchControl {
   /** increments whenever pending autocomplete results become stale */
   searchId: number;
   abortController?: AbortController;
+  /** showResult is about to move the map, see addMarker */
+  movingMap?: boolean;
   /** recent results by query text, oldest first (see cacheSize) */
   cache?: Map<string, SearchResult[]>;
 
@@ -1120,7 +1122,9 @@ const Control: SearchControl = {
         this.markers.removeLayer(markers[0]);
       }
 
+      this.movingMap = updateMap;
       const marker = this.addMarker(result, query);
+      this.movingMap = false;
 
       if (updateMap) {
         this.centerMap(result);
@@ -1182,6 +1186,21 @@ const Control: SearchControl = {
     this.markers.addLayer(marker);
 
     if (markerPopup && showPopup) {
+      // an opening popup pans the map to fit in view (autoPan). Before the
+      // map moves to the result that pan works against the move: it jumps to
+      // a result off screen, and flyTo has nothing left to animate. So the
+      // popup waits until the map has arrived, then pans if it still has to
+      const popup = marker.getPopup();
+      if (this.movingMap && popup?.options.autoPan) {
+        popup.options.autoPan = false;
+        this.map.once('moveend', () => {
+          popup.options.autoPan = true;
+          if (popup.isOpen()) {
+            popup.update();
+          }
+        });
+      }
+
       marker.openPopup();
     }
 

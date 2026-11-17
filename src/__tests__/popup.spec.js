@@ -105,3 +105,59 @@ describe('geosearch/beforeshowlocation (#157)', () => {
     expect(shown).not.toHaveBeenCalled();
   });
 });
+
+// the popup's autoPan used to jump the map to the result before the control
+// moved it, so flyTo had nothing left to animate
+describe('popup autoPan while the map moves', () => {
+  async function shown(options) {
+    const { map, control } = setup({ showPopup: true, ...options });
+    await control.onSubmit({ query: 'den' });
+    const popup = control.markers.getLayers()[0].getPopup();
+    return { map, popup };
+  }
+
+  test('waits until the map has arrived, then pans if it has to', async () => {
+    const { map, popup } = await shown();
+    const update = vi.spyOn(popup, 'update');
+
+    // the popup is open right away, it just doesn't pan yet
+    expect(popup.isOpen()).toBe(true);
+    expect(popup.options.autoPan).toBe(false);
+
+    map.fire('moveend');
+
+    expect(popup.options.autoPan).toBe(true);
+    expect(update).toHaveBeenCalledTimes(1);
+
+    // only once, later moves are the user's
+    map.fire('moveend');
+    expect(update).toHaveBeenCalledTimes(1);
+  });
+
+  test('a popup closed before the map arrives stays closed', async () => {
+    const { map, popup } = await shown();
+    popup.close();
+    const update = vi.spyOn(popup, 'update');
+
+    map.fire('moveend');
+
+    expect(popup.isOpen()).toBe(false);
+    expect(update).not.toHaveBeenCalled();
+  });
+
+  test("without updateMap the map doesn't move, so the popup pans right away", async () => {
+    const { popup } = await shown({ updateMap: false });
+
+    expect(popup.options.autoPan).toBe(true);
+  });
+
+  test('autoPan: false in popupOptions stays off', async () => {
+    const { map, popup } = await shown({ popupOptions: { autoPan: false } });
+    const update = vi.spyOn(popup, 'update');
+
+    map.fire('moveend');
+
+    expect(popup.options.autoPan).toBe(false);
+    expect(update).not.toHaveBeenCalled();
+  });
+});
