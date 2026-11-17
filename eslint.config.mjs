@@ -4,7 +4,16 @@ import prettierRecommended from 'eslint-plugin-prettier/recommended';
 
 export default defineConfig(
   {
-    ignores: ['dist/', 'lib/', 'coverage/', '.docz/', '.tmp/', 'website/'],
+    ignores: [
+      'dist/',
+      'lib/',
+      'coverage/',
+      '.docz/',
+      '.tmp/',
+      'website/',
+      // Leaflet versions for the e2e tests, see scripts/e2e-leaflet.mjs
+      'e2e/vendor/',
+    ],
   },
   {
     files: ['**/*.{js,ts,tsx}'],

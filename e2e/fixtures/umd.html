@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>leaflet-geosearch e2e (UMD)</title>
-    <link rel="stylesheet" href="/node_modules/leaflet/dist/leaflet.css" />
+    <script src="/e2e/fixtures/leaflet.js"></script>
     <link rel="stylesheet" href="/dist/geosearch.css" />
     <style>
       #map,
@@ -17,25 +17,36 @@
     <div id="map"></div>
     <div id="map2"></div>
 
-    <script src="/node_modules/leaflet/dist/leaflet.js"></script>
-    <script src="/dist/geosearch.umd.js"></script>
+    <!-- Leaflet's global build, then the UMD bundle. Leaflet main has none -->
+    <script>
+      if (window.e2eLeaflet.global) {
+        document.write(
+          '<script src="' +
+            window.e2eLeaflet.global +
+            '"><\/script><script src="/dist/geosearch.umd.js"><\/script>',
+        );
+      }
+    </script>
     <script>
       // the tests add the control; map events end up in window.events
       window.events = [];
-      window.map = new L.Map('map').setView([52, 5], 8);
-      [
-        'geosearch/showlocation',
-        'geosearch/error',
-        'geosearch/marker/dragend',
-      ].forEach((type) =>
-        window.map.on(type, (e) =>
-          window.events.push({
-            type,
-            label: e.location?.label,
-            source: e.source,
-          }),
-        ),
-      );
+      if (window.L) {
+        window.map = new L.Map('map').setView([52, 5], 8);
+        [
+          'geosearch/showlocation',
+          'geosearch/error',
+          'geosearch/marker/dragend',
+        ].forEach(function (type) {
+          window.map.on(type, function (e) {
+            window.events.push({
+              type: type,
+              label: e.location && e.location.label,
+              source: e.source,
+            });
+          });
+        });
+      }
+      window.ready = true;
     </script>
   </body>
 </html>

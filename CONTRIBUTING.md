@@ -22,16 +22,17 @@ A pre-commit hook (husky and lint-staged) type-checks, lints and formats the sta
 - unit tests live next to the code in `src/**/__tests__` and run with Vitest and happy-dom.
 - requests to providers are answered with recorded responses through MSW, nothing goes to the network. A request without a handler fails the test.
 - a fix comes with a test that fails without it. A new option comes with tests for the default and for the option.
-- the end-to-end tests in `e2e/` run the built bundles in Chromium, Firefox and WebKit with Playwright, with Leaflet 1 and Leaflet 2 (`leaflet-2` is Leaflet 2 under another name). CI also runs them with the browsers of older Playwright versions, so a change that breaks an older browser shows up in the PR:
+- the end-to-end tests in `e2e/` run the built bundles in Chromium, Firefox and WebKit with Playwright, each with every Leaflet version: the dev dependencies `leaflet` and `leaflet-2` (Leaflet 2 under another name), and the versions `scripts/e2e-leaflet.mjs` puts in `e2e/vendor`, like 1.6.0 or Leaflet's main branch. CI also runs them with the browsers of older Playwright versions, so a change that breaks an older browser shows up in the PR:
 
 ```bash
 npx playwright install chromium firefox webkit   # once
 npm run build
+node scripts/e2e-leaflet.mjs 1.6.0 2.0.0-alpha.1 main   # optional, more Leaflet versions
 npm run test:e2e
-npm run test:e2e -- --project=chromium   # one browser
+npm run test:e2e -- --project=chromium-leaflet   # one browser and version
 ```
 
-Locally an installed browser works too: `PLAYWRIGHT_CHANNEL=msedge npm run test:e2e -- --project=chromium` (or `chrome`).
+A project is a browser and a Leaflet version, like `firefox-leaflet-2` or `webkit-1.6.0`. `LEAFLET_VERSIONS="leaflet 1.6.0"` picks the versions. Locally the tests use a quarter of the CPU cores, every worker starts its own browsers. `--workers=8` runs more at once, `--project=chromium-*` only one browser. Locally an installed browser works too: `PLAYWRIGHT_CHANNEL=msedge npm run test:e2e -- --project=chromium-leaflet` (or `chrome`).
 
 Before you open a PR, run what CI runs:
 
