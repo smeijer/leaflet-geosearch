@@ -2,6 +2,6 @@
   "name": "e2e-runner-1.54.2",
   "private": true,
   "devDependencies": {
-    "@playwright/test": "1.54.2"
+    "@playwright/test": "1.65.1"
   }
 }
