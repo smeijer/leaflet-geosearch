@@ -17,6 +17,8 @@ npm run build       # the bundles in dist and the types
 
 A pre-commit hook (husky and lint-staged) type-checks, lints and formats the staged files. Please don't skip it.
 
+`tsc` is TypeScript 7 (the dev dependency `@typescript/native`). TypeScript 7 has no JavaScript API yet, so the `typescript` dev dependency is TypeScript 6 (`@typescript/typescript6`) for typescript-eslint. Both are set up as [the TypeScript team describes](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/#running-side-by-side-with-typescript-6.0). When typescript-eslint supports TypeScript 7, the second one can go.
+
 ## Tests
 
 - unit tests live next to the code in `src/**/__tests__` and run with Vitest and happy-dom.
