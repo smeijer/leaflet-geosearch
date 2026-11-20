@@ -12,12 +12,9 @@ updates:
     commit-message:
       prefix: ci
 
-  # npm packages of the library, the docs site and the e2e test runner, one
-  # pull request a month. The runner in e2e/runners/latest has to stay at the
-  # @playwright/test version of the root lockfile (the setup job checks it).
-  # The other runners are pinned on purpose, each to the browsers of a version
+  # npm packages of the library and the docs site, one pull request a month
   - package-ecosystem: npm
-    directories: ['/', '/website', '/e2e/runners/latest']
+    directories: ['/', '/website']
     schedule:
       interval: monthly
     groups:
@@ -30,3 +27,13 @@ updates:
     commit-message:
       prefix: chore
       include: scope
+
+  # the older e2e test runners, each one pinned to the browsers of its
+  # Playwright image. Nothing there is updated, not even by a security update
+  - package-ecosystem: npm
+    directory: /e2e/runners
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 0
+    ignore:
+      - dependency-name: '*'

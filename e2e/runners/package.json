@@ -1,0 +1,12 @@
+{
+  "name": "e2e-runners",
+  "private": true,
+  "devDependencies": {
+    "playwright-1.22.2": "npm:@playwright/test@1.22.2",
+    "playwright-1.29.2": "npm:@playwright/test@1.29.2",
+    "playwright-1.37.1": "npm:@playwright/test@1.37.1",
+    "playwright-1.46.1": "npm:@playwright/test@1.46.1",
+    "playwright-1.48.2": "npm:@playwright/test@1.48.2",
+    "playwright-1.54.2": "npm:@playwright/test@1.54.2"
+  }
+}
