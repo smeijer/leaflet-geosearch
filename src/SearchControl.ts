@@ -1171,7 +1171,9 @@ const Control: SearchControl = {
     const marker = new Marker([result.y, result.x], options);
 
     if (markerPopup) {
-      let popupLabel = result.label;
+      // the label comes from the provider, so it is html only when
+      // popupFormat makes it so
+      let popupLabel = escapeHtml(result.label);
       if (typeof popupFormat === 'function') {
         popupLabel = popupFormat({
           query,
