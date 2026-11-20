@@ -9,6 +9,7 @@
     "allowJs": true,
     "pretty": true,
     "strict": true,
+    "rootDir": "src",
     "rootDirs": ["src"],
     "sourceMap": true,
     "removeComments": false,
