@@ -23,6 +23,10 @@ export { default as PhotonProvider } from './providers/photonProvider';
 
 export { default as JsonProvider } from './providers/provider';
 
+// for custom resultFormat and popupFormat: the parts that come from a
+// provider have to be escaped before they go into the html
+export { escapeHtml } from './domUtils';
+
 export type {
   SearchControlOptions,
   ProviderChoice,

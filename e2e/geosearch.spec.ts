@@ -236,6 +236,73 @@ test('labels with html are shown as text', async ({ page, leaflet }) => {
   expect(await page.evaluate(() => window.xss)).toBeUndefined();
 });
 
+test('html in a real provider answer runs nowhere', async ({
+  page,
+  leaflet,
+}) => {
+  // a real browser runs what happy-dom doesn't, like an iframe's srcdoc
+  const payloads = [
+    '<img src=x onerror="window.xss=1">',
+    '<svg onload="window.xss=1"></svg>',
+    '<iframe srcdoc="<script>parent.xss=1</script>"></iframe>',
+    '"><img src=x onerror="window.xss=1">',
+    '<details open ontoggle="window.xss=1">',
+  ];
+  const label = `Den Haag ${payloads.join(' ')}`;
+  await open(page, leaflet);
+  await answerNominatim(
+    page,
+    JSON.stringify([
+      {
+        lat: '52.08',
+        lon: '4.3',
+        display_name: label,
+        boundingbox: ['52.0', '52.1', '4.2', '4.4'],
+      },
+    ]),
+  );
+  await addControl(page, '{"showPopup": true}');
+  const input = page.locator('.leaflet-geosearch-bar input');
+
+  await input.fill('den');
+  const item = page.locator('.leaflet-geosearch-bar .results > *').first();
+  await expect(item).toHaveText(label);
+  await item.click();
+
+  const popup = page.locator('.leaflet-popup-content');
+  await expect(popup).toHaveText(label);
+  expect(await popup.locator('img, svg, iframe, details').count()).toEqual(0);
+  // give an event handler time to run, if one was made
+  await page.waitForTimeout(300);
+  expect(await page.evaluate(() => window.xss)).toBeUndefined();
+});
+
+test('a provider url that is not http or https is never requested', async ({
+  page,
+  leaflet,
+}) => {
+  await open(page, leaflet);
+  const errors = await page.evaluate(async () => {
+    const found: string[] = [];
+    for (const searchUrl of [
+      'javascript:window.xss=1',
+      'data:application/json,[]',
+    ]) {
+      const provider = new window.GeoSearch.OpenStreetMapProvider({
+        searchUrl,
+      });
+      await provider.search({ query: 'den' }).catch((error: Error) => {
+        found.push(error.message);
+      });
+    }
+    return found;
+  });
+
+  expect(errors).toHaveLength(2);
+  errors.forEach((message) => expect(message).toMatch(/http or https/));
+  expect(await page.evaluate(() => window.xss)).toBeUndefined();
+});
+
 test('a map from a second copy of Leaflet can show results (#253)', async ({
   page,
   leaflet,

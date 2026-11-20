@@ -19,3 +19,7 @@ export { default as PhotonProvider } from './photonProvider';
 
 export { default as Provider } from './provider';
 export { default as JsonProvider } from './provider';
+
+// for custom formatters: escape what comes from a provider before it goes
+// into html
+export { escapeHtml } from '../domUtils';

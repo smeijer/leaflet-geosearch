@@ -333,8 +333,8 @@ new GeoSearchControl({
     // optional: L.MarkerOptions - without icon, Leaflet's default icon is used
     draggable: false,
   },
-  popupFormat: ({ query, result }) => result.label, // optional: function    - default returns result label,
-  resultFormat: ({ result }) => result.label, // optional: function    - default returns result label
+  popupFormat: ({ query, result }) => escapeHtml(result.label), // optional: function    - default returns the escaped label
+  resultFormat: ({ result }) => escapeHtml(result.label), // optional: function    - default returns the escaped label
   maxMarkers: 1, // optional: number      - default 1
   retainZoomLevel: false, // optional: true|false  - default false
   zoomToBounds: true, // optional: true|false  - default true
@@ -367,7 +367,7 @@ open a popup with the location text.
 
 `resultFormat` is callback function for modifying the search result texts (e. g. in order to hide address components or change its ordering).
 
-Both return html. The default ones escape the label, since it comes from the provider. If you build your own html, escape the parts that come from the result, e.g. with the `escapeHtml` helper of your framework. `notFoundMessage` and `searchIcon` are html too: only pass markup you wrote yourself, never text from users. See [Security](https://leaflet-geosearch.meijer.works/leaflet-control#security) in the docs.
+Both return html. The default ones escape the label, since it comes from the provider. If you build your own html, escape the parts that come from the result with `escapeHtml`, which the package exports (`import { escapeHtml } from 'leaflet-geosearch'`). `notFoundMessage` and `searchIcon` are html too: only pass markup you wrote yourself, never text from users. See [Security](https://leaflet-geosearch.meijer.works/leaflet-control#security) in the docs.
 
 `maxMarker` determines how many last results are kept in memory. Default 1, but
 perhaps you want to show the last `x` results when searching for new queries as

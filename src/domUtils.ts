@@ -1,3 +1,5 @@
+import requestUrl from './lib/requestUrl';
+
 export function createElement<T extends HTMLElement = HTMLElement>(
   element: string,
   className: string | null = '',
@@ -42,6 +44,8 @@ export function createScriptElement<T = object>(
   url: string,
   cb: string,
 ): Promise<T> {
+  // before anything is added to the page, so a bad url leaves nothing behind
+  const src = requestUrl(url);
   const script = createElement('script', null, document.body);
   script.setAttribute('type', 'text/javascript');
 
@@ -62,7 +66,7 @@ export function createScriptElement<T = object>(
       reject(new Error(`Request failed: ${url.split('?')[0]}`));
     });
 
-    script.setAttribute('src', url);
+    script.setAttribute('src', src);
   });
 }
 

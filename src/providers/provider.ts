@@ -1,3 +1,5 @@
+import requestUrl from '../lib/requestUrl';
+
 export type PointTuple = [number, number];
 export type BoundsTuple = [PointTuple, PointTuple];
 
@@ -91,7 +93,7 @@ export default abstract class AbstractProvider<
       type: RequestType.SEARCH,
     });
 
-    const request = await fetch(url, { signal: options.signal });
+    const request = await fetch(requestUrl(url), { signal: options.signal });
     const json: TRequestResult = await readJson(request);
     return this.parse({ data: json });
   }
@@ -116,7 +118,7 @@ export default abstract class AbstractProvider<
     }
 
     const url = this.endpoint({ query, type: RequestType.REVERSE });
-    const request = await fetch(url, { signal });
+    const request = await fetch(requestUrl(url), { signal });
     const json: TRequestResult = await readJson(request);
     return this.parse({ data: json });
   }
