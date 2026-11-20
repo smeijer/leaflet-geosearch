@@ -24,6 +24,7 @@ A pre-commit hook (husky and lint-staged) type-checks, lints and formats the sta
 - unit tests live next to the code in `src/**/__tests__` and run with Vitest and happy-dom.
 - requests to providers are answered with recorded responses through MSW, nothing goes to the network. A request without a handler fails the test.
 - a fix comes with a test that fails without it. A new option comes with tests for the default and for the option.
+- html from providers must never run: `src/__tests__/providerXss.spec.js` feeds the control and every provider html in many forms, and `security.spec.js` covers the rest. A change that puts provider data into the page, or a new provider, gets a case there.
 - `src/__tests__/properties.spec.js` has property-based tests with [fast-check](https://fast-check.dev). They run with `npm test` and check rules that must hold for any input, like HTML escaping and the query in provider URLs, with hundreds of generated inputs. When one fails, fast-check prints the smallest input that still fails and a seed to run it again.
 - the end-to-end tests in `e2e/` run the built bundles in Chromium, Firefox and WebKit with Playwright, each with every Leaflet version: the dev dependencies `leaflet` and `leaflet-2` (Leaflet 2 under another name), and the versions `scripts/e2e-leaflet.mjs` puts in `e2e/vendor`, like 1.6.0 or Leaflet's main branch. CI also runs them with the browsers of older Playwright versions, so a change that breaks an older browser shows up in the PR:
 
