@@ -39,7 +39,8 @@ const payloads = [
   '<style>@import "javascript:window.__xss=1"</style>',
   '&lt;img src=x onerror="window.__xss=1"&gt;',
   'Den\u0000Haag <img src=x onerror="window.__xss=1">',
-  '‮<img src=x onerror="window.__xss=1">',
+  // right-to-left override, written as an escape so the file shows it
+  '\u202e<img src=x onerror="window.__xss=1">',
 ];
 
 const place = (label) => ({ x: 4.3, y: 52.08, label, bounds: null, raw: {} });
