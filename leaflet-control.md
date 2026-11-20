@@ -258,7 +258,7 @@ The control follows the combobox pattern of the ARIA authoring practices. The in
 
 ## Security
 
-The labels come from the provider, and for OpenStreetMap they are edited by anyone. The default `resultFormat` and `popupFormat` escape them, and provider names, `searchLabel`, `clearSearchLabel` and `setQuery` are always set as text.
+The labels come from the provider, and the control can't know what a provider sends. The default `resultFormat` and `popupFormat` escape them, and provider names, `searchLabel`, `clearSearchLabel` and `setQuery` are always set as text.
 
 Some options are put into the page as html, on purpose:
 
