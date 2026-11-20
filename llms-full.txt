@@ -364,7 +364,7 @@ const searchControl = new SearchControl({
   provider: new OpenStreetMapProvider(),
   showPopup: true,
   popupOptions: { maxWidth: 180, className: 'my-popup' },
-  popupFormat: ({ result }) => result.label,
+  popupFormat: ({ result }) => `<b>${escapeHtml(result.label)}</b>`,
 });
 ```
 
@@ -438,17 +438,18 @@ Some options are put into the page as html, on purpose:
 | `notFoundMessage` (also through `setLabels`) | html                                             |
 | `searchIcon`                                 | html                                             |
 
-Only pass markup you wrote yourself to these, never text from users or from a provider without escaping it:
+Only pass markup you wrote yourself to these, never text from users or from a provider without escaping it. `escapeHtml` is exported for that, also from `leaflet-geosearch/providers`:
 
 ```js
-const escape = (text) =>
-  String(text).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+import { SearchControl, escapeHtml } from 'leaflet-geosearch';
 
 new SearchControl({
   provider,
-  resultFormat: ({ result }) => `<b>${escape(result.raw.name)}</b>`,
+  resultFormat: ({ result }) => `<b>${escapeHtml(result.raw.name)}</b>`,
 });
 ```
+
+The urls of a provider can come from options like `host` or `searchUrl`. Requests only go to `http` and `https` urls, or urls relative to the page. Any other scheme, like `javascript:` or `data:`, makes the search fail with an error (`geosearch/error`) before anything is requested, so a url from a setting can't run code or answer with made up results. Bing answers with a script (JSONP), so it runs with the rights of your page: only use it with its own `dev.virtualearth.net` url.
 
 API keys used in the browser can always be seen. Restrict them to your domain in the console of the service. With a Content Security Policy, allow the hosts of your provider in `connect-src`, and for the Bing provider, which answers through JSONP, `dev.virtualearth.net` in `script-src`. The Google provider loads the Maps JavaScript API from `maps.googleapis.com`.
 
@@ -1776,7 +1777,7 @@ new GeoSearchControl({ provider });
 // a label like "<b>Amsterdam</b>" shows up as text // [!code ++]
 ```
 
-If your provider returns html in its labels on purpose, render it with your own formatters:
+If your provider returns html in its labels on purpose, and you trust it, render it with your own formatters. Don't do this with a public source like OpenStreetMap, where anyone can edit the names:
 
 ```js
 new GeoSearchControl({
