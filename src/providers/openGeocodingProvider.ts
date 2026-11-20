@@ -11,6 +11,7 @@ import AbstractProvider, {
   SearchResult,
   readJson,
 } from './provider';
+import requestUrl from '../lib/requestUrl';
 
 interface GeoCoordinates {
   // omitted when 0
@@ -115,7 +116,7 @@ export default class OpenGeocodingProvider extends AbstractProvider<
 
   // the key is only accepted in a header, never in the url
   async request(url: string, signal?: AbortSignal): Promise<RequestResult> {
-    const response = await fetch(url, {
+    const response = await fetch(requestUrl(url), {
       headers: { 'x-api-key': this.apiKey },
       signal,
     });
