@@ -544,6 +544,10 @@ npm run test:e2e -- --project=chromium-leaflet   # one browser and version
 [pelias]: https://leaflet-geosearch.meijer.works/providers/pelias
 [photon]: https://leaflet-geosearch.meijer.works/providers/photon
 
+## Changelog
+
+The notes for every version are on [GitHub Releases](https://github.com/smeijer/leaflet-geosearch/releases): what changed, what to look out for when you update, and who did the work. Bigger changes and plans are in [#455](https://github.com/smeijer/leaflet-geosearch/issues/455).
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):

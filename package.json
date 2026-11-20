@@ -99,6 +99,7 @@
     "eslint": "^10.13.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.7",
+    "fast-check": "^4.10.2",
     "happy-dom": "^21.0.4",
     "husky": "^9.1.7",
     "leaflet-2": "npm:leaflet@^2.0.0-beta.4",
