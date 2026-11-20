@@ -29,9 +29,13 @@ test('exports', () => {
     'PhotonProvider',
     'SearchControl',
     'SearchElement',
+    'escapeHtml',
   ]);
 
   expect(api.GeoSearchControl).toBe(api.SearchControl);
+  expect(api.escapeHtml(`<b>"a" & 'b'</b>`)).toEqual(
+    '&lt;b&gt;&quot;a&quot; &amp; &#39;b&#39;&lt;/b&gt;',
+  );
 });
 
 test('leaflet-geosearch/providers exports', () => {
