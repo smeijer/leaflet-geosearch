@@ -1,5 +1,5 @@
-// HTML from a provider must never run as code. OpenStreetMap names are edited
-// by anyone, a new or self-hosted provider can answer with anything, and a
+// HTML from a provider must never run as code. The control can't know what a
+// provider sends, a new or self-hosted one can answer with anything, and a
 // provider url can come from an option. These tests feed the control and the
 // providers html in many forms and check that it only ever shows as text.
 import fc from 'fast-check';

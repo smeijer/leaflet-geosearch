@@ -59,8 +59,8 @@ const defaultOptions: Omit<SearchControlProps, 'provider' | 'providers'> = {
   resultListPosition: 'below',
   theme: 'light',
   popupOptions: {},
-  // labels come from the provider (e.g. user edited OpenStreetMap data), so
-  // they are escaped before being used as html
+  // labels come from the provider, and the control can't know what it sends,
+  // so they are escaped before being used as html
   popupFormat: ({ result }) => escapeHtml(result.label),
   resultFormat: ({ result }) => escapeHtml(result.label),
   // no icon, so Marker uses Leaflet's default icon
