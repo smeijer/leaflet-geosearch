@@ -1,0 +1,36 @@
+# Upgrading from 3.x to 4.0
+
+4.0 has one breaking change: the Algolia provider is removed, because Algolia shut down Algolia Places. Everything else works the same as in 3.11. If you go further to 5.x, read [4.x to 5.0](./v5) next.
+
+## Updating the package
+
+{/* prettier-ignore */}
+```jsonc title="package.json"
+{
+  "dependencies": {
+    "leaflet-geosearch": "^3.11.1" // [!code --]
+    "leaflet-geosearch": "^4.0.0" // [!code ++]
+  }
+}
+```
+
+The dependencies, the files in the package and the browser support are the same as in 3.11.
+
+## The Algolia provider is removed
+
+`AlgoliaProvider` is no longer exported. Algolia Places stopped answering, so the provider couldn't find anything anyway. Pick another provider, for example OpenStreetMap, which needs no API key:
+
+{/* prettier-ignore */}
+```js
+import { AlgoliaProvider } from 'leaflet-geosearch'; // [!code --]
+import { OpenStreetMapProvider } from 'leaflet-geosearch'; // [!code ++]
+
+const provider = new AlgoliaProvider(); // [!code --]
+const provider = new OpenStreetMapProvider(); // [!code ++]
+```
+
+The [providers](/providers/openstreetmap) section of the docs lists all of them, with their options and whether they need a key.
+
+## New in 4.0
+
+- the result types of the Esri provider are exported for TypeScript

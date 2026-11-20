@@ -57,6 +57,8 @@ This library is written with the latest technologies in mind. Thereby it is requ
 - the Google provider uses `@googlemaps/js-api-loader` 2. `url`, `nonce`, `retries` and `id` are ignored.
 - the Esri provider asks for up to 5 locations instead of 1.
 
+Coming from 2.x or 3.x, go through the [2.x to 3.0](https://leaflet-geosearch.meijer.works/upgrading/v3) and [3.x to 4.0](https://leaflet-geosearch.meijer.works/upgrading/v4) notes first.
+
 # About
 
 This library adds support for geocoding _(address lookup, a.k.a. geosearching)_

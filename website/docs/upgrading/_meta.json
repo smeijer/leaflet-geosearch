@@ -1,1 +1,5 @@
-[{ "type": "file", "name": "v5", "label": "4.x to 5.0" }]
+[
+  { "type": "file", "name": "v5", "label": "4.x to 5.0" },
+  { "type": "file", "name": "v4", "label": "3.x to 4.0" },
+  { "type": "file", "name": "v3", "label": "2.x to 3.0" }
+]
