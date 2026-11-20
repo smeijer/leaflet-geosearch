@@ -53,11 +53,12 @@ jobs:
         run: |
           version=$(node -p "require('./package-lock.json').packages['node_modules/@playwright/test'].version")
           node -e "
+            const runners = require('./e2e/runners/package.json').devDependencies;
             const lock = require('./e2e/runners/package-lock.json').packages;
-            for (const name of Object.keys(lock[''].devDependencies)) {
-              const version = lock['node_modules/' + name].version;
-              if (name !== 'playwright-' + version) {
-                console.log('::error file=e2e/runners/package.json::' + name + ' is @playwright/test ' + version);
+            for (const name of Object.keys(runners)) {
+              const version = lock['node_modules/' + name]?.version;
+              if (name !== 'playwright-' + version || runners[name] !== 'npm:@playwright/test@' + version) {
+                console.log('::error file=e2e/runners/package.json::' + name + ' has to be npm:@playwright/test@<version> and in the lockfile, it is ' + runners[name] + ' and ' + version + ' in the lockfile');
                 process.exitCode = 1;
               }
             }
