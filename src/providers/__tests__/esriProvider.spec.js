@@ -1,6 +1,6 @@
 import Provider from '../esriProvider';
 import fixtures from './esriResponse.json';
-import { answerRequests, mockResponse } from '../../../test';
+import { mockResponse } from '../../../test';
 
 describe('EsriProvider', () => {
   beforeAll(() => {

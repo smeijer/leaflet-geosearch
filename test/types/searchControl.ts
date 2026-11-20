@@ -34,8 +34,11 @@ const several = new GeoSearchControl({
 several.selectProvider(1);
 several.setProviderSelectVisible(false);
 const listed: ProviderInfo[] = several.getProviders();
+several.selectProvider(listed[0].index);
 const selected: SelectedProvider = several.getSelectedProvider();
+several.selectProvider(selected.index === 'all' ? 0 : selected.index);
 const choices: ProviderChoice[] = [{ label: 'x', provider }];
+new GeoSearchControl({ providers: choices });
 
 // methods for code outside the control
 constructed.reset();
