@@ -9,6 +9,7 @@
 [![Leaflet 1.6+ and 2](https://img.shields.io/badge/Leaflet-1.6%2B%20%7C%202-199900?style=flat-square)](https://leaflet-geosearch.meijer.works/usage#leaflet-2)
 [![License](https://img.shields.io/npm/l/leaflet-geosearch?style=flat-square)](./LICENSE)
 [![Socket](https://socket.dev/api/badge/npm/package/leaflet-geosearch)](https://socket.dev/npm/package/leaflet-geosearch)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16940/badge)](https://www.bestpractices.dev/projects/16940)
 [![semantic-release](https://img.shields.io/badge/semantic--release-e10079?style=flat-square&logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->

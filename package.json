@@ -51,7 +51,7 @@
     "docs:build": "npm run build && npm --prefix website run build",
     "docs:typecheck": "tsc -p website/tsconfig.json",
     "prepublish": "run-s test clean build",
-    "ci:lint": "eslint \"{src,test,e2e}/**/*.{js,ts,tsx}\"",
+    "ci:lint": "eslint \"{src,test,e2e}/**/*.{js,ts,tsx}\" --max-warnings 0",
     "ci:tsc": "tsc --noEmit --project ./tsconfig.test.json",
     "ci:test": "vitest run",
     "ci:package": "publint --pack npm && attw --pack . --ignore-rules unexpected-module-syntax",

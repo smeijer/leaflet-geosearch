@@ -38,7 +38,7 @@ A project is a browser and a Leaflet version, like `firefox-leaflet-2` or `webki
 
 In CI each e2e job runs in the Playwright image of its version, and the test runner has to be the same version to find the browsers. The job for the latest browsers uses `@playwright/test` from `package-lock.json`. The older runners are aliases in `e2e/runners/package.json` (`"playwright-1.46.1": "npm:@playwright/test@1.46.1"`), all in one lockfile. To add one, add the alias and the matrix entry in `ci.yml`, then run `npm install --package-lock-only --install-strategy=nested` in `e2e/runners` (each runner keeps its own Playwright inside its folder). Dependabot doesn't update them, and the setup job checks that each alias is still its version. Their security alerts (like GHSA-7mvr-c777-76hp, the macOS scripts that install Chrome and Edge) don't apply here, the images already have the browsers. `e2e/runners/osv-scanner.toml` tells Scorecard so.
 
-Before you open a PR, run what CI runs:
+Before you open a PR, run what CI runs. `ci:lint` fails on ESLint warnings too, not only on errors:
 
 ```bash
 npm run ci:tsc && npm run ci:lint && npm test
