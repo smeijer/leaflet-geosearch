@@ -45,17 +45,23 @@ jobs:
         with:
           node-version: "${{ env.NODE_VERSION }}"
 
-      # the e2e job runs in the Playwright image of this version, with the test
-      # runner from e2e/runners/latest. Both have to be the same version
+      # the e2e job for the latest browsers runs in the Playwright image of
+      # this version, with the test runner from node_modules. The older
+      # runners in e2e/runners have to stay at the version in their name
       - name: Playwright version
         id: playwright
         run: |
           version=$(node -p "require('./package-lock.json').packages['node_modules/@playwright/test'].version")
-          runner=$(node -p "require('./e2e/runners/latest/package-lock.json').packages['node_modules/@playwright/test'].version")
-          if [ "$version" != "$runner" ]; then
-            echo "::error file=e2e/runners/latest/package.json::@playwright/test is $version in package-lock.json and $runner in e2e/runners/latest"
-            exit 1
-          fi
+          node -e "
+            const lock = require('./e2e/runners/package-lock.json').packages;
+            for (const name of Object.keys(lock[''].devDependencies)) {
+              const version = lock['node_modules/' + name].version;
+              if (name !== 'playwright-' + version) {
+                console.log('::error file=e2e/runners/package.json::' + name + ' is @playwright/test ' + version);
+                process.exitCode = 1;
+              }
+            }
+          "
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Cache node modules
@@ -220,6 +226,9 @@ jobs:
             e2e/vendor
             node_modules/leaflet/dist
             node_modules/leaflet-2/dist
+            node_modules/@playwright/test
+            node_modules/playwright
+            node_modules/playwright-core
           retention-days: 1
 
   # the built bundles in Chromium, Firefox and WebKit, each with every Leaflet
@@ -277,21 +286,24 @@ jobs:
         with:
           name: e2e-files
 
-      # only the test runner, matching the browsers in the image, from its
-      # lockfile in e2e/runners. The tests need nothing else from node_modules
-      - name: Install Playwright ${{ matrix.playwright || needs.setup.outputs.playwright }}
+      # the test runner has to match the browsers in the image. The latest one
+      # comes with the files, an older one from its alias in e2e/runners.
+      # Their security alerts (like GHSA-7mvr-c777-76hp, the macOS scripts
+      # that install Chrome and Edge) don't apply, the image has the browsers
+      - name: Install Playwright ${{ matrix.playwright }}
+        if: matrix.playwright
         env:
-          RUNNER: e2e/runners/${{ matrix.playwright || 'latest' }}
+          PLAYWRIGHT: ${{ matrix.playwright }}
         run: |
-          npm ci --prefix "$RUNNER" --no-audit --no-fund
-          mkdir -p node_modules
-          cp -R "$RUNNER/node_modules/." node_modules/
+          npm ci --prefix e2e/runners --no-audit --no-fund
+          rm -rf node_modules/@playwright/test node_modules/playwright node_modules/playwright-core
+          cp -R "e2e/runners/node_modules/playwright-$PLAYWRIGHT" node_modules/@playwright/test
 
       # provider requests are mocked
       - name: End-to-end tests
         env:
           LEAFLET_VERSIONS: ${{ env.E2E_LEAFLET }}
-        run: npx playwright test
+        run: node node_modules/@playwright/test/cli.js test
 
   docs:
     name: Docs

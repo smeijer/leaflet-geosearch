@@ -1,0 +1,7 @@
+# The runners stay at their Playwright version, the browsers of its image.
+# The advisory is about the macOS scripts that install Chrome and Edge with
+# curl -k. The e2e jobs run in Linux images that already have the browsers
+# and never run them
+[[IgnoredVulns]]
+id = "GHSA-7mvr-c777-76hp"
+reason = "Pinned e2e runners in Linux images with the browsers, the macOS install scripts never run"

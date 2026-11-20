@@ -1,7 +1,0 @@
-{
-  "name": "e2e-runner-1.46.1",
-  "private": true,
-  "devDependencies": {
-    "@playwright/test": "1.46.1"
-  }
-}
